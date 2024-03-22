@@ -1,25 +1,3 @@
-
-<?php 
-    function formatCurrency($amount) {
-        // Chuyển đổi số tiền thành chuỗi
-        $amount = strval($amount);
-        
-        // Chia chuỗi thành các phần nguyên và phần thập phân
-        $parts = explode('.', $amount);
-        
-        // Định dạng phần nguyên
-        $integerPart = number_format($parts[0]);
-        
-        // Định dạng phần thập phân (nếu có)
-        $decimalPart = isset($parts[1]) ? ',' . $parts[1] : '';
-        
-        // Kết hợp phần nguyên và phần thập phân vào chuỗi tiền tệ hoàn chỉnh
-        $formattedAmount = $integerPart . $decimalPart . ' ₫';
-        
-        return $formattedAmount;
-    }
-    
-?>
 <main>
     <section class="hero">
         <div class="container">
@@ -190,86 +168,9 @@
                 </div>
                 <div class="product-new__list card__list">
                     <?php
-                        $sql_spmoi= "SELECT * FROM `sanpham` WHERE `SanPhamMoi` = 1 LIMIT 12";
-                        $result=mysqli_query($connect,$sql_spmoi);
-                        while($row=mysqli_fetch_array($result)){?>
-                            <a href="index.php?danhmuc=product-detail&id=<?php echo $row['MaSP'] ?>">
-                                <div class="card">
-                                    <div class="card-img">
-                                        <img src="./assets/img/<?php echo $row['HinhAnh']?>" alt="">
-                                    </div>
-                                    <p class="card-title"><?php echo $row['TenSP']?></p>
-                                    <div class="card-price-rate">
-                                        <div class="card-price">
-                                            <span><?php echo formatCurrency($row['GiaCu'])?></span>
-                                            <span><del><?php echo formatCurrency($row['GiaMoi']) ?></del></span>  
-                                        </div>
-                                        <div class="card-rate">
-                                            <i class="fa-solid fa-star"></i>
-                                            <?php echo $row['SoSaoDanhGia']?>
-                                        </div>
-                                    </div>   
-                                    <i class=" card-btn__like fa-regular fa-heart"></i>
-                                    <div class="card-new-hot">
-                                    <?php
-                                        if($row['SanPhamMoi']==1){ ?>
-                                            <div class="card-special card-hot">
-                                            Mới
-                                            </div>
-                                        <?php }
-                                        if($row['SanPhamHot']==1){?>
-                                            <div class="card-special card-new">
-                                                Hot
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </a>
-                        <?php }?>
-                                                
-                        <!-- <div class="card">
-                    <div class="card-img">
-                        <img src="./assets/img/pd-1.png" alt="">
-                    </div>
-                    <p class="card-title">Nike Running Shoes</p>
-                    <div class="card-price-rate">
-                        <div class="card-price">
-                            <span>18.900.000 <u>đ</u></span>
-                            <span><del>18.900.000 <u>đ</u></del></span>  
-                        </div>
-                        <div class="card-rate">
-                            <i class="fa-solid fa-star"></i>
-                            4.5
-                        </div>
-                    </div>   
-                    <i class="card-btn__like fa-regular fa-heart"></i>
-                    <div class="card-new-hot">
-                        <div class="card-special card-hot">
-                            Hot
-                        </div>
-                        <div class="card-special card-new">
-                            New
-                        </div>
-                    </div>
-                </div> -->
-
-                    <!-- <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class=" card-btn__like fa-regular fa-heart"></i>
-                    </div> -->
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                        echo showListProductString(getProductNew());
+                        ?>
                 </div>
             </div>
         </div>
@@ -292,59 +193,9 @@
                 </div>
                 <div class="product-hot__list card__list">
                     <?php
-                        $sql_spmoi= "SELECT * FROM `sanpham` WHERE `SanPhamHot` = 1 LIMIT 12";
-                        $result=mysqli_query($connect,$sql_spmoi);
-                        while($row=mysqli_fetch_array($result)){?>
-                            <a href="index.php?danhmuc=product-detail&id=<?php echo $row['MaSP'] ?>">
-                                <div class="card">
-                                    <div class="card-img">
-                                        <img src="./assets/img/<?php echo $row['HinhAnh']?>" alt="">
-                                    </div>
-                                    <p class="card-title"><?php echo $row['TenSP']?></p>
-                                    <div class="card-price-rate">
-                                        <div class="card-price">
-                                            <span><?php echo formatCurrency($row['GiaCu'])?></span>
-                                            <span><del><?php echo formatCurrency($row['GiaMoi']) ?></del></span>  
-                                        </div>
-                                        <div class="card-rate">
-                                            <i class="fa-solid fa-star"></i>
-                                            <?php echo $row['SoSaoDanhGia']?>
-                                        </div>
-                                    </div>   
-                                    <i class=" card-btn__like fa-regular fa-heart"></i>
-                                    <div class="card-new-hot">
-                                    <?php
-                                        if($row['SanPhamMoi']==1){ ?>
-                                            <div class="card-special card-hot">
-                                            Mới
-                                            </div>
-                                        <?php }
-                                        if($row['SanPhamHot']==1){?>
-                                            <div class="card-special card-new">
-                                                Hot
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </a>
-                        <?php }?>
-                    <!-- <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class=" card-btn__like fa-regular fa-heart"></i>
-                    </div> -->
+                       require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                       echo showListProductString(getProductHot());
+                    ?>
                 </div>
             </div>
         </div>
@@ -357,101 +208,31 @@
                     <a href="">PHẢN HỒI</a>
                 </span>
                 <div class="feedback__list">
-                    <div class="feedback__item">
+                    <?php
+                        $sql_feedback= "SELECT * FROM `feedback`";
+                        $result=mysqli_query($connect,$sql_feedback);
+                        while($row=mysqli_fetch_array($result)){?>
+                            <div class="feedback__item">
                         <div class="feedback__star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+                            <?php
+                                for($i=0;$i<$row['SoSao'];$i++){ ?>
+                                    <i class="fa-solid fa-star"></i>
+                            <?php } ?>
                         </div>
                         <div class="feedback__text">
-                            "Mình không thể hạnh phúc hơn với đôi giày này! Chất liệu tuyệt vời, thiết kế đẹp mắt và rất thoải mái khi mang. Mình đã nhận được nhiều lời khen từ bạn bè về sự phong cách của giày. Sẽ tiếp tục ủng hộ thương hiệu này trong tương lai!"
+                            <?php echo $row['NoiDung']; ?>
                         </div>
                         <div class="feedback__person">
-                            <img class="feedback__person-img" src="./assets/img/person_1.jpg" alt="">
+                            <img class="feedback__person-img" src="./assets/img/<?php echo $row['Image']; ?>" alt="">
                             <div class="feedback__person-name_work">
-                                <span class="feedback__person-name">DONAL TRUMP</span>
+                                <span class="feedback__person-name"><?php echo $row['TenNgFb']; ?></span>
                                 <div class="feedback__person-work">CUSTOMER @SHOES</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="feedback__item">
-                        <div class="feedback__star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
                         </div>
-                        <div class="feedback__text">
-                            "Đôi giày mới của mình đơn giản là tuyệt vời! Chúng không chỉ làm cho bàn chân mình cảm thấy thoải mái hơn mà còn giúp tôn lên phong cách riêng của mình. Chắc chắn sẽ giới thiệu cho bạn bè và gia đình mình biết về thương hiệu này."
-                        </div>
-                        <div class="feedback__person">
-                            <img class="feedback__person-img" src="./assets/img/person_2.jpg" alt="">
-                            <div class="feedback__person-name_work">
-                                <span class="feedback__person-name">BILL GATES</span>
-                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feedback__item">
-                        <div class="feedback__star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="feedback__text">
-                            "Mua giày online lần đầu tiên và thật may mắn khi chọn được đôi giày tuyệt vời như thế này! Chất liệu cao cấp và cảm giác chân thật sự thoải mái. Những ngày dạo chơi hay đi làm đều trở nên dễ dàng hơn với đôi giày này."
-                        </div>
-                        <div class="feedback__person">
-                            <img class="feedback__person-img" src="./assets/img/person_3.jpg" alt="">
-                            <div class="feedback__person-name_work">
-                                <span class="feedback__person-name">MR BEAN</span>
-                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feedback__item">
-                        <div class="feedback__star">
-                            <i class="fa-solid fa-sta feedback__star-1"></i>
-                            <i class="fa-solid fa-star feedback__star-2"></i>
-                            <i class="fa-solid fa-star feedback__star-3"></i>
-                            <i class="fa-solid fa-star feedback__star-4"></i>
-                            <i class="fa-solid fa-star feedback__star-5"></i>
-                        </div>
-                        <div class="feedback__text">
-                            "Đây là lần đầu tiên mình mua giày từ thương hiệu này và chắc chắn sẽ không phải là lần cuối. Giày không chỉ đẹp mắt mà còn rất chất lượng. Mình đã có một trải nghiệm mua sắm tốt và sẽ quay lại mua sắm ở đây nếu cần."
-                        </div>
-                        <div class="feedback__person">
-                            <img class="feedback__person-img" src="./assets/img/person_4.jpg" alt="">
-                            <div class="feedback__person-name_work">
-                                <span class="feedback__person-name">OBAMA</span>
-                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feedback__item">
-                        <div class="feedback__star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="feedback__text">
-                            "Đôi giày hoàn toàn đáng tiền! Chất liệu và thiết kế không chỉ đẹp mắt mà còn rất bền. Mình đã đi dạo một hồi dài và đôi giày vẫn giữ form tốt. Cảm ơn thương hiệu đã mang đến cho mình một sản phẩm tuyệt vời như vậy!"
-                        </div>
-                        <div class="feedback__person">
-                            <img class="feedback__person-img" src="./assets/img/person_5.jpg" alt="">
-                            <div class="feedback__person-name_work">
-                                <span class="feedback__person-name">ELON MUSK</span>
-                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
+                    
+                    
                     <!-- <i class="feedback__slick-left btn-slick__left fa-solid fa-angle-left"></i>
                     <i class="feedback__slick-right btn-slick__right fa-solid fa-angle-right"></i>    
                     -->
@@ -460,6 +241,7 @@
         </div>
     </section>
 </main>
+
 <script>
 var cards = document.querySelectorAll(".card");
 cards.forEach(function(card) {
@@ -482,4 +264,6 @@ cards.forEach(function(card) {
         }
     });
 });
+
 </script>
+

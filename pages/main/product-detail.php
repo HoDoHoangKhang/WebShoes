@@ -1,20 +1,38 @@
 <?php
-    include_once 'config/config.php';
-    $sql_sp= "SELECT * FROM `sanpham` WHERE `MaSP` = '" . $_GET['id'] . "'";
-    $result=mysqli_query($connect,$sql_sp);
-    $product=mysqli_fetch_array($result);
-    $MaSP=$product['MaSP'];
-    $TenSP=$product['MaSP'];
-    $SoSaoDanhGia=$product['MaSP'];
-    $SoLuotDanhGia=$product['MaSP'];
-    $MoTa=$product['MaSP'];
-    $HinhAnh=$product['MaSP'];
-    $SanPhamMoi=$product['MaSP'];
-    $SanPhamHot=$product['MaSP'];
-    $GiaCu=$product['MaSP'];
-    $GiaMoi=$product['MaSP'];
-    $SoLuongDaBan=$product['MaSP'];
-    $NhanHieu=$product['MaSP'];
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+
+
+    $product= new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+    $product=getProduct($_GET['id']);
+    $MaSP=$product->getMaSP();
+    $TenSP=$product->getTenSP();        
+    $SoSaoDanhGia=$product->getSoSaoDanhGia();
+    $SoLuotDanhGia=$product->getSoLuotDanhGia();
+    $MoTa=$product->getMoTa();
+    $HinhAnh=$product->getHinhAnh();
+    $SanPhamMoi=$product->getSanPhamMoi();
+    $SanPhamHot=$product->getSanPhamHot();
+    $GiaCu=$product->getGiaCu();
+    $GiaMoi=$product->getGiaMoi();
+    $SoLuongDaBan=$product->getSoLuongDaBan();
+    $MaNhanHieu=$product->getMaNhanHieu();
+    $MaLoai=$product->getMaLoai();
+
+    //Kiểm tra hàng có còn tromg kho không, còn thì trả về trua, hết thì false
+    function kiemTraKho($MaSP,$SizeSP){
+        global $connect;
+        $sql_kiemTraKho= "SELECT sanpham.MaSP, ctsizesp.SizeSP,ctsizesp.SoLuong FROM sanpham INNER JOIN ctsizesp ON ctsizesp.MaSP = sanpham.MaSP WHERE sanpham.MaSP = '" . $MaSP . "' AND ctsizesp.SizeSP ='" . $SizeSP . "' ";
+        $result_kiemTraKho=mysqli_query($connect,$sql_kiemTraKho);
+        $product_kiemTraKho=mysqli_fetch_array($result_kiemTraKho);
+        if($product_kiemTraKho['SoLuong']>0){
+            return True;
+        }
+        else{
+            return False;
+        }
+    }
 ?>
 <main>
     <section class="breadcrumb">
@@ -29,12 +47,12 @@
                 </span>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
                 <span class="breadcrumb-detail">
-                    Tên nhãn hiệu
+                    <?php echo getTenNhanHieu($MaNhanHieu)?>
                 </span>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
 
                 <span class="breadcrumb-detail">
-                    Tên sản phẩm
+                    <?php echo $TenSP ?>
                 </span>
             </div>
         </div>
@@ -49,7 +67,7 @@
                         </li> -->
                     </ul>
                     <div class="detail-show__image">
-                        <img src="./assets/img/pd-10,1.webp" alt="" class="">
+                        <img src="./assets/img/<?php echo $HinhAnh ?>" alt="" class="">
                         <div class="detail-show__image-slick">
                             <i class="detail-show__image-slick-btn fa-solid fa-angle-left"></i>
                             <i class="detail-show__image-slick-btn fa-solid fa-angle-right"></i>
@@ -59,7 +77,7 @@
                 <div class="detail-content">
                     <div class="detail-content-product">
                         <h3 class="detail-content__title">
-                            <!-- JORDAN 1 MID TUFT ORANGE -->
+                            <?php echo $TenSP ?>
                         </h3>
                         <div class="detail-content__rate-review-sold">
                             <div class="detail-content__rate">
@@ -72,41 +90,47 @@
                             </div>
                             <div class="detail-content__review">
                                 <span>
-                                    <!-- 1233 -->
+                                    <?php echo $SoLuotDanhGia ?>
                                 </span> 
-                                Reviews
+                                Đánh giá
                             </div>
                             <div class="detail-content__sold">
                                 <span>
-                                    <!-- 1233 -->
+                                    <?php echo $SoLuongDaBan ?>
                                 </span> 
-                                Sold
+                                Đã bán
                             </div>
                         </div>
                         <div class="detail-content__price">
                             <div class="detail-content__price-sale">
                                 <i  class="detail-content__price-icon fa-sharp fa-regular fa-badge-percent"></i>
                                 <i>
-                                    <!-- 45% -->
+                                    20%
                                 </i>
                             </div>
                             <span><del>
-                                <!-- 18.900.000 <u>đ</u> -->
+                                <?php echo formatCurrency($GiaCu) ?>
                             </del></span>  
                             <span>
-                                <!-- 18.900.000 <u>đ</u> -->
+                                <?php echo formatCurrency($GiaMoi) ?>
                             </span>
                         </div>
                         <div class="detail-content__size">
-                            <h4>Select Size</h4>
+                            <h4>Size</h4>
                             <ul class="detail-content__size-list">
-                                <!-- <li class="detail-content__size-item detail-content__size-item--disable">37</li> -->
-                            </ul>
-                        </div>
-                        <div class="detail-content__color">
-                            <h4>Select color</h4>
-                            <ul class="detail-content__color-list">
-                                <!-- <li class="detail-content__color-item bg-black"></li> -->
+                                <!-- Hiển thị size sản phẩm -->
+                                <?php 
+                                    $sql_sizeSp= "SELECT * FROM `sizesp`";
+                                    $result_sizeSp=mysqli_query($connect,$sql_sizeSp);
+                                    $product_sizeSp=mysqli_fetch_array($result_sizeSp);
+                                    while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
+                                            if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
+                                                <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                            <?php }
+                                            else{ ?>
+                                                <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                            <?php } 
+                                   } ?>                                
                             </ul>
                         </div>
                         <div class="detail-content__count">
@@ -123,21 +147,19 @@
                             </div>
                         </div>
                         <div class="detail-button">
-                            <a href="" class="detail-btn__buy card-btn">Buy Now</a>
-                            <a href="" class="detail-btn__cart card-btn">
+                            <a href="" class="detail-btn__buy card-btn">Mua ngay</a>
+                            <button class="detail-btn__cart card-btn ">
                                 <i class="fa-regular fa-bag-shopping"></i>
-                            </a>
-                            <a href="" class="detail-btn__like card-btn">
+                            </button>
+                            <button class="detail-btn__like card-btn">
                                 <i class="fa-regular fa-heart"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <div class="detail-content-shop">
 
                     </div>
-
                 </div>
-
             </div>
         </div>
     </section>
@@ -671,198 +693,239 @@
 
     
 </main>
-    <script src="index.js">
-        
-    </script>
-    <script>
-        function priceNew(priceOld,sale){
-            var priceAfterSale = priceOld - (priceOld * sale / 100);
-            return priceAfterSale.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-        }
-        function insertSize(size){
-            var listSize=document.querySelector(".detail-content__size-list");
-            var newLi=document.createElement("li");
-            newLi.classList.add("detail-content__size-item");
-            newLi.textContent=size;
-            listSize.appendChild(newLi);
-        }
-        function addSize(listSize){
-            var arrSize=listSize.split(",");
-            arrSize.forEach(element =>{
-                insertSize(element);
-            });
-        }
-        function insertColor(color){
-            var listColor=document.querySelector(".detail-content__color-list");
-            var newLi=document.createElement("li");
-            newLi.classList.add("detail-content__color-item");
-            switch(color){
-                case "black":
-                    newLi.classList.add("bg-black");
-                    break;
-                case "white":
-                    newLi.classList.add("bg-white");
-                    break;
-                case "blue":
-                    newLi.classList.add("bg-blue");
-                    break;
-                case "yellow":
-                    newLi.classList.add("bg-yellow");
-                    break;
-                case "green":
-                    newLi.classList.add("bg-green");
-                    break;
-                case "red":
-                    newLi.classList.add("bg-red");
-                    break;
-            }
-            listColor.appendChild(newLi);
-        }
-        function addColor(listColor){
-            var arrColor=listColor.split(",");
-            arrColor.forEach(element =>{
-                insertColor(element);
-            });
-        }
-        function rate(rate){
-            var rateNumber=document.querySelector(".detail-content__rate span");
-            rateNumber.textContent=rate;
-            var rateStar=document.querySelectorAll(".detail-content__rate-icon");
-            switch(rate){
-                case 1:
-                    rateStar[0].classList.add("cl-orange");
-                    break;
-                case 2:
-                    rateStar[0].classList.add("cl-orange");
-                    rateStar[1].classList.add("cl-orange");
-                    break;
-                case 3:
-                    rateStar[0].classList.add("cl-orange");
-                    rateStar[1].classList.add("cl-orange");
-                    rateStar[2].classList.add("cl-orange");
-                    break;
-                case 4:
-                    rateStar[0].classList.add("cl-orange");
-                    rateStar[1].classList.add("cl-orange");
-                    rateStar[2].classList.add("cl-orange");
-                    rateStar[3].classList.add("cl-orange");
-                    break;
-                case 5:
-                    rateStar[0].classList.add("cl-orange");
-                    rateStar[1].classList.add("cl-orange");
-                    rateStar[2].classList.add("cl-orange");
-                    rateStar[3].classList.add("cl-orange");
-                    rateStar[4].classList.add("cl-orange");
-                    break;
-            }
-
-        }
-        function imgList(imgList){
-            var listSlick=imgList.split(";");
-            listSlick.forEach(element => {
-                var newLi=document.createElement("li");
-                newLi.classList.add("detail-show__item");
-                var html=`
-                    <img src="./assets/img/`+element+`" alt="" class="">
-                `
-                newLi.innerHTML=html;
-                document.querySelector(".detail-show__slick").appendChild(newLi);
-            });
-        }
-        window.onload = function() {
-            // Lấy thông tin sản phẩm từ query parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const ob = urlParams.get("ob");
-            var object=JSON.parse(ob);
-            document.querySelector(".detail-content__title").textContent=object.title;
-            document.querySelector(".detail-show__image img").src="./assets/img/"+object.img;
-            document.querySelector(".detail-content__review span").textContent=object.reviews;
-            document.querySelector(".detail-content__sold span").textContent=object.sold;
-            document.querySelector(".detail-content__price-sale i:last-child").textContent=object.sale+"%";
-            document.querySelector(".detail-content__price span:nth-child(2) del").textContent=object.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-            document.querySelector(".detail-content__price span:nth-child(3)").textContent=priceNew(object.price_old,object.sale);
-            addSize(object.size);
-            addColor(object.color)
-            rate(object.rate);
-            imgList(object.list_img);
-
+<script src="index.js">
     
+</script>
+<!-- <script>
+    function priceNew(priceOld,sale){
+        var priceAfterSale = priceOld - (priceOld * sale / 100);
+        return priceAfterSale.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+    function insertSize(size){
+        var listSize=document.querySelector(".detail-content__size-list");
+        var newLi=document.createElement("li");
+        newLi.classList.add("detail-content__size-item");
+        newLi.textContent=size;
+        listSize.appendChild(newLi);
+    }
+    function addSize(listSize){
+        var arrSize=listSize.split(",");
+        arrSize.forEach(element =>{
+            insertSize(element);
+        });
+    }
+    function insertColor(color){
+        var listColor=document.querySelector(".detail-content__color-list");
+        var newLi=document.createElement("li");
+        newLi.classList.add("detail-content__color-item");
+        switch(color){
+            case "black":
+                newLi.classList.add("bg-black");
+                break;
+            case "white":
+                newLi.classList.add("bg-white");
+                break;
+            case "blue":
+                newLi.classList.add("bg-blue");
+                break;
+            case "yellow":
+                newLi.classList.add("bg-yellow");
+                break;
+            case "green":
+                newLi.classList.add("bg-green");
+                break;
+            case "red":
+                newLi.classList.add("bg-red");
+                break;
+        }
+        listColor.appendChild(newLi);
+    }
+    function addColor(listColor){
+        var arrColor=listColor.split(",");
+        arrColor.forEach(element =>{
+            insertColor(element);
+        });
+    }
+    function rate(rate){
+        var rateNumber=document.querySelector(".detail-content__rate span");
+        rateNumber.textContent=rate;
+        var rateStar=document.querySelectorAll(".detail-content__rate-icon");
+        switch(rate){
+            case 1:
+                rateStar[0].classList.add("cl-orange");
+                break;
+            case 2:
+                rateStar[0].classList.add("cl-orange");
+                rateStar[1].classList.add("cl-orange");
+                break;
+            case 3:
+                rateStar[0].classList.add("cl-orange");
+                rateStar[1].classList.add("cl-orange");
+                rateStar[2].classList.add("cl-orange");
+                break;
+            case 4:
+                rateStar[0].classList.add("cl-orange");
+                rateStar[1].classList.add("cl-orange");
+                rateStar[2].classList.add("cl-orange");
+                rateStar[3].classList.add("cl-orange");
+                break;
+            case 5:
+                rateStar[0].classList.add("cl-orange");
+                rateStar[1].classList.add("cl-orange");
+                rateStar[2].classList.add("cl-orange");
+                rateStar[3].classList.add("cl-orange");
+                rateStar[4].classList.add("cl-orange");
+                break;
+        }
 
-            //slick product-detial
-            var next=document.querySelector(".detail-show__image-slick i:nth-child(2)");
-            var back=document.querySelector(".detail-show__image-slick i:nth-child(1)");
+    }
+    function imgList(imgList){
+        var listSlick=imgList.split(";");
+        listSlick.forEach(element => {
+            var newLi=document.createElement("li");
+            newLi.classList.add("detail-show__item");
+            var html=`
+                <img src="./assets/img/`+element+`" alt="" class="">
+            `
+            newLi.innerHTML=html;
+            document.querySelector(".detail-show__slick").appendChild(newLi);
+        });
+    }
+    window.onload = function() {
+        // Lấy thông tin sản phẩm từ query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const ob = urlParams.get("ob");
+        var object=JSON.parse(ob);
+        document.querySelector(".detail-content__title").textContent=object.title;
+        document.querySelector(".detail-show__image img").src="./assets/img/"+object.img;
+        document.querySelector(".detail-content__review span").textContent=object.reviews;
+        document.querySelector(".detail-content__sold span").textContent=object.sold;
+        document.querySelector(".detail-content__price-sale i:last-child").textContent=object.sale+"%";
+        document.querySelector(".detail-content__price span:nth-child(2) del").textContent=object.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        document.querySelector(".detail-content__price span:nth-child(3)").textContent=priceNew(object.price_old,object.sale);
+        addSize(object.size);
+        addColor(object.color)
+        rate(object.rate);
+        imgList(object.list_img);
 
-            var hero=document.querySelector(".detail-show__image img");
-            var list_img=document.querySelectorAll(".detail-show__item");
-
-            var arr_img=object.list_img.split(";");
-
-            function removeBorder(){
-                list_img.forEach(element => {
-                    element.classList.remove("select-product-detail");
-                });
-            }
 
 
-            var curentIndex=0;
-            list_img[0].classList.add("select-product-detail")
-            list_img.forEach((element,index) => {
-                element.addEventListener('click',function(){
-                    removeBorder();
-                    hero.src="./assets/img/"+arr_img[index]; // trong 1 lớp có nhiều lớp con nên phải lấy ra phần tử đầu tiên
-                    curentIndex=index;
-                    element.classList.add("select-product-detail");
-                })
+        //slick product-detial
+        var next=document.querySelector(".detail-show__image-slick i:nth-child(2)");
+        var back=document.querySelector(".detail-show__image-slick i:nth-child(1)");
+
+        var hero=document.querySelector(".detail-show__image img");
+        var list_img=document.querySelectorAll(".detail-show__item");
+
+        var arr_img=object.list_img.split(";");
+
+        function removeBorder(){
+            list_img.forEach(element => {
+                element.classList.remove("select-product-detail");
             });
-            
-            next.addEventListener('click',function(){
+        }
+
+
+        var curentIndex=0;
+        list_img[0].classList.add("select-product-detail")
+        list_img.forEach((element,index) => {
+            element.addEventListener('click',function(){
                 removeBorder();
-                console.log(curentIndex);
-                if(curentIndex===arr_img.length-1){
-                    curentIndex=0;
-                    hero.src=list_img[0].children[0].src;
-                    list_img[curentIndex].classList.add("select-product-detail");
-                }
-                else{
-                    hero.src=list_img[curentIndex+1].children[0].src;
-                    list_img[curentIndex+1].classList.add("select-product-detail");
-                    curentIndex++;
-                }
-            });
-
-            back.addEventListener('click',function(){
-                removeBorder();
-                if(curentIndex===0){
-                    curentIndex=arr_img.length-1;
-                    hero.src=list_img[arr_img.length-1].children[0].src;
-                    list_img[arr_img.length-1].classList.add("select-product-detail");
-                }
-                else{
-                    hero.src=list_img[curentIndex-1].children[0].src;
-                    list_img[curentIndex-1].classList.add("select-product-detail");
-                    curentIndex--;
-                }
-            });
-            function removeSelectSize(){
-                var selectSize=document.querySelectorAll(".detail-content__size-item");
-                selectSize.forEach(element=>{
-                    element.classList.remove("detail-content__size-item--select");
-
-                });
+                hero.src="./assets/img/"+arr_img[index]; // trong 1 lớp có nhiều lớp con nên phải lấy ra phần tử đầu tiên
+                curentIndex=index;
+                element.classList.add("select-product-detail");
+            })
+        });
+        
+        next.addEventListener('click',function(){
+            removeBorder();
+            console.log(curentIndex);
+            if(curentIndex===arr_img.length-1){
+                curentIndex=0;
+                hero.src=list_img[0].children[0].src;
+                list_img[curentIndex].classList.add("select-product-detail");
             }
+            else{
+                hero.src=list_img[curentIndex+1].children[0].src;
+                list_img[curentIndex+1].classList.add("select-product-detail");
+                curentIndex++;
+            }
+        });
+
+        back.addEventListener('click',function(){
+            removeBorder();
+            if(curentIndex===0){
+                curentIndex=arr_img.length-1;
+                hero.src=list_img[arr_img.length-1].children[0].src;
+                list_img[arr_img.length-1].classList.add("select-product-detail");
+            }
+            else{
+                hero.src=list_img[curentIndex-1].children[0].src;
+                list_img[curentIndex-1].classList.add("select-product-detail");
+                curentIndex--;
+            }
+        });
+        function removeSelectSize(){
             var selectSize=document.querySelectorAll(".detail-content__size-item");
             selectSize.forEach(element=>{
-                element.addEventListener('click',function(){
-                    if(element.classList.contains("detail-content__size-item--disable")==false){
-                        removeSelectSize();
-                        element.classList.add("detail-content__size-item--select");   
-                    }
-                });
+                element.classList.remove("detail-content__size-item--select");
+
             });
+        }
+        var selectSize=document.querySelectorAll(".detail-content__size-item");
+        selectSize.forEach(element=>{
+            element.addEventListener('click',function(){
+                if(element.classList.contains("detail-content__size-item--disable")==false){
+                    removeSelectSize();
+                    element.classList.add("detail-content__size-item--select");   
+                }
+            });
+        });
 
-            //breadcrumb-detail
-            document.querySelector(".breadcrumb-detail").textContent=object.title;
+        //breadcrumb-detail
+        document.querySelector(".breadcrumb-detail").textContent=object.title;
 
 
-        };
-    </script>
+    };
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+
+console.log($$(".page-item"));
+$$(".page-item").forEach(element => {
+    element.addEventListener('click', function() {
+        removeClasslist($$(".page-item"), "page-item--select");
+        element.classList.add("page-item--select");
+    });
+});
+
+$$(".reviews_detail-filter_item").forEach(element => {
+    element.addEventListener('click', function() {
+        removeClasslist($$(".reviews_detail-filter_item"), "reviews_detail-filter_item--select");
+        element.classList.add("reviews_detail-filter_item--select");
+    });
+});
+
+// $(".detail-content__count-minus").addEventListener('click', function(){
+//   console.log($(".detail-content__count-number").innerHTML);
+// });
+
+
+
+//-------------------------------------SHELL
+//check box
+function selectShell() {
+    console.log("?")
+    $$(".shell-check_box").forEach(element => {
+        element.addEventListener('click', function() {
+            console.log("vppafs")
+            element.classList.toggle("shell-check_box--select");
+            element.children[0].classList.toggle("block")
+        });
+    });
+}
+selectShell();
+$(".header__action-cart").addEventListener('click', function() {
+    window.location.href = "./shell.html";
+});
+
+</script> -->

@@ -1153,16 +1153,18 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 150px;
 }
+
 .sort-price:hover .sort-price__list{
-    display: block;
 }
 .sort-price__title{
     border-radius: 5px;
     border: 1px solid gray;
     padding: 1rem;
     display: flex;
-    width: 25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1177,16 +1179,19 @@
     background-color: #ffffff;
     z-index: 1;
     list-style: none;
-    padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0px 0px 2px var(--shadow-color);
+    overflow: hidden;
 }
 .sort-price__list > li{
+    box-sizing: border-box;
     cursor: pointer;
     padding: 0.5rem 0;
+    padding: 1rem;
 }
 .sort-price__list li:hover{
-    color: var(--A-color);;
+    background-color: #aaa9a9;
+    color: white;
 }
 .hidden-filter-icon{
     padding-left: 0.5rem;
@@ -1243,7 +1248,6 @@
     flex: 1;
     flex-wrap: wrap;
     gap: 1rem;
-
 }
 .tagret-item{
     font-size: 1.6rem;
@@ -1537,6 +1541,7 @@
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
+    cursor: pointer;
     justify-content: center;
 }
 .detail-button{
@@ -1555,6 +1560,7 @@
     padding: 1.4rem;
     font-size: 2rem;
     color: var(--black-color);
+    cursor: pointer;
 }
 .detail-btn__like{
     border: 1px solid #807e7e;
@@ -2565,9 +2571,109 @@
     }
 }
 
-
-
 .select-input-mobile{
     color: white;
     background-color: #3da8f566;
 }
+.detail-btn__cart{
+    cursor: pointer;
+}
+
+/* Range Slider */
+ /* Import Google Font - Poppins */
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+ ::selection{
+   color: #fff;
+   background: #17A2B8;
+ }
+ .filterPrice{
+   background: #fff;
+   border-radius: 10px;
+   padding: 10px;
+   box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+   font-size: 16px;
+   padding: 10px;
+ }
+ header h2{
+   font-size: 24px;
+   font-weight: 600;
+ }
+ header p{
+   margin-top: 5px;
+   font-size: 16px;
+ }
+ .price-input{
+   width: 100%;
+   display: flex;
+ }
+ .price-input .field{
+   display: flex;
+   width: 100%;
+   align-items: center;
+ }
+ .field input{
+   width: 100%;
+   height: 100%;
+   outline: none;
+   border-radius: 5px;
+   text-align: center;
+   border: 1px solid #999;
+   -moz-appearance: textfield;
+ }
+ input[type="number"]::-webkit-outer-spin-button,
+ input[type="number"]::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+ }
+ .price-input .separator{
+   display: flex;
+   font-size: 19px;
+   align-items: center;
+   justify-content: center;
+ }
+ .slider{
+    margin-top: 20px;
+   height: 5px;
+   position: relative;
+   background: #ddd;
+   border-radius: 5px;
+ }
+ .slider .progress{
+   height: 100%;
+   left: 25%;
+   right: 25%;
+   position: absolute;
+   border-radius: 5px;
+   background: #17A2B8;
+ }
+ .range-input{
+   position: relative;
+ }
+ .range-input input{
+   position: absolute;
+   width: 100%;
+   height: 5px;
+   top: -5px;
+   background: none;
+   pointer-events: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+ }
+ input[type="range"]::-webkit-slider-thumb{
+   height: 17px;
+   width: 17px;
+   border-radius: 50%;
+   background: #17A2B8;
+   pointer-events: auto;
+   -webkit-appearance: none;
+   box-shadow: 0 0 6px rgba(0,0,0,0.05);
+ }
+ input[type="range"]::-moz-range-thumb{
+   height: 17px;
+   width: 17px;
+   border: none;
+   border-radius: 50%;
+   background: #17A2B8;
+   pointer-events: auto;
+   -moz-appearance: none;
+   box-shadow: 0 0 6px rgba(0,0,0,0.05);
+ }
