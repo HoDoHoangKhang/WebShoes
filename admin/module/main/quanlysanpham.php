@@ -18,18 +18,35 @@
         <div class="table-func">
             <div class="filter-container">
                 <select id="filterSelect">
-                    <option value="">Nhãn hiệu</option>
-                    <option value="">Nike</option>
-                    <option value="">Adidas</option>
-                    <option value="">Vans</option>
+                    <?php
+                    require '../config/config.php';
+                    // Lấy dữ liệu từ bảng nhanhieu
+                    $sql = "SELECT MaNhanHieu, TenNhanHieu FROM nhanhieu";
+                    $result = $connect->query($sql);
+                    if ($result->num_rows > 0) {
+                      while ($row = $result->fetch_assoc()) {
+                          echo '<option value="' . $row["MaNhanHieu"] . '">' . $row["TenNhanHieu"] . '</option>';
+                      }
+                    } else {
+                      echo "<option value=''>Không có dữ liệu</option>";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="filter-container">
                 <select id="filterSelect">
-                    <option value="">Danh mục</option>
-                    <option value="">Gym</option>
-                    <option value="">Chạy bộ</option>
-                    <option value="">Bóng rỗ</option>
+                    <?php 
+                    // Lấy dữ liệu từ bảng loaisp
+                    $sql = "SELECT MaLoai, TenLoai FROM loaisp";
+                    $result = $connect->query($sql);
+                    if ($result->num_rows > 0) {
+                      while ($row = $result->fetch_assoc()) {
+                          echo '<option value="' . $row["MaLoai"] . '">' . $row["TenLoai"] . '</option>';
+                      }
+                    } else {
+                      echo "<option value=''>Không có dữ liệu</option>";
+                    }
+                    ?>
                 </select>
             </div>
             <button type="button" class="btn btn-primary Add-SP-button" data-bs-toggle="modal" data-bs-target="#themsanpham">
@@ -48,12 +65,10 @@
                 <th>giá bán</th>
                 <th>Số lượng</th>
                 <th>Hành động</th>
-
             </tr>
         </thead>
         <tbody>
             <?php 
-                require '../config/config.php';
                 $sql_shoes = "SELECT * FROM `sanpham`";
                 $result_shoes = $connect->query($sql_shoes);
                 if ($result_shoes->num_rows > 0) {
@@ -413,97 +428,61 @@ $(document).ready(function(){
       </div>
       <div class="modal-body">
         <form id="fix_data_product">
-          <table class="table">
-            <tr>
-              <td>Mã SP:</td>
-              <td><input id="MaSPid" type="number" name="MaSP" value=""></td>
-            </tr>
-            <tr>
-              <td>Tên Sản Phẩm:</td>
-              <td><input type="text" name="TenSP"></td>
-            </tr>
-            <tr>
-              <td>Mô Tả:</td>
-              <td><textarea name="MoTa"></textarea></td>
-            </tr>
-            <tr>
-              <td>Số sao đánh giá:</td>
-              <td><input type="number" name="saoDG"></td>
-            </tr>
-            <tr>
-              <td>Số sao lượt đánh giá:</td>
-              <td><input type="number" name="luotDG"></td>
-            </tr>
-            <tr>
-              <td>Sản phẩm mới:</td>
-              <td><input type="checkbox" name="SanPhamMoi"></td>
-            </tr>
-            <tr>
-              <td>Sản phẩm Hot:</td>
-              <td><input type="checkbox" name="SanPhamHot"></td>
-            </tr>
-            <tr>
-              <td>Hình Ảnh:</td>
-              <td><input type="file" name="HinhSanPham" id="hinhanh"></td>
-            </tr>
-            <tr>
-              <td>Giá cũ:</td>
-              <td><input type="number" name="GiaCu"></td>
-            </tr>
-            <tr>
-              <td>Giá Mới:</td>
-              <td><input type="number" name="GiaMoi"></td>
-            </tr>
-            <tr>
-              <td>Số lượng đã bán:</td>
-              <td><input type="number" name="SoLuongDaBan"></td>
-            </tr>
-            <tr>
-              <td>Mã Nhãn Hiệu:</td>
-              <td>
-                <select name="MaNhanHieu">
-                  <?php
-                  // Lấy dữ liệu từ bảng nhanhieu
-                  $sql = "SELECT MaNhanHieu, TenNhanHieu FROM nhanhieu";
-                  $result = $connect->query($sql);
-                  if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-                          echo '<option value="' . $row["MaNhanHieu"] . '">' . $row["TenNhanHieu"] . '</option>';
-                      }
-                  } else {
-                      echo "<option value=''>Không có dữ liệu</option>";
-                  }
-                  ?>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Mã Loại:</td>
-              <td>
-                <select name="MaLoai">
-                  <?php 
-                  // Lấy dữ liệu từ bảng loaisp
-                  $sql = "SELECT MaLoai, TenLoai FROM loaisp";
-                  $result = $connect->query($sql);
-                  if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-                          echo '<option value="' . $row["MaLoai"] . '">' . $row["TenLoai"] . '</option>';
-                      }
-                  } else {
-                      echo "<option value=''>Không có dữ liệu</option>";
-                  }
-                  ?>
-                </select>
-              </td>
-            </tr>
-          </table>
+          
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
-        <button type="button" class="btn btn-primary" id="resetForm">Clear</button>
+        <button type="submit" class="btn btn-primary" id="submitFormforfix">Lưu</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('.fix-sp-button').click(function(){
+            var productId = $(this).attr('data-product-id');
+            $.ajax({
+                url: 'module/main/get_product_info_for_fix_info.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response){
+                    $('#fix_data_product').html(response);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+    $('#submitFormforfix').on('click', function(e){
+        e.preventDefault(); // Ngăn chặn gửi form thông qua trình duyệt
+
+        var formData = new FormData($('#fix_data_product')[0]);
+        // Lấy dữ liệu từ input file và thêm vào formData
+        var hinhanh = $('#hinhanh2')[0].files[0];
+        if (hinhanh == null)
+            formData.append('hinhanh2', new Blob());
+        else 
+            formData.append('hinhanh2', hinhanh);
+        console.log(formData);
+        // Gửi dữ liệu bằng AJAX
+        $.ajax({
+            type: 'POST',
+            url: 'module/main/fix_sanpham.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
+            data: formData,
+            processData: false, // Không xử lý dữ liệu
+            contentType: false, // Không thiết lập kiểu dữ liệu
+            success: function(response){
+                $('#responsfixed').html(response);
+            },
+            error: function(xhr, status, error){
+                console.error(error); // Hiển thị lỗi nếu có
+            }
+        });
+
+    });
+});
+</script>
