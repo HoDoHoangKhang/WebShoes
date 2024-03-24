@@ -260,7 +260,10 @@ $(document).ready(function(){
 
         // Lấy dữ liệu từ input file và thêm vào formData
         var hinhanh = $('#hinhanh')[0].files[0];
-        formData.append('hinhanh', hinhanh);
+        if (hinhanh == null)
+            formData.append('hinhanh', new Blob());
+        else 
+            formData.append('hinhanh', hinhanh);
 
         console.log(formData);
 
@@ -316,6 +319,7 @@ $(document).ready(function(){
     $('.view-SP-button').click(function(event){
         event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
         var productId = $(this).attr('data-product-id');
+        console.log(productId);
         $.ajax({
             url: 'module/main/get_product_info.php',
             type: 'POST',
@@ -459,7 +463,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('#submitFormforfix').on('click', function(e){
         e.preventDefault(); // Ngăn chặn gửi form thông qua trình duyệt
-
         var formData = new FormData($('#fix_data_product')[0]);
         // Lấy dữ liệu từ input file và thêm vào formData
         var hinhanh = $('#hinhanh2')[0].files[0];
@@ -482,7 +485,6 @@ $(document).ready(function(){
                 console.error(error); // Hiển thị lỗi nếu có
             }
         });
-
     });
 });
 </script>
