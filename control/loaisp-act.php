@@ -1,22 +1,31 @@
 <?php
 
-function getTenLoai($maLoai) {
-    // Thực hiện truy vấn để lấy tên loại từ mã loại
-    // Ví dụ: SELECT ten_loai FROM loai_san_pham WHERE ma_loai = $maLoai
+require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/DTB.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/loaisp.php');
 
-    // Giả sử kết quả truy vấn trả về là một mảng chứa thông tin loại sản phẩm
-    $loaiSanPham = [
-        'ma_loai' => $maLoai,
-        'ten_loai' => 'Tên loại sản phẩm'
-    ];
-
-    // Trả về tên loại
-    return $loaiSanPham['ten_loai'];
+function getLoaiSanPhamList(){
+    $db = new DTB();
+    $kq = mysqli_query($db->getConnection(), "SELECT * FROM loaisp");
+    $loaiSpArr = array();
+    while ($row = mysqli_fetch_assoc($kq)) {
+        $loaiSP = new LoaiSP(
+            $row['MaLoai'],
+            $row['TenLoai']
+        );
+        $loaiSpArr[] = $loaiSP;
+    }
+    $db->disconnect();
+    return $loaiSpArr;
 }
-
-// Sử dụng hàm để lấy tên loại
-$maLoai = 'ABC123';
-$tenLoai = getTenLoai($maLoai);
-echo $tenLoai;
-
+function showDanhMuc(){
+    $danhMucArr = getLoaiSanPhamList();
+    foreach($danhMucArr as $danhMuc){
+        echo "
+        <li class='filter__list-item filter__list-item-text'>
+            <input class='inputFilter danhmucFilter' type='checkbox' name='' id='' value='".$danhMuc->getTenLoai()."'>
+            <span>".$danhMuc->getTenLoai()."</span>
+        </li>
+        ";
+    }
+}
 ?>

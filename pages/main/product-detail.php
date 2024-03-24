@@ -34,7 +34,10 @@
         }
     }
 ?>
-<main>
+<main style="position: relative;">
+    <div class="notification">
+
+    </div>
     <section class="breadcrumb">
         <div class="container">
             <div class="breadcrumb-main">
@@ -76,7 +79,7 @@
                 </div>
                 <div class="detail-content">
                     <div class="detail-content-product">
-                        <h3 class="detail-content__title">
+                        <h3 class="detail-content__title" style="font-size: 25px; margin-bottom: 10px;">
                             <?php echo $TenSP ?>
                         </h3>
                         <div class="detail-content__rate-review-sold">
@@ -116,7 +119,13 @@
                             </span>
                         </div>
                         <div class="detail-content__size">
-                            <h4>Size</h4>
+                            <div class="titleSize">
+                                <h4>Size</h4>
+                                <div class="size-warning">
+                                    <i class="fa-solid fa-exclamation-circle"></i>
+                                    <p>Vui lòng chọn size</p>
+                                </div>
+                            </div>
                             <ul class="detail-content__size-list">
                                 <!-- Hiển thị size sản phẩm -->
                                 <?php 
@@ -133,21 +142,32 @@
                                    } ?>                                
                             </ul>
                         </div>
-                        <div class="detail-content__count">
-                            <div class="detail-content__count-box">
-                                <div class="detail-content__count-minus detail-content__count-btn">
-                                    -
+                        <div class="detail-content__quanlity">
+                            <div class="detail-content__title" style="padding-bottom: 10px; margin: 0;">
+                                <h4 style="font-size: 20px;">Số lượng</h4>
+                                <div class="detail-content__instock">
+                                    còn lại: <span class="detail-content__instock-value">1000</span>
                                 </div>
-                                <div class="detail-content__count-number">
-                                    1
+                                <div class="stock-warning">
+                                    <i class="fa-solid fa-exclamation-circle"></i>
+                                    <p>Số lượng trong kho không đủ</p>
                                 </div>
-                                <div class="detail-content__count-plus  detail-content__count-btn">
-                                    +
+                            </div>
+                            <div class="detail-content__count">
+                                <input type="number" id="quantity" value="1">
+                                <div class="detail-content__count--quanlity">
+                                    <button onclick="increaseQuantity()">
+                                        <i class="fa-solid fa-caret-up"></i>
+                                    </button>
+                                    <button onclick="decreaseQuantity()">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="detail-button">
-                            <a href="" class="detail-btn__buy card-btn">Mua ngay</a>
+                            <div  class="detail-btn__buy card-btn">Mua ngay</div>
                             <button class="detail-btn__cart card-btn ">
                                 <i class="fa-regular fa-bag-shopping"></i>
                             </button>
@@ -695,6 +715,87 @@
 </main>
 <script src="index.js">
     
+</script>
+<script>
+    $(document).ready(function(){
+        var btnAddCart=document.querySelector(".detail-btn__cart");
+        btnAddCart.addEventListener('click',function(){
+            if(getSize()==0){// chưa chọn size
+                var sizeWarning=document.querySelector(".size-warning");
+                sizeWarning.style.opacity=1;
+            }
+            else{   //đã chọn size
+                $.ajax({
+                    url: "./control/ajax_action.php",
+                    method: "POST",
+                    data: {
+                        MaSP: parseInt(<?php echo $MaSP ?>),
+                        SizeSP: getSize(),
+                        SoLuong: getQuantity(),
+                        action: "themVaoGioHang"
+                    },
+                    success: function(data){//Nếu = 0 thì số luog trong kho không đủ
+                        if(data==0){
+                            var stock=document.querySelector(".stock-warning");
+                            stock.style.opacity=1;
+                        }
+                        else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
+                            creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
+                            var quanlityCart=document.querySelector(".header__action-cart-count");
+                            if(data>0){
+                                quanlityCart.style.display="block";
+                                quanlityCart.innerHTML=data;
+                            }
+                        }
+                    }
+                });
+            }
+        })
+        function getSize(){
+            var valueSize=0;
+            var size=document.querySelectorAll(".detail-content__size-item");
+            size.forEach(element => {
+                if(element.classList.contains("detail-content__size-item--select")){
+                    valueSize=element.textContent;
+                }
+            });
+            return parseInt(valueSize);
+        }
+        function getQuantity(){
+            return parseInt(document.querySelector("#quantity").value);
+        }
+        var selectSize=document.querySelectorAll(".detail-content__size-item");
+        selectSize.forEach(element=>{
+            element.addEventListener('click',function(){
+                var sizeWarning=document.querySelector(".size-warning");
+                sizeWarning.style.opacity=0;
+                var stock=document.querySelector(".detail-content__instock");
+                stock.style.display="block";
+                $.ajax({
+                    url: "./control/ajax_action.php",
+                    method: "POST",
+                    data: {
+                        MaSP: parseInt(<?php echo $MaSP ?>),
+                        SizeSP: parseInt(element.textContent),
+                        action: "kiemTraKho"
+                    },
+                    success: function(data){
+                        var valueStock=document.querySelector(".detail-content__instock-value");
+                        valueStock.textContent=data;
+                    }
+                });
+            });
+        });
+        var inputQuantity=document.querySelector("#quantity");
+        inputQuantity.addEventListener('change',function(){
+            var stock=document.querySelector(".stock-warning");
+            stock.style.opacity=0;
+            if(inputQuantity.value<0) inputQuantity.value=1;
+        });
+        
+
+    });
+
 </script>
 <!-- <script>
     function priceNew(priceOld,sale){

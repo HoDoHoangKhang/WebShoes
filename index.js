@@ -197,33 +197,25 @@ function new_hot(new_hot) {
         showListShoes();
     }
 }
-var btn_new = document.querySelector(".sort-new");
-var btn_hot = document.querySelector(".sort-hot");
-if (btn_new) {
-    btn_new.addEventListener('click', function() {
-        btn_hot.classList.remove("btn-sort--click") // Xóa màu của nút Hot
-        this.classList.toggle("btn-sort--click");
-        if (this.classList.contains("btn-sort--click")) {
-            hiddenListShoes();
-            sortNewHot("new");
-        } else {
-            showListShoes();
-        }
-    });
-}
-if (btn_hot) {
-    btn_hot.addEventListener('click', function() {
-        btn_new.classList.remove("btn-sort--click") // Xóa màu của nút New
-        this.classList.toggle("btn-sort--click");
-        if (this.classList.contains("btn-sort--click")) {
-            hiddenListShoes();
-            sortNewHot("hot");
-        } else {
-            showListShoes();
-        }
-    });
+// var btn_new = document.querySelector(".sort-new");
+// var btn_hot = document.querySelector(".sort-hot");
+// if (btn_new) {
+//     btn_new.addEventListener('click', function() {
+//         this.classList.toggle("btn-sort--click");
+//     });
+// }
+// if (btn_hot) {
+//     btn_hot.addEventListener('click', function() {
+//         this.classList.toggle("btn-sort--click");
+//     });
 
-}
+// }
+var btnNewHot=document.querySelectorAll(".btn-sort");
+btnNewHot.forEach(element=>{
+    element.addEventListener('click',function(){
+        element.classList.toggle("btn-sort--click");
+    });
+});
 
 //----------------------------------------------------------Sort-Price
 function setTextFirst() {
@@ -299,39 +291,6 @@ function insertTarget(keyWords) {
     if (target) {
         target.appendChild(newDiv);
     }
-}
-var list_tag;
-var search = document.querySelector(".header__action-search-input");
-if (search) {
-    search.addEventListener('keydown', function(e) {
-        list_tag = document.querySelectorAll(".tagret-item");
-        if (e.which == 13) {
-            var flag = true;
-            list_tag.forEach((element) => {
-                if (this.value == element.children[0].textContent) {
-                    flag = false;
-                    this.value = ""
-                }
-            });
-            if (this.value != "" && flag == true) {
-                console.log(window.location.pathname);
-                if (window.location.pathname === "/product.html") {
-
-                    insertTarget(e.target.value);
-
-                    //reset value input
-                    this.value = ""
-                } else {
-                    e.stopPropagation(); //Ngăn chặn nổi bọt
-                    var url =
-                        `product.html?tagret=${encodeURIComponent(e.target.value)}`;
-                    window.location.href = url;
-
-
-                }
-            }
-        }
-    });
 }
 
 //----------------------------------------------------------On-Off Filter
@@ -683,3 +642,114 @@ function removeClasslist(list, str) {
         
 //     });
 // });
+const rangeInput = document.querySelectorAll(".range-input input"),
+priceInput = document.querySelectorAll(".price-input input"),
+range = document.querySelector(".slider .progress");
+let priceGap = 1000;
+
+priceInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        
+        if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+            if(e.target.className === "input-min"){
+                rangeInput[0].value = minPrice;
+                range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+            }else{
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+            }
+        }
+    });
+});
+
+rangeInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+        if((maxVal - minVal) < priceGap){
+            if(e.target.className === "range-min"){
+                rangeInput[0].value = maxVal - priceGap
+            }else{
+                rangeInput[1].value = minVal + priceGap;
+            }
+        }else{
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+    });
+});
+
+
+//var list_tag;
+var search = document.querySelector(".header__action-search-input");
+if (search) {
+    search.addEventListener('keydown', function(e) {
+        list_tag = document.querySelectorAll(".tagret-item");
+        if (e.which == 13) {
+            e.stopPropagation(); //Ngăn chặn nổi bọt
+            var url =`index.php?danhmuc=products`;
+            window.location.href = url;
+            console.log("search");
+        }
+    });
+}
+
+
+// product-detail select size
+function removeSelectSize(){
+    var selectSize=document.querySelectorAll(".detail-content__size-item");
+    selectSize.forEach(element=>{
+        element.classList.remove("detail-content__size-item--select");
+
+    });
+}
+var selectSize=document.querySelectorAll(".detail-content__size-item");
+selectSize.forEach(element=>{
+    element.addEventListener('click',function(){
+        if(element.classList.contains("detail-content__size-item--disable")==false){
+            removeSelectSize();
+            element.classList.add("detail-content__size-item--select");   
+        }
+    });
+});
+//product-detail quanlity
+function increaseQuantity() {
+    var inputElement = document.getElementById("quantity");
+    var currentValue = parseInt(inputElement.value);
+    inputElement.value = currentValue + 1;
+    var stock=document.querySelector(".stock-warning");
+    stock.style.opacity=0;
+}
+
+function decreaseQuantity() {
+    var inputElement = document.getElementById("quantity");
+    var currentValue = parseInt(inputElement.value);
+    if (currentValue > 1) {
+        inputElement.value = currentValue - 1;
+    }
+    var stock=document.querySelector(".stock-warning");
+    stock.style.opacity=0;
+}
+function creatToast(status,mess,icon,end_color){
+    var newDiv= document.createElement("div");
+    newDiv.classList.add("item",status);
+    newDiv.innerHTML=`
+        <div class="item-main">
+            <i class="item-icon `+icon+`"></i>
+            <span class="item-text">`+mess+`</span>
+        </div>
+        <div class="item-end `+end_color+`">
+        </div>`
+
+    document.querySelector(".notification").appendChild(newDiv);
+    newDiv.classList.add("chuyendong")
+  
+    setTimeout(() => {
+        newDiv.classList.add("hidden");
+    }, 1000);
+}

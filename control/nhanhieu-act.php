@@ -25,4 +25,15 @@ function getTenNhanHieu($id){
     $db->disconnect();
     return $tenNhanHieu;
 }
+function showNhanHieu(){
+    $nhanHieuArr = getNhanHieuList();
+    foreach($nhanHieuArr as $nhanHieu){
+        echo "
+        <li class='filter__list-item filter__list-item-text'>
+            <input class='inputFilter nhanhieuFilter' type='checkbox' name='' id='' value='".$nhanHieu->getTenNhanHieu()."'>
+            <span>".$nhanHieu->getTenNhanHieu()."</span>
+        </li>
+        ";
+    }
+}
 ?>

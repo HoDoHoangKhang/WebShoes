@@ -19,6 +19,7 @@
             default:
                 include_once 'pages/main/home.php';
                 break;
+            
             case 'product-detail':
                 include_once 'pages/main/product-detail.php';
                 break;
