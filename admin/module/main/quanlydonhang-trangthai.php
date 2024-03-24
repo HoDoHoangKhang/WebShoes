@@ -1,7 +1,7 @@
 <?php
 $id = $_GET['id'];
  // Kết nối cơ sở dữ liệu
- $conn = mysqli_connect("localhost", "root", "", "web_2");
+ $conn = mysqli_connect("localhost", "root", "", "shoestore");
 // Lấy danh sách đơn hàng
 $sql = "SELECT TinhTrangDH FROM phieuxuat WHERE MaPX=$id";
 $result = mysqli_query($conn, $sql);

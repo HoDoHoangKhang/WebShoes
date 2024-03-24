@@ -1,6 +1,6 @@
 <?php
 // Kết nối với cơ sở dữ liệu
-$conn = mysqli_connect("localhost", "root", "", "web_2");  
+$conn = mysqli_connect("localhost", "root", "", "shoestore");  
   //lấy thông tin sản phẩm,khách hàng,nhân viên
   $sql="SELECT
   px.MaPX,

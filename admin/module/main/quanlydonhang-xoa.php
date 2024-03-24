@@ -1,7 +1,7 @@
 <?php
 
 // Kết nối cơ sở dữ liệu
-$conn = mysqli_connect("localhost", "root", "", "web_2");
+$conn = mysqli_connect("localhost", "root", "", "shoestore");
 
 // Lấy ID từ URL
 $id = $_GET['id'];
