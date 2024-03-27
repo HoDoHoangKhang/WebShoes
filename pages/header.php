@@ -1,3 +1,5 @@
+<?php session_start();
+ ?>
 <header class="header">
     <div class="container">
         <div class="header-main">
@@ -83,10 +85,12 @@
                 <a href="" class="header__action-like">
                     <i class="header__action-like-icon fa-regular fa-heart"></i>
                 </a>
-                <div href="" class="header__action-cart">
-                    <i class="header__action-cart-icon fa-regular fa-basket-shopping-simple" style="color: #000000;"></i>
+                <div class="header__action-cart">
+                    <a href="index.php?danhmuc=shell" class="header__action-cart-icon fa-regular fa-basket-shopping-simple" style="color: #000000;"></a>
                     <span class="header__action-cart-count">
-                        12
+                        <?php 
+                            // echo $_SESSION['voHang'];
+                        ?>
                     </span>
                     <div class="header__action-cart-hover">
                         <div class="header__action-cart-title">Sản phẩm mới thêm</div>
@@ -199,6 +203,5 @@
             <input type="text" class="search_mobile-input" placeholder="Search">
             <i class="search_mobile-input-icon fa-solid fa-magnifying-glass"></i>
         </div>
-        
     </div>
 </header>

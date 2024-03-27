@@ -32,6 +32,10 @@
                 case 'caidatwebsite':
                     require_once 'module/main/caidatwebsite.php';
                     break;   
+                case 'chitietdonhang':                     
+                    require_once 'module/main/chitietdonhang.php';
+                        
+                    break;  
                 default:
                     require_once 'module/main/dashboard.php';
                 break;
