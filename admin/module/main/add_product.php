@@ -71,19 +71,23 @@ if ($uploadOk == 1) {
 	if ($connect->query($sql) === TRUE) {
 	    echo "Thêm dữ liệu thành công!!!";
 	} else {
-	    echo "Lỗi: " . $sql . "<br>" . $connect->error;
+		echo "Thêm Không thành công!!!";
 	}
 }
-if ($uploadOk == 0) {
-	$tenhinh = $_FILES['hinhanh']["name"];
-	$sql = "INSERT INTO sanpham (MaSP, TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
-	VALUES ($maSP, '$tenSP', 0, 0, '$moTa', 'NULL', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
 
-	// Thực thi câu truy vấn và kiểm tra kết quả
-	if ($connect->query($sql) === TRUE) {
-	    echo "Thêm dữ liệu thành công!!!";
-	} else {
-	    echo "Lỗi: " . $sql . "<br>" . $connect->error;
+if ($uploadOk == 0) { // không có ảnh
+	try {
+		$tenhinh = $_FILES['hinhanh']["name"];
+		$sql = "INSERT INTO sanpham (MaSP, TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
+		VALUES ($maSP, '$tenSP', 0, 0, '$moTa', 'NULL', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
+
+		// Thực thi câu truy vấn và kiểm tra kết quả
+		if ($connect->query($sql) === TRUE) {
+		    echo "Thêm dữ liệu thành công!!!";
+		}
+	} catch (Exception $e) {
+		echo "<br><strong>Thêm Không thành công!!! </strong>";
 	}
+	
 }
 ?>

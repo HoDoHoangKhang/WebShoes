@@ -233,7 +233,7 @@
     </div>
   </div>
 </div>
-<script>
+<script> // gọi ra khi cần clear form 
     document.getElementById('resetForm').addEventListener('click', function() {
 
     var MaSPField = document.getElementById('MaSPid');
@@ -246,6 +246,7 @@
         input.value = '';
     });
 
+    document.getElementById("responsepp").innerHTML = "";
     // Tăng giá trị của trường MaSP lên 1
     var currentMaSP = parseInt(socuaMaSp);
     MaSPField.value = currentMaSP + 1;
