@@ -73,6 +73,8 @@
                 $result_shoes = $connect->query($sql_shoes);
                 if ($result_shoes->num_rows > 0) {
                     while ($row = $result_shoes->fetch_assoc()) {
+                        if ($row['hide'] == 0)
+                            continue; 
                         // Câu truy vấn SQL
                         $sql = "SELECT TenNhanHieu FROM `nhanhieu` WHERE MaNhanHieu = " . $row["MaNhanHieu"];
                         // Thực thi truy vấn
@@ -105,21 +107,18 @@
                                 <td>' . $tennhanhieu . '</td>
                                 <td>' . $formatted_number = number_format($row["GiaMoi"], 0, ',', '.') .' VND</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluong" data-product-id="' . $row["MaSP"] . '">
+                                    <button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluong" id="' .$row["MaSP"] . '">
                                     ' . $tongSL . '
                                     </button>
                                 </td>
                                 <td>
-                                    <div class="dropdown" >
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                                            <li><button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" data-product-id="' . $row["MaSP"] . '">
+                                    <div class="dropdown">
+                                            <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
                                                 Chi tiết
-                                                </button></li>
-                                            <li><button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham" data-product-id="' . $row["MaSP"] . '">Sửa</button></li>
-                                            <li><button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham" data-product-id="' . $row["MaSP"] . '">Xóa</button></li>
-                                        </ul>
+                                                </button>
+                                            <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="' .$row["MaSP"] . '">Sửa</button>
+                                            <button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>
+                                        
                                     </div>
                                 </td>
                             </tr>';
@@ -136,7 +135,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <!-- Modal thêm sản phẩm -->
-<div class="modal fade" id="themsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="themsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 800px;">
   <div class="modal-dialog">
     <div class="modal-content" style="">
       <div class="modal-header">
@@ -146,22 +145,7 @@
       <div class="modal-body">
         <p id="responsepp"></p>
         <form id="new_data_product">
-          <table class="table">
-            <tr>
-              <td>Mã SP:</td>
-                <?php 
-                $sql = "SELECT COUNT(*) AS total FROM sanpham";
-                $result = $connect->query($sql);
-
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $tongSoSanPham = $row["total"];
-                } else {
-                    $tongSoSanPham = 0;
-                }
-                echo '<td><input id="MaSPid" type="number" name="MaSP" value="' .$tongSoSanPham + 1 .'"></td>';
-               ?>
-            </tr>
+          <table>
             <tr>
               <td>Tên Sản Phẩm:</td>
               <td><input type="text" name="TenSP"></td>
@@ -233,11 +217,8 @@
     </div>
   </div>
 </div>
-<script> // gọi ra khi cần clear form 
+<script> 
     document.getElementById('resetForm').addEventListener('click', function() {
-
-    var MaSPField = document.getElementById('MaSPid');
-    var socuaMaSp = MaSPField.value;
     // Lấy danh sách các trường input
     var inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
 
@@ -247,13 +228,11 @@
     });
 
     document.getElementById("responsepp").innerHTML = "";
-    // Tăng giá trị của trường MaSP lên 1
-    var currentMaSP = parseInt(socuaMaSp);
-    MaSPField.value = currentMaSP + 1;
 });
 </script>
 <script>
 $(document).ready(function(){
+
     $('#submitForm').on('click', function(e){
         e.preventDefault(); // Ngăn chặn gửi form thông qua trình duyệt
 
@@ -289,7 +268,7 @@ $(document).ready(function(){
 
 
 <!-- Modal chi tiết sản phẩm -->
-<div class="modal fade" id="chitietsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="chitietsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog">
     <div class="modal-content"  style="">
       <div class="modal-header">
@@ -317,10 +296,9 @@ $(document).ready(function(){
 </div>
 <script>
 $(document).ready(function(){
-    $('.view-SP-button').click(function(event){
-        event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-        var productId = $(this).attr('data-product-id');
-        console.log(productId);
+    $('table').on('click', 'td' , function (event) {
+        var productId = $('button', this).attr('id');
+        // console.log(productId);
         $.ajax({
             url: 'module/main/get_product_info.php',
             type: 'POST',
@@ -329,7 +307,6 @@ $(document).ready(function(){
                 $('#list_data_product').html(response);
             }
         });
-        
     });
 });
 </script>
@@ -363,8 +340,8 @@ $(document).ready(function(){
 </div>
 <script>
 $(document).ready(function(){
-    $('.view-size-button').click(function(){
-        var productId = $(this).attr('data-product-id');
+    $('table').on('click', 'td' , function (event) {
+        var productId = $('button', this).attr('id');
         $.ajax({
             url: 'module/main/get_list_size_and_number.php',
             type: 'POST',
@@ -394,13 +371,11 @@ $(document).ready(function(){
   </div>
 </div>
 <script>
-    $(document).ready(function(){
-        $('.xoa-sp-button').click(function(){
-            var productId = $(this).attr('data-product-id');
-            var pElement = document.getElementById("idsp");
-            // Thay đổi nội dung bằng thuộc tính textContent
-            pElement.textContent = productId;
-        });
+    $('table').on('click', 'td' , function (event) {
+        var productId = $('button', this).attr('id');
+        var pElement = document.getElementById("idsp");
+        // Thay đổi nội dung bằng thuộc tính textContent
+        pElement.textContent = productId;
     });
 </script>
 <script>
@@ -445,17 +420,15 @@ $(document).ready(function(){
 </div>
 
 <script>
-    $(document).ready(function(){
-        $('.fix-sp-button').click(function(){
-            var productId = $(this).attr('data-product-id');
-            $.ajax({
-                url: 'module/main/get_product_info_for_fix_info.php',
-                type: 'POST',
-                data: { productId: productId },
-                success: function(response){
-                    $('#fix_data_product').html(response);
-                }
-            });
+    $('table').on('click', 'td' , function (event) {
+        var productId = $('button', this).attr('id');
+        $.ajax({
+            url: 'module/main/get_product_info_for_fix_info.php',
+            type: 'POST',
+            data: { productId: productId },
+            success: function(response){
+                $('#fix_data_product').html(response);
+            }
         });
     });
 </script>

@@ -1,6 +1,5 @@
 <?php
 // Xử lý dữ liệu từ form
-$maSP = $_POST['MaSP']; 
 $tenSP = $_POST['TenSP'];
 $moTa = $_POST['MoTa'];
 $giaMoi = $_POST['GiaMoi'];
@@ -11,13 +10,10 @@ $Dir_nm = __DIR__;
 $targetDir = str_replace("admin\\module\\main", "assets\\img\\", $Dir_nm);
 $target_file = $targetDir . basename($_FILES['hinhanh']["name"]);
 
-$connect=mysqli_connect('localhost','root','','shoestore');
-if($connect){
-    mysqli_query($connect,"SET NAMES 'UTF8'");
-}
-else{
-    echo "Kết nối thất bại";
-}
+$targetDir = str_replace("admin\\module\\main", "config\\config.php", $Dir_nm);
+require $targetDir;
+
+
 $uploadOk = 0;
 if ($_FILES['hinhanh']['size'] != 0) {
 	$Dir_nm = __DIR__;
@@ -64,8 +60,8 @@ if ($_FILES['hinhanh']['size'] != 0) {
 
 if ($uploadOk == 1) {
 	$tenhinh = $_FILES['hinhanh']["name"];
-	$sql = "INSERT INTO sanpham (MaSP, TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
-	VALUES ($maSP, '$tenSP', 0, 0, '$moTa', '$tenhinh', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
+	$sql = "INSERT INTO sanpham (TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
+	VALUES ('$tenSP', 0, 0, '$moTa', '$tenhinh', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
 
 	// Thực thi câu truy vấn và kiểm tra kết quả
 	if ($connect->query($sql) === TRUE) {
@@ -78,15 +74,15 @@ if ($uploadOk == 1) {
 if ($uploadOk == 0) { // không có ảnh
 	try {
 		$tenhinh = $_FILES['hinhanh']["name"];
-		$sql = "INSERT INTO sanpham (MaSP, TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
-		VALUES ($maSP, '$tenSP', 0, 0, '$moTa', 'NULL', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
+		$sql = "INSERT INTO sanpham (TenSP, SoSaoDanhGia, SoLuotDanhGia, MoTa, HinhAnh, SanPhamMoi, SanPhamHot, GiaCu, GiaMoi, SoLuongDaBan, MaNhanHieu, MaLoai)
+		VALUES ('$tenSP', 0, 0, '$moTa', 'NULL', 1, 0, 0, $giaMoi, 0, $maNhanHieu, $maLoai)";
 
 		// Thực thi câu truy vấn và kiểm tra kết quả
 		if ($connect->query($sql) === TRUE) {
-		    echo "Thêm dữ liệu thành công!!!";
+		    echo '<br><strong style="color: lightgreen;">Thêm thành công!!! </strong>';;
 		}
 	} catch (Exception $e) {
-		echo "<br><strong>Thêm Không thành công!!! </strong>";
+		echo '<br><strong style="color: red;">Thêm Không thành công!!! </strong>';
 	}
 	
 }
