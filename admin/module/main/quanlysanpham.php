@@ -267,7 +267,7 @@ $(document).ready(function(){
         // Gửi dữ liệu bằng AJAX
         $.ajax({
             type: 'POST',
-            url: 'module/main/add_product.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
+            url: 'module/main/quanlysanpham_add_product.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
             data: formData,
             processData: false, // Không xử lý dữ liệu
             contentType: false, // Không thiết lập kiểu dữ liệu
@@ -317,7 +317,7 @@ $(document).ready(function(){
         var productId = $('button', this).attr('id');
         // console.log(productId);
         $.ajax({
-            url: 'module/main/get_product_info.php',
+            url: 'module/main/quanlysanpham_get_product_info.php',
             type: 'POST',
             data: { productId: productId },
             success: function(response){
@@ -360,7 +360,7 @@ $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
         $.ajax({
-            url: 'module/main/get_list_size_and_number.php',
+            url: 'module/main/quanlysanpham_get_list_size_and_number.php',
             type: 'POST',
             data: { productId: productId },
             success: function(response){
@@ -402,6 +402,23 @@ $(document).ready(function(){
     });
 </script>
 <script>
+$(document).ready(function(){
+  $('#xoasanpham').on('hidden.bs.modal', function () {
+    // Ví dụ: Reset form
+    $('#contendelete').html(`
+      <style>
+        .inline-p {
+          display: inline-block;
+        }
+      </style>
+      <p class="inline-p">Mã sản phẩm: </p><p id="idsp" class="inline-p"></p>
+      <h2>Bạn có chắc muốn xóa sản phẩm này?</h2>
+      <button type="submit" class="btn btn-primary" id="submitXoa">Xóa</button>
+    `);
+  });
+});
+</script>
+<script>
     document.getElementById('submitXoa').addEventListener('click', function() {
         // Lấy giá trị của idsp
         var idSanPham = document.getElementById('idsp').innerText;
@@ -410,12 +427,19 @@ $(document).ready(function(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                // Xử lý phản hồi từ máy chủ (nếu cần)
                 $('#contendelete').html(this.responseText);
-                // Sau khi xóa, bạn có thể thực hiện các hành động khác ở đây
+                // xóa hàng theo idSanPham
+                var searchValue = idSanPham;
+                $("#myTable tbody tr").each(function() {
+                    var rowData = $(this).find("td:eq(0)").text(); // Lấy dữ liệu của cột 0 trong hàng
+                    if (rowData === searchValue) {
+                        $(this).remove(); // Xóa hàng nếu dữ liệu cột 0 trùng khớp với giá trị tìm kiếm
+                        return false; // Dừng vòng lặp sau khi xóa hàng
+                    }
+                });
             }
         };
-        xhttp.open("POST", "module/main/delete_sanpham.php", true);
+        xhttp.open("POST", "module/main/quanlysanpham_delete_sanpham.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("idSanPham=" + idSanPham);
     });
@@ -446,7 +470,7 @@ $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
         $.ajax({
-            url: 'module/main/get_product_info_for_fix_info.php',
+            url: 'module/main/quanlysanpham_get_product_info_for_fix_info.php',
             type: 'POST',
             data: { productId: productId },
             success: function(response){
@@ -471,7 +495,7 @@ $(document).ready(function(){
         // Gửi dữ liệu bằng AJAX
         $.ajax({
             type: 'POST',
-            url: 'module/main/fix_sanpham.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
+            url: 'module/main/quanlysanpham_fix_sanpham.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
             data: formData,
             processData: false, // Không xử lý dữ liệu
             contentType: false, // Không thiết lập kiểu dữ liệu
