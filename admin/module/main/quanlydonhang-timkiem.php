@@ -1,34 +1,57 @@
 <?php
-// Kết nối với cơ sở dữ liệu
-$conn = mysqli_connect("localhost", "root", "", "shoestore");  
-  //lấy thông tin sản phẩm,khách hàng,nhân viên
-  $sql="SELECT
-  px.MaPX,
-  px.NgayDatHang,
-  px.TinhTrangDH,
-  px.TongTien,
-  px.TongSoLuong,
-  px.trangThai,
-  khachhang.MaKH,
-  khachhang.HoTenKH,
-  khachhang.Sdt,
-  nhanvien.MaNV,
-  nhanvien.HoTenNV,
-  nhanvien.SDT
+
+// Lấy dữ liệu từ select box và input date
+$tinhTrang = $_POST['tinh_trang'];
+$ngayBatDau = $_POST['ngay_bat_dau'];
+$ngayKetThuc = $_POST['ngay_ket_thuc'];
+// Sử dụng giá trị mặc định cho ngày bắt đầu
+if (empty($ngayBatDau)) {
+    $ngayBatDau = "2000-01-01";
+  }
+  
+  // Sử dụng giá trị mặc định cho ngày kết thúc
+  if (empty($ngayKetThuc)) {
+    $ngayKetThuc = date("Y-m-d"); // Sử dụng ngày hiện tại
+  }
+  // Chuyển đổi ngày tháng sang dạng timestamp
+$timestampBatDau = strtotime($ngayBatDau);
+$timestampKetThuc = strtotime($ngayKetThuc);
+
+// Kiểm tra
+if ($timestampBatDau > $timestampKetThuc) {
+  // Hiển thị thông báo lỗi
+  echo "<script>alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');</script>";
+  echo "<script>window.location.href = '../../index.php?danhmuc=quanlydonhang';</script>";
+  exit(); // Dừng thực thi script
+}
+
+$conn = mysqli_connect("localhost", "root", "", "shoestore"); 
+// Truy vấn database
+$sql = "SELECT
+px.MaPX,
+px.NgayDatHang,
+px.TinhTrangDH,
+px.TongTien,
+px.TongSoLuong,
+px.trangThai,
+khachhang.MaKH,
+khachhang.HoTenKH,
+khachhang.Sdt,
+nhanvien.MaNV,
+nhanvien.HoTenNV,
+nhanvien.SDT
 
 FROM phieuxuat px
 INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
-INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV;";
-
-
+INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV
+WHERE (TinhTrangDH = '$tinhTrang' OR '$tinhTrang' = '') AND NgayDatHang BETWEEN '$ngayBatDau' AND '$ngayKetThuc';";
 $result = $conn->query($sql);
 if ($result->num_rows === 0) {
-    echo "<p>Không có dữ liệu phiếu xuất</p>";
-    die();
-  }
+  echo "<p>Không có thông tin tìm kiếm</p>";
+  die();
+}
 
-
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +94,7 @@ if ($result->num_rows === 0) {
                         <option value="">Tất cả</option>
                         <option value="Tạm giữ">Tạm giữ</option>
                         <option value="Đang xử lý">Đang xử lý</option>
-                        <option value="Đã hoàn thành">Đã hoàn thành</option>
+                        <option value="Đã giao hàng">Đã hoàn thành</option>
                     </select>
                     <input type="submit" value="Lọc">
                 </form>
@@ -183,3 +206,4 @@ if ($result->num_rows === 0) {
 </div>
 </body>
 </html>
+
