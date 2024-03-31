@@ -117,12 +117,12 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                            <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
-                                                Chi tiết
-                                                </button>
-                                            <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="' .$row["MaSP"] . '">Sửa</button>
-                                            <button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>
+                                    <div>
+                                        <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
+                                            Chi tiết
+                                            </button>
+                                        <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="' .$row["MaSP"] . '">Sửa</button>
+                                        <button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>
                                         
                                     </div>
                                 </td>
