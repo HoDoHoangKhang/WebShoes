@@ -89,7 +89,6 @@ if ($result->num_rows === 0) {
 					<li>ID: <?php echo $row['MaNV']; ?></li></li>
 					<li>Tên: <?php echo $row['HoTenNV']; ?> </li>
 					<li>SĐT: <?php echo $row['SDT']; ?></li>
-					<li></li>
 				</ul>
 			</td>
 			<td>
@@ -97,7 +96,6 @@ if ($result->num_rows === 0) {
 					<li>ID: <?php echo $row['MaNCC']; ?></li></li>
 					<li>Tên: <?php echo $row['TenNCC']; ?> </li>
 					<li>SĐT: <?php echo $row['SdtNCC']; ?> </li>
-					<li></li>
 				</ul>
 			</td>
 			
@@ -106,7 +104,17 @@ if ($result->num_rows === 0) {
 			<td>
 				<button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluong" id="<?php echo $row['MaPN']; ?>"> <?php echo $row['TongSoLuong']; ?> </button>
 			</td>
-			<td><?php echo $row['TinhTrangDH']; ?></td>
+			<td>
+				<input class="form-check-input" type="checkbox" value="" id="<?php echo $row['MaPN']; ?>"
+					<?php 
+						if ($row['TinhTrangDH'] == 'Đã nhận') 
+							echo ' checked';
+					?>
+				>
+				<label class="form-check-label" id="p<?php echo $row['MaPN']; ?>">
+			        <?php echo $row['TinhTrangDH']; ?>
+			    </label>
+			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
 				<button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="">Sửa</button>
@@ -117,6 +125,51 @@ if ($result->num_rows === 0) {
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	$('table').on('click', 'td' , function (event) {
+		var checkbox = $('input', this); 
+		var maPhieuNhap = checkbox.attr('id');
+		if (checkbox.is(':checked')){
+			var confirmation = confirm("Xác nhận đã nhận được đơn hàng có mã = " + maPhieuNhap + " ?");
+			if (confirmation) {
+				$.ajax({
+					url: 'module/main/quanlynhaphang_xac_nhan_nhan_hang.php',
+					type: 'POST',
+					data: { maPhieuNhap: maPhieuNhap },
+					success: function(response){
+						console.log(response);
+						document.getElementById("p" + maPhieuNhap).innerHTML = "Đã nhận";
+					}
+				});
+			} else {
+				checkbox.prop('checked', false);
+			}
+		}
+		
+		
+	});
+	$(document).ready(function(){
+    $('table').on('change', 'input[type="checkbox"]' , function (event) {
+        var checkbox = $(this);
+        var maPhieuNhap = checkbox.attr('id');
+        
+        if (!checkbox.is(':checked')) {
+        	$.ajax({
+				url: 'module/main/quanlynhaphang_huy_nhan_hang.php',
+				type: 'POST',
+				data: { maPhieuNhap: maPhieuNhap },
+				success: function(response){
+					console.log(response);
+        			document.getElementById("p" + maPhieuNhap).innerHTML = "Chưa nhận";
+				}
+			});
+        }
+    });
+});
+});
+
+</script>
 <?php $connect->close(); ?>
 <!-- Modal -->
 <div class="modal fade" id="chitietsoluong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -319,7 +319,7 @@ $(document).ready(function(){
         $.ajax({
             url: 'module/main/quanlysanpham_get_product_info.php',
             type: 'POST',
-            data: { productId: productId },
+            data: { maPhieuNhap: maPhieuNhap },
             success: function(response){
                 $('#list_data_product').html(response);
             }
