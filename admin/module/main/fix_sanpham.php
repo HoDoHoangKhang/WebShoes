@@ -78,6 +78,6 @@ if ($uploadOk == 1) {
 if ($connect->query($sql) === TRUE) {
     echo "Cập nhật dữ liệu thành công!!!";
 } else {
-    echo "Lỗi: " . $sql . "<br>" . $connect->error;
+    echo "Sửa Không thành công!";
 }
 ?>

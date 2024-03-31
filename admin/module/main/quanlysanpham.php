@@ -12,12 +12,15 @@
         object-fit: cover;
     }
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <div class="tableBox ">
     <div class="tableTitle">
         <p>Danh sách sản phẩm</p>
         <div class="table-func">
             <div class="filter-container">
-                <select id="filterSelect">
+                <select id="filterSelect1">
+                    <option value=''>All</option>
                     <?php
                     require '../config/config.php';
                     // Lấy dữ liệu từ bảng nhanhieu
@@ -25,7 +28,7 @@
                     $result = $connect->query($sql);
                     if ($result->num_rows > 0) {
                       while ($row = $result->fetch_assoc()) {
-                          echo '<option value="' . $row["MaNhanHieu"] . '">' . $row["TenNhanHieu"] . '</option>';
+                          echo '<option value="' . $row["TenNhanHieu"] . '">' . $row["TenNhanHieu"] . '</option>';
                       }
                     } else {
                       echo "<option value=''>Không có dữ liệu</option>";
@@ -34,7 +37,8 @@
                 </select>
             </div>
             <div class="filter-container">
-                <select id="filterSelect">
+                <select id="filterSelect2">
+                    <option value=''>All</option>
                     <?php 
                     // Lấy dữ liệu từ bảng loaisp
                     $sql = "SELECT MaLoai, TenLoai FROM loaisp";
@@ -65,6 +69,7 @@
                 <th>giá bán</th>
                 <th>Số lượng</th>
                 <th>Hành động</th>
+                <th data-visible="false">ẨN</th>
             </tr>
         </thead>
         <tbody>
@@ -121,7 +126,9 @@
                                         
                                     </div>
                                 </td>
-                            </tr>';
+                                <td style="display:none;visibility:hidden;">' .$row["MaLoai"]. '</td>
+                            </tr>'
+                            ;
                     }
                 } else {
                     echo "<tr><td colspan='2'>Không có dữ liệu</td></tr>";
@@ -131,8 +138,18 @@
         </tbody>
     </table>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#myTable').DataTable();
+  $('#filterSelect1').on('change', function() {
+    $('#myTable').DataTable().column(3).search($(this).val()).draw();
+  });
+  $('#filterSelect2').on('change', function() {
+    $('#myTable').DataTable().column(7).search($(this).val()).draw();
+    console.log($(this).val())
+  });
+});
+</script>
 
 <!-- Modal thêm sản phẩm -->
 <div class="modal fade" id="themsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 800px;">
@@ -361,8 +378,14 @@ $(document).ready(function(){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="contendelete">
+            <style>
+                .inline-p {
+                    display: inline-block;
+                }
+            </style>
+
+            <p class="inline-p">Mã sản phẩm: </p><p id="idsp" class="inline-p"></p>
             <h2>Bạn có chắc muốn xóa sản phẩm này?</h2>
-            <p id="idsp">1</p>
             <button type="submit" class="btn btn-primary" id="submitXoa">Xóa</button>
       </div>
       <div class="modal-footer">
