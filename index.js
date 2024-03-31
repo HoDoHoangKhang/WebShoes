@@ -1,18 +1,4 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//   var feedback_list=document.querySelector(".feedback__list");
-//   if(feedback_list){
-//     $(feedback_list).slick({
-//       slidesToShow: 2,
-//       slidesToScroll: 1,
-//       autoplay: true,
-//       autoplaySpeed: 3000,
-//       infinite:true,
-//       prevArrow:"<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
-//       nextArrow:"<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>"
-//     });
-//   }
-// });
-// responsive
+
 document.addEventListener("DOMContentLoaded", function() {
     var feedback_list = document.querySelector(".feedback__list");
     if (feedback_list) {
@@ -105,46 +91,46 @@ function tagHotNew(tag_new, tag_hot, card) {
     }
 }
 //-----------------------------------------------------------insert card
-// function insertCard(render, divList) {
-//     render.forEach((element, index) => {
-//         var newDiv = document.createElement("div");
-//         newDiv.classList.add("card");
-//         newDiv.innerHTML = `
-//         <div class="card-img">
-//             <img src="./assets/img/` + element.img + `" alt="">
-//         </div>
-//         <p class="card-title">` + element.title + `</p>
-//         <div class="card-price-rate">
-//             <div class="card-price">
-//                 <span>` + priceNew(element.price_old, element.sale) + `</span>
-//                 <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
-//             </div>
-//             <div class="card-rate">
-//                 <i class="fa-solid fa-star"></i>
-//                 ` + element.rate + `
-//             </div>
-//         </div>   
-//         <i class="card-btn__like fa-regular fa-heart"></i>
-//         <div class="card-new-hot">
+function insertCard(render, divList) {
+    render.forEach((element, index) => {
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("card");
+        newDiv.innerHTML = `
+        <div class="card-img">
+            <img src="./assets/img/` + element.img + `" alt="">
+        </div>
+        <p class="card-title">` + element.title + `</p>
+        <div class="card-price-rate">
+            <div class="card-price">
+                <span>` + priceNew(element.price_old, element.sale) + `</span>
+                <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+            </div>
+            <div class="card-rate">
+                <i class="fa-solid fa-star"></i>
+                ` + element.rate + `
+            </div>
+        </div>   
+        <i class="card-btn__like fa-regular fa-heart"></i>
+        <div class="card-new-hot">
     
-//         </div>
-//         `
-//         newDiv.addEventListener('click', function(e) {
-//             e.stopPropagation(); //Ngăn chặn nổi bọt
-//             var url =
-//                 `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
-//             window.location.href = url;
-//         })
+        </div>
+        `
+        newDiv.addEventListener('click', function(e) {
+            e.stopPropagation(); //Ngăn chặn nổi bọt
+            var url =
+                `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+            window.location.href = url;
+        })
 
 
-//         //get tagNew and tagHot
-//         tagHotNew(element.new, element.hot, newDiv);
+        //get tagNew and tagHot
+        tagHotNew(element.new, element.hot, newDiv);
 
-//         divList.appendChild(newDiv);
-//         //like
-//         likeShoes(newDiv);
-//     });
-// }
+        divList.appendChild(newDiv);
+        //like
+        likeShoes(newDiv);
+    });
+}
 // var listProduct = document.querySelector(".list-shoes");
 // if (listProduct) {
 //     insertCard(render, listProduct);
@@ -685,19 +671,7 @@ rangeInput.forEach(input =>{
 });
 
 
-//var list_tag;
-var search = document.querySelector(".header__action-search-input");
-if (search) {
-    search.addEventListener('keydown', function(e) {
-        list_tag = document.querySelectorAll(".tagret-item");
-        if (e.which == 13) {
-            e.stopPropagation(); //Ngăn chặn nổi bọt
-            var url =`index.php?danhmuc=products`;
-            window.location.href = url;
-            console.log("search");
-        }
-    });
-}
+
 
 
 // product-detail select size

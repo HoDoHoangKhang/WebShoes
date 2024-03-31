@@ -28,4 +28,10 @@ function showDanhMuc(){
         ";
     }
 }
+function showDanhMucMegaMenu(){
+    $danhMucArr = getLoaiSanPhamList();
+    foreach($danhMucArr as $danhMuc){
+        echo "<a href='index.php?danhmuc=products&loai=".$danhMuc->getTenLoai()."' class='menu__hover__content-li'>".$danhMuc->getTenLoai()."</a>";
+    }
+}
 ?>

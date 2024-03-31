@@ -2,13 +2,46 @@
     <section class="breadcrumb">
         <div class="container">
             <div class="breadcrumb-main">
-                <span>
+                <a  href="index.php?danhmuc=home" style="color: #807e7e;">
                     Home
-                </span>
+                </a>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
-                <span>
+                <a href="index.php?danhmuc=products" style="color: #807e7e;">
                     Products
-                </span>
+                </a>
+                <?php 
+                    if(isset($_GET['search'])){?>
+                        <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                        <span>
+                            Kết quả tìm kiếm cho "<?php echo $_GET["search"] ?>"
+                        </span>
+                    <?php }
+                    if(isset($_GET["loai"])){ ?>
+                        <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                        <span>
+                            <?php echo $_GET["loai"] ?>
+                        </span>                        
+                    <?php }
+                     if(isset($_GET["nhanhieu"])){ ?>
+                        <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                        <span>
+                            <?php echo $_GET["nhanhieu"] ?>
+                        </span>                        
+                    <?php }
+                    if(isset($_GET["new"])){ ?>
+                        <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                        <span>
+                            <?php echo "New" ?>
+                        </span>                        
+                    <?php }
+                    if(isset($_GET["hot"])){ ?>
+                        <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                        <span>
+                            <?php echo "Hot" ?>
+                        </span>                        
+                    <?php }
+                ?>
+                
             </div>
         </div>
     </section>
@@ -37,7 +70,7 @@
                             </div>
                         </div>           
                     </div>
-                    <div class="filter__categories">
+                    <div class="filter__categories filter__categories-danhmuc">
                         <div class="filter__categories-title">
                             <h3>DANH MỤC</h3>
                             <i class="filter__categories-title-icon fa-solid fa-sort-down"></i>
@@ -53,7 +86,7 @@
                             </li> -->
                         </ul>            
                     </div>
-                    <div class="filter__categories">
+                    <div class="filter__categories filter__categories-nhanhieu">
                         <div class="filter__categories-title">
                             <h3>NHÃN HIỆU</h3>
                             <i class="filter__categories-title-icon fa-solid fa-sort-down"></i>
@@ -190,8 +223,35 @@
         filterData();
         function filterData(page){
             var action = 'filter_data';
+            var search="";
             var danhmuc = getFilter('danhmucFilter');
             var nhanhieu = getFilter('nhanhieuFilter');
+            <?php 
+                if(isset($_GET['search'])){?>
+                    search=("<?php echo $_GET['search'] ?>");
+                <?php }
+                if(isset($_GET['loai'])){?>
+                    danhmuc.push("<?php echo $_GET['loai'] ?>");
+                    var filterDanhMuc=document.querySelector(".filter__categories-danhmuc").classList.add("none");
+                <?php } 
+                if(isset($_GET['nhanhieu'])){?>
+                    nhanhieu.push("<?php echo $_GET['nhanhieu'] ?>");
+                    var filterNhanHieu=document.querySelector(".filter__categories-nhanhieu").classList.add("none");
+                <?php } 
+                if(isset($_GET['new'])){?>
+                    var btnNew=document.querySelector(".sort-new").classList.add("btn-sort--click")
+                    var btnNewHot=document.querySelectorAll(".btn-sort").forEach(btn => {
+                        btn.classList.add("none");
+                    });
+                <?php }
+                if(isset($_GET['hot'])){?>
+                        var btnHot=document.querySelector(".sort-hot").classList.add("btn-sort--click")
+                        var btnNewHot=document.querySelectorAll(".btn-sort").forEach(btn => {
+                        btn.classList.add("none");
+                    });
+                <?php }
+            ?>
+            console.log(search);
             var sortprice= getValueSortPrice();
             var min=getValueFilterPrice()[0];
             var max=getValueFilterPrice()[1];
@@ -200,7 +260,7 @@
             $.ajax({
                 url:"./control/ajax_action.php",
                 method:"POST",
-                data:{action:action,danhmuc:JSON.stringify(danhmuc), nhanhieu:JSON.stringify(nhanhieu), sortprice:sortprice ,min:min,max:max,newValue:newValue,hotValue:hotValue,page:page},
+                data:{action:action,danhmuc:JSON.stringify(danhmuc), nhanhieu:JSON.stringify(nhanhieu), sortprice:sortprice ,min:min,max:max,newValue:newValue,hotValue:hotValue,page:page,search:search},
                 success: function(response){
                     var data = JSON.parse(response);//chuyển json thành mảng
                     $('.list-shoes').html(data['data1']);
@@ -282,12 +342,14 @@
                 filterData();
             });
         });
+        // var number_page=document.querySelectorAll(".pagination_link");
+        // number_page.forEach(page =>{
+        //     page.addEventListener('click',function(){
+        //         page.classList.add("pagination_link-select");
+        //     });
+        // });
     });
-        
-
-
-
-
+    
     //     //Load dữ liệu
     //     $(document).on('click', '.btn-sort', function(){
     //         var sort = $(this).text();

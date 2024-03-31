@@ -1306,3 +1306,25 @@ while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
             <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
         <?php } 
 } ?>      
+
+<div class="row info-pay mt-4 p-4">
+    <div id="pay-chuyenkhoan">
+        <p class="font-size-16 pay-chuyenkhoan_title">
+            Thông tin chuyển khoản
+        </p>
+        <div class="pay-chuyenkhoan-div">
+            <div class="pay-chuyenkhoan_img">
+                <img src="./assets/img/banking.png" alt="">
+        
+            </div>
+            <div class="pay-chuyenkhoan_main">
+                <p class="font-size-16 pay-chuyenkhoan_content">
+                    Nội dung: <strong class="font-size-16">#123</strong>.
+                </p>
+                <p class="font-size-16 pay-chuyenkhoan_note">
+                    Sau khi nhận được tiền shop sẽ gửi hàng về cho bạn.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

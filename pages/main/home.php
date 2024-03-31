@@ -7,14 +7,12 @@
                     <div class="hero__text-content">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum optio ipsa et dolor quod minus quisquam, laudantium veritatis repellat labore id odio sequi, asperiores neque repellendus libero saepe blanditiis commodi.
                     </div>
-                    <a href="./product.html">
-                        <button class="button-hero">
-                            <span>Explore more</span>
-                            <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>
-                                <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="white"></path>
-                            </svg>
-                        </button>
+                    <a href="index.php?danhmuc=products" class="button-hero">
+                        <span>Cửa hàng</span>
+                        <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>
+                            <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="white"></path>
+                        </svg>
                     </a>
                 </div>
                 <div class="hero__image">
@@ -36,63 +34,63 @@
     <section class="about">
         <div class="container">
             <div class="about-main">
-                <div class="about__box">
+                <a href="index.php?danhmuc=products&loai=Running" class="about__box">
                     <div class="about__box-text">
                         <div class="about__box-title">
                             Running<br> Shoes
                         </div>
-                        <a href="" class="about__box-link">
+                        <span class="about__box-link">
                             SHOP NOW
                             <i class="fa-solid fa-angles-right"></i>
-                        </a>
+                        </span>
                     </div>
                     <div class="about__box-img">
                         <img src="./assets/img/man.png" alt="" class="">
                     </div>
-                </div>
-                <div class="about__box">
+                </a>
+                <a href="index.php?danhmuc=products&loai=Basketball" class="about__box">
                     <div class="about__box-text">
                         <div class="about__box-title">
                             Basketball <br> Shoes
                         </div>
-                        <a href="" class="about__box-link">
+                        <span class="about__box-link">
                             SHOP NOW
                             <i class="fa-solid fa-angles-right"></i>
-                        </a>
+                        </span>
                     </div>
                     <div class="about__box-img">
                         <img src="./assets/img/women.png" alt="" class="">
                     </div>
-                </div>
-                <div class="about__box">
+                </a>
+                <a href="index.php?danhmuc=products&loai=Gym" class="about__box">
                     <div class="about__box-text">
                         <div class="about__box-title">
                             Gym <br> Shoes
                         </div>
-                        <a href="" class="about__box-link">
+                        <span class="about__box-link">
                             SHOP NOW
                             <i class="fa-solid fa-angles-right"></i>
-                        </a>
+                        </span>
                     </div>
                     <div class="about__box-img">
                         <img src="./assets/img/kids.png" alt="" class="">
                     </div>
-                </div>
-                <div class="about__box">
+                </a>
+                <a href="index.php?danhmuc=products" class="about__box">
                     <div class="about__box-text">
                         <div class="about__box-title">
                             All <br>
                             Shoes
                         </div>
-                        <a href="" class="about__box-link">
+                        <span class="about__box-link">
                             SHOP NOW
                             <i class="fa-solid fa-angles-right"></i>
-                        </a>
+                        </span>
                     </div>
                     <div class="about__box-img">
                         <img src="./assets/img/family.png" alt="" class="">
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -158,7 +156,7 @@
                         PRODUCT
                         <a href="">SẢN PHẨM MỚI</a>
                     </span>
-                    <a class="btn-more" href="./product.html">
+                    <a class="btn-more"  href="index.php?danhmuc=products&new=1">
                         <span class="btn-more-title">More</span>
                         <i class="fa-solid fa-chevron-right"></i>
                         <div class="btn-more--hover">
@@ -183,7 +181,7 @@
                         HOT
                         <a href="">SẢN PHẨM HOT</a>
                     </span>
-                    <a class="btn-more" href="./product.html">
+                    <a class="btn-more" href="index.php?danhmuc=products&hot=1">
                         <span class="btn-more-title">More</span>
                         <i class="fa-solid fa-chevron-right"></i>
                         <div class="btn-more--hover">

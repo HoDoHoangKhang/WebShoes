@@ -36,4 +36,10 @@ function showNhanHieu(){
         ";
     }
 }
+function showNhanHieuMegaMenu(){
+    $nhanHieuArr = getNhanHieuList();
+    foreach($nhanHieuArr as $nhanHieu){
+        echo "<a href='index.php?danhmuc=products&nhanhieu=".$nhanHieu->getTenNhanHieu()."' class='menu__hover__content-li'>".$nhanHieu->getTenNhanHieu()."</a>";
+    }
+}
 ?>

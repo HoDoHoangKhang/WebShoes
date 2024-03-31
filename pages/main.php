@@ -16,13 +16,20 @@
             case 'shell':
                 include_once 'pages/main/shell.php';
                 break;
+            case 'checkout':
+                include_once 'pages/main/checkout.php';
+                break;   
+            case 'product-detail':
+                include_once 'pages/main/product-detail.php';
+                break;
+            case 'profile':
+                include_once 'pages/main/profile.php';
+                break; 
             default:
                 include_once 'pages/main/home.php';
                 break;
             
-            case 'product-detail':
-                include_once 'pages/main/product-detail.php';
-                break;
+            
         }
     }
     else{

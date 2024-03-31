@@ -1,4 +1,5 @@
 <?php session_start();
+    $_SESSION['taikhoan'] = 5;
  ?>
 <header class="header">
     <div class="container">
@@ -8,7 +9,7 @@
                     <i class="fa-solid fa-bars"></i>
                     <!-- <i class="fa-sharp fa-solid fa-list-ul"></i> -->
                 </div>
-                <a  href="./index.html">
+                <a  href="index.php?danhmuc=home">
                     <img src="./assets/img/logo.png" alt="Logo" class="header__logo">
                 </a>
             </div>
@@ -16,77 +17,49 @@
                 <a class="menu_sub" href="index.php?danhmuc=home" >
                     Home
                 </a>
-                <a class="menu_sub" href="index.php?danhmuc=products">
+                <div class="menu_sub menu_sub-products">
                     Products
                     <div class="menu__hover">
                         <div class="menu__hover-shoes">
                             <h5 class="menu__hover__title">
-                                SHOES
+                                Danh mục
                             </h5>
                             <ul class="menu__hover__content">
-                                <li>All Men's Shoes</li>
-                                <li>Basketball</li>
-                                <li>Running</li>
-                                <li>Gym</li>
-                                <li>Football</li>
+                                <?php 
+                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/loaisp-act.php');
+                                    showDanhMucMegaMenu();
+                                ?>
                             </ul>
                         </div>
                         <div class="menu__hover-brands">
                             <h5 class="menu__hover__title">
-                                BRANDS
+                                Nhãn hiệu
                             </h5>
                             <ul class="menu__hover__content">
-                                <li>Nike</li>
-                                <li>Adidas</li>
-                                <li>Jordan</li>
-                                <li>New Balance</li>
-                                <li>Vans</li>
-                                <li>Puma</li>
+                                <?php 
+                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+                                    showNhanHieuMegaMenu();
+                                ?>
                             </ul>
                         </div>
-                        <div class="menu__hover-size">
-                            <h5 class="menu__hover__title">
-                                SIZE
-                            </h5>
-                            <ul class="menu__hover__content ">
-                                <ul class="menu__hover__content-size ">
-                                    <li>33</li>
-                                    <li>34</li>
-                                </ul>
-                                <ul class="menu__hover__content-size ">
-                                    <li>35</li>
-                                    <li>36</li>
-                                </ul>
-                                <ul class="menu__hover__content-size ">
-                                    <li>37</li>
-                                    <li>38</li>
-                                </ul>
-                                <ul class="menu__hover__content-size ">
-                                    <li>39</li>
-                                    <li>40</li>
-                                </ul>
-                                <ul class="menu__hover__content-size ">
-                                    <li>41</li>
-                                    <li>42</li>
-                                </ul>
-                            </ul>
+                        <div class="menu__hover-img">
+                            <img src="./assets/img/megaMenu.png" alt="">
                         </div>
                     </div>
-                </a>
+                </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
                 <a class="menu_sub" href="index.php?danhmuc=contact">Contact</a>
-                <a class="menu_sub" href="index.php?danhmuc=blog">Blog</a>
             </div>
             <div class="header__action">
                 <div class="header__action-search">
-                    <i class="header__action-search-icon fa-solid fa-magnifying-glass"></i>
+                    <i class="header__action-icon header__action-search-icon fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="header__action-search-input" placeholder="Search">
                 </div>
                 <a href="" class="header__action-like">
-                    <i class="header__action-like-icon fa-regular fa-heart"></i>
+                    <i class="header__action-icon header__action-like-icon fa-regular fa-heart"></i>
                 </a>
                 <div class="header__action-cart">
-                    <a href="index.php?danhmuc=shell" class="header__action-cart-icon fa-regular fa-basket-shopping-simple" style="color: #000000;"></a>
+                    <a href="index.php?danhmuc=shell" class="header__action-icon header__action-cart-icon fa-regular fa-basket-shopping-simple" style="color: #000000;"></a>
                     <span class="header__action-cart-count">
                         <?php 
                             // echo $_SESSION['voHang'];
@@ -96,7 +69,7 @@
                         <div class="header__action-cart-title">Sản phẩm mới thêm</div>
 
                         <ul class="header__action-cart-list">
-                            <li class="header__action-cart-item">
+                         <!-- <li class="header__action-cart-item">
                                 <div class="header__action-img">
                                     <img src="./assets/img/pd-1.png" alt="">
                                 </div>
@@ -113,79 +86,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="header__action-cart-item">
-                                <div class="header__action-img">
-                                    <img src="./assets/img/pd-1.png" alt="">
-                                </div>
-                                <div class="header__action-cart-detail">
-                                    <div class="header__action-cart-name">
-                                        <span>ADIDAS Ultraboost hiel sadi</span>
-                                        <div>18.000.000đ</div>
-                                    </div>
-                                    <div class="header__action-cart-amount">
-                                        <div class="header__action-cart-number">SL: 2</div>
-                                        <div class="header__action-cart-size_color">
-                                            <div class="header__action-cart-size">Size: 39</div>
-                                            <div class="header__action-cart-color"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="header__action-cart-item">
-                                <div class="header__action-img">
-                                    <img src="./assets/img/pd-1.png" alt="">
-                                </div>
-                                <div class="header__action-cart-detail">
-                                    <div class="header__action-cart-name">
-                                        <span>ADIDAS Ultraboost hiel sadi</span>
-                                        <div>18.000.000đ</div>
-                                    </div>
-                                    <div class="header__action-cart-amount">
-                                        <div class="header__action-cart-number">SL: 2</div>
-                                        <div class="header__action-cart-size_color">
-                                            <div class="header__action-cart-size">Size: 39</div>
-                                            <div class="header__action-cart-color"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="header__action-cart-item">
-                                <div class="header__action-img">
-                                    <img src="./assets/img/pd-1.png" alt="">
-                                </div>
-                                <div class="header__action-cart-detail">
-                                    <div class="header__action-cart-name">
-                                        <span>ADIDAS Ultraboost hiel sadi</span>
-                                        <div>18.000.000đ</div>
-                                    </div>
-                                    <div class="header__action-cart-amount">
-                                        <div class="header__action-cart-number">SL: 2</div>
-                                        <div class="header__action-cart-size_color">
-                                            <div class="header__action-cart-size">Size: 39</div>
-                                            <div class="header__action-cart-color"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="header__action-cart-item">
-                                <div class="header__action-img">
-                                    <img src="./assets/img/pd-1.png" alt="">
-                                </div>
-                                <div class="header__action-cart-detail">
-                                    <div class="header__action-cart-name">
-                                        <span>ADIDAS Ultraboost hiel sadi</span>
-                                        <div>18.000.000đ</div>
-                                    </div>
-                                    <div class="header__action-cart-amount">
-                                        <div class="header__action-cart-number">SL: 2</div>
-                                        <div class="header__action-cart-size_color">
-                                            <div class="header__action-cart-size">Size: 39</div>
-                                            <div class="header__action-cart-color"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="header__action-cart-btn">
                             <a href="index.php?danhmuc=shell" class="header__action-cart-btn-link">
@@ -197,6 +98,19 @@
                         </div>
                     </div>
                 </div>
+                <?php 
+                    if(isset($_SESSION['taikhoan'])){?>
+                       <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
+                            <span>Admin ádasd ád</span>
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                    <?php }
+                    else{ ?>
+                        <a href="" class="header__action-login">
+                            ĐĂNG NHẬP
+                        </a>
+                    <?php }
+                ?>
             </div>
         </div>
         <div class="search_mobile none">
@@ -205,3 +119,86 @@
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function(){
+        var cardQuanlity=document.querySelector('.header__action-cart-count').innerHTML=getCardUser().length;
+        function getCardUser(){
+            var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
+            var cartUser=[];
+            cartAll.forEach(item => {
+                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                    cartUser.push(item);
+                }
+            });
+            return cartUser;
+        }
+        function reverseCartUser(){
+            var reverseArr=getCardUser().reverse();
+            return reverseArr;
+        }
+        showCartUser();
+        function showCartUser(){
+            var cartUser=reverseCartUser();
+            var cartUserSlice=cartUser.slice(0,5);
+            var listProduct=[];
+            $.ajax({
+                url:"./control/ajax_action.php",
+                method: "POST",
+                data:{
+                    action: "getListProductFromCart",
+                    cart: JSON.stringify(cartUserSlice)
+                },
+                success: function(data){
+                    listProduct=JSON.parse(data);
+                    showCardVuaThem(listProduct);
+                }
+            })
+            function showCardVuaThem(listProduct){
+                listProduct.forEach(product => {
+                    console.log(product);
+                    var li = document.createElement("li");
+                    li.classList.add("header__action-cart-item");
+                    li.innerHTML = `
+                        <div class="header__action-img">
+                            <img src="./assets/img/`+product.HinhAnh+`" alt="">
+                        </div>
+                        <div class="header__action-cart-detail">
+                            <div class="header__action-cart-name">
+                                <span>`+product.TenSP+`</span>
+                                <div>`+product.GiaMoi+`</div>
+                            </div>
+                            <div class="header__action-cart-amount">
+                                <div class="header__action-cart-number">SL: `+product.SoLuong+`</div>
+                                <div class="header__action-cart-size_color">
+                                    <div class="header__action-cart-size">Size: `+product.Size+` </div>
+                                    <div class="header__action-cart-color"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    var list = document.querySelector(".header__action-cart-list");
+                    list.appendChild(li);
+                });
+            }
+        }
+        function linkMenuJs(){
+            var linkProduct=document.querySelector(".menu_sub-products").addEventListener("click", function(){
+                window.location.href = "index.php?danhmuc=products";
+            });
+        }
+        linkMenuJs();
+        //var list_tag;
+        var search = document.querySelector(".header__action-search-input");
+        if (search) {
+            search.addEventListener('keydown', function(e) {
+                list_tag = document.querySelectorAll(".tagret-item");
+                if (e.which == 13) {
+                    e.stopPropagation(); //Ngăn chặn nổi bọt
+                    var url =`index.php?danhmuc=products`+`&search=`+ search.value;
+                    window.location.href = url;
+                    // console.log(search.value);
+                }
+            });
+        }
+    });
+</script>

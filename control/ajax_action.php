@@ -1,5 +1,6 @@
 <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/DTB.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctsizesp-act.php');
@@ -24,9 +25,13 @@
         $maxPrice = $_POST['max'];
         $newValue = $_POST['newValue'];
         $hotValue = $_POST['hotValue'];
+        $search = $_POST['search'];
         $query= "SELECT * FROM sanpham 
         INNER JOIN nhanhieu ON nhanhieu.MaNhanHieu = sanpham.MaNhanHieu 
         INNER JOIN loaisp ON loaisp.MaLoai = sanpham.MaLoai ";
+        if(isset($_POST['search']) && $search!=""){
+            $query.=" WHERE TenSP LIKE '%".$search."%'";
+        }
         if(isset($_POST['nhanhieu']) && !empty($keyWordNhanHieu)){
             $filterNhanHieu=implode("','",$keyWordNhanHieu);
             $query.=" AND nhanhieu.TenNhanHieu IN('".$filterNhanHieu."')";
@@ -119,5 +124,127 @@
             $_SESSION['voHang']=$tempProduct;
             echo count($_SESSION['voHang']);
         }
+    }
+    if($_POST['action']=='showCart'){
+        $output='';
+        $cart=json_decode($_POST['cart']);
+        foreach($cart as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->MaSP);
+            $output.='
+            <tr>
+                <td>
+                    <div class="shell-product">
+                        <div class="shell-img">
+                            <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
+                        </div>
+                        <div class="shell-title-repository">
+                            <div class="shell-title">
+                                '.$sanPham->getTenSP().'
+                            </div>
+                            <div class="shell-repository">
+                                23 stocks remaining
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="cartSize">'.$product->Size.'</td>
+                <td class="cartSoluong">'.$product->SoLuong.'</td>
+                <td>'.formatCurrency($sanPham->getGiaMoi()*$product->SoLuong).'</td>
+                <td style="display:flex; align-item:center; padding:30px 0; gap:5px" >
+                    <input class="inputCart" style="width: 20px; height: 20px;" type="checkbox" value="'.$product->MaSP.'">
+                    <button class="buttonDeleteCart" id="'.$product->MaSP.'" style="width: 20px; height: 20px;"> 
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+            ';
+        }
+        echo $output;
+    }
+    if($_POST['action']=='addProductToTotal'){
+        $output='';
+        $products=json_decode($_POST['products']);
+        foreach($products as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->MaSP);
+            $output.='
+            <li class="shell-total-item">
+                <div class="shell-total-item-detail">
+                    <div class="shell-total-img-quanlity">
+                        <div class="shell-total-img">
+                            <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
+                        </div>
+                        <div class="shell-total-item_quanlity">
+                            '.$product->SoLuong.'
+                        </div>
+                    </div>
+                    <div class="shell-total-title_size">
+                        <div class="shell-total-title">
+                            '.$sanPham->getTenSP().'
+                        </div>
+                        <div class="shell-total-size">
+                            Size: '.$product->Size.'
+                        </div>
+                    </div>
+                </div>
+                <div class="shell-total-item-price">
+                    <span>'.formatCurrency($sanPham->getGiaMoi()*$product->SoLuong).'</span>
+                </div>  
+            </li>
+            ';
+        }
+        echo $output;
+    }
+    if($_POST['action'] == "getListProductFromCart") {
+        $carts = json_decode($_POST['cart']);
+        $productArr = array();
+        foreach($carts as $cart) {
+            $sanPham=getProduct($cart->MaSP);
+            $product = array(
+                'HinhAnh' => $sanPham->getHinhAnh(),
+                'MaSP' => $sanPham->getMaSP(),
+                'TenSP' => $sanPham->getTenSP(),
+                'GiaMoi' => $sanPham->getGiaMoi(),
+                'SoLuong' => $cart->SoLuong,
+                'Size' => $cart->Size                
+            );
+            $productArr[]=$product;
+        } 
+        echo json_encode($productArr);
+    }
+    if($_POST['action']=='showCheckout'){
+        $output='';
+        $products=json_decode($_POST['listCart']);
+        foreach($products as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->MaSP);
+            $output.='
+            <li class="shell-total-item">
+                <div class="shell-total-item-detail">
+                    <div class="shell-total-img-quanlity">
+                        <div class="shell-total-img">
+                            <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
+                        </div>
+                        <div class="shell-total-item_quanlity">
+                            '.$product->SoLuong.'
+                        </div>
+                    </div>
+                    <div class="shell-total-title_size">
+                        <div class="shell-total-title">
+                            '.$sanPham->getTenSP().'
+                        </div>
+                        <div class="shell-total-size">
+                            Size: '.$product->Size.'
+                        </div>
+                    </div>
+                </div>
+                <div class="shell-total-item-price">
+                    <span>'.formatCurrency($sanPham->getGiaMoi()*$product->SoLuong).'</span>
+                </div>  
+            </li>
+            ';
+        }
+        echo $output;
     }
 ?>

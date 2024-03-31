@@ -36,7 +36,6 @@
 ?>
 <main style="position: relative;">
     <div class="notification">
-
     </div>
     <section class="breadcrumb">
         <div class="container">
@@ -45,12 +44,14 @@
                     Home
                 </span>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
-                <span>
-                    Product
-                </span>
+                <a href="index.php?danhmuc=products" style="color: #807e7e;">
+                    Products
+                </a>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
                 <span class="breadcrumb-detail">
+                    <a style="color: #807e7e;" href="index.php?danhmuc=products&nhanhieu=<?php echo getTenNhanHieu($MaNhanHieu)?>">
                     <?php echo getTenNhanHieu($MaNhanHieu)?>
+                    </a>
                 </span>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
 
@@ -139,7 +140,7 @@
                                             else{ ?>
                                                 <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
                                             <?php } 
-                                   } ?>                                
+                                } ?>                                
                             </ul>
                         </div>
                         <div class="detail-content__quanlity">
@@ -710,8 +711,6 @@
             </div>
         </div>
     </section>
-
-    
 </main>
 <script src="index.js">
     
@@ -741,16 +740,37 @@
                         }
                         else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
                             creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
-                            var quanlityCart=document.querySelector(".header__action-cart-count");
                             if(data>0){
-                                quanlityCart.style.display="block";
-                                quanlityCart.innerHTML=data;
+                                var product = { TaiKhoan: <?php echo $_SESSION['taikhoan'] ?>,MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
+                                // Thêm sản phẩm vào giỏ hàng
+                                addToCart(product);
+                                setQuantityCard();
+                                // showCartUser();
                             }
                         }
                     }
                 });
             }
         })
+        function addToCart(product) {
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            var found = false;
+
+            cart.forEach(element => {
+                if (element['MaSP'] == product['MaSP'] && element['Size'] == product['Size'] && element['TaiKhoan'] == product['TaiKhoan']) {
+                    element['SoLuong'] += product['SoLuong'];
+                    found = true;
+                    return;
+                }
+            });
+
+            if (!found) {
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
         function getSize(){
             var valueSize=0;
             var size=document.querySelectorAll(".detail-content__size-item");
@@ -792,8 +812,64 @@
             stock.style.opacity=0;
             if(inputQuantity.value<0) inputQuantity.value=1;
         });
-        
+        function setQuantityCard(){
+            var cardQuanlity=document.querySelector('.header__action-cart-count').innerHTML=getCardUser().length;
+        }
+        function getCardUser(){
+            var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
+            var cartUser=[];
+            cartAll.forEach(item => {
+                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                    cartUser.push(item);
+                }
+            });
+            return cartUser;
+        }
+        function showCartUser(){
+            var cartUser=reverseCartUser();
+            var cartUserSlice=cartUser.slice(0,5);
+            var list = document.querySelector(".header__action-cart-list");
+            var listProduct=[];
+            $.ajax({
+                url:"./control/ajax_action.php",
+                method: "POST",
+                data:{
+                    action: "getListProductFromCart",
+                    cart: JSON.stringify(cartUserSlice)
+                },
+                success: function(data){
+                    listProduct=JSON.parse(data);
+                    showCardVuaThem(listProduct);
+                }
+            })
+            function showCardVuaThem(listProduct){
+                listProduct.forEach(product => {
+                    console.log(product);
+                    var li = document.createElement("li");
+                    li.classList.add("header__action-cart-item");
+                    li.innerHTML = `
+                        <div class="header__action-img">
+                            <img src="./assets/img/`+product.HinhAnh+`" alt="">
+                        </div>
+                        <div class="header__action-cart-detail">
+                            <div class="header__action-cart-name">
+                                <span>`+product.TenSP+`</span>
+                                <div>`+product.GiaMoi+`</div>
+                            </div>
+                            <div class="header__action-cart-amount">
+                                <div class="header__action-cart-number">SL: `+product.SoLuong+`</div>
+                                <div class="header__action-cart-size_color">
+                                    <div class="header__action-cart-size">Size: `+product.Size+` </div>
+                                    <div class="header__action-cart-color"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(li);
+                });
+            }
 
+        }
     });
 
 </script>
