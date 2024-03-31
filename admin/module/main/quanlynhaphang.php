@@ -108,7 +108,7 @@ if ($result->num_rows === 0) {
 			</td>
 			<td><?php echo $row['TinhTrangDH']; ?></td>
 			<td>
-				<button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="">Chi tiết </button>
+				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
 				<button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="">Sửa</button>
 				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="">Xóa</button>
 			</td>
