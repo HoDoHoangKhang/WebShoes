@@ -1,5 +1,6 @@
 <main class="profile-item">
-    <table style="width: 100%; font-size: 16px;">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap.css"> -->
+    <table class="table-order" style="width: 100%;">
         <thead style="">
             <tr>
                 <th>ĐƠN HÀNG</th>
@@ -20,9 +21,14 @@
                 </td>
                 <td>500.000 đ</td>
                 <td>
-                    <a href="index.php?danhmuc=profile&profile=donhang-chitiet">
-                        Xem
-                    </a>    
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <a style="padding: 5px 10px;" href="index.php?danhmuc=profile&profile=donhang-chitiet">
+                            Xem
+                        </a>  
+                        <a style="background-color: rgb(247, 55, 55); padding: 5px 10px" href="index.php?danhmuc=profile&profile=donhang-chitiet">
+                            hủy
+                        </a>    
+                    </div>
                 </td>
             </tr>
         </tbody>

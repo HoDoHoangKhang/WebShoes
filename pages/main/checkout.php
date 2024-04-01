@@ -47,7 +47,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="none div-pay-address row info-pay mt-4 p-4">
+                                        <div class="block_none div-pay-address info-pay mt-4 p-4">
                                             <div id="pay-address">
                                                 <p class="font-size-16 pay-address_title">
                                                     Thay đổi địa chỉ nhận hàng
@@ -56,6 +56,9 @@
                                                     <label class="form-label" for="billing-address">Địa chỉ</label>
                                                     <textarea class="form-control" id="billing-address" rows="3" placeholder="Nhập đầy đủ địa chỉ nhận hàng"></textarea>
                                                 </div>
+                                                <button class="btn btn-primary">
+                                                    Lưu
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -160,24 +163,24 @@
                                     <p class="text-muted text-truncate mb-4">Chọn phương thức giao hàng</p>
                                     <div class="mb-3">
                                         <div class="row">                
-                                            <div class="col-lg-3 col-sm-6">
+                                            <div class="col-lg-3 col-sm-6 delivery_checkout">
                                                 <div>
                                                     <label class="card-radio-label">
                                                         <input type="radio" name="pay-delivery" id="pay-methodoption1" class="card-radio-input" checked>
                                                         <span class="card-radio py-3 text-center text-truncate">
                                                         <i class="fa-solid fa-truck d-block h2 mb-3"></i>
-                                                            Giao hàng tiết kiệm <br> <strong style="color: #BE1004;">30,000 VND</strong>
+                                                            Giao hàng tiết kiệm <br> <strong id="delivery_checkout-price" style="color: #BE1004;">30,000₫</strong>
                                                         </span>
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-sm-6">
+                                            <div class="col-lg-3 col-sm-6 delivery_checkout">
                                                 <div>
                                                     <label class="card-radio-label">
                                                         <input type="radio" name="pay-delivery" id="pay-methodoption1" class="card-radio-input">
                                                         <span class="card-radio py-3 text-center text-truncate">
                                                         <i class="fa-solid fa-truck-fast d-block h2 mb-3"></i>
-                                                            Giao hàng nhanh <br> <strong style="color: #BE1004;">50,000 VND</strong>
+                                                            Giao hàng nhanh <br> <strong id="delivery_checkout-price" style="color: #BE1004;">50,000₫</strong>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -197,7 +200,7 @@
             <div class="shell-total">
                     <div class="shell-total-main">
                         <ul class="shell-total-product">
-                            <li class="shell-total-item">
+                            <!-- <li class="shell-total-item">
                                 <div class="shell-total-item-detail">
                                     <div class="shell-total-img-quanlity">
                                         <div class="shell-total-img">
@@ -221,7 +224,7 @@
                                     <span>16,000,000đ</span>
                                 </div>  
 
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="shell-total-div shell-total-total">
                             <span>Tổng tiền hàng</span>
@@ -235,7 +238,7 @@
                             <span>Tổng thanh toán</span>
                             <span class="shell-priceTotal-total" style="text-align: end;"></span>
                         </div>
-                        <a href="index.php?danhmuc=checkout" class="shell-total-btn" style="width: 100%; display: block;">
+                        <a href="index.php?danhmuc=pay" class="shell-total-btn" style="width: 100%; display: block;">
                             Đặt hàng
                         </a>
                     </div>
@@ -260,11 +263,21 @@
             },
             success: function(data){
                 var shellTotal=document.querySelector(".shell-total-product").innerHTML=data;
-                showPriceTotal();
+                showPriceTotal("30,000₫");
             }
         });
-        function getCart(listCart){
+        function getCardUser(){
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
+            var cartUser=[];
+            cartAll.forEach(item => {
+                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                    cartUser.push(item);
+                }
+            });
+            return cartUser;
+        }
+        function getCart(listCart){
+            var cartAll =getCardUser();
             var cart=[];
             cartAll.forEach(item => {
                 listCart.forEach(elements => {
@@ -285,14 +298,12 @@
             });
             return total;
         }
-        function showPriceTotal(){
+        function showPriceTotal(priceDelivery){
             var PriceTotal=document.querySelector(".shell-priceTotal");
-            var Delivery=document.querySelector(".shell-priceTotal-delivery");
             var Total=document.querySelector(".shell-priceTotal-total");
             PriceTotal.innerHTML=integerToVND(getPrice());
-            console.log(Delivery.textContent);
-            console.log(vndToInteger(Delivery.textContent));
-            Total.innerHTML=integerToVND(vndToInteger(Delivery.textContent)+vndToInteger(PriceTotal.textContent));
+            console.log(priceDelivery);
+            Total.innerHTML=integerToVND(vndToInteger(priceDelivery)+vndToInteger(PriceTotal.textContent));
         }
         console.log(getPrice());
         function integerToVND(amount) {
@@ -329,5 +340,15 @@
             var divEditAddress= document.querySelector(".div-pay-address");
             divEditAddress.classList.toggle("block");
         });
+
+        
+        var btnDelivery=document.querySelectorAll(".delivery_checkout");
+        btnDelivery.forEach(element => {
+            element.addEventListener('click', function(){   
+                var price=element.querySelector("#delivery_checkout-price").textContent;
+                showPriceTotal(price);
+            });
+        });
+
     });
 </script>

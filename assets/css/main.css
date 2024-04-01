@@ -3992,11 +3992,14 @@ a {
     gap: 20px;
 }
 .buttonDeleteCart{
-    background-color: red;
+    background-color: red ;
     color: white;
     border: 1px;
     border-radius: 3px;
     cursor: pointer;
     font-size: 14px;
     padding: 2px;
+}
+.table-order{
+    border-collapse: collapse;
 }

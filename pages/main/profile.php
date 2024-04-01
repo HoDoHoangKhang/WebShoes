@@ -23,17 +23,11 @@
                     </span>
                 </div>
                 <ul class="profile-user-menu">
-                    <li class="profile-user-item">
-                        <a href="index.php?danhmuc=profile&profile=trangtaikhoan">TRANG TÀI KHOẢN</a>
+                 <li class="profile-user-item">
+                        <a href="index.php?danhmuc=profile&profile=taikhoan">TÀI KHOẢN</a>
                     </li>
                     <li class="profile-user-item">
                         <a href="index.php?danhmuc=profile&profile=donhang">ĐƠN HÀNG</a>
-                    </li>
-                    <li class="profile-user-item">
-                        <a href="index.php?danhmuc=profile&profile=diachi">ĐỊA CHỈ</a>
-                    </li>
-                    <li class="profile-user-item">
-                        <a href="index.php?danhmuc=profile&profile=taikhoan">TÀI KHOẢN</a>
                     </li>
                     <li class="profile-user-item">
                     <a href="index.php?danhmuc=profile&profile=dangxuat">ĐĂNG XUẤT</a>
@@ -44,14 +38,8 @@
                 <?php
                     if(isset($_GET["profile"])){
                         switch ($_GET["profile"]) {
-                            case 'trangtaikhoan':
-                                include_once 'pages/main/profile/trangtaikhoan.php';
-                                break;
                             case 'donhang':
                                 include_once 'pages/main/profile/donhang.php';
-                                break;
-                            case 'diachi':
-                                include_once 'pages/main/profile/diachi.php';
                                 break;
                             case 'taikhoan':
                                 include_once 'pages/main/profile/taikhoan.php';
@@ -63,12 +51,12 @@
                                 include_once 'pages/main/profile/donhang-chitiet.php';
                                 break;
                             default:
-                                include_once 'pages/main/profile/trangtaikhoan.php';
+                                include_once 'pages/main/profile/taikhoan.php';
                                 break;
                         }
                     }
                     else{
-                        include_once 'pages/main/profile/trangtaikhoan.php';
+                        include_once 'pages/main/profile/taikhoan.php';
                     }
                 
                 ?>
