@@ -34,81 +34,33 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>12</td>
-                <td>Admin</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                            <li><a class="dropdown-item" href="#">Sửa</a></li>
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>Admin</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                            <li><a class="dropdown-item" href="#">Sửa</a></li>
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>Admin</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                            <li><a class="dropdown-item" href="#">Sửa</a></li>
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>Admin</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                            <li><a class="dropdown-item" href="#">Sửa</a></li>
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>Admin</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                            <li><a class="dropdown-item" href="#">Sửa</a></li>
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
+            
+            <?php
+                require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php'); //Kết nối mysql
+                $sql = "SELECT * FROM quyen";
+                $result = mysqli_query($connect,$sql);
+                while ($row = mysqli_fetch_array($result)) {
+            ?>
+                <tr>
+                    <td><?php echo $row['MaQuyen'] ?></td>
+                    <td><?php echo $row['TenQuyen'] ?></td>
+                    <td>
+                        <div class="dropdown" >
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
+                                <li><a class="dropdown-item" href="#">Chi tiết</a></li>
+                                <li><a class="dropdown-item" href="#">Sửa</a></li>
+                                <li><a class="dropdown-item" href="#">Xóa</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php
+                }
+                mysqli_close($connect);
+            ?> 
+            
         </tbody>
     </table>
 </div>
