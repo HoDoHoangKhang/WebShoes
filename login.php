@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,56 +61,58 @@
     </style>
 </head>
 <body>
-    <!-- Login 6 - Bootstrap Brain Component -->
-    <div id="main-wrapper" class="container">
-    <div class="row justify-content-center" style="border-radius: 10px;">
-        <div class="col-xl-10">
-            <div class="card border-0">
-                <div class="card-body p-0">
-                    <div class="row no-gutters">
-                        <div class="col-lg-6">
-                            <div class="p-5">
-                                <div class="mb-5">
-                                    <h3 class="h4 font-weight-bold text-theme">Login</h3>
+    <form action="xulylogin.php" method="post">
+        <!-- Login 6 - Bootstrap Brain Component -->
+        <div id="main-wrapper" class="container">
+            <div class="row justify-content-center" style="border-radius: 10px;">
+                <div class="col-xl-10">
+                    <div class="card border-0">
+                        <div class="card-body p-0">
+                            <div class="row no-gutters">
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="mb-5">
+                                            <h3 class="h4 font-weight-bold text-theme">Login</h3>
+                                        </div>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" name="txtUser">
+                                            </div>
+                                            <div class="form-group mb-5">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1" name="txtPass">
+                                            </div>
+                                            <button type="submit" class="btn btn-theme" name="btnLogin">Login</button>
+                                            <a href="#l" class="link float-right text-primary">Forgot password?</a>
+                                        </form>
+                                    </div>
                                 </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
-                                    </div>
-                                    <div class="form-group mb-5">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                    </div>
-                                    <button type="submit" class="btn btn-theme">Login</button>
-                                    <a href="#l" class="link float-right text-primary">Forgot password?</a>
-                                </form>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-6 d-none d-lg-inline-block">
-                            <div class="account-block rounded-right">
-                                <div class="overlay rounded-right"></div>
-                                <div class="account-testimonial">
-                                    
+                                <div class="col-lg-6 d-none d-lg-inline-block">
+                                    <div class="account-block rounded-right">
+                                        <div class="overlay rounded-right"></div>
+                                        <div class="account-testimonial">
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+                        <!-- end card-body -->
                     </div>
+                    <!-- end card -->
+
+                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="" class="link text-primary ml-1">register</a></p>
+
+                    <!-- end row -->
 
                 </div>
-                <!-- end card-body -->
+                <!-- end col -->
             </div>
-            <!-- end card -->
-
-            <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="" class="link text-primary ml-1">register</a></p>
-
-            <!-- end row -->
-
+            <!-- Row -->
         </div>
-        <!-- end col -->
-    </div>
-    <!-- Row -->
-</div>
+    </form>
 </body>
 </html>

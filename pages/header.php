@@ -49,6 +49,8 @@
                 </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
                 <a class="menu_sub" href="index.php?danhmuc=contact">Contact</a>
+                <a class="menu_sub" href="logout.php">Logout</a>
+
             </div>
             <div class="header__action">
                 <div class="header__action-search">

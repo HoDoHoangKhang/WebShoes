@@ -49,7 +49,7 @@
     </div>
     <div class="footer-end">
         <div class="container">
-            <span class="footer-end-text">© 2023 Bản quyền thuộc về Hoàng Khang.</span>
+            <span class="footer-end-text">© 2023 Bản quyền thuộc về Nguyên Đán.</span>
         </div>
     </div>
 </footer>
