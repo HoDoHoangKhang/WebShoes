@@ -13,13 +13,12 @@ if (isset($_POST['txtUser']) && isset($_POST['txtPass']))
 	$sql = "SELECT TenDangNhap,MatKhau 
 	      FROM taikhoan
 		WHERE TenDangNhap = '$userId' AND MatKhau = '$password' ";
-	$result = mysqli_query($connect, $sql) or die('Query failed. ' . mysql_error()); 
+	$result = mysqli_query($connect, $sql) or die('Query failed. ' . mysqli_error($connect)); 
 	
 	if (mysqli_num_rows($result) == 1)	{
 		// username va password hop le 
 		// Tao bien session "db_is_logged_in" va gan gia tri bang true
 		$_SESSION['TenDangNhap'] = $userId;
-		
 		//sau khi dang nhap thanh cong thi chuyen sang trang index.php
 		header('Location: index.php');
 		exit;
@@ -28,8 +27,6 @@ if (isset($_POST['txtUser']) && isset($_POST['txtPass']))
 		header('Location: login.php?success=false');
 	
 	}
-	
-	
 	mysqli_close($connect);
 }
 
