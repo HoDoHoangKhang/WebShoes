@@ -741,7 +741,7 @@
                         else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
                             creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
                             if(data>0){
-                                var product = { TaiKhoan: <?php echo $_SESSION['taikhoan'] ?>,MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
+                                var product = { TaiKhoan: "<?php echo $_SESSION['taikhoan'] ?>",MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
                                 // Thêm sản phẩm vào giỏ hàng
                                 addToCart(product);
                                 setQuantityCard();
@@ -819,7 +819,7 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
                     cartUser.push(item);
                 }
             });

@@ -30,7 +30,7 @@
                         <a href="index.php?danhmuc=profile&profile=donhang">ĐƠN HÀNG</a>
                     </li>
                     <li class="profile-user-item">
-                    <a href="index.php?danhmuc=profile&profile=dangxuat">ĐĂNG XUẤT</a>
+                    <a href="logout.php">ĐĂNG XUẤT</a>
                     </li>
                 </ul>
             </div>

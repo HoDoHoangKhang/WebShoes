@@ -27,9 +27,7 @@
                 break; 
             default:
                 include_once 'pages/main/home.php';
-                break;
-            
-            
+                break; 
         }
     }
     else{

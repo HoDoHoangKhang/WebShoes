@@ -36,7 +36,7 @@
         <tbody>
             
             <?php
-                require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php'); //Kết nối mysql
+                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql
                 $sql = "SELECT * FROM quyen";
                 $result = mysqli_query($connect,$sql);
                 while ($row = mysqli_fetch_array($result)) {

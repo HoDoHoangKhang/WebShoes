@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['taikhoan'])){
+        header('Location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,8 +43,8 @@
 
 </head>
 <body>
-        
     <?php require_once 'config/config.php' ?>
+
     <div class="app">
         <!-- Header -->
         <?php include_once 'pages/header.php' ?>

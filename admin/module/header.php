@@ -1,5 +1,9 @@
     <div class="header-main">
-        <p class="header-title">Dashboard</p>
+        <p class="header-title">
+        <a href="../index.php" class="header_banhang">
+                <i class="fa-solid fa-circle-right icon-banhang"></i><span>Cửa hàng</span>
+            </a>
+        </p>
         <div class="header-notifi_user">
             <div class="notifi">
                 <i class="fa-regular fa-bell"></i>
@@ -24,8 +28,7 @@
                             </li>
                             <li>
                                 <i class="fa-solid fa-right-from-bracket"></i>
-                                <p>Log out</p>
-                                
+                                <a style="text-decoration: none;" href="../logout.php">Log out</a>
                             </li>
                         </ul>
                     </div>

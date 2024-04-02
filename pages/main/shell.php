@@ -220,7 +220,7 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
                     cartUser.push(item);
                 }
             });
@@ -367,7 +367,7 @@
                         button.parentElement.parentElement.remove();//Xóa trên giao diện
                         var MaSP=parseInt(button.getAttribute('id'));
                         var Size= parseInt(button.parentElement.parentElement.children[1].innerText);
-                        var TaiKhoan=<?php echo $_SESSION['taikhoan']?>;
+                        var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
                         console.log(MaSP+" "+Size+" "+TaiKhoan);
                         removeFromCart(MaSP,Size,TaiKhoan);
                         setQuantityCard();
@@ -399,7 +399,7 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
                     cartUser.push(item);
                 }
             });

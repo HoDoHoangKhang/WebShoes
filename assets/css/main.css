@@ -1,3 +1,23 @@
+.header_Admin{
+    background-color: #3294fe;
+    font-size: 16px;
+    padding: 5px 20px ;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.header_Admin:hover{    
+    color: #ffffff;
+    background-color: #666666;
+}
+.icon-admin{
+    transition: all 0.2s ease-in-out;
+}
+.header_Admin:hover .icon-admin{    
+    transform: translateX(5px);
+}
 
 .header-main{
     display: flex;
@@ -2869,7 +2889,7 @@ th{
 }
 
 main{
-    margin-top: 100px;
+    margin-top: 120px;
 }
 @keyframes hover-menu{
     from{

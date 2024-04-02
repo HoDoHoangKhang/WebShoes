@@ -4,9 +4,9 @@
 session_start();
 
 //Neu nguoi dung da dang nhap thanh cong, thi huy bien session
-if (isset($_SESSION['db_is_logged_in'])) 
+if (isset($_SESSION['taikhoan'])) 
 {
-	unset($_SESSION['db_is_logged_in']);
+	unset($_SESSION['taikhoan']);
 }
 
 //Da dang xuat, quay tro lai trang login.php

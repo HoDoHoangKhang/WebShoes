@@ -1,7 +1,20 @@
 <?php session_start();
-    $_SESSION['taikhoan'] = 5;
  ?>
+
 <header class="header">
+    <?php
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
+        // echo $_SESSION['taikhoan'];
+        if(isset($_SESSION['taikhoan'])){
+            if(getTenNhomQuyen($_SESSION['taikhoan'])!="Khách hàng"){?>
+                <a href="admin/index.php" class="header_Admin">
+                    <i class="fa-solid fa-circle-right icon-admin"></i><span>Admin</span>
+                </a>
+            <?php }
+        }
+        
+    ?>
+
     <div class="container">
         <div class="header-main">
             <div class="header-logo">
@@ -49,7 +62,6 @@
                 </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
                 <a class="menu_sub" href="index.php?danhmuc=contact">Contact</a>
-                <a class="menu_sub" href="logout.php">Logout</a>
 
             </div>
             <div class="header__action">
@@ -108,7 +120,7 @@
                         </a>
                     <?php }
                     else{ ?>
-                        <a href="" class="header__action-login">
+                        <a href="login.php" class="header__action-login">
                             ĐĂNG NHẬP
                         </a>
                     <?php }
@@ -128,7 +140,7 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']==<?php echo $_SESSION['taikhoan']; ?>){
+                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
                     cartUser.push(item);
                 }
             });
