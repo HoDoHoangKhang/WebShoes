@@ -1,14 +1,8 @@
 <?php
-$productId = $_POST['productId'];
-
-// Thực hiện truy vấn để lấy danh sách các size và số lượng tương ứng của sản phẩm
-$connect=mysqli_connect('localhost','root','','shoestore');
-if($connect){
-    mysqli_query($connect,"SET NAMES 'UTF8'");
-}
-else{
-    echo "Kết nối thất bại";
-}
+$phieunhapId = $_POST['phieunhapId'];
+$dir =  __DIR__;
+$targetDir = str_replace("admin\\module\\main", "config\\config.php", $dir);
+require $targetDir;
 
 $html = '';
 $sql = "SELECT SizeSP,SoLuong FROM `ctsizesp` WHERE MaSP =" . $productId;

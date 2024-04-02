@@ -41,6 +41,9 @@
                 case 'thongtintaikhoan':                     
                     require_once 'module/main/thongtintaikhoan.php';             
                     break;   
+                case 'chitietphieunhap':                     
+                    require_once 'module/main/quanlynhaphang_view_chi_tiet_phieu.php';
+                    break;
                 default:
                     require_once 'module/main/dashboard.php';
                 break;
