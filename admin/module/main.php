@@ -32,10 +32,15 @@
                 case 'caidatwebsite':
                     require_once 'module/main/caidatwebsite.php';
                     break;   
-                case 'chitietdonhang':                     
-                    require_once 'module/main/chitietdonhang.php';
-                        
+                case 'quanlydonhang-chitiet':                     
+                    require_once 'module/main/quanlydonhang-chitiet.php';             
                     break;  
+                case 'quanlydonhang-timkiem':                     
+                    require_once 'module/main/quanlydonhang-timkiem.php';             
+                    break; 
+                case 'thongtintaikhoan':                     
+                    require_once 'module/main/thongtintaikhoan.php';             
+                    break;   
                 default:
                     require_once 'module/main/dashboard.php';
                 break;

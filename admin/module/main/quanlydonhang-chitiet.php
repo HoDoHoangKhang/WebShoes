@@ -23,7 +23,6 @@ INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
 INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV
 INNER JOIN sanpham ON ctpx.MaSP = sanpham.MaSP
 WHERE px.MaPX = $id;";
-
 $result = $conn->query($sql);
 if ($result->num_rows === 0) {
     echo "<p>Không có dữ liệu phiếu xuất.</p>";
@@ -43,13 +42,6 @@ if ($result->num_rows > 0) {
     $soLuong = $row['SoLuong'];
     $giaBan = $row['GiaBan'];
 }
-
-
-    echo "<script>const button = document.getElementById('btn-xem-chi-tiet');
-    const form = document.getElementById('form-chi-tiet');    
-    button.addEventListener('click', () => {
-      form.style.display = 'block';
-    });</script>";
 
 ?>
 
@@ -148,6 +140,10 @@ if ($result->num_rows > 0) {
             <div class="row">
                 <div class="label">Tình trạng đơn hàng:</div>
                 <div class="value"><?php echo $tinhTrangDonHang; ?></div>
+            </div>
+            <div class="row">
+                <div class="label">Tổng số lượng:</div>
+                <div class="value"><?php echo $tongSoLuong; ?></div>
             </div>
 
             <table class="table-info">

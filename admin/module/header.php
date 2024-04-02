@@ -24,7 +24,7 @@
                         <ul>
                             <li>
                                 <i class="fa-solid fa-user"></i>
-                                <p>My profile</p>
+                                <a class="dropdown-item" href="index.php?danhmuc=thongtintaikhoan">Thông tin</a>
                             </li>
                             <li>
                                 <i class="fa-solid fa-right-from-bracket"></i>
