@@ -1,5 +1,5 @@
 <?php
-$phieunhapId = $_POST['phieunhapId'];
+$productId = $_POST['productId'];
 $dir =  __DIR__;
 $targetDir = str_replace("admin\\module\\main", "config\\config.php", $dir);
 require $targetDir;
