@@ -102,7 +102,7 @@ if ($result->num_rows === 0) {
 			<td><?php echo $row['NgayNhap']; ?></td>
 			<td><?php echo number_format($row['TongTien'], 0, ',', '.') . ' '; ?>VND</td>
 			<td>
-				<button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluong" id="<?php echo $row['MaPN']; ?>"> <?php echo $row['TongSoLuong']; ?> </button>
+				<button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluongPhieunhap" id="<?php echo $row['MaPN']; ?>"> <?php echo $row['TongSoLuong']; ?> </button>
 			</td>
 			<td>
 				<input class="form-check-input" type="checkbox" value="" id="<?php echo $row['MaPN']; ?>"
@@ -172,7 +172,7 @@ if ($result->num_rows === 0) {
 </script>
 <?php $connect->close(); ?>
 <!-- Modal -->
-<div class="modal fade" id="chitietsoluong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="chitietsoluongPhieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 	<div class="modal-content"  style="">
 	  <div class="modal-header">
