@@ -1,3 +1,26 @@
+
+<?php
+    //dtb taikhoan nhanvien khachhang
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
+    $tenDangNhap=$_SESSION["taikhoan"];
+    $Ma=getUser($tenDangNhap)->getMa();
+    $hoTen=getUser($tenDangNhap)->getHoTen();
+    $ngaySinh=getUser($tenDangNhap)->getNgaySinh();
+    $sdt=getUser($tenDangNhap)->getSDT();
+    $email=getUser($tenDangNhap)->getEmail();
+    $diaChi=getUser($tenDangNhap)->getDiaChi();
+    $gioiTinh=getUser($tenDangNhap)->getGioiTinh();
+    $matKhau=getTaiKhoan($tenDangNhap)->getMatKhau();
+    $avt=getTaiKhoan($tenDangNhap)->getAvt();
+    $slipt = explode(" ", $hoTen);
+    // Lấy từ cuối cùng trong mảng
+    $Ten = end($slipt);
+    $Ho = $slipt[0];
+    echo $avt." ".$Ma ." ".$hoTen." ".$ngaySinh." ".$sdt." ".$email." ".$diaChi." ".$gioiTinh." ".$matKhau;
+?>
 <main class="profile-item">
     <div class="woocommerce-MyAccount-content">
         <form class="form-changeProfile" action="" method="post">
@@ -5,12 +28,12 @@
                 <p class="">
                     <label for="account_first_name">Tên&nbsp;<span class="">*</span></label>
                     <br>
-                    <input type="text" class="" name="" id="" value="Khang">
+                    <input type="text" class="" name="" id="" value="<?php echo $Ten ?>">
                 </p>
                 <p class="">
                     <label for="account_last_name">Họ&nbsp;<span class="required">*</span></label>
                     <br>
-                    <input type="text" class="" name="account_last_name" id="account_last_name" autocomplete="family-name" value="Hồ">
+                    <input type="text" class="" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo $Ho?>">
                 </p>
             </div>
             <p class="">
@@ -21,7 +44,7 @@
             <p class="">
                 <label for="account_email">Địa chỉ email&nbsp;<span class="required">*</span></label>
                 <br>
-                <input type="email" class="" name="account_email" id="account_email" autocomplete="email" value="hodohoangkhang@gmail.com">
+                <input type="email" class="" name="account_email" id="account_email" autocomplete="email" value="<?php echo $email ?>">
             </p>
             <p class="">
                 <label for="password_current">Mật khẩu hiện tại</label>

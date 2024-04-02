@@ -3,6 +3,7 @@
 
 <header class="header">
     <?php
+        //dtb taikhoan nhanvien khachhang
         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
         // echo $_SESSION['taikhoan'];
         if(isset($_SESSION['taikhoan'])){
@@ -115,7 +116,18 @@
                 <?php 
                     if(isset($_SESSION['taikhoan'])){?>
                        <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
-                            <span>Admin ádasd ád</span>
+                            <span>
+                                <?php
+                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
+                                    $HoTen=getUser($_SESSION['taikhoan'])->getHoTen();
+                                    $slipt = explode(" ", $HoTen);
+                                    // Lấy từ cuối cùng trong mảng
+                                    $Ten = end($slipt)." ".$HoTen;
+                                    echo $Ten;
+                                ?>
+                            </span>
+                            
                             <i class="fa-solid fa-user"></i>
                         </a>
                     <?php }
