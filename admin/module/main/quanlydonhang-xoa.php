@@ -29,6 +29,6 @@ $conn->query($sql);
 // Đóng kết nối
 $conn->close();
 
-
-header('Location: ../../index.php?danhmuc=quanlydonhang');
+echo "<script>alert('Xóa đơn hàng thành công');</script>";
+echo "<script>window.location.href = '../../index.php?danhmuc=quanlydonhang';</script>";
 ?>
