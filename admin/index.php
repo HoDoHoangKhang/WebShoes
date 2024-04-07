@@ -1,15 +1,3 @@
-<?php 
-    session_start();
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
-    //Nếu chưa đăng nhập vào thì chuyển đến trang đăng nhập
-    if(!isset($_SESSION['taikhoan'])){
-        header('Location: ../login.php');
-    }
-    //Nếu đang đăng nhập với tài khoản khách hàng thì không cho vào trang admin và chuyển về trang cửa hàng
-    if(getTenNhomQuyen($_SESSION['taikhoan'])=="Khách hàng"){
-        header('Location: ../index.php');
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -49,6 +49,23 @@
                 break;
             }
         }
+        if(isset($_GET['caidat'])){
+            switch ($_GET['caidat']) {
+                case 'size':
+                    require_once 'module/main/caidat/size.php';
+                    break; 
+                case 'nhacungcap':
+                    require_once 'module/main/caidat/nhacungcap.php';
+                    break;
+                case 'nhanhieu':
+                    require_once 'module/main/caidat/nhanhieu.php';
+                    break;
+                case 'danhmuc':
+                    require_once 'module/main/caidat/danhmuc.php';
+                    break;      
+            
+            }
+        }
         else{
             require_once 'module/main/dashboard.php';
         }
