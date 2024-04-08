@@ -9,25 +9,16 @@ $conn = mysqli_connect("localhost", "root", "", "shoestore");
   px.TongTien,
   px.TongSoLuong,
   px.trangThai,
-  khachhang.MaKH,
-  khachhang.HoTenKH,
-  khachhang.Sdt,
-  nhanvien.MaNV,
-  nhanvien.HoTenNV,
-  nhanvien.SDT
-
+  khachhang.Ma as MaKH,
+  khachhang.HoTen as HoTenKH,
+  khachhang.SDT as SDTKH,
+  nhanvien.Ma as MaNV,
+  nhanvien.HoTen as HoTenNV,
+  nhanvien.SDT as SDTNV
 FROM phieuxuat px
-INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
-INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV;";
-
-
+INNER JOIN user khachhang ON px.MaKH = khachhang.Ma
+INNER JOIN user nhanvien ON px.MaNV = nhanvien.Ma;";
 $result = $conn->query($sql);
-if ($result->num_rows === 0) {
-    echo "<p>Không có dữ liệu phiếu xuất</p>";
-    die();
-  }
-
-
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +47,6 @@ if ($result->num_rows === 0) {
        padding: 0;
     }
 </style>
-<!-- //myTable_wrapper ở đâu -->
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
     <div class="tableTitle">
@@ -103,7 +93,7 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaKH']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenKH']; ?> </li>
-                        <li>SĐT:<?php echo $row['Sdt']; ?></li> 
+                        <li>SĐT:<?php echo $row['SDTKH']; ?></li> 
                         <li></li>
                     </ul>
                 </td>
@@ -111,7 +101,7 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaNV']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
-                        <li>SĐT: <?php echo $row['SDT']; ?></li>
+                        <li>SĐT: <?php echo $row['SDTNV']; ?></li>
                         <li></li>
                     </ul>
                 </td>

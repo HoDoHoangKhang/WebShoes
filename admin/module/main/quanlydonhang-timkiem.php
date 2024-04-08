@@ -27,30 +27,24 @@ if ($timestampBatDau > $timestampKetThuc) {
 
 $conn = mysqli_connect("localhost", "root", "", "shoestore"); 
 // Truy vấn database
-$sql = "SELECT
+$sql="SELECT
 px.MaPX,
 px.NgayDatHang,
 px.TinhTrangDH,
 px.TongTien,
 px.TongSoLuong,
 px.trangThai,
-khachhang.MaKH,
-khachhang.HoTenKH,
-khachhang.Sdt,
-nhanvien.MaNV,
-nhanvien.HoTenNV,
-nhanvien.SDT
-
+khachhang.Ma as MaKH,
+khachhang.HoTen as HoTenKH,
+khachhang.SDT as SDTKH,
+nhanvien.Ma as MaNV,
+nhanvien.HoTen as HoTenNV,
+nhanvien.SDT as SDTNV
 FROM phieuxuat px
-INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
-INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV
+INNER JOIN user khachhang ON px.MaKH = khachhang.Ma
+INNER JOIN user nhanvien ON px.MaNV = nhanvien.Ma
 WHERE (TinhTrangDH = '$tinhTrang' OR '$tinhTrang' = '') AND NgayDatHang BETWEEN '$ngayBatDau' AND '$ngayKetThuc';";
 $result = $conn->query($sql);
-if ($result->num_rows === 0) {
-  echo "<p>Không có thông tin tìm kiếm</p>";
-  die();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +88,7 @@ if ($result->num_rows === 0) {
                         <option value="">Tất cả</option>
                         <option value="Tạm giữ">Tạm giữ</option>
                         <option value="Đang xử lý">Đang xử lý</option>
-                        <option value="Đã giao hàng">Đã hoàn thành</option>
+                        <option value="Đã hoàn thành">Đã hoàn thành</option>
                     </select>
                     <input type="submit" value="Lọc">
                 </form>
@@ -126,7 +120,7 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaKH']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenKH']; ?> </li>
-                        <li>SĐT:<?php echo $row['Sdt']; ?></li> 
+                        <li>SĐT:<?php echo $row['SDTKH']; ?></li> 
                         <li></li>
                     </ul>
                 </td>
@@ -134,7 +128,7 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaNV']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
-                        <li>SĐT: <?php echo $row['SDT']; ?></li>
+                        <li>SĐT: <?php echo $row['SDTNV']; ?></li>
                         <li></li>
                     </ul>
                 </td>
@@ -206,4 +200,3 @@ if ($result->num_rows === 0) {
 </div>
 </body>
 </html>
-

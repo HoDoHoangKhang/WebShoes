@@ -25,7 +25,7 @@
                     <!-- <i class="fa-sharp fa-solid fa-list-ul"></i> -->
                 </div>
                 <a  href="index.php?danhmuc=home">
-                    <img src="./assets/img/logo.png" alt="Logo" class="header__logo">
+                    <img src="./assets/img/logo.png" alt="Logo" class="header__logo" style="height: 50px; width: 100px;">                 
                 </a>
             </div>
             <div class="header__menu">

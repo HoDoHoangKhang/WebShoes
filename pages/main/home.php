@@ -26,7 +26,7 @@
                         </div>
                     </a> -->
                     <div class="hero__image-text">
-                        NIKE
+                       NIKE
                     </div>
                 </div>
             </div>

@@ -49,6 +49,9 @@
                 break;
             }
         }
+        else{
+            require_once 'module/main/dashboard.php';
+        }
         if(isset($_GET['caidat'])){
             switch ($_GET['caidat']) {
                 case 'size':
@@ -66,8 +69,6 @@
             
             }
         }
-        else{
-            require_once 'module/main/dashboard.php';
-        }
+
     ?>
 </div>
