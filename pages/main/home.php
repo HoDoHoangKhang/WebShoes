@@ -3,9 +3,10 @@
         <div class="container">
             <div class="hero-main">
                 <div class="hero__text">
-                    <div class="hero__text-title">LOREM IPSUM</div>
+                    <div class="hero__text-title">SPORT SHOES</div>
                     <div class="hero__text-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum optio ipsa et dolor quod minus quisquam, laudantium veritatis repellat labore id odio sequi, asperiores neque repellendus libero saepe blanditiis commodi.
+                        Vượt qua mọi giới hạn cùng bạn, đồng hành trên mọi hành trình, chinh phục mọi mục tiêu và đạt đến thành công.
+                        Đẳng cấp từ từng bước chân, biểu tượng của sự thành công, nâng tầm đẳng cấp và tạo nên sự khác biệt.
                     </div>
                     <a href="index.php?danhmuc=products" class="button-hero">
                         <span>Cửa hàng</span>
@@ -119,30 +120,24 @@
             <div class="brand-main">
                 <div class="brand__title">BRAND</div>
                 <div class="brand__list">
-                    <div class="brand__box">
-                        <img src="./assets/img/brand-nike.webp" alt="">
-                    </div>
-                    <div class="brand__box">
+                    <a href='index.php?danhmuc=products&nhanhieu=Nike' class="brand__box">
+                        <img src="./assets/img/brand-nike.png" alt="">
+                    </a>
+                    <a href='index.php?danhmuc=products&nhanhieu=Adidas' class="brand__box">
                         <img src="./assets/img/brand-adidas.png" alt="">
-                    </div>
-                    <div class="brand__box">
-                        <img src="./assets/img/brand-vans.jpg" alt="">
-                    </div>
-                    <div class="brand__box">
-                        <img src="./assets/img/brand-hoka.png" alt="">
-                    </div>
-                    <div class="brand__box">
+                    </a>
+                    <a href='index.php?danhmuc=products&nhanhieu=Vans' class="brand__box">
+                        <img src="./assets/img/brand-vans.png" alt="">
+                    </a>
+                    <a href='index.php?danhmuc=products&nhanhieu=Jordan' class="brand__box">
+                        <img src="./assets/img/brand-jordan.png" alt="">
+                    </a>
+                    <a href='index.php?danhmuc=products&nhanhieu=Puma' class="brand__box">
                         <img src="./assets/img/brand-puma.png" alt="">
-                    </div>
-                    <div class="brand__box">
+                    </a>
+                    <a href='index.php?danhmuc=products&nhanhieu=New Balance' class="brand__box">
                         <img src="./assets/img/brand-balance.png" alt="">
-                    </div>
-                    <div class="brand__box">
-                        <img src="./assets/img/brand-crocs.jpg" alt="">
-                    </div>
-                    <div class="brand__box">
-                        <img src="./assets/img/brand-jordan.jpg" alt="">
-                    </div>
+                    </a>
                 </div>
                 
             </div>

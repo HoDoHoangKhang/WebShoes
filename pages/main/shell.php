@@ -129,7 +129,7 @@
                                 <div class="shell-total-item-detail">
                                     <div class="shell-total-img-quanlity">
                                         <div class="shell-total-img">
-                                            <img src="./assets/img/shoesDefault.jpg" alt="" class="">
+                                            <img src="./assets/img/shoesDefault.png" alt="" class="">
                                         </div>
                                     </div>
                                     <div class="shell-total-title_size">
@@ -301,7 +301,7 @@
                                 <div class="shell-total-item-detail">
                                     <div class="shell-total-img-quanlity">
                                         <div class="shell-total-img">
-                                            <img src="./assets/img/shoesDefault.jpg" alt="" class="">
+                                            <img src="./assets/img/shoesDefault.png" alt="" class="">
                                         </div>
                                     </div>
                                     <div class="shell-total-title_size">
@@ -418,12 +418,49 @@
                 creatToast("item-error","Vui lòng chọn sản phẩm để thanh toán!","fa-solid fa-triangle-exclamation","item-end-error");
             }
             else{
-                var output="";
-                getProductSelect().forEach(cart =>{
-                    output+=cart.TaiKhoan +","+ cart.MaSP +"," + cart.Size +","+ cart.SoLuong + "/" ;
-                });
-                console.log(output);
-                window.location.href="index.php?danhmuc=checkout&checkout="+output;
+                <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctsizesp-act.php');?>
+                $.ajax({
+                        url: 'control/ajax_action.php',
+                        type: 'POST',
+                        data: {
+                            action: 'checkSoLuongTonKho',
+                            products: JSON.stringify(getProductSelect()),                        
+                        },
+                        success: function(data){
+                            if(data==0){// Sai
+                                console.log(data);
+                                creatToast("item-error","Số lượng sản phẩm trong kho không đủ!","fa-solid fa-triangle-exclamation","item-end-error");                                
+                            }
+                            else{
+                                console.log(data);
+                                window.location.href="index.php?danhmuc=checkout&checkout="+data;
+                            }
+                        }
+                    });
+                // var output="";
+                // getProductSelect().forEach(cart =>{
+                //     output+=cart.TaiKhoan +","+ cart.MaSP +"," + cart.Size +","+ cart.SoLuong + "/" ;
+                //     $.ajax({
+                //         url: 'control/ajax_action.php',
+                //         type: 'POST',
+                //         data: {
+                //             action: 'checkSoLuongTonKho',
+                //             listCart:getProductSelect()
+                //         },
+                //         success: function(data){
+                //             if(cart.SoLuong > parseInt(data)){
+                //                 creatToast("item-error","Số lượng sản phẩm trong kho không đủ!","fa-solid fa-triangle-exclamation","item-end-error");
+                //                 flag = false;
+                                
+                //             }
+                //         }
+                //     });
+                // });
+                // console.log(output);
+                // if(flag===true){
+                //     console.log(flag);
+                //     // window.location.href="index.php?danhmuc=checkout&checkout="+output;
+                // }
             }
         });
     });

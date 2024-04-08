@@ -1,4 +1,5 @@
-<?php session_start();
+<?php 
+    // session_start();
  ?>
 
 <header class="header">
@@ -116,7 +117,7 @@
                 <?php 
                     if(isset($_SESSION['taikhoan'])){?>
                        <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
-                            <span>
+                            <span class="header__action-login-name">
                                 <?php
                                     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
                                     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');

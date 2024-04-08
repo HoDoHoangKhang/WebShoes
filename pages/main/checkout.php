@@ -32,10 +32,14 @@
                                                     <label class="card-radio-label mb-0">
                                                         <input type="radio" name="address" id="info-address1" class="card-radio-input" checked="">
                                                         <div class="card-radio text-truncate p-3">
-                                                            <span class="fs-14 mb-4 d-block">Hoàng Khang</span>
-                                                            <span class="fs-14 mb-2 d-block">(+84) 338873461</span>
-                                                            <span class="text-muted fw-normal text-wrap mb-1 d-block">hodohoangkhang@gmail.com</span>
-                                                            <span class="text-muted fw-normal text-wrap mb-1 d-block">109 Clarksburg Park Road Show Low, AZ 85901</span>
+                                                            <?php
+                                                                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                                                                $user=getUser($_SESSION['taikhoan']);
+                                                            ?>
+                                                            <span class="fs-14 mb-4 d-block"><?php echo $user->getHoTen() ?></span>
+                                                            <span class="fs-14 mb-2 d-block">(+84) <?php echo $user->getSDT(); ?></span>
+                                                            <span class="text-muted fw-normal text-wrap mb-1 d-block"><?php echo $user->getEmail() ?></span>
+                                                            <span class="text-muted fw-normal text-wrap mb-1 d-block"><?php echo $user->getDiaChi() ?></span>
 
                                                         </div>
                                                     </label>
@@ -114,6 +118,24 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="row info-pay mt-4 p-4">
+                                <div id="pay-chuyenkhoan">
+                                    <p class="font-size-16 pay-chuyenkhoan_title" style="margin-bottom: 10px;">
+                                        Thông tin chuyển khoản
+                                    </p>
+                                    <div class="pay-chuyenkhoan-div">
+                                        <div class="pay-chuyenkhoan_img">
+                                            <img src="./assets/img/banking.png" alt="">
+
+                                        </div>
+                                        <div class="pay-chuyenkhoan_main">
+                                            <p class="font-size-16 pay-chuyenkhoan_note">
+                                                Sau khi nhận được tiền shop sẽ gửi hàng về cho bạn.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                         <!-- <div class="col-lg-3 col-sm-6">
                                             <div>
                                                 <label class="card-radio-label">
@@ -238,9 +260,9 @@
                             <span>Tổng thanh toán</span>
                             <span class="shell-priceTotal-total" style="text-align: end;"></span>
                         </div>
-                        <a href="index.php?danhmuc=pay" class="shell-total-btn" style="width: 100%; display: block;">
+                        <button class="shell-total-btn" style="width: 100%; display: block;">
                             Đặt hàng
-                        </a>
+                        </button>
                     </div>
                 </div>
         </div>
@@ -346,9 +368,60 @@
         btnDelivery.forEach(element => {
             element.addEventListener('click', function(){   
                 var price=element.querySelector("#delivery_checkout-price").textContent;
+                var showPriceDelivery=document.querySelector(".shell-priceTotal-delivery");
+                showPriceDelivery.textContent=price;
                 showPriceTotal(price);
             });
         });
+        // Đặt hàng
+        var btnDatHang=document.querySelector(".shell-total-btn");
+        btnDatHang.addEventListener('click', function(){
+            var tongTienHang=vndToInteger(document.querySelector(".shell-priceTotal").textContent);
+            var phiVanChuyen=vndToInteger(document.querySelector(".shell-priceTotal-delivery").textContent);
+            var tongThanhToan=vndToInteger(document.querySelector(".shell-priceTotal-total").textContent);
+            console.log(tongTienHang+" "+phiVanChuyen+" "+tongThanhToan);
+            $.ajax({
+                method:"POST",
+                url:"./control/ajax_action.php",
+                data:{
+                    listCart: JSON.stringify(getCart(parts)),
+                    tongTienHang: tongTienHang,
+                    phiVanChuyen:phiVanChuyen,
+                    tongThanhToan:tongThanhToan,
+                    tenDangNhap: "<?php echo $_SESSION['taikhoan'] ?>",
+                    action:"checkout"
+                },
+                success: function(data){
+                    removeListCart(parts);
+                    window.location.href = `index.php?danhmuc=paysucess`;
+                }
+            });
+        });
+        function removeListCart(parts){
+            parts.forEach(i => {
+                var cart=i.split(",");
+                console.log(cart[0]+" "+cart[1]+" "+cart[2]+" "+cart[3]+" ")
+                $ma=parseInt(cart[1]);
+                $size=parseInt(cart[2]);
+                $taikhoan=cart[0];
+                removeFromCart($ma,$size,$taikhoan);
+            });
+        }
+        function removeFromCart(MaSP,Size,TaiKhoan) {
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+            // Tìm chỉ mục của sản phẩm trong mảng cart
+            var index = cart.findIndex(function(item) {
+                return item['MaSP'] === MaSP && item['Size'] === Size && item['TaiKhoan'] === TaiKhoan;
+            });
+            if (index !== -1) {
+                // Nếu tìm thấy sản phẩm trong giỏ hàng, xóa sản phẩm đó khỏi mảng
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                console.log("Sản phẩm đã được xóa khỏi giỏ hàng.");
+            } else {
+                console.log("Không tìm thấy sản phẩm trong giỏ hàng.");
+            }
+        }
     });
 </script>

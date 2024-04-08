@@ -197,16 +197,16 @@
                     </div>
                     <div class="page">
                         <div class="page-main">
-                            <div class="page-left page-left-right page-item--disable">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </div>
+                            <!-- <div class="page-left page-left-right page-item--disable">
+                                <i clas-s="fa-solid fa-angle-left"></i>
+                            </div> -->
                             <div class="page-number">
 
 
                             </div>
-                            <div class="page-right page-left-right">
+                            <!-- <div class="page-right page-left-right">
                                 <i class="fa-solid fa-angle-right "></i>
-                            </div>
+                            </div> -->
                         </div>
                     </div>  
                 </div>
@@ -342,12 +342,13 @@
                 filterData();
             });
         });
-        // var number_page=document.querySelectorAll(".pagination_link");
-        // number_page.forEach(page =>{
-        //     page.addEventListener('click',function(){
-        //         page.classList.add("pagination_link-select");
-        //     });
-        // });
+        var number_page=document.querySelectorAll(".pagination_link");
+        number_page.forEach(page =>{
+            page.addEventListener('click',function(){
+            page.classList.add("pagination_link-select");
+            //console.log("aasas");
+           });
+        });
     });
     
     //     //Load dữ liệu

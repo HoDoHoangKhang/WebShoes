@@ -2,6 +2,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/loaisp-act.php');
 
 
     $product= new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
@@ -83,6 +84,14 @@
                         <h3 class="detail-content__title" style="font-size: 25px; margin-bottom: 10px;">
                             <?php echo $TenSP ?>
                         </h3>
+                        <div class="detail-content__tag">
+                            <ul class="detail-content__tag-list">
+                                <?php 
+                                    showNhanHieuProductDetail($_GET['id']);
+                                    showLoaiProductDetail($_GET['id']);
+                                ?>
+                            </ul>
+                        </div>
                         <div class="detail-content__rate-review-sold">
                             <div class="detail-content__rate">
                                 <i class="detail-content__rate-icon fa-solid fa-star"></i>
@@ -147,7 +156,7 @@
                             <div class="detail-content__title" style="padding-bottom: 10px; margin: 0;">
                                 <h4 style="font-size: 20px;">Số lượng</h4>
                                 <div class="detail-content__instock">
-                                    còn lại: <span class="detail-content__instock-value">1000</span>
+                                    Còn lại: <span class="detail-content__instock-value">1000</span>
                                 </div>
                                 <div class="stock-warning">
                                     <i class="fa-solid fa-exclamation-circle"></i>

@@ -61,8 +61,8 @@
             
             <?php
             
-            $sql = "SELECT tk.TenDangNhap, tk.MatKhau, tk.MaQuyen, tk.Avt, nv.HoTenNV, nv.SDT ,nv.Email
-                    FROM taikhoan tk JOIN nhanvien nv ON tk.TenDangNhap = nv.TenDangNhap";
+            $sql = "SELECT *
+                    FROM taikhoan tk JOIN user u ON tk.TenDangNhap = u.TenDangNhap";
             $result = mysqli_query($connect,$sql);
             while ($row=mysqli_fetch_array($result)) { ?>
                 <tr>
@@ -73,7 +73,7 @@
                             <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
                         </div>
                         <ul class="ml-2">
-                            <li> <?php echo $row['HoTenNV'] ?> </li>
+                            <li> <?php echo $row['HoTen'] ?> </li>
                             <li> <?php echo $row['Email'] ?> </li>
                             <li> <?php echo $row['SDT'] ?> </li>
                         </ul>
@@ -104,65 +104,6 @@
                         
                         
                         
-                    </select>
-                </div>
-                </td>
-                <td>Hoạt động</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Xóa</a></li>
-                            <li><a class="dropdown-item" href="#">Kích hoạt</a></li>
-                            <li><a class="dropdown-item" href="#">Khóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <?php
-            }
-            
-            $sql = "SELECT tk.TenDangNhap, tk.MatKhau, tk.MaQuyen, tk.Avt, kh.HoTenKH, kh.Sdt ,kh.Email 
-                    FROM taikhoan tk JOIN khachhang kh ON tk.TenDangNhap = kh.TenDangNhap";
-            $result = mysqli_query($connect,$sql);
-            while ($row=mysqli_fetch_array($result)) { ?>
-                <tr>
-                
-                <td>
-                    <div style="display: flex; align-items: center; gap: 10px">
-                        <div class="img-pr">
-                            <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
-                        </div>
-                        <ul class="ml-2">
-                            <li> <?php echo $row['HoTenKH'] ?> </li>
-                            <li> <?php echo $row['Email'] ?> </li>
-                            <li> <?php echo $row['Sdt'] ?> </li>
-                        </ul>
-                    </div>
-                    
-                </td>
-                <td>
-                    <ul>
-                        <li>
-                            <strong>Tài khoản: </strong> <?php echo $row['TenDangNhap'] ?>
-                        </li>
-                        <li>
-                            <strong>Mật khẩu: </strong> <?php echo $row['MatKhau'] ?>
-                        </li>
-                    </ul>
-                </td>
-                <td>
-                <div class="filter-container">
-                    <select id="filterSelect" style="width: 100%;">
-                    <?php
-                            $sql ="SELECT * From quyen";
-                            $result1 = mysqli_query($connect,$sql);
-                            while ($row1=mysqli_fetch_array($result1)) { ?>
-                                <option value="<?php echo $row['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
-                            <?php
-                            }
-                        ?>
                     </select>
                 </div>
                 </td>

@@ -2,6 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/DTB.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/loaisp.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+
 
 function getLoaiSanPhamList(){
     $db = new DTB();
@@ -33,5 +35,20 @@ function showDanhMucMegaMenu(){
     foreach($danhMucArr as $danhMuc){
         echo "<a href='index.php?danhmuc=products&loai=".$danhMuc->getTenLoai()."' class='menu__hover__content-li'>".$danhMuc->getTenLoai()."</a>";
     }
+}
+function getTenLoai($id){
+    $db = new DTB();
+    $kq = mysqli_query($db->getConnection(), "SELECT TenLoai FROM loaisp WHERE MaLoai = $id");
+    $row = mysqli_fetch_assoc($kq);
+    $tenLoai = $row['TenLoai'];
+    $db->disconnect();
+    return $tenLoai;
+}
+function showLoaiProductDetail($maSP){
+    echo "
+    <a href='index.php?danhmuc=products&loai=".getTenLoai(getProduct($maSP)->getMaLoai())."' class='detail-content__tag-item'>
+        ".getTenLoai(getProduct($maSP)->getMaLoai())."
+    </a>
+    ";
 }
 ?>

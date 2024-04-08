@@ -200,4 +200,17 @@
         }
         return $output;
     }
+    function getSoLuongDaBan($maSP){
+        $db = new DTB();
+        $query="SELECT * FROM `sanpham` WHERE MaSP=$maSP";
+        $kq = mysqli_query($db->getConnection(), $query);
+        $row = mysqli_fetch_assoc($kq);
+        return $row['SoLuongDaBan'];
+    }
+    function updateSoLuongDaBan($maSP, $soLuongBan){
+        $soLuongMoi=intval(getSoLuongDaBan($maSP)) + intval($soLuongBan);
+        $db = new DTB();
+        $query="UPDATE `sanpham` SET `SoLuongDaBan`=$soLuongMoi WHERE MaSP=$maSP";
+        $kq = mysqli_query($db->getConnection(), $query);
+    }
 ?>

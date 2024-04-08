@@ -25,6 +25,9 @@
             case 'profile':
                 include_once 'pages/main/profile.php';
                 break; 
+            case 'paysucess':
+                include_once 'pages/main/paysucess.php';
+                break; 
             default:
                 include_once 'pages/main/home.php';
                 break; 

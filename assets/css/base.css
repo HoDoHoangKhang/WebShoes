@@ -338,7 +338,6 @@ a{
 }
 .page-number{
     display: flex;
-    gap: 1rem;
 }
 .page-left i{
     line-height: 3rem;

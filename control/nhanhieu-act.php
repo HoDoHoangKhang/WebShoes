@@ -2,6 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/DTB.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/nhanhieu.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+
 
 function getNhanHieuList(){
     $db = new DTB();
@@ -41,5 +43,12 @@ function showNhanHieuMegaMenu(){
     foreach($nhanHieuArr as $nhanHieu){
         echo "<a href='index.php?danhmuc=products&nhanhieu=".$nhanHieu->getTenNhanHieu()."' class='menu__hover__content-li'>".$nhanHieu->getTenNhanHieu()."</a>";
     }
+}
+function showNhanHieuProductDetail($maSP){
+    echo "
+    <a href='index.php?danhmuc=products&nhanhieu=".getTenNhanHieu(getProduct($maSP)->getMaNhanHieu())."' class='detail-content__tag-item'>
+        ".getTenNhanHieu(getProduct($maSP)->getMaNhanHieu())."
+    </a>
+    ";
 }
 ?>
