@@ -411,3 +411,27 @@ background-color: #1819567d;
     height: 30px;
     
 }
+
+.header_banhang{
+    background-color: #3294fe;
+    font-size: 16px;
+    padding: 5px 20px ;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.header_banhang:hover{    
+    color: #ffffff;
+    background-color: #666666;
+}
+.icon-banhang{
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+.header_banhang:hover .icon-banhang{    
+    transform: translateX(5px);
+}

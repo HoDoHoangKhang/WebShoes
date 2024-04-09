@@ -35,7 +35,7 @@
         <tbody>
             
             <?php
-                require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php'); //Kết nối mysql
+                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql
                 $sql = "SELECT * FROM quyen";
                 $result = mysqli_query($connect,$sql);
                 while ($row = mysqli_fetch_array($result)) {
@@ -71,7 +71,7 @@
 
     <div class="modal-content" style="">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelThemsanpham">Thêm Quyền mới</h5>
+        <h5 class="modal-title" id="ModalLabelThemquyen">Thêm Quyền mới</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -99,7 +99,7 @@
   <form action="module/main/quanlyquyen_suaquyen.php?id=<?php echo $_GET['MaQuyen'] ?>" method="post" >
     <div class="modal-content" style="">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelThemsanpham">Sửa Tên Quyền </h5>
+        <h5 class="modal-title" id="ModalLabelSuaquyen">Sửa Tên Quyền </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -136,7 +136,7 @@
   <div class="modal-dialog">
     <div class="modal-content" style="">
       <div class="modal-header">
-        <h2 class="modal-title" id="ModalLabelThemsanpham">Thông báo </h2>
+        <h2 class="modal-title" id="ModalLabelthongbao">Thông báo </h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

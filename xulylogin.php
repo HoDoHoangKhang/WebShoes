@@ -2,11 +2,9 @@
 
 // Bat dau session
 session_start();
-
 if (isset($_POST['txtUser']) && isset($_POST['txtPass'])) 
 {
 	include("config/config.php");
-	
 	$userId   = $_POST['txtUser'];
 	$password = $_POST['txtPass'];
 	
@@ -18,16 +16,17 @@ if (isset($_POST['txtUser']) && isset($_POST['txtPass']))
 	if (mysqli_num_rows($result) == 1)	{
 		// username va password hop le 
 		// Tao bien session "db_is_logged_in" va gan gia tri bang true
-		$_SESSION['TenDangNhap'] = $userId;
+
+		//session này dùng để luu lại Tên Đăng nhập của tài khoản sau khi đăng nhấp thành công
+		$_SESSION['taikhoan'] = $userId;
+
+		
 		//sau khi dang nhap thanh cong thi chuyen sang trang index.php
 		header('Location: index.php');
 		exit;
 	} 
 	else {
 		header('Location: login.php?success=false');
-	
 	}
 	mysqli_close($connect);
 }
-
-?>

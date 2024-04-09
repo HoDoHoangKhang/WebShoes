@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['taikhoan'])){
+        header('Location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +28,7 @@
 
     <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- font pro -->
     <link rel="stylesheet" href="./assets/fonts/fontawesome.com/releases/v6.4.0/css/all.css">
@@ -29,11 +36,15 @@
     <link rel="stylesheet" href="./assets/fonts/fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
     <link rel="stylesheet" href="./assets/fonts/fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 <body>
-        
     <?php require_once 'config/config.php' ?>
+
     <div class="app">
         <!-- Header -->
         <?php include_once 'pages/header.php' ?>
@@ -49,6 +60,8 @@
     
 
     <!-- Slick -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script
       type="text/javascript"
       src="https://code.jquery.com/jquery-1.11.0.min.js"
@@ -62,7 +75,6 @@
       src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
     <script src="index.js">
-        
     </script>
 </body>
 <div class="menu-mobile">

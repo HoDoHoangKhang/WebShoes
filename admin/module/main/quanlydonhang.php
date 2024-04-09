@@ -1,3 +1,43 @@
+<?php
+// Kết nối với cơ sở dữ liệu
+$conn = mysqli_connect("localhost", "root", "", "shoestore");  
+  //lấy thông tin sản phẩm,khách hàng,nhân viên
+  $sql="SELECT
+  px.MaPX,
+  px.NgayDatHang,
+  px.TinhTrangDH,
+  px.TongTien,
+  px.TongSoLuong,
+  px.trangThai,
+  khachhang.MaKH,
+  khachhang.HoTenKH,
+  khachhang.Sdt,
+  nhanvien.MaNV,
+  nhanvien.HoTenNV,
+  nhanvien.SDT
+
+FROM phieuxuat px
+INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
+INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV;";
+
+
+$result = $conn->query($sql);
+if ($result->num_rows === 0) {
+    echo "<p>Không có dữ liệu phiếu xuất</p>";
+    die();
+  }
+
+
+  ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lí đơn hàng</title>
+  
+</head>
+<body>
 <style
 >
     .img-pr{
@@ -13,22 +53,28 @@
         object-fit: cover;
     }
     ul{
-        padding: 0;
+       padding: 0;
     }
 </style>
+<!-- //myTable_wrapper ở đâu -->
+<div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
     <div class="tableTitle">
         <p>Danh sách đơn hàng</p>
         <div class="table-func">
             <div class="filter-container">
-                <select id="filterSelect">
-                    <option value="">Tình trạng đơn hàng</option>
-                    <option value="">a</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                </select>
+                <form action="index.php?danhmuc=quanlydonhang-timkiem" method="post">
+                    Ngày bắt đầu: <input type="date" name="ngay_bat_dau">
+                    Ngày kết thúc: <input type="date" name="ngay_ket_thuc">
+                    <label>Tình trạng:</label> 
+                    <select name="tinh_trang">
+                        <option value="">Tất cả</option>
+                        <option value="Tạm giữ">Tạm giữ</option>
+                        <option value="Đang xử lý">Đang xử lý</option>
+                        <option value="Đã hoàn thành">Đã hoàn thành</option>
+                    </select>
+                    <input type="submit" value="Lọc">
+                </form>
             </div>
             
         </div>
@@ -42,225 +88,57 @@
                 <th>Ngày đặt</th>
                 <th>Số lượng</th>
                 <th>Tổng tiền</th>
-                <th>Trạng thái</th>
+                <th>Tình trạng đơn hàng</th>
                 <th>Hàng động</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>
+        <?php
+        while ($row = $result->fetch_assoc()) {
+            if($row['trangThai'] == 1){
+        ?>
+      <tr>
+        <td><?php echo $row['MaPX']; ?></td>
+        <td>
                     <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
+                        <li>ID: <?php echo $row['MaKH']; ?></li></li>
+                        <li>Tên: <?php echo $row['HoTenKH']; ?> </li>
+                        <li>SĐT:<?php echo $row['Sdt']; ?></li> 
                         <li></li>
                     </ul>
                 </td>
                 <td>
                     <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
+                        <li>ID: <?php echo $row['MaNV']; ?></li></li>
+                        <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
+                        <li>SĐT: <?php echo $row['SDT']; ?></li>
                         <li></li>
                     </ul>
                 </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
+                <td><?php echo $row['NgayDatHang']; ?></td>
+                <td><?php echo $row['TongSoLuong']; ?></td>
+                <td><?php echo $row['TongTien']; ?></td>
+                <td><?php echo $row['TinhTrangDH']; ?></td>
                 <td>
                     <div class="dropdown" >
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
+                            <li><a class="dropdown-item" href="index.php?danhmuc=quanlydonhang-chitiet&id=<?php echo $row['MaPX']; ?>">Xem chi tiết</a></li>                   
+                            <li><a class="dropdown-item" href="module/main/quanlydonhang-trangthai.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa chuyển trạng thái đơn hàng?');" >Chuyển trạng thái</a></li>
+                            <li><a class="dropdown-item" href="module/main/quanlydonhang-xoa.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng?');" >Xóa đơn hàng</a></li>
                         </ul>
                     </div>
                 </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>ID: 12</li></li>
-                        <li>Tên: Name NameName </li>
-                        <li>SDT: 0987654312</li>
-                        <li></li>
-                    </ul>
-                </td>
-                <td>12/12/1122</td>
-                <td>4</td>
-                <td>600.000</td>
-                <td>Trạng thái</td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="#">Chi tiết đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Tạm giữ</a></li>
-                            <li><a class="dropdown-item" href="#">Đang xử lý</a></li>
-                            <li><a class="dropdown-item" href="#">Đã hoàn thành</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
+      </tr>
+    <?php } } ?>
         </tbody>
     </table>
 </div>
-
+<?php
+  // Đóng kết nối
+  $conn->close();
+  ?>
 <!-- Modal -->
 <div class="modal fade" id="chitietsoluong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -303,3 +181,5 @@
     </div>
   </div>
 </div>
+</body>
+</html>
