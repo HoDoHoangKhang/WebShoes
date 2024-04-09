@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 02, 2024 lúc 06:17 PM
+-- Thời gian đã tạo: Th4 09, 2024 lúc 06:01 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.1.17
 
@@ -197,10 +197,10 @@ CREATE TABLE `ctpx` (
 INSERT INTO `ctpx` (`MaPX`, `MaSP`, `SoLuong`, `GiaBan`, `SizeSP`, `trangThai`) VALUES
 (1, 37, 1, 1440000, 43, 1),
 (1, 38, 1, 752000, 43, 1),
-(2, 2, 1, 950000, 41, 1),
-(2, 3, 1, 720000, 42, 1),
-(2, 4, 2, 880000, 40, 1),
-(2, 5, 1, 1040000, 40, 1),
+(2, 2, 1, 950000, 41, 0),
+(2, 3, 1, 720000, 42, 0),
+(2, 4, 2, 880000, 40, 0),
+(2, 5, 1, 1040000, 40, 0),
 (3, 6, 1, 760000, 41, 1),
 (3, 7, 2, 920000, 42, 1),
 (4, 2, 2, 950000, 37, 1),
@@ -208,7 +208,37 @@ INSERT INTO `ctpx` (`MaPX`, `MaSP`, `SoLuong`, `GiaBan`, `SizeSP`, `trangThai`) 
 (5, 21, 1, 1440000, 38, 1),
 (6, 18, 1, 1240000, 43, 1),
 (6, 30, 1, 1240000, 40, 1),
-(6, 30, 1, 1240000, 43, 1);
+(6, 30, 1, 1240000, 43, 1),
+(104, 6, 1, 760000, 40, 0),
+(105, 6, 1, 760000, 41, 0),
+(106, 9, 1, 840000, 32, 1),
+(107, 1, 1, 800000, 33, 1),
+(107, 1, 1, 800000, 37, 1),
+(107, 1, 1, 800000, 38, 1),
+(107, 6, 1, 760000, 31, 1),
+(107, 6, 1, 760000, 39, 1),
+(107, 35, 1, 784000, 41, 1),
+(108, 6, 2, 760000, 32, 1),
+(108, 6, 3, 760000, 37, 1),
+(108, 35, 2, 784000, 40, 1),
+(109, 9, 1, 840000, 40, 1),
+(110, 14, 45, 752000, 43, 1),
+(111, 14, 1, 752000, 39, 1),
+(112, 26, 1, 760000, 43, 1),
+(113, 6, 1, 760000, 38, 1),
+(113, 9, 1, 840000, 43, 1),
+(113, 26, 1, 760000, 43, 1),
+(114, 4, 1, 880000, 32, 1),
+(115, 1, 1, 800000, 37, 1),
+(116, 1, 1, 800000, 31, 1),
+(118, 1, 3, 800000, 43, 1),
+(119, 1, 3, 800000, 37, 1),
+(120, 9, 1, 840000, 38, 1),
+(121, 1, 4, 800000, 31, 1),
+(121, 1, 2, 800000, 43, 1),
+(121, 29, 2, 768000, 40, 1),
+(122, 6, 5, 760000, 31, 1),
+(122, 6, 6, 760000, 33, 1);
 
 -- --------------------------------------------------------
 
@@ -228,19 +258,19 @@ CREATE TABLE `ctsizesp` (
 
 INSERT INTO `ctsizesp` (`MaSP`, `SizeSP`, `SoLuong`) VALUES
 (1, 30, 11),
-(1, 31, 24),
+(1, 31, 20),
 (1, 32, 2),
 (1, 33, 33),
 (1, 34, 40),
 (1, 35, 19),
 (1, 36, 10),
-(1, 37, 36),
+(1, 37, 32),
 (1, 38, 6),
-(1, 39, 10),
+(1, 39, 2),
 (1, 40, 0),
 (1, 41, 27),
 (1, 42, 32),
-(1, 43, 46),
+(1, 43, 44),
 (2, 30, 9),
 (2, 31, 36),
 (2, 32, 25),
@@ -298,9 +328,9 @@ INSERT INTO `ctsizesp` (`MaSP`, `SizeSP`, `SoLuong`) VALUES
 (5, 42, 50),
 (5, 43, 9),
 (6, 30, 20),
-(6, 31, 50),
+(6, 31, 45),
 (6, 32, 50),
-(6, 33, 36),
+(6, 33, 30),
 (6, 34, 1),
 (6, 35, 37),
 (6, 36, 20),
@@ -347,7 +377,7 @@ INSERT INTO `ctsizesp` (`MaSP`, `SizeSP`, `SoLuong`) VALUES
 (9, 35, 20),
 (9, 36, 7),
 (9, 37, 0),
-(9, 38, 46),
+(9, 38, 45),
 (9, 39, 35),
 (9, 40, 26),
 (9, 41, 17),
@@ -629,7 +659,7 @@ INSERT INTO `ctsizesp` (`MaSP`, `SizeSP`, `SoLuong`) VALUES
 (29, 37, 9),
 (29, 38, 22),
 (29, 39, 27),
-(29, 40, 16),
+(29, 40, 14),
 (29, 41, 37),
 (29, 42, 1),
 (29, 43, 12),
@@ -850,19 +880,20 @@ CREATE TABLE `hinhanh` (
 
 CREATE TABLE `loaisp` (
   `MaLoai` int(11) NOT NULL,
-  `TenLoai` varchar(30) DEFAULT NULL
+  `TenLoai` varchar(30) DEFAULT NULL,
+  `hide` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `loaisp`
 --
 
-INSERT INTO `loaisp` (`MaLoai`, `TenLoai`) VALUES
-(1, 'Basketball'),
-(2, 'Gym'),
-(3, 'Running'),
-(4, 'Tennis'),
-(5, 'Badminton');
+INSERT INTO `loaisp` (`MaLoai`, `TenLoai`, `hide`) VALUES
+(1, 'Basketball', 1),
+(2, 'Gym', 1),
+(3, 'Running', 1),
+(4, 'Tennis', 1),
+(5, 'Badminton', 1);
 
 -- --------------------------------------------------------
 
@@ -875,20 +906,21 @@ CREATE TABLE `nhacungcap` (
   `TenNCC` varchar(20) DEFAULT NULL,
   `DiaChiNCC` varchar(255) DEFAULT NULL,
   `SdtNCC` varchar(10) DEFAULT NULL,
-  `EmailNCC` varchar(255) DEFAULT NULL
+  `EmailNCC` varchar(255) DEFAULT NULL,
+  `hide` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nhacungcap`
 --
 
-INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`, `DiaChiNCC`, `SdtNCC`, `EmailNCC`) VALUES
-(1, 'Vina Giày', '', '0392921111', 'ncc1@gmail.com'),
-(2, 'An Ba', '', '0231231233', 'ncc2@gmail.com'),
-(3, 'Giày Việt', '', '0938212311', 'ncc3@gmail.com'),
-(4, 'Giày Sài Gòn', '', '039123123', 'ncc4@gmail.com'),
-(5, 'Sahara', '', '0909988972', 'ncc5@gmail.com'),
-(6, 'Bitis', '', '0293123123', 'ncc6@gmail.com');
+INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`, `DiaChiNCC`, `SdtNCC`, `EmailNCC`, `hide`) VALUES
+(1, 'Vina Giày', '123 Đường ARR, Quận 1, Thành phố HCM', '0392921111', 'ncc1@gmail.com', 1),
+(2, 'An Ba', '222 Đường ABC, Quận 2, Thành phố HCM', '0231231233', 'ncc2@gmail.com', 1),
+(3, 'Giày Việt', '333 Đường ARBC, Quận 4, Thành phố HCM', '0938212311', 'ncc3@gmail.com', 1),
+(4, 'Giày Sài Gòn', '444 Đường ABRC, Quận 8, Thành phố HCM', '039123123', 'ncc4@gmail.com', 1),
+(5, 'Sahara', '666 Đường 23, Quận 2, Thành phố HCM', '0909988972', 'ncc5@gmail.com', 1),
+(6, 'Bitis', '99 Đường 2, Quận 3, Thành phố HCM', '0293123123', 'ncc6@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -898,20 +930,21 @@ INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`, `DiaChiNCC`, `SdtNCC`, `EmailNCC`) 
 
 CREATE TABLE `nhanhieu` (
   `MaNhanHieu` int(20) NOT NULL,
-  `TenNhanHieu` varchar(50) NOT NULL
+  `TenNhanHieu` varchar(50) NOT NULL,
+  `hide` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nhanhieu`
 --
 
-INSERT INTO `nhanhieu` (`MaNhanHieu`, `TenNhanHieu`) VALUES
-(2, 'Nike'),
-(3, 'Adidas'),
-(4, 'Jordan'),
-(5, 'New Balance'),
-(6, 'Vans'),
-(7, 'Puma');
+INSERT INTO `nhanhieu` (`MaNhanHieu`, `TenNhanHieu`, `hide`) VALUES
+(2, 'Nike', 1),
+(3, 'Adidas', 1),
+(4, 'Jordan', 1),
+(5, 'New Balance', 1),
+(6, 'Vans', 1),
+(7, 'Puma', 1);
 
 -- --------------------------------------------------------
 
@@ -968,12 +1001,31 @@ CREATE TABLE `phieuxuat` (
 --
 
 INSERT INTO `phieuxuat` (`MaPX`, `MaNV`, `MaKH`, `NgayDatHang`, `TinhTrangDH`, `TongTien`, `TongSoLuong`, `trangThai`) VALUES
-(1, 3, 1, '2024-03-04', 'Tạm giữ', 2192000, 2, 1),
-(2, 3, 2, '2024-03-02', 'Đang xử lý', 4470000, 4, 1),
-(3, 3, 3, '2024-02-14', 'Tạm giữ', 2600000, 3, 1),
+(1, 3, 1, '2024-03-04', 'Đã hoàn thành', 2192000, 2, 1),
+(2, 3, 2, '2024-03-02', 'Đang xử lý', 4470000, 4, 0),
+(3, 3, 3, '2024-02-14', 'Đang xử lý', 2600000, 3, 1),
 (4, 3, 4, '2024-01-24', 'Đã hoàn thành', 1900000, 2, 1),
 (5, 3, 5, '2024-02-09', 'Đã hoàn thành', 2208000, 2, 1),
-(6, 3, 6, '2024-04-30', 'Đã hoàn thành', 3560000, 3, 1);
+(6, 3, 6, '2024-04-30', 'Đã hoàn thành', 3560000, 3, 1),
+(104, 7, 7, '2024-04-06', 'Tạm giữ', 790000, 1, 0),
+(105, 7, 7, '2024-04-06', 'Đã hoàn thành', 790000, 1, 0),
+(106, 7, 7, '2024-04-06', 'Đã hoàn thành', 870000, 1, 1),
+(107, 7, 7, '2024-04-06', 'Tạm giữ', 4734000, 6, 1),
+(108, 7, 7, '2024-04-06', 'Tạm giữ', 5398000, 7, 1),
+(109, 7, 7, '2024-04-06', 'Tạm giữ', 890000, 1, 1),
+(110, 7, 7, '2024-04-06', 'Tạm giữ', 33870000, 45, 1),
+(111, 1, 1, '2024-04-07', 'Tạm giữ', 782000, 1, 1),
+(112, 1, 1, '2024-04-07', 'Tạm giữ', 810000, 1, 1),
+(113, 1, 1, '2024-04-07', 'Tạm giữ', 2410000, 3, 1),
+(114, 1, 1, '2024-04-08', 'Tạm giữ', 910000, 1, 1),
+(115, 1, 1, '2024-04-08', 'Tạm giữ', 830000, 1, 1),
+(116, 1, 1, '2024-04-08', 'Tạm giữ', 830000, 1, 1),
+(117, 1, 1, '2024-04-08', 'Tạm giữ', 830000, 1, 1),
+(118, 1, 1, '2024-04-08', 'Tạm giữ', 2430000, 3, 1),
+(119, 1, 1, '2024-04-08', 'Tạm giữ', 2430000, 3, 1),
+(120, 7, 7, '2024-04-08', 'Tạm giữ', 870000, 1, 1),
+(121, 7, 7, '2024-04-08', 'Tạm giữ', 6366000, 8, 1),
+(122, 7, 7, '2024-04-08', 'Tạm giữ', 8390000, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -1024,15 +1076,15 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`MaSP`, `TenSP`, `SoSaoDanhGia`, `SoLuotDanhGia`, `MoTa`, `HinhAnh`, `SanPhamMoi`, `SanPhamHot`, `GiaCu`, `GiaMoi`, `SoLuongDaBan`, `MaNhanHieu`, `MaLoai`, `hide`) VALUES
-(1, 'NIKE AiRFORD 1', 5, 13, 'Mô tả Nike Air Max 270', 'pd-1.png', 1, 0, 1000000, 800000, 50, 2, 1, 1),
+(1, 'NIKE AiRFORD 1', 5, 13, 'Mô tả Nike Air Max 270', 'pd-1.png', 1, 0, 1000000, 800000, 180, 2, 1, 1),
 (2, 'Nike Ultraboost', 5, 13, 'Mô tả Adidas Ultraboost', 'pd-2.png', 1, 0, 1200000, 950000, 30, 2, 3, 1),
 (3, 'JORDAN Air Force', 4, 38, 'Mô tả Puma Speed 500', 'pd-3.png', 1, 0, 900000, 720000, 60, 4, 5, 1),
-(4, 'Nike PG 1', 5, 19, 'Mô tả Nike Air Jordan 1', 'pd-4.png', 1, 0, 1100000, 880000, 40, 2, 2, 1),
+(4, 'Nike PG 1', 5, 19, 'Mô tả Nike Air Jordan 1', 'pd-4.png', 1, 0, 1100000, 880000, 80, 2, 2, 1),
 (5, 'NIKE AIR ZOOM PEGASUS 34', 5, 4, 'Mô tả Adidas Superstar', 'pd-5.png', 1, 0, 1300000, 1040000, 35, 2, 3, 1),
-(6, 'Air Jordan 1 Mid GS', 4, 10, 'Mô tả Puma Future Rider', 'pd-6.png', 1, 1, 950000, 760000, 55, 4, 1, 1),
+(6, 'Air Jordan 1 Mid GS', 4, 10, 'Mô tả Puma Future Rider', 'pd-6.png', 1, 1, 950000, 760000, 66, 4, 1, 1),
 (7, 'NIKE Revolution 5', 5, 10, 'Mô tả Nike Air Force 1', 'pd-7.png', 1, 0, 1150000, 920000, 25, 2, 3, 1),
 (8, 'JORDAN Retro 1', 4, 4, 'Mô tả Puma RS-X3', 'pd-9.png', 1, 0, 980000, 784000, 50, 4, 3, 1),
-(9, 'PUMA RS-X', 5, 23, 'Mô tả Nike Revolution 5', 'pd-10.png', 1, 0, 1050000, 840000, 45, 7, 1, 1),
+(9, 'PUMA RS-X', 5, 23, 'Mô tả Nike Revolution 5', 'pd-10.png', 1, 0, 1050000, 840000, 46, 7, 1, 1),
 (10, 'NEW Balance 997H', 5, 12, 'Mô tả Adidas Yeezy Boost 350', 'pd-11.png', 1, 0, 1600000, 1280000, 30, 5, 4, 1),
 (11, 'VANS Authentic', 4, 30, 'Mô tả Puma Hybrid Fuego', 'pd-12.png', 1, 0, 970000, 776000, 60, 6, 4, 1),
 (12, 'NIKE Air Max', 5, 56, 'Mô tả Nike Air Max 97', 'pd-13.png', 0, 1, 1250000, 1000000, 70, 2, 5, 1),
@@ -1052,7 +1104,7 @@ INSERT INTO `sanpham` (`MaSP`, `TenSP`, `SoSaoDanhGia`, `SoLuotDanhGia`, `MoTa`,
 (26, 'NIKE Blazer Mid', 4, 5, 'Mô tả Puma Suede Classic', 'pd-27.png', 1, 0, 950000, 760000, 40, 2, 1, 1),
 (27, 'ADIDAS Nite Jogger', 5, 20, 'Mô tả Nike Air Max 2090', 'pd-28.png', 0, 1, 1400000, 1120000, 25, 3, 4, 1),
 (28, 'JORDAN Retro 11', 5, 16, 'Mô tả Adidas Stan Smith', 'pd-29.png', 0, 1, 1600000, 1280000, 20, 4, 3, 1),
-(29, 'PUMA Suede Classic', 4, 30, 'Mô tả Puma Liberate Nitro', 'pd-30.png', 1, 0, 960000, 768000, 35, 7, 1, 1),
+(29, 'PUMA Suede Classic', 4, 30, 'Mô tả Puma Liberate Nitro', 'pd-30.png', 1, 0, 960000, 768000, 37, 7, 1, 1),
 (30, 'NEW Balance 327', 5, 17, 'Mô tả Nike Air Max 97', 'pd-31.png', 0, 1, 1450000, 1160000, 30, 5, 5, 1),
 (31, 'VANS Slip-On', 5, 13, 'Mô tả Adidas Ultraboost 21', 'pd-32.png', 0, 1, 1800000, 1440000, 15, 6, 4, 1),
 (32, 'NIKE Air Force 1', 4, 15, 'Mô tả Puma RS-X3', 'pd-33.png', 0, 0, 970000, 776000, 30, 2, 3, 1),
@@ -1082,28 +1134,29 @@ CREATE TABLE `setting` (
 --
 
 CREATE TABLE `sizesp` (
-  `SizeSP` int(11) NOT NULL
+  `SizeSP` int(11) NOT NULL,
+  `hide` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `sizesp`
 --
 
-INSERT INTO `sizesp` (`SizeSP`) VALUES
-(30),
-(31),
-(32),
-(33),
-(34),
-(35),
-(36),
-(37),
-(38),
-(39),
-(40),
-(41),
-(42),
-(43);
+INSERT INTO `sizesp` (`SizeSP`, `hide`) VALUES
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(35, 1),
+(36, 1),
+(37, 1),
+(38, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(42, 1),
+(43, 1);
 
 -- --------------------------------------------------------
 
@@ -1116,26 +1169,27 @@ CREATE TABLE `taikhoan` (
   `MatKhau` varchar(255) DEFAULT NULL,
   `NgayTaoTK` date DEFAULT NULL,
   `MaQuyen` int(11) DEFAULT NULL,
-  `Avt` varchar(255) DEFAULT NULL
+  `Avt` varchar(255) DEFAULT NULL,
+  `TrangThai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `taikhoan`
 --
 
-INSERT INTO `taikhoan` (`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`) VALUES
-('admin1', '12345', '2024-03-16', 1, 'avt-7.png'),
-('admin2', '12345', '2024-03-16', 1, 'avt-8.png'),
-('nhanvien1', '12345', '2024-03-16', 3, 'avt-9.png'),
-('nhanvien2', '12345', '2024-03-16', 3, 'avt-10.png'),
-('nhanvien3', '12345', '2024-03-16', 3, 'avt-11.png'),
-('quanly1', '12345', '2024-03-16', 2, 'avt-12.png'),
-('user1', '12345', '2024-03-16', 4, 'avt-1.png'),
-('user2', '12345', '2024-03-16', 4, 'avt-2.png'),
-('user3', '12345', '2024-03-16', 4, 'avt-3.png'),
-('user4', '12345', '2024-03-16', 4, 'avt-4.png'),
-('user5', '12345', '2024-03-16', 4, 'avt-5.png'),
-('user6', '12345', '2024-03-16', 4, 'avt-6.png');
+INSERT INTO `taikhoan` (`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`, `TrangThai`) VALUES
+('admin1', '12345', '2024-03-16', 1, 'fb5.jpg', 0),
+('admin2', '12345', '2024-03-16', 1, 'fb5.jpg', 0),
+('nhanvien1', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
+('nhanvien2', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
+('nhanvien3', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
+('quanly1', '12345', '2024-03-16', 2, 'fb5.jpg', 0),
+('user1', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
+('user2', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
+('user3', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
+('user4', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
+('user5', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
+('user6', '12345', '2024-03-16', 4, 'fb5.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -1148,7 +1202,7 @@ CREATE TABLE `user` (
   `TenDangNhap` varchar(255) DEFAULT NULL,
   `HoTen` varchar(255) DEFAULT NULL,
   `NgaySinh` date DEFAULT NULL,
-  `SDT` varchar(10) DEFAULT NULL,
+  `SDT` varchar(11) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `DiaChi` varchar(255) DEFAULT NULL,
   `GioiTinh` int(1) DEFAULT NULL
@@ -1159,18 +1213,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Ma`, `TenDangNhap`, `HoTen`, `NgaySinh`, `SDT`, `Email`, `DiaChi`, `GioiTinh`) VALUES
-(1, 'admin1', 'Hồ Đỗ Hoàng Khang', '2003-03-02', '0987362123', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 1),
-(2, 'admin2', 'Tăng Hồng Nguyên Đán', '2003-06-06', '0982731231', 'tanghongnguyendan@gmail', '101 Đường GHI, Quận PQR, Thành phố HCM', 1),
-(3, 'nhanvien1', 'Vỹ Apu', '2003-10-12', '0123456789', 'levy@gmail.com', '333 Đường UVW, Quận YZA, Thành phố HCM', 1),
-(4, 'nhanvien2', 'Khánh Duy', '2003-02-04', '0987655432', 'khanhduy@gmail.com', '555 Đường HIJ, Quận KLM, Thành phố HCM', 1),
-(5, 'nhanvien3', 'Lê Vạn An', '2003-04-23', '0999888312', 'vanan@gmail', '999 Đường FGH, Quận IJK, Thành phố HCM', 1),
-(6, 'quanly1', 'Trần Văn A', '2003-12-13', '0982731231', 'tranvana@gmail', '1010 Đường LMN, Quận OPQ, Thành phố HCM', 1),
-(7, 'user1', 'Nguyễn Sin', '2009-02-09', '0982731231', 'nguyensin@gmail', '1412 Đường GHI, Quận PQR, Thành phố HCM', 1),
-(8, 'user2', 'Trấn Thành', '1999-02-23', '0123123123', 'tranthanh@gmail', '1515 Đường VAS, Quận 5, Thành phố HCM', 1),
-(9, 'user3', 'Mika Tô', '2000-06-06', '0987873231', 'mikato@gmail', '1441 Đường LT, Quận TB, Thành phố HCM', 1),
-(10, 'user4', 'Trường Giang', '2001-10-06', '0122112312', 'truonggiang@gmail', '113 Đường GHI, Quận 8, Thành phố HCM', 1),
-(11, 'user5', 'Nam Em', '1992-05-10', '0191919212', 'namem@gmail', '1022 Đường QKS, Quận 4, Thành phố HCM', 0),
-(12, 'user6', 'Nhã Phương', '1999-07-08', '0191231231', 'nhaphuong@gmail', '104 Đường HKA, Quận 2, Thành phố HCM', 0);
+(1, 'admin1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(2, 'admin2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(3, 'nhanvien1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(4, 'nhanvien2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(5, 'nhanvien3', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(6, 'quanly1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(7, 'user1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(8, 'user2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(9, 'user3', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(10, 'user4', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(11, 'user5', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
+(12, 'user6', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1342,19 +1396,19 @@ ALTER TABLE `hinhanh`
 -- AUTO_INCREMENT cho bảng `loaisp`
 --
 ALTER TABLE `loaisp`
-  MODIFY `MaLoai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaLoai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
-  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `nhanhieu`
 --
 ALTER TABLE `nhanhieu`
-  MODIFY `MaNhanHieu` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MaNhanHieu` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `phieunhap`
@@ -1366,7 +1420,7 @@ ALTER TABLE `phieunhap`
 -- AUTO_INCREMENT cho bảng `phieuxuat`
 --
 ALTER TABLE `phieuxuat`
-  MODIFY `MaPX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaPX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT cho bảng `quyen`
@@ -1378,7 +1432,7 @@ ALTER TABLE `quyen`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
