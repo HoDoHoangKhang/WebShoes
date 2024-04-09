@@ -13,10 +13,17 @@
             </div>
             <div class="user">
                 <p class="user-name">
-                    My Name
+                    <?php
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php');
+                        $TenDangNhap=$_SESSION['taikhoan'];
+                        $sql="SELECT u.HoTen,tk.Avt FROM user u join taikhoan tk on u.TenDangNhap=tk.TenDangNhap WHERE tk.TenDangNhap='$TenDangNhap'";
+                        $result=mysqli_query($connect,$sql);
+                        $row=mysqli_fetch_array($result);
+                        echo $row['HoTen'];
+                    ?>             
                 </p>
                 <div class="user-img">
-                    <img src="./assets/img/user.png" alt="">
+                    <img src="./assets/img/<?php echo $row['Avt']?>" alt="">
                     <div class="user-state">
 
                     </div>
@@ -30,7 +37,7 @@
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <a style="text-decoration: none;" href="../logout.php">Log out</a>
                             </li>
-                        </ul>
+                        </ul>   
                     </div>
                 </div>
             </div>
