@@ -1,7 +1,7 @@
 <?php
     $TenQuyen=$_POST['txtTenQuyenCanSua'];
     $MaQuyen=$_GET['id'];
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php');
     $sqltest="SELECT * FROM quyen";
     $result1=mysqli_query($connect,$sqltest);
     $flag=1;

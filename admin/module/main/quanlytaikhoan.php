@@ -31,7 +31,7 @@
                 <select id="filterSelect">
                     <option value="">Loại tài khoản</option>
                     <?php
-                        require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php'); //Kết nối mysql                     
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
                         $sql = "SELECT *
                                 FROM quyen";
                         $result = mysqli_query($connect,$sql);
@@ -102,13 +102,13 @@
                         </select>
                     </div>
                 </td>
-                <td>Hoạt động</td>
+                <td> <?php if($row['TrangThai']==0){echo "Hoạt động";}else{echo "Bị Khóa";}?> </td>
                 <td>
                     <div class="dropdown" >
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['Ma']?>">Xóa</a></li>
+                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_gettaikhoan.php?id=<?php echo $row['TenDangNhap']?>">Xóa</a></li>
                             <li><a class="dropdown-item" href="#">Kích hoạt</a></li>
                             <li><a class="dropdown-item" href="#">Khóa</a></li>
                         </ul>
@@ -132,3 +132,36 @@
         });
     });
 </script>
+
+<!-- Form thông báo -->
+<div class="modal fade" id="thongbao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
+  <div class="modal-dialog">
+    <form action="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $_GET['TenDangNhap']?>" method="post">
+        <div class="modal-content" style="">
+            <div class="modal-header">
+                <h2 class="modal-title" id="ModalLabelThemsanpham">Thông báo </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="responsepp"></p> 
+                <h4>Bạn có chắc chắn không?</h4>
+            </div>    
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<?php
+    if (isset($_GET['Getsuccess']) && $_GET['Getsuccess']==true) {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var myModal = new bootstrap.Modal(document.getElementById("thongbao"));
+          myModal.show();
+        });
+      </script>';
+      }
+?>

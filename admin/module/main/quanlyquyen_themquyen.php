@@ -1,7 +1,7 @@
 <?php
     if (isset($_POST['txtTenQuyen'])) {
         $TenQuyen=$_POST['txtTenQuyen'];
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/WebShoes/admin/config/config.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php');
 
         $sql1="SELECT * FROM quyen";
         $result1=mysqli_query($connect,$sql1);

@@ -1,43 +1,1330 @@
-INSERT INTO `sanpham`(`TenSP`, `SoSaoDanhGia`, `SoLuotDanhGia`, `MoTa`, `HinhAnh`, `SanPhamMoi`, `SanPhamHot`, `GiaCu`, `GiaMoi`, `SoLuongDaBan`, `NhanHieu`)
-VALUES 
-('NIKE AiRFORD 1', 4.5, 13, 'Mô tả Nike Air Max 270', 'pd-1.png', 1, 0, 1000000, 800000, 50, 'Nike'),
-('Nike Ultraboost', 4.7, 13, 'Mô tả Adidas Ultraboost', 'pd-2.png', 1, 0, 1200000, 950000, 30, 'Nike'),
-('JORDAN Air Force', 4.2, 38, 'Mô tả Puma Speed 500', 'pd-3.png', 1, 0, 900000, 720000, 60, 'Jordan'),
-('Nike PG 1', 4.6, 19, 'Mô tả Nike Air Jordan 1', 'pd-4.png', 1, 0, 1100000, 880000, 40, 'Nike'),
-('NIKE AIR ZOOM PEGASUS 34', 4.5, 4, 'Mô tả Adidas Superstar', 'pd-5.png', 1, 0, 1300000, 1040000, 35, 'Nike'),
-('Air Jordan 1 Mid GS', 4.3, 10, 'Mô tả Puma Future Rider', 'pd-6.png', 1, 0, 950000, 760000, 55, 'Jordan'),
-('NIKE Revolution 5', 4.7, 10, 'Mô tả Nike Air Force 1', 'pd-7.png', 1, 0, 1150000, 920000, 25, 'Nike'),
-('JORDAN Retro 1', 4.4, 4, 'Mô tả Puma RS-X3', 'pd-9.png', 1, 0, 980000, 784000, 50, 'Jordan'),
-('PUMA RS-X', 4.5, 23, 'Mô tả Nike Revolution 5', 'pd-10.png', 1, 0, 1050000, 840000, 45, 'Puma'),
-('NEW Balance 997H', 4.6, 12, 'Mô tả Adidas Yeezy Boost 350', 'pd-11.png', 1, 0, 1600000, 1280000, 30, 'New Balance'),
-('VANS Authentic', 4.3, 30, 'Mô tả Puma Hybrid Fuego', 'pd-12.png', 1, 0, 970000, 776000, 60, 'Vans'),
-('NIKE Air Max', 4.7, 56, 'Mô tả Nike Air Max 97', 'pd-13.png', 0, 1, 1250000, 1000000, 'Nike'),
-('ADIDAS NMD R1', 4.8, 65, 'Mô tả Adidas Questar Flow', 'pd-14.png', 0, 1, 1350000, 1080000, 15, 'Adidas'),
-('JORDAN Air Force 1', 4.4, 32, 'Mô tả Puma Future Rider Twofold', 'pd-15.png', 1, 0, 940000, 752000, 40, 'Jordan'),
-('PUMA Suede', 4.5, 8, 'Mô tả Nike Air Zoom Pegasus', 'pd-16.png', 0, 1, 1450000, 1160000, 25, 'Puma'),
-('NEW Balance 574S', 4.6, 4, 'Mô tả Adidas Stan Smith', 'pd-17.png', 0, 1, 1700000, 1360000, 'New Balance'),
-('VANS Era', 4.2, 4, 'Mô tả Puma Deviate Nitro', 'pd-18.png', 0, 0, 920000, 736000, 50, 'Vans'),
-('NIKE React Infinity', 4.7, 5, 'Mô tả Nike Air Max Plus', 'pd-19.png', 0, 1, 1550000, 1240000, 15, 'Nike'),
-('ADIDAS Stan Smith', 4.8, 6, 'Mô tả Adidas Ultraboost 21', 'pd-20.png', 0, 1, 1750000, 1400000, 'Adidas'),
-('NIKE Air Max 270', 4.5, 7, 'Mô tả Puma Cali Sport', 'pd-21.png', 0, 0, 960000, 768000, 35, 'Nike'),
-('ADIDAS Ultraboost 21', 4.6, 23, 'Mô tả Nike Air Jordan 4', 'pd-22.png', 0, 1, 1800000, 1440000, 30, 'Adidas'),
-('JORDAN Retro 4', 4.4, 17, 'Mô tả Adidas NMD R1', 'pd-23.png', 0, 1, 1650000, 1320000, 25, 'Jordan'),
-('PUMA RS-X Bold', 4.3, 40, 'Mô tả Puma Liberate Nitro', 'pd-24.png', 0, 0, 990000, 792000, 45, 'Puma'),
-('NEW Balance 997', 4.7, 10, 'Mô tả Nike Blazer Mid', 'pd-25.png', 0, 1, 1350000, 1080000, 'New Balance'),
-('VANS Sk8-Hi', 4.8, 4, 'Mô tả Adidas Superstar', 'pd-26.png', 0, 1, 1700000, 1360000, 15, 'Vans'),
-('NIKE Blazer Mid', 4.4, 5, 'Mô tả Puma Suede Classic', 'pd-27.png', 1, 0, 950000, 760000, 40, 'Nike'),
-('ADIDAS Nite Jogger', 4.5, 20, 'Mô tả Nike Air Max 2090', 'pd-28.png', 0, 1, 1400000, 1120000, 25, 'Adidas'),
-('JORDAN Retro 11', 4.6, 16, 'Mô tả Adidas Stan Smith', 'pd-29.png', 0, 1, 1600000, 1280000, 'Jordan'),
-('PUMA Suede Classic', 4.3, 30, 'Mô tả Puma Liberate Nitro', 'pd-30.png', 1, 0, 960000, 768000, 35, 'Puma'),
-('NEW Balance 327', 4.7, 17, 'Mô tả Nike Air Max 97', 'pd-31.png', 0, 1, 1450000, 1160000, 'New Balance'),
-('VANS Slip-On', 4.8, 13, 'Mô tả Adidas Ultraboost 21', 'pd-32.png', 0, 1, 1800000, 1440000, 15, 'Vans'),
-('NIKE Air Force 1', 4.4, 15, 'Mô tả Puma RS-X3', 'pd-33.png', 0, 0, 970000, 776000, 30, 'Nike'),
-('ADIDAS Stan Smith', 4.5, 23, 'Mô tả Nike Air Zoom Pegasus', 'pd-34.png', 0, 0, 1500000, 1200000, 25, 'Adidas'),
-('JORDAN Retro 6', 4.6, 14, 'Mô tả Adidas Yeezy Boost 350', 'pd-35.png', 0, 0, 1700000, 1360000, 'Jordan'),
-('PUMA Cali', 4.3, 45, 'Mô tả Puma Hybrid Fuego', 'pd-36.png', 0, 0, 980000, 784000, 55, 'Puma'),
-('NEW Balance 574', 4.5, 27, 'Mô tả Nike Air Zoom Pegasus', 'pd-37.png', 0, 0, 1600000, 1280000, 30, 'New Balance'),
-('VANS Old Skool', 4.7, 23, 'Mô tả Adidas Stan Smith', 'pd-38.png', 0, 0, 1800000, 1440000, 25, 'Vans'),
-('NIKE React Presto', 4.2, 45, 'Mô tả Puma Deviate Nitro', 'pd-39.png', 1, 0, 940000, 752000, 50, 'Nike'),
-('ADIDAS Falcon', 4.8, 16, 'Mô tả Nike Air Max Plus', 'pd-40.png', 1, 0, 1900000, 1520000, 20, 'Adidas');
+INSERT INTO `ctpn`(`MaPN`, `MaSP`, `SoLuong`, `GiaNhap`, `SizeSP`) VALUES 
+(1,1,2,500000,37),
+(1,1,2,500000,38),
+(1,1,2,500000,39),
+(1,1,2,500000,40),
+(1,1,2,500000,41),
+
+(1,2,2,500000,39),
+(1,2,2,500000,40),
+(1,2,2,500000,41),
+(1,2,2,500000,42),
+(1,2,2,500000,43),
+
+(1,3,1,500000,33),
+(1,3,1,500000,34),
+(1,3,1,500000,35),
+(1,3,1,500000,36),
+(1,3,1,500000,37),
+(1,3,1,500000,38),
+(1,3,1,500000,39),
+(1,3,1,500000,40),
+(1,3,1,500000,41),
+(1,3,1,500000,42),
+
+(1,4,5,500000,40),
+(1,4,5,500000,43),
+
+<?php
+                        $sql_spmoi= "SELECT * FROM `sanpham` ORDER BY RAND()";
+                        $result=mysqli_query($connect,$sql_spmoi);
+                        while($row=mysqli_fetch_array($result)){?>
+                            <a href="index.php?danhmuc=product-detail&id=<?php echo $row['MaSP'] ?>">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="./assets/img/<?php echo $row['HinhAnh']?>" alt="">
+                                    </div>
+                                    <p class="card-title"><?php echo $row['TenSP']?></p>
+                                    <div class="card-price-rate">
+                                        <div class="card-price">
+                                            <span><?php echo formatCurrency($row['GiaMoi'])?></span>
+                                            <span><del><?php echo formatCurrency($row['GiaCu']) ?></del></span>  
+                                        </div>
+                                        <div class="card-rate">
+                                            <i class="fa-solid fa-star"></i>
+                                            <?php echo $row['SoSaoDanhGia']?>
+                                        </div>
+                                    </div>   
+                                    <i class=" card-btn__like fa-regular fa-heart"></i>
+                                    <div class="card-new-hot">
+                                    <?php
+                                        if($row['SanPhamMoi']==1){ ?>
+                                            <div class="card-special card-hot">
+                                            Mới
+                                            </div>
+                                        <?php }
+                                        if($row['SanPhamHot']==1){?>
+                                            <div class="card-special card-new">
+                                                Hot
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php }?>
 
 
+
+
+
+(2,5,2,500000,37),
+(2,5,2,500000,38),
+(2,5,2,500000,39),
+(2,5,2,500000,40),
+(2,5,2,500000,41),
+
+(2,6,4,500000,30),
+(2,6,6,500000,35),
+(2,6,6,500000,36),
+(2,6,6,500000,37),
+(2,6,10,500000,39),
+(2,6,12,500000,40),
+(2,6,2,500000,41),
+(2,6,2,500000,42),
+
+
+
+
+(3,7,10,500000,39),
+(3,8,10,500000,38),
+(3,9,10,500000,37),
+(3,10,10,500000,40),
+(3,11,10,500000,40),
+(3,12,10,500000,40),
+(3,13,10,500000,34),
+(3,14,10,500000,32),
+
+(4,15,10,500000,37),
+(4,16,10,500000,37),
+
+(5,17,1,500000,31),
+(5,17,1,500000,32),
+(5,17,1,500000,33),
+(5,17,1,500000,34),
+(5,17,1,500000,35),
+(5,17,1,500000,36),
+(5,17,1,500000,37),
+(5,17,1,500000,38),
+(5,17,1,500000,39),
+(5,17,1,500000,43),
+
+(6,18,10,500000,43),
+(6,19,10,500000,43),
+(6,20,10,500000,43),
+(6,22,10,500000,43),
+(6,23,10,500000,43),
+(6,24,10,500000,43),
+(6,25,10,500000,43),
+(6,26,10,500000,43),
+(6,27,10,500000,43),
+
+(6,21,2,500000,42),
+(6,21,2,500000,41),
+(6,21,2,500000,40),
+(6,21,2,500000,37),
+(6,21,2,500000,43),
+
+
+
+
+(7,28,20,500000,43),
+(7,29,20,500000,43),
+(7,30,20,500000,43),
+(7,31,20,500000,43),
+(7,32,20,500000,43),
+(7,33,20,500000,43),
+(7,34,20,500000,43),
+(7,35,20,500000,43),
+(7,39,20,500000,43),
+(7,39,10,500000,42),
+
+
+(8,1,5,500000,43),
+(8,2,5,500000,43),
+(8,3,5,500000,43),
+(8,4,5,500000,43),
+(8,5,5,500000,43),
+(8,6,5,500000,43),
+(8,7,5,500000,43),
+(8,8,5,500000,43),
+(8,9,5,500000,43),
+(8,11,5,500000,43),
+
+(8,12,1,500000,39),
+(8,12,1,500000,38),
+(8,12,1,500000,37),
+(8,12,1,500000,40),
+(8,12,1,500000,43),
+
+(8,10,1,500000,33),
+(8,10,1,500000,34),
+(8,10,1,500000,35),
+(8,10,1,500000,36),
+(8,10,1,500000,37),
+
+
+
+(9,20,10,500000,37),
+(9,21,10,500000,37),
+(9,22,10,500000,37),
+(9,23,10,500000,37),
+(9,28,5,500000,37),
+(9,29,5,500000,37),
+(9,30,5,500000,37),
+
+
+(10,31,10,500000,38),
+(10,32,10,500000,37),
+(10,33,10,500000,38),
+(10,34,10,500000,37),
+(10,35,5,500000,41);
+
+
+
+<div class="feedback__item">
+                        <div class="feedback__star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="feedback__text">
+                            "Đôi giày mới của mình đơn giản là tuyệt vời! Chúng không chỉ làm cho bàn chân mình cảm thấy thoải mái hơn mà còn giúp tôn lên phong cách riêng của mình. Chắc chắn sẽ giới thiệu cho bạn bè và gia đình mình biết về thương hiệu này."
+                        </div>
+                        <div class="feedback__person">
+                            <img class="feedback__person-img" src="./assets/img/person_2.jpg" alt="">
+                            <div class="feedback__person-name_work">
+                                <span class="feedback__person-name">BILL GATES</span>
+                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feedback__item">
+                        <div class="feedback__star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="feedback__text">
+                            "Mua giày online lần đầu tiên và thật may mắn khi chọn được đôi giày tuyệt vời như thế này! Chất liệu cao cấp và cảm giác chân thật sự thoải mái. Những ngày dạo chơi hay đi làm đều trở nên dễ dàng hơn với đôi giày này."
+                        </div>
+                        <div class="feedback__person">
+                            <img class="feedback__person-img" src="./assets/img/person_3.jpg" alt="">
+                            <div class="feedback__person-name_work">
+                                <span class="feedback__person-name">MR BEAN</span>
+                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feedback__item">
+                        <div class="feedback__star">
+                            <i class="fa-solid fa-sta feedback__star-1"></i>
+                            <i class="fa-solid fa-star feedback__star-2"></i>
+                            <i class="fa-solid fa-star feedback__star-3"></i>
+                            <i class="fa-solid fa-star feedback__star-4"></i>
+                            <i class="fa-solid fa-star feedback__star-5"></i>
+                        </div>
+                        <div class="feedback__text">
+                            "Đây là lần đầu tiên mình mua giày từ thương hiệu này và chắc chắn sẽ không phải là lần cuối. Giày không chỉ đẹp mắt mà còn rất chất lượng. Mình đã có một trải nghiệm mua sắm tốt và sẽ quay lại mua sắm ở đây nếu cần."
+                        </div>
+                        <div class="feedback__person">
+                            <img class="feedback__person-img" src="./assets/img/person_4.jpg" alt="">
+                            <div class="feedback__person-name_work">
+                                <span class="feedback__person-name">OBAMA</span>
+                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feedback__item">
+                        <div class="feedback__star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="feedback__text">
+                            "Đôi giày hoàn toàn đáng tiền! Chất liệu và thiết kế không chỉ đẹp mắt mà còn rất bền. Mình đã đi dạo một hồi dài và đôi giày vẫn giữ form tốt. Cảm ơn thương hiệu đã mang đến cho mình một sản phẩm tuyệt vời như vậy!"
+                        </div>
+                        <div class="feedback__person">
+                            <img class="feedback__person-img" src="./assets/img/person_5.jpg" alt="">
+                            <div class="feedback__person-name_work">
+                                <span class="feedback__person-name">ELON MUSK</span>
+                                <div class="feedback__person-work">CUSTOMER @SHOES</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    // document.addEventListener("DOMContentLoaded", function() {
+//   var feedback_list=document.querySelector(".feedback__list");
+//   if(feedback_list){
+//     $(feedback_list).slick({
+//       slidesToShow: 2,
+//       slidesToScroll: 1,
+//       autoplay: true,
+//       autoplaySpeed: 3000,
+//       infinite:true,
+//       prevArrow:"<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+//       nextArrow:"<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>"
+//     });
+//   }
+// });
+// responsive
+document.addEventListener("DOMContentLoaded", function() {
+    var feedback_list = document.querySelector(".feedback__list");
+    if (feedback_list) {
+        $(feedback_list).slick({
+            dots: true,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            infinite: true,
+            prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+            nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    }
+});
+
+//---------------------------------------------------Information Product
+document.querySelectorAll("slick-dots").forEach(element => {
+    console.log(element)
+    element.textContent = '';
+});
+    // Giá sau khi sale
+function priceNew(priceOld, sale) {
+    var priceAfterSale = priceOld - (priceOld * sale / 100);
+    return priceAfterSale.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+}
+//-----------------------------------------------------------Like
+function likeShoes(card) {
+    var like = card.querySelector(".card-btn__like");
+    if (like) {
+        like.addEventListener('click', function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào liên kết
+            e.stopPropagation(); // Ngăn chặn nổi bọt
+            if (like.classList.contains("fa-regular")) {
+                like.classList.remove("fa-regular");
+                like.classList.add("fa-solid");
+                like.style.color = "#F02757";
+            } else {
+                like.classList.remove("fa-solid");
+                like.classList.add("fa-regular");
+                like.style.color = "";
+            }
+        });
+    }
+}
+// -----------------------------------------------------------set tagHot tagNew 
+// Sucess
+function tagHotNew(tag_new, tag_hot, card) {
+    if (tag_new == 1) {
+        var newDivHot = document.createElement("div");
+        newDivHot.innerHTML = `
+<div class="card-special card-new">
+    New
+</div>
+`
+        card.querySelector(".card-new-hot").appendChild(newDivHot);
+    }
+    if (tag_hot == 1) {
+        var newDivNew = document.createElement("div");
+        newDivNew.innerHTML = `
+  <div class="card-special card-hot">
+      Hot
+  </div>
+  `
+        card.querySelector(".card-new-hot").appendChild(newDivNew);
+    }
+}
+//-----------------------------------------------------------insert card
+function insertCard(render, divList) {
+    render.forEach((element, index) => {
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("card");
+        newDiv.innerHTML = `
+        <div class="card-img">
+            <img src="./assets/img/` + element.img + `" alt="">
+        </div>
+        <p class="card-title">` + element.title + `</p>
+        <div class="card-price-rate">
+            <div class="card-price">
+                <span>` + priceNew(element.price_old, element.sale) + `</span>
+                <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+            </div>
+            <div class="card-rate">
+                <i class="fa-solid fa-star"></i>
+                ` + element.rate + `
+            </div>
+        </div>   
+        <i class="card-btn__like fa-regular fa-heart"></i>
+        <div class="card-new-hot">
+    
+        </div>
+        `
+        newDiv.addEventListener('click', function(e) {
+            e.stopPropagation(); //Ngăn chặn nổi bọt
+            var url =
+                `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+            window.location.href = url;
+        })
+
+
+        //get tagNew and tagHot
+        tagHotNew(element.new, element.hot, newDiv);
+
+        divList.appendChild(newDiv);
+        //like
+        likeShoes(newDiv);
+    });
+}
+var listProduct = document.querySelector(".list-shoes");
+if (listProduct) {
+    insertCard(render, listProduct);
+}
+
+
+//-------------------------------------------------Show-Hidden Categories
+var categories_title = document.querySelectorAll(".filter__categories-title");
+if (categories_title) {
+    categories_title.forEach(element => {
+        element.addEventListener('click', function() {
+            element.parentElement.children[1].classList.toggle("block_none");
+            element.parentElement.children[0].children[1].classList.toggle("categories-title-icon");
+        });
+    });
+}
+//----------------------------------------------------Filter Hot and New
+function hiddenListShoes() { // Ẩn tất cả sản phẩm
+    var list_shoes = document.querySelectorAll(".card");
+    list_shoes.forEach(element => {
+        element.style.display = "none";
+    });
+}
+
+function showListShoes() { // Hiện tất cả sản phẩm
+    var list_shoes = document.querySelectorAll(".card");
+    list_shoes.forEach(element => {
+        element.style.display = "block";
+    });
+}
+
+function sortNewHot(newHot) { // card nào có card-new thì hiện ra
+    var list_shoes = document.querySelectorAll(".card");
+    list_shoes.forEach(element => {
+        if (element.querySelector(".card-" + newHot)) {
+            element.style.display = "block";
+        }
+    });
+}
+
+function new_hot(new_hot) {
+    if (new_hot === "new") {
+
+    }
+    this.classList.toggle("btn-sort--click");
+    if (this.classList.contains("btn-sort--click")) {
+        hiddenListShoes();
+        sort_new();
+    } else {
+        showListShoes();
+    }
+}
+var btn_new = document.querySelector(".sort-new");
+var btn_hot = document.querySelector(".sort-hot");
+if (btn_new) {
+    btn_new.addEventListener('click', function() {
+        btn_hot.classList.remove("btn-sort--click") // Xóa màu của nút Hot
+        this.classList.toggle("btn-sort--click");
+        if (this.classList.contains("btn-sort--click")) {
+            hiddenListShoes();
+            sortNewHot("new");
+        } else {
+            showListShoes();
+        }
+    });
+}
+if (btn_hot) {
+    btn_hot.addEventListener('click', function() {
+        btn_new.classList.remove("btn-sort--click") // Xóa màu của nút New
+        this.classList.toggle("btn-sort--click");
+        if (this.classList.contains("btn-sort--click")) {
+            hiddenListShoes();
+            sortNewHot("hot");
+        } else {
+            showListShoes();
+        }
+    });
+
+}
+
+//----------------------------------------------------------Sort-Price
+function setTextFirst() {
+    btn_new.classList.remove("btn-sort--click") // Xóa màu của nút New
+    btn_hot.classList.remove("btn-sort--click") // Xóa màu của nút Hot
+}
+//Sắp sắp mảng giảm dần giá trị
+function sortHightToLow(render) {
+    render.sort(function(a, b) {
+        return (b.price_old - (b.price_old * b.sale / 100)) - (a.price_old - (a.price_old * a.sale / 100));
+    });
+    return render;
+}
+//Sắp sắp mảng tăng dần giá trị
+function sortLowToHight(render) {
+    render.sort(function(a, b) {
+        return (a.price_old - (a.price_old * a.sale / 100)) - (b.price_old - (b.price_old * b.sale / 100));
+    });
+    return render;
+}
+//Click vào nút giảm dần
+var hightToLow = document.querySelector(".sort-HightToLow");
+if (hightToLow) {
+    hightToLow.addEventListener('click', function() {
+        console.log("sadas")
+        document.querySelector(".list-shoes").innerHTML = ""
+        renderAfterSort = sortHightToLow(render);
+        insertCard(renderAfterSort, listProduct);
+        //Set Text lại ô sắp xếp theo giá
+        document.querySelector(".sort-price__title").textContent = "Price: from hight to low";
+        setTextFirst();
+    });
+}
+//Click vào nút tăng dần
+var lowToHight = document.querySelector(".sort-LowToHight");
+if (lowToHight) {
+    lowToHight.addEventListener('click', function() {
+        document.querySelector(".list-shoes").innerHTML = ""
+        renderAfterSort = sortLowToHight(render);
+        insertCard(renderAfterSort, listProduct);
+        //Set Text lại ô sắp xếp theo giá
+        document.querySelector(".sort-price__title").textContent = "Price: from low to hight";
+        setTextFirst();
+    });
+}
+
+//----------------------------------------------------------Tag search
+
+// !!!! Nếu xóa tag đã check thì xóa luôn dấu check
+function unCheckTag(keysWords) {
+    var input = document.querySelectorAll(".filter__list-item");
+    input.forEach(element => {
+        if (element.children[0].classList.contains("border_select")) {
+            element.children[0].classList.remove("border_select"); //color
+        } else if (element.children[1].textContent == keysWords) {
+            element.children[0].checked = false; //input
+        }
+    });
+}
+
+function insertTarget(keyWords) {
+    var newDiv = document.createElement("div");
+    newDiv.classList.add("tagret-item");
+    newDiv.innerHTML = `
+  <span>` + keyWords + `</span>
+  <i class="targer-icon fa-solid fa-xmark"></i>
+`
+    newDiv.children[1].addEventListener('click', function() {
+        newDiv.remove();
+        unCheckTag(keyWords);
+        resultSearch();
+    });
+    var target = document.querySelector(".tagret");
+    if (target) {
+        target.appendChild(newDiv);
+    }
+}
+var list_tag;
+var search = document.querySelector(".header__action-search-input");
+if (search) {
+    search.addEventListener('keydown', function(e) {
+        list_tag = document.querySelectorAll(".tagret-item");
+        if (e.which == 13) {
+            var flag = true;
+            list_tag.forEach((element) => {
+                if (this.value == element.children[0].textContent) {
+                    flag = false;
+                    this.value = ""
+                }
+            });
+            if (this.value != "" && flag == true) {
+                console.log(window.location.pathname);
+                if (window.location.pathname === "/product.html") {
+
+                    insertTarget(e.target.value);
+
+                    //reset value input
+                    this.value = ""
+                    resultSearch();
+                } else {
+                    e.stopPropagation(); //Ngăn chặn nổi bọt
+                    var url =
+                        `product.html?tagret=${encodeURIComponent(e.target.value)}`;
+                    window.location.href = url;
+
+
+                }
+            }
+        }
+    });
+}
+
+//----------------------------------------------------------On-Off Filter
+var hidden_filter = document.querySelector(".hidden-filter")
+if (hidden_filter) {
+    hidden_filter.addEventListener('click', function() {
+        hidden_filter.children[0].classList.toggle("btn-filter--off");
+        //off
+        var filter = document.querySelector(".filter");
+        filter.classList.toggle("filter-none");
+        if (filter.classList.contains("filter-none")) {
+            document.querySelector(".show").classList.add("show--offFilter");
+        } else {
+            document.querySelector(".show").classList.remove("show--offFilter");
+        }
+    });
+}
+
+//----------------------------------------------------------Clicked checked categories
+var filter_item = document.querySelectorAll(".filter__list-item");
+filter_item.forEach(element => {
+    element.addEventListener('click', function() {
+        if (element.children[0].checked) {
+            element.children[0].checked = false;
+        } else {
+            element.children[0].checked = true;
+        }
+    });
+});
+
+//-------------------------------------------------------------Product new 
+var listProductNew = document.querySelector(".product-new__list");
+if (listProductNew) {
+    var count = 0;
+    render.forEach((element) => {
+        if (element.new == 1 && element.hot == 0 && count <= 11) {
+            count++;
+            var newDiv = document.createElement("div");
+            newDiv.classList.add("card");
+            newDiv.innerHTML = `
+    <div class="card-img">
+        <img src="./assets/img/` + element.img + `" alt="">
+    </div>
+    <p class="card-title">` + element.title + `</p>
+    <div class="card-price-rate">
+        <div class="card-price">
+            <span>` + priceNew(element.price_old, element.sale) + `</span>
+            <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+        </div>
+        <div class="card-rate">
+            <i class="fa-solid fa-star"></i>
+            ` + element.rate + `
+        </div>
+    </div>   
+    <i class="card-btn__like fa-regular fa-heart"></i>
+    <div class="card-new-hot">
+
+    </div>
+  `
+            newDiv.addEventListener('click', function(e) {
+                    e.stopPropagation(); //Ngăn chặn nổi bọt
+                    var url =
+                        `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+                    window.location.href = url;
+                })
+                //get tagNew and tagHot
+            tagHotNew(element.new, element.hot, newDiv);
+
+            listProductNew.appendChild(newDiv);
+            //like
+            likeShoes(newDiv);
+        }
+    });
+}
+//-------------------------------------------------------------Product hot
+var listProductHot = document.querySelector(".product-hot__list");
+if (listProductHot) {
+    var count = 0;
+    render.forEach((element) => {
+        if (element.hot == 1 && element.new == 0 && count <= 11) {
+            count++;
+            var newDiv = document.createElement("div");
+            newDiv.classList.add("card");
+            newDiv.innerHTML = `
+    <div class="card-img">
+        <img src="./assets/img/` + element.img + `" alt="">
+    </div>
+    <p class="card-title">` + element.title + `</p>
+    <div class="card-price-rate">
+        <div class="card-price">
+            <span>` + priceNew(element.price_old, element.sale) + `</span>
+            <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+        </div>
+        <div class="card-rate">
+            <i class="fa-solid fa-star"></i>
+            ` + element.rate + `
+        </div>
+    </div>   
+    <i class="card-btn__like fa-regular fa-heart"></i>
+    <div class="card-new-hot">
+
+    </div>
+  `
+            newDiv.addEventListener('click', function(e) {
+                    e.stopPropagation(); //Ngăn chặn nổi bọt
+                    var url =
+                        `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+                    window.location.href = url;
+                })
+                //get tagNew and tagHot
+            tagHotNew(element.new, element.hot, newDiv);
+
+            listProductHot.appendChild(newDiv);
+            //like
+            likeShoes(newDiv);
+        }
+    });
+}
+//-------------------------------------------------------------flash sale
+var listFalshSale = document.querySelector(".flashsale__list");
+if (listFalshSale) {
+    var count = 0;
+    render.forEach((element) => {
+        if (element.flashsale == 1 && count <= 5) {
+            count++;
+            var newDiv = document.createElement("div");
+            newDiv.classList.add("flashsale__item");
+            newDiv.innerHTML = `
+  <img src="./assets/img/` + element.img + `" alt="" class="flashsale__item-img">
+  <p class="flashsale__item-title">` + element.title + `</p>
+  <div class="flashsale__item-price">
+      <span>` + priceNew(element.price_old, element.sale) + `</span>
+      <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+  </div> 
+  <div class="flashsale__item-timeline">
+
+  </div>          
+  <div class="flashsale__item-detail">
+      <span>240</span>
+      sản phầm đã bán
+  </div>      
+  `
+            newDiv.addEventListener('click', function(e) {
+                    e.stopPropagation(); //Ngăn chặn nổi bọt
+                    var url =
+                        `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+                    window.location.href = url;
+                })
+                //get tagNew and tagHot
+                // tagHotNew(element.new,element.hot,newDiv);
+
+            listFalshSale.appendChild(newDiv);
+            //like
+            likeShoes(newDiv);
+        }
+    });
+}
+
+//get các từ khóa từ search và filter
+function getSearch() {
+    var arr = [];
+    var tagret_item = document.querySelectorAll(".tagret-item");
+    tagret_item.forEach(element => {
+        var key = element.children[0].textContent.toLowerCase();
+        arr.push(key);
+    });
+    return arr;
+}
+
+function searchObjectsByKeywords(objects, keywords) {
+    var temp = []; // Danh sách mảng đối tượng tìm thấy
+    if (keywords.length === 0) {
+        temp = render;
+        console.log(temp);
+        return temp;
+
+    } else {
+        objects.forEach(obj => {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    const value = obj[key];
+                    if (typeof value === "string") {
+                        const lowercaseValue = value.toLowerCase();
+                        if (keywords.some(keyword => lowercaseValue.includes(keyword))) {
+                            temp.push(obj);
+                            break; // Đã tìm thấy, thoát khỏi vòng lặp
+                        }
+                    } else if (typeof value === "number" || typeof value === "boolean") {
+                        // Kiểm tra kiểu số hoặc kiểu boolean
+                        const stringValue = String(value).toLowerCase();
+                        if (keywords.some(keyword => stringValue.includes(keyword))) {
+                            temp.push(obj);
+                            break; // Đã tìm thấy, thoát khỏi vòng lặp
+                        }
+                    }
+                    // Bạn có thể thêm các trường hợp kiểu dữ liệu khác ở đây
+                }
+            }
+        });
+        console.log(temp);
+        return temp;
+    }
+}
+
+function resultSearch() {
+    document.querySelector(".list-shoes").innerHTML = "";
+    var arr = []
+    var arrObject = searchObjectsByKeywords(render, getSearch());
+    for (var i = 0; i < render.length; i++) {
+        for (var j = 0; j < arrObject.length; j++) {
+            if (render[i].id === arrObject[j].id) {
+                arr.push(render[i]);
+            }
+        }
+    }
+    insertCard(arr, listProduct);
+}
+
+
+
+//----------------------------------------------select filter color
+// var inputColor=document.querySelectorAll(".filter__list-item-color");
+// console.log(inputColor);
+// inputColor.forEach(element=>{
+//   element.addEventListener('click',function(){
+//     element.children[0].classList.toggle("border_select");
+//   })
+// });
+// ----------------------------------------------check filter and insert tag filter
+function closeTag(keysWords) { // xóa những tag có tên là keywords
+    var tagret_item = document.querySelectorAll(".tagret-item");
+    tagret_item.forEach(element => {
+        if (element.children[0].textContent === keysWords) {
+            element.remove();
+        }
+    });
+}
+
+function closeNoCheckInputFilter(arr, select) { // xóa các tag khi kh được check
+    if (select == "input") {
+        arr.forEach(element => {
+            if (element.children[0].checked === false) {
+                closeTag(element.children[1].textContent);
+            }
+        });
+    } else if (select == "color") {
+        arr.forEach(element => {
+            if (element.classList.contains("border_select") === false) {
+                closeTag(element.nextElementSibling.textContent);
+            }
+        });
+    }
+}
+
+function checkInputCheckFilter() {
+    var input = document.querySelectorAll(".filter__list-item-text");
+    input.forEach(element => {
+        element.addEventListener('click', function() {
+            if (element.children[0].checked) {
+                insertTarget(element.children[0].value);
+                closeNoCheckInputFilter(input, "input");
+            } else {
+                closeNoCheckInputFilter(input, "input");
+            }
+            resultSearch();
+        });
+    });
+};
+checkInputCheckFilter();
+
+function checkColorCheckFilter() {
+    var input = document.querySelectorAll(".filter__list-color");
+    input.forEach(element => {
+        element.addEventListener('click', function() {
+            element.classList.toggle("border_select");
+            if (element.classList.contains("border_select")) {
+                insertTarget(element.nextElementSibling.textContent);
+                closeNoCheckInputFilter(input, "color");
+            } else {
+                closeNoCheckInputFilter(input, "color");
+            }
+            resultSearch();
+        });
+    });
+};
+checkColorCheckFilter();
+
+
+// --------------------------------ProductDetail
+// describle-select
+function removeSelectAll() {
+    var menu = document.querySelectorAll(".describe__menu-sub");
+    menu.forEach(element => {
+        element.classList.remove("describe--primary");
+    });
+}
+
+function offAllDescribe() {
+    var describe = document.querySelectorAll(".describe-select");
+    describe.forEach(element => {
+        element.classList.add("none");
+    });
+}
+
+function selectDescribe() {
+    var menu = document.querySelectorAll(".describe__menu-sub");
+    menu.forEach(element => {
+        element.addEventListener('click', function() {
+            removeSelectAll();
+            element.classList.add("describe--primary");
+            offAllDescribe();
+            console.log("describe");
+            // if(element.classList.contains("describe__menu-sub_view")){
+            //   var view = document.querySelector(".describe-detail");
+            //   view.classList.remove("none");
+            //   console.log("1");
+            // }
+            if (element.classList.contains("describe__menu-sub_size")) {
+                var size = document.querySelector(".describe-size");
+                size.classList.remove("none");
+                console.log("2");
+            }
+            if (element.classList.contains("describe__menu-sub_delivery")) {
+                // var view = document.querySelector(".describe-detail");
+                // view.classList.remove("none");
+            }
+            if (element.classList.contains("describe__menu-sub_reviews")) {
+                var reviews = document.querySelector(".describe-reviews");
+                reviews.classList.remove("none");
+                console.log("4");
+            }
+            // if(element.classList.contains("describe__menu-sub_view")){
+            //   element.classList.add();
+            // }
+        });
+    });
+}
+selectDescribe();
+
+
+//-------------product-detail___useful-comment
+var useful = document.querySelectorAll(".describe-reviews_detail-like");
+useful.forEach(element => {
+    element.addEventListener('click', function() {
+        console.log("Click");
+        element.children[0].classList.toggle("describe-reviews_detail-like--select-icon");
+
+        element.classList.toggle("describe-reviews_detail-like--select-box");
+    });
+});
+// --------------------------------------------------page
+function removeClasslist(list, str) {
+    list.forEach(element => {
+        element.classList.remove(str);
+    });
+}
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+console.log($$(".page-item"));
+$$(".page-item").forEach(element => {
+    element.addEventListener('click', function() {
+        removeClasslist($$(".page-item"), "page-item--select");
+        element.classList.add("page-item--select");
+    });
+});
+
+$$(".reviews_detail-filter_item").forEach(element => {
+    element.addEventListener('click', function() {
+        removeClasslist($$(".reviews_detail-filter_item"), "reviews_detail-filter_item--select");
+        element.classList.add("reviews_detail-filter_item--select");
+    });
+});
+
+// $(".detail-content__count-minus").addEventListener('click', function(){
+//   console.log($(".detail-content__count-number").innerHTML);
+// });
+
+
+
+//-------------------------------------SHELL
+//check box
+function selectShell() {
+    console.log("?")
+    $$(".shell-check_box").forEach(element => {
+        element.addEventListener('click', function() {
+            console.log("vppafs")
+            element.classList.toggle("shell-check_box--select");
+            element.children[0].classList.toggle("block")
+        });
+    });
+}
+selectShell();
+$(".header__action-cart").addEventListener('click', function() {
+    window.location.href = "./shell.html";
+});
+
+
+function updateMessage() {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth < 576) {
+        $(".header__action-search").addEventListener('click', function() {
+            $(".search_mobile").classList.toggle("none");
+            this.classList.toggle("select-input-mobile")
+
+        });
+        $(".header-logo-menu i").addEventListener('click', function(e) {
+            $(".menu-mobile").classList.add("show-menu");
+        });
+        $(".menu-mobile_title-icon").addEventListener('click', function() {
+            $(".menu-mobile").classList.remove("show-menu");
+
+        })
+
+    } else if (screenWidth < 1000) {} else {
+
+    }
+}
+
+// Gọi hàm cập nhật thông điệp khi kích thước màn hình thay đổi
+updateMessage();
+
+
+    <!-- Slick -->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.11.0.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+    <script src="index.js">
+        
+    </script>
+
+
+    //-------------------------------------------------------------Product new 
+// var listProductNew = document.querySelector(".product-new__list");
+// if (listProductNew) {
+//     var count = 0;
+//     render.forEach((element) => {
+//         if (element.new == 1 && element.hot == 0 && count <= 11) {
+//             count++;
+//             var newDiv = document.createElement("div");
+//             newDiv.classList.add("card");
+//             newDiv.innerHTML = `
+//     <div class="card-img">
+//         <img src="./assets/img/` + element.img + `" alt="">
+//     </div>
+//     <p class="card-title">` + element.title + `</p>
+//     <div class="card-price-rate">
+//         <div class="card-price">
+//             <span>` + priceNew(element.price_old, element.sale) + `</span>
+//             <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+//         </div>
+//         <div class="card-rate">
+//             <i class="fa-solid fa-star"></i>
+//             ` + element.rate + `
+//         </div>
+//     </div>   
+//     <i class="card-btn__like fa-regular fa-heart"></i>
+//     <div class="card-new-hot">
+
+//     </div>
+//   `
+//             newDiv.addEventListener('click', function(e) {
+//                     e.stopPropagation(); //Ngăn chặn nổi bọt
+//                     var url =
+//                         `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+//                     window.location.href = url;
+//                 })
+//                 //get tagNew and tagHot
+//             tagHotNew(element.new, element.hot, newDiv);
+
+//             listProductNew.appendChild(newDiv);
+//             //like
+//             likeShoes(newDiv);
+//         }
+//     });
+// }
+// //-------------------------------------------------------------Product hot
+// var listProductHot = document.querySelector(".product-hot__list");
+// if (listProductHot) {
+//     var count = 0;
+//     render.forEach((element) => {
+//         if (element.hot == 1 && element.new == 0 && count <= 11) {
+//             count++;
+//             var newDiv = document.createElement("div");
+//             newDiv.classList.add("card");
+//             newDiv.innerHTML = `
+//     <div class="card-img">
+//         <img src="./assets/img/` + element.img + `" alt="">
+//     </div>
+//     <p class="card-title">` + element.title + `</p>
+//     <div class="card-price-rate">
+//         <div class="card-price">
+//             <span>` + priceNew(element.price_old, element.sale) + `</span>
+//             <span><del>` + element.price_old.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + `</del></span>  
+//         </div>
+//         <div class="card-rate">
+//             <i class="fa-solid fa-star"></i>
+//             ` + element.rate + `
+//         </div>
+//     </div>   
+//     <i class="card-btn__like fa-regular fa-heart"></i>
+//     <div class="card-new-hot">
+
+//     </div>
+//   `
+//             newDiv.addEventListener('click', function(e) {
+//                     e.stopPropagation(); //Ngăn chặn nổi bọt
+//                     var url =
+//                         `product-detail.html?ob=${encodeURIComponent(JSON.stringify(element))}`;
+//                     window.location.href = url;
+//                 })
+//                 //get tagNew and tagHot
+//             tagHotNew(element.new, element.hot, newDiv);
+
+//             listProductHot.appendChild(newDiv);
+//             //like
+//             likeShoes(newDiv);
+//         }
+//     });
+// }
+
+
+
+<!-- Lọc theo màu -->
+                    <!-- <div class="filter__categories">
+                        <div class="filter__categories-title">
+                            <h3>COLOR</h3>
+                            <i class="filter__categories-title-icon fa-solid fa-sort-down"></i>
+                        </div>
+                        <ul class="filter__list">
+                            <li class="filter__list-item filter__list-item-color">
+                                <div class="bg-white filter__list-color "></div>
+                                <span>White</span>
+                            </li>
+                            <li class="filter__list-item filter__list-item-color">
+                                <div class="bg-red filter__list-color"></div>
+                                <span>Red</span>
+                            </li>
+                            <li class="filter__list-item filter__list-item-color">
+                                <div class="bg-black filter__list-color"></div>
+                                <span>Black</span>
+                            </li>
+                            <li class="filter__list-item filter__list-item-color">
+                                <div class="bg-green filter__list-color"></div>
+                                <span>Green</span>
+                            </li>
+                            <li class="filter__list-item filter__list-item-color">
+                                <div class="bg-blue filter__list-color"></div>
+                                <span>Blue</span>
+                            </li>
+                        </ul>            
+                    </div> -->
+
+
+<!-- SORT -->
+product.php
+<script type="text/javascript">
+    //Lọc dữ liệu sử dụng ajax
+    $(document).ready(function(){
+        ////////////////////////////////////////////////////////////////////////////////////////////////////Lọc dữ liệu
+        filterData();
+        function filterData(){
+            var action = 'filter_data';
+            var danhmuc = getFilter('danhmucFilter');
+            var nhanhieu = getFilter('nhanhieuFilter');
+            var sortprice= getValueSortPrice();
+            $.ajax({
+                url:"./control/ajax_action.php",
+                method:"POST",
+                data:{action:action,danhmuc:JSON.stringify(danhmuc), nhanhieu:JSON.stringify(nhanhieu), sortprice:sortprice},
+                success: function(data){
+                    $('.list-shoes').html(data);
+                },
+            });
+        }
+        function getFilter(class_name){
+            var filter = [];
+            document.querySelectorAll('.'+class_name+':checked').forEach(input => {
+                filter.push(input.value);
+            });
+            return filter;
+        }
+        //Click vào item lọc thì sẽ kiểm tra và lọc dữ liệu
+        var inputs = document.querySelectorAll('.filter__list-item');
+        inputs.forEach(input => {
+            input.addEventListener('click', function(){
+                filterData();
+                var buttonTagets = document.querySelectorAll('.targer-icon');
+                buttonTagets.forEach(buttonTaget => {
+                    buttonTaget.addEventListener('click', function(){
+                        filterData();
+                    });
+                });
+            });
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////Sắp xếp theo giá
+        var comboBox = document.getElementById("myComboBox");
+        comboBox.addEventListener("change", function() {
+            filterData();
+        });
+        function getValueSortPrice() {
+            var comboBox = document.getElementById("myComboBox");
+            var selectedValue = comboBox.value;
+            return selectedValue;
+        }
+    });
+
+    //     //Load dữ liệu
+    //     $(document).on('click', '.btn-sort', function(){
+    //         var sort = $(this).text();
+    //         $.ajax({
+    //             url:"./pages/main/ajax_action.php",
+    //             method:"POST",
+    //             data:{sort:sort},
+    //             success: function(data){
+    //                 $('.list-shoes').html(data);
+    //             },
+    //         });
+    //     });
+    //     function fetch_data(){
+    //         $.ajax({
+    //             url:"./pages/main/ajax_action.php",
+    //             method:"POST",
+    //             success: function(data){
+    //                 $('.list-shoes').html(data);
+    //             },
+    //         });
+    //     }
+    //     fetch_data();
+
+</script>
+
+ajax_action.php
+<?php
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/DTB.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+    $keyWordNhanHieu = json_decode($_POST['nhanhieu']);
+    $keyWordNDanhMuc = json_decode($_POST['danhmuc']);
+    if(($_POST['action'])=='filter_data'){
+        $query= "SELECT * FROM sanpham 
+        INNER JOIN nhanhieu ON nhanhieu.MaNhanHieu = sanpham.MaNhanHieu 
+        INNER JOIN loaisp ON loaisp.MaLoai = sanpham.MaLoai ";
+        if(isset($_POST['nhanhieu']) && !empty($keyWordNhanHieu)){
+            $filterNhanHieu=implode("','",$keyWordNhanHieu);
+            $query.=" AND nhanhieu.TenNhanHieu IN('".$filterNhanHieu."')";
+        }
+        if(isset($_POST['danhmuc']) && !empty($keyWordNDanhMuc)){
+            $filterDanhMuc=implode("','",$keyWordNDanhMuc);
+            $query.=" AND loaisp.TenLoai IN('".$filterDanhMuc."')";
+        }
+        if(isset($_POST['sortprice']) && $_POST['sortprice']!=""){
+            $sortPrice=$_POST['sortprice'];
+            if($sortPrice=="asc"){
+                $query.=" ORDER BY sanpham.GiaMoi ASC";
+            }else{
+                $query.=" ORDER BY sanpham.GiaMoi DESC";
+            }
+        }
+        $db = new DTB();
+        $result = mysqli_query($db->getConnection(), $query);
+        $productArr = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $sanPham = new SanPham(
+                $row['MaSP'],
+                $row['TenSP'],
+                $row['SoSaoDanhGia'],
+                $row['SoLuotDanhGia'],
+                $row['MoTa'],
+                $row['HinhAnh'],
+                $row['SanPhamMoi'],
+                $row['SanPhamHot'],
+                $row['GiaCu'],
+                $row['GiaMoi'],
+                $row['SoLuongDaBan'],
+                $row['MaNhanHieu'],
+                $row['MaLoai']
+            );
+            $productArr[] = $sanPham;
+        }
+        echo showListProductString($productArr);
+        $db->disconnect();
+    }
+?>
+ <?php 
+$sql_sizeSp= "SELECT * FROM `sizesp`";
+$result_sizeSp=mysqli_query($connect,$sql_sizeSp);
+$product_sizeSp=mysqli_fetch_array($result_sizeSp);
+while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
+        if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
+            <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
+        <?php }
+        else{ ?>
+            <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
+        <?php } 
+} ?>      
+
+<div class="row info-pay mt-4 p-4">
+    <div id="pay-chuyenkhoan">
+        <p class="font-size-16 pay-chuyenkhoan_title">
+            Thông tin chuyển khoản
+        </p>
+        <div class="pay-chuyenkhoan-div">
+            <div class="pay-chuyenkhoan_img">
+                <img src="./assets/img/banking.png" alt="">
+        
+            </div>
+            <div class="pay-chuyenkhoan_main">
+                <p class="font-size-16 pay-chuyenkhoan_content">
+                    Nội dung: <strong class="font-size-16">#123</strong>.
+                </p>
+                <p class="font-size-16 pay-chuyenkhoan_note">
+                    Sau khi nhận được tiền shop sẽ gửi hàng về cho bạn.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
