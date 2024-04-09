@@ -27,7 +27,7 @@
         $sql_kiemTraKho= "SELECT sanpham.MaSP, ctsizesp.SizeSP,ctsizesp.SoLuong FROM sanpham INNER JOIN ctsizesp ON ctsizesp.MaSP = sanpham.MaSP WHERE sanpham.MaSP = '" . $MaSP . "' AND ctsizesp.SizeSP ='" . $SizeSP . "' ";
         $result_kiemTraKho=mysqli_query($connect,$sql_kiemTraKho);
         $product_kiemTraKho=mysqli_fetch_array($result_kiemTraKho);
-        if($product_kiemTraKho['SoLuong']>0){
+        if($product_kiemTraKho && $product_kiemTraKho['SoLuong']>0){
             return True;
         }
         else{

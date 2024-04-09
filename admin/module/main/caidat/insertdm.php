@@ -11,7 +11,7 @@ if(isset($_POST['tenLoai'])) {
     $tenLoai = $_POST['tenLoai'];
     
     // Thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO loaisp (TenLoai) VALUES ('$tenLoai')";
+    $sql = "INSERT INTO loaisp (TenLoai,hide) VALUES ('$tenLoai',1)";
     if ($conn->query($sql) === TRUE) {
         // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
         $result = $conn->query("SELECT * FROM loaisp WHERE TenLoai='$tenLoai'");

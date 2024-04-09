@@ -12,7 +12,7 @@ if(isset($_POST['size'])) {
     $size = $_POST['size'];
     
     // Chuẩn bị câu truy vấn SQL để thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO sizesp (SizeSP) VALUES ('$size')";
+    $sql = "INSERT INTO sizesp (SizeSP,hide) VALUES ('$size',1)";
     
     // Thực thi truy vấn
     if ($conn->query($sql) === TRUE) {

@@ -11,7 +11,7 @@ if(isset($_POST['tenNhanHieu'])) {
     $tenNhanHieu = $_POST['tenNhanHieu'];
     
     // Thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO nhanhieu (TenNhanHieu) VALUES ('$tenNhanHieu')";
+    $sql = "INSERT INTO nhanhieu (TenNhanHieu,hide) VALUES ('$tenNhanHieu',1)";
     if ($conn->query($sql) === TRUE) {
         // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
         $result = $conn->query("SELECT * FROM nhanhieu WHERE TenNhanHieu='$tenNhanHieu'");

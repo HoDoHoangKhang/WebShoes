@@ -31,7 +31,7 @@
                         </div>
                     </a> -->
                     <div class="hero__image-text">
-                        <?php echo $_SESSION['name']; ?>
+                        NIKE
                     </div>
                 </div>
             </div>

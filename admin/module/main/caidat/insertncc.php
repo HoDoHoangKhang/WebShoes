@@ -15,7 +15,7 @@ if(isset($_POST['tenNCC']) && isset($_POST['diaChiNCC']) && isset($_POST['sdtNCC
     $emailNCC = $_POST['emailNCC'];
     
     // Chuẩn bị câu truy vấn SQL để thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO nhacungcap (TenNCC, DiaChiNCC, SdtNCC, EmailNCC) VALUES ('$tenNCC', '$diaChiNCC', '$sdtNCC', '$emailNCC')";
+    $sql = "INSERT INTO nhacungcap (TenNCC, DiaChiNCC, SdtNCC, EmailNCC,hide) VALUES ('$tenNCC', '$diaChiNCC', '$sdtNCC', '$emailNCC',1)";
     
     // Thực thi truy vấn
     if ($conn->query($sql) === TRUE) {

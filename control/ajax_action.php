@@ -322,9 +322,9 @@
         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctpx-act.php');
         $maPX=intval($_POST['MaPX']);
-        $maSP=intval($_POST['MaSP']);
-        $soLuong=intval($_POST['SoLuong']);
-        $size=intval($_POST['Size']);
+        // $maSP=intval($_POST['MaSP']);
+        // $soLuong=intval($_POST['SoLuong']);
+        // $size=intval($_POST['Size']);
         if(getTinhTrangPhieuXat($maPX)=='Tạm giữ'){
             deleteChiTietPhieuXuat($maPX);
             deletePhieuXuat($maPX);

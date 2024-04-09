@@ -1177,20 +1177,19 @@ CREATE TABLE `taikhoan` (
 -- Đang đổ dữ liệu cho bảng `taikhoan`
 --
 
-INSERT INTO `taikhoan` (`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`, `TrangThai`) VALUES
-('admin1', '12345', '2024-03-16', 1, 'fb5.jpg', 0),
-('admin2', '12345', '2024-03-16', 1, 'fb5.jpg', 0),
-('nhanvien1', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
-('nhanvien2', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
-('nhanvien3', '12345', '2024-03-16', 3, 'fb5.jpg', 0),
-('quanly1', '12345', '2024-03-16', 2, 'fb5.jpg', 0),
-('user1', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
-('user2', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
-('user3', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
-('user4', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
-('user5', '12345', '2024-03-16', 4, 'fb5.jpg', 0),
-('user6', '12345', '2024-03-16', 4, 'fb5.jpg', 0);
-
+INSERT INTO `taikhoan` (`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`) VALUES
+('admin1', '12345', '2024-03-16', 1, 'avt-7.png'),
+('admin2', '12345', '2024-03-16', 1, 'avt-8.png'),
+('nhanvien1', '12345', '2024-03-16', 3, 'avt-9.png'),
+('nhanvien2', '12345', '2024-03-16', 3, 'avt-10.png'),
+('nhanvien3', '12345', '2024-03-16', 3, 'avt-11.png'),
+('quanly1', '12345', '2024-03-16', 2, 'avt-12.png'),
+('user1', '12345', '2024-03-16', 4, 'avt-1.png'),
+('user2', '12345', '2024-03-16', 4, 'avt-2.png'),
+('user3', '12345', '2024-03-16', 4, 'avt-3.png'),
+('user4', '12345', '2024-03-16', 4, 'avt-4.png'),
+('user5', '12345', '2024-03-16', 4, 'avt-5.png'),
+('user6', '12345', '2024-03-16', 4, 'avt-6.png');
 -- --------------------------------------------------------
 
 --
@@ -1213,18 +1212,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Ma`, `TenDangNhap`, `HoTen`, `NgaySinh`, `SDT`, `Email`, `DiaChi`, `GioiTinh`) VALUES
-(1, 'admin1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(2, 'admin2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(3, 'nhanvien1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(4, 'nhanvien2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(5, 'nhanvien3', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(6, 'quanly1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(7, 'user1', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(8, 'user2', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(9, 'user3', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(10, 'user4', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(11, 'user5', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0),
-(12, 'user6', 'Hồ Đỗ Hoàng Khang', '2003-02-26', '0987654322', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 0);
+(1, 'admin1', 'Hồ Đỗ Hoàng Khang', '2003-03-02', '0987362123', 'hodohoangkhang@gmail.com', '123 Đường ABC, Quận XYZ, Thành phố HCM', 1),
+(2, 'admin2', 'Tăng Hồng Nguyên Đán', '2003-06-06', '0982731231', 'tanghongnguyendan@gmail', '101 Đường GHI, Quận PQR, Thành phố HCM', 1),
+(3, 'nhanvien1', 'Vỹ Apu', '2003-10-12', '0123456789', 'levy@gmail.com', '333 Đường UVW, Quận YZA, Thành phố HCM', 1),
+(4, 'nhanvien2', 'Khánh Duy', '2003-02-04', '0987655432', 'khanhduy@gmail.com', '555 Đường HIJ, Quận KLM, Thành phố HCM', 1),
+(5, 'nhanvien3', 'Lê Vạn An', '2003-04-23', '0999888312', 'vanan@gmail', '999 Đường FGH, Quận IJK, Thành phố HCM', 1),
+(6, 'quanly1', 'Trần Văn A', '2003-12-13', '0982731231', 'tranvana@gmail', '1010 Đường LMN, Quận OPQ, Thành phố HCM', 1),
+(7, 'user1', 'Nguyễn Sin', '2009-02-09', '0982731231', 'nguyensin@gmail', '1412 Đường GHI, Quận PQR, Thành phố HCM', 1),
+(8, 'user2', 'Trấn Thành', '1999-02-23', '0123123123', 'tranthanh@gmail', '1515 Đường VAS, Quận 5, Thành phố HCM', 1),
+(9, 'user3', 'Mika Tô', '2000-06-06', '0987873231', 'mikato@gmail', '1441 Đường LT, Quận TB, Thành phố HCM', 1),
+(10, 'user4', 'Trường Giang', '2001-10-06', '0122112312', 'truonggiang@gmail', '113 Đường GHI, Quận 8, Thành phố HCM', 1),
+(11, 'user5', 'Nam Em', '1992-05-10', '0191919212', 'namem@gmail', '1022 Đường QKS, Quận 4, Thành phố HCM', 0),
+(12, 'user6', 'Nhã Phương', '1999-07-08', '0191231231', 'nhaphuong@gmail', '104 Đường HKA, Quận 2, Thành phố HCM', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
