@@ -8,7 +8,7 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
   $trangThaiHienTai = $row['TinhTrangDH'];
   if ($trangThaiHienTai === "Đã hoàn thành") {
-    echo "<script>alert('Bạn không thể chuyển trạng thái đơn hàng đang đã hoàn thành!');</script>";
+    echo "<script>alert('Bạn không thể chuyển trạng thái đơn hàng đã hoàn thành!');</script>";
     echo "<script>window.location.href = '../../index.php?danhmuc=quanlydonhang';</script>";
     exit;
   }

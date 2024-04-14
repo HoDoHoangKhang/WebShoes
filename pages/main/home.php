@@ -18,11 +18,15 @@
                 </div>
                 <div class="hero__image">
                     <?php 
-                    $_SESSION['img'];
-                    if($_SESSION['img'] == '')
-                      $_SESSION['img'] = 'hero.png';
+                    $conn = new mysqli("localhost", "root", "", "shoestore");
+                    $sql="SELECT *
+                    FROM website";
+                    $result = $conn->query($sql);
+                      $data = mysqli_fetch_assoc($result);
+                      $image = $data["imghome"];
+                      $thuonghieu = $data["thuonghieu"];
                     ?>
-                    <img src="./assets/img/<?php echo $_SESSION['img']; ?>" alt="" class="hero__image-img">
+                    <img src="./assets/img/<?php echo $image; ?>" alt="" class="hero__image-img">
                     <!-- <a href="" class="hero__image-btn-sale button">
                         <i class="hero__image-btn-sale-icon fa-regular fa-badge-percent"></i>
                         <div>
@@ -31,7 +35,7 @@
                         </div>
                     </a> -->
                     <div class="hero__image-text">
-                        NIKE
+                    <?php echo $thuonghieu; ?>
                     </div>
                 </div>
             </div>

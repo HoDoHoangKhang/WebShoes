@@ -9,18 +9,17 @@ $conn = mysqli_connect("localhost", "root", "", "shoestore");
 $sql="SELECT
   px.NgayDatHang,
   px.TinhTrangDH,
-  px.TongTien,
   px.TongSoLuong,
-  nhanvien.HotenNV,
-  khachhang.HotenKH,
+  nhanvien.HoTen as HotenNV,
+  khachhang.HoTen as HotenKH,
   sanpham.TenSP,
   sanpham.HinhAnh,
   ctpx.SoLuong,
   ctpx.GiaBan
 FROM phieuxuat px
 INNER JOIN ctpx ON px.MaPX = ctpx.MaPX
-INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
-INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV
+INNER JOIN user khachhang ON px.MaKH = khachhang.Ma
+INNER JOIN user nhanvien ON px.MaNV = nhanvien.Ma
 INNER JOIN sanpham ON ctpx.MaSP = sanpham.MaSP
 WHERE px.MaPX = $id;";
 $result = $conn->query($sql);
@@ -33,16 +32,17 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $ngayDatHang = $row['NgayDatHang'];
    $tinhTrangDonHang = $row['TinhTrangDH'];
-   $tongTien = $row['TongTien'];
    $tongSoLuong = $row['TongSoLuong']; 
     $hotenNV = $row['HotenNV'];
     $hotenKH = $row['HotenKH'];
-    $tenSP = $row['TenSP'];
     $hinhAnh = $row['HinhAnh'];
+    $tenSP = $row['TenSP'];
     $soLuong = $row['SoLuong'];
     $giaBan = $row['GiaBan'];
+    $tongTienSP = $soLuong * $giaBan;
+    $tongTien =0;
+    $tongTien += $tongTienSP;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -158,9 +158,16 @@ if ($result->num_rows > 0) {
                     </tr>
                 </thead>
                 <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><?php echo $tenSP; ?></td>
+                            <td><img src="../assets/img/<?php echo $hinhAnh; ?>" alt="<?php echo $hinhAnh; ?>"></td>
+                            <td><?php echo $soLuong; ?></td>
+                            <td><?php echo number_format($giaBan, 0, ',', '.'); ?> VNĐ</td>
+                            <td><?php echo number_format($tongTienSP, 0, ',', '.'); ?> VNĐ</td>
+                        </tr>
                     <?php
-                    $stt = 1;
-                    $tongTien = 0;
+                    $stt = 2;
                     while ($row = mysqli_fetch_assoc($result)) {
                         $hinhAnh = $row['HinhAnh'];
                         $tenSP = $row['TenSP'];

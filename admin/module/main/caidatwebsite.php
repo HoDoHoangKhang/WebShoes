@@ -1,19 +1,22 @@
 <?php
-//tạo session lưu tên logo
-$logo = $_SESSION['logo'];
-//tạo session lưu tên ảnh trang home
-$image = $_SESSION['img'];
+// Kết nối với cơ sở dữ liệu
+$conn = mysqli_connect("localhost", "root", "", "shoestore");
+$sql="SELECT *
+FROM website";
+$result = mysqli_query($conn, $sql);
+  $data = mysqli_fetch_assoc($result);
+  $logo = $data["logo"];
+  $image = $data["imghome"];
+  $thuonghieu = $data["thuonghieu"];
 
-$_SESSION['name'];
-if($_SESSION['name']=='')
-  $_SESSION['name']='nike';
-$thuonghieu = $_SESSION['name'];
-?>
+$sql = "SELECT * FROM feedback";
+$result = mysqli_query($conn, $sql);
+  ?>
 <style>
     .container {
-  display: flex;
-  
+  display: flex; 
   align-items: center;
+  margin: 0px;
 }
 .form-group h5 {
   width: 300px; 
@@ -33,6 +36,7 @@ $thuonghieu = $_SESSION['name'];
 
 input file, text{
   width: 300px;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .update-button {
@@ -45,6 +49,18 @@ input file, text{
   border-radius: 10px;
   background: rgb(34,193,195);
 background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(103,73,242,1) 100%);
+}
+.reset{
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin: 0 auto; 
+  display: block;
+  border: 3px solid #ddd;
+  border-radius: 10px;
+  background: rgb(34,193,195);
+  background: rgb(212,170,170);
+  background: linear-gradient(0deg, rgba(212,170,170,1) 0%, rgba(255,0,0,1) 100%);
 }
 
 img{
@@ -88,31 +104,36 @@ img{
     <table id="myTable" class="table table-striped " style="width: 100%;">
         <thead>
             <tr>
-                <th >Mã DG</th>
-                <th>Mã SP</th>
-                <th>Tiêu đề</th>
+                <th >STT</th>
+                <th>Tên</th>
+                <th>Ảnh</th>
                 <th>Nội dung</th>
-                <th>Thời gian</th>
                 <th>Số sao</th>
-                <th>Chọn</th>
-
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td><input type="checkbox" name="row_id" value="1"></td>
-            </tr>
+        <?php
+        while ($row = $result->fetch_assoc()) {
+        ?>
+      <tr>
+        <td><input type="text" readonly style="width: 20px;" name="id[]" value="<?php echo $row['Mafb']; ?>"></td>
+        <td><input type="text" style="width: 100px;" name="ten[]" value="<?php echo $row['TenNgFb']; ?>"></td>
+        <td>
+          <ul style="padding: 0px;margin: 0px;">
+            <li><img src="../assets/img/<?php echo $row['Image']; ?>"  style="width: 70px;height: 70px;border-radius: 50%;margin-bottom: 10px;"></li>
+            <li style="width: 100px;"><input type="file" name="avt[]"></li>
+          </ul>
+        </td>
+        <td><textarea name="NoiDung[]" cols="50" rows="5" style="width: 100%;"><?php echo $row['NoiDung']; ?></textarea></td>
+        <td><input type="number" name="SoSao[]" value="<?php echo $row['SoSao']; ?>" max="5" min="1"></td>
+      </tr>
+      <?php }?>
         </tbody>
   </table>
   </div>
-<button class="update-button" type="submit">Cập nhật</button>
+  <div style="display: flex;">
+    <button class="update-button" type="submit">Cập nhật</button>
+    <input type="reset" value="Reset" class="reset">
+  </div>
 </form>
 </div>

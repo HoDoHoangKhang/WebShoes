@@ -26,10 +26,13 @@
                 </div>
                 <a  href="index.php?danhmuc=home">
                 <?php               
-                    $_SESSION['logo'];
-                    if($_SESSION['logo'] == '')
-                      $_SESSION['logo'] = 'logo.png';    
-                    $logo = $_SESSION['logo'];
+                    $conn = mysqli_connect("localhost", "root", "", "shoestore");
+                    $sql="SELECT *
+                    FROM website";
+                    $result = $conn->query($sql);
+                      $data = mysqli_fetch_assoc($result);
+                      $logo = $data["logo"];
+                      $conn->close();
                     ?>
                     <img src="./assets/img/<?php echo $logo; ?>" alt="Logo" class="header__logo" style=" width: 130px;">                 
                 </a>

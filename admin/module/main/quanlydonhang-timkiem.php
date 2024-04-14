@@ -21,8 +21,8 @@ $timestampKetThuc = strtotime($ngayKetThuc);
 if ($timestampBatDau > $timestampKetThuc) {
   // Hiển thị thông báo lỗi
   echo "<script>alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');</script>";
-  echo "<script>window.location.href = '../../index.php?danhmuc=quanlydonhang';</script>";
-  exit(); // Dừng thực thi script
+  echo "<script>history.back();</script>";
+ exit();
 }
 
 $conn = mysqli_connect("localhost", "root", "", "shoestore"); 
