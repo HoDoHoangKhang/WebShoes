@@ -44,6 +44,15 @@
                 case 'chitietphieunhap':                     
                     require_once 'module/main/quanlynhaphang_view_chi_tiet_phieu.php';
                     break;
+                case 'themsanpham':                     
+                    require_once 'module/main/quanlysanpham_add_product_input.php';
+                    break;
+                case 'suasanpham':                     
+                    require_once 'module/main/quanlysanpham_fix_product_input.php';
+                    break;
+                case 'themphieunhap':                     
+                    require_once 'module/main/quanlynhaphang_them_phieu_nhap.php';
+                    break;
                 default:
                     require_once 'module/main/dashboard.php';
                 break;

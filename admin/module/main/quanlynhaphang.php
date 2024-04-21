@@ -9,16 +9,16 @@
 	pn.TongSoLuong,
 	pn.TinhTrangDH,
 	pn.trangThai,
-	nhanvien.MaNV,
-	nhanvien.HoTenNV,
-	nhanvien.SDT,
+	user.Ma,
+	user.HoTen,
+	user.SDT,
 	nhacungcap.MaNCC,
 	nhacungcap.SdtNCC,
 	nhacungcap.TenNCC
 
 FROM phieunhap pn
 INNER JOIN nhacungcap ON pn.MaNCC = nhacungcap.MaNCC
-INNER JOIN nhanvien ON pn.MaNV = nhanvien.MaNV;";
+INNER JOIN user ON pn.MaNV = user.Ma;";
 
 
 $result = $connect->query($sql);
@@ -35,7 +35,6 @@ if ($result->num_rows === 0) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Quản lí Nhập hàng</title>
-	
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -56,14 +55,96 @@ if ($result->num_rows === 0) {
 	ul{
 		 padding: 0;
 	}
+    .contentdivselect {
+        display: none; /* Ẩn tất cả các div */
+    }
+    /* Hiển thị div content1 mặc định */
+    #contentdivselect1 {
+        display: block;
+    }
 </style>
-
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
 	<div class="tableTitle">
 		<p>Danh sách nhập hàng</p>
-		
+		<div class="table-func">
+			<select id="selectBox" onchange="changeContent()">
+				    <option value="option1">Theo Ngày</option>
+				    <option value="option2">Theo Tiền</option>
+				    <option value="option3">Option 3</option>
+				</select>
+			<div id="contentdivselect1" class="contentdivselect filter-container">
+				<label>Start date:</label>
+			    <input type="date" id="startdate">
+				<label>End date:</label>
+				<input type="date" id="enddate">
+				<button class="btn btn-primary" id="filterBtnDate">Filter</button>
+				<button class="btn btn-secondary" id="clearBtn">Clear</button>
+			</div>
+			<div id="contentdivselect2" class="contentdivselect filter-container">
+			    <label>Start Money:</label>
+			    <input type="number" id="startmoney">
+				<label>End Money:</label>
+				<input type="number" id="endmoney">
+				<button class="btn btn-primary" id="filterBtnMoney">Filter</button>
+				<button class="btn btn-secondary" id="clearBtn">Clear</button>
+			</div>
+			<div id="contentdivselect3" class="contentdivselect filter-container">
+			    Nội dung cho Option 3
+			</div>
+			&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp
+			<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
+		</div>
 	</div>
+	<script>
+	    // Hàm để thay đổi nội dung của div
+	    function changeContent() {
+	        var selectBox = document.getElementById("selectBox");
+	        var selectedOption = selectBox.options[selectBox.selectedIndex].value;
+
+	        // Ẩn tất cả các div
+	        var allContents = document.getElementsByClassName("contentdivselect");
+	        for (var i = 0; i < allContents.length; i++) {
+	            allContents[i].style.display = "none";
+	        }
+
+	        // Hiển thị div tương ứng với option đã chọn
+	        var contentDiv = document.getElementById("contentdivselect" + selectedOption.substr(-1));
+	        contentDiv.style.display = "block";
+	    }
+	</script>
+	<script>
+		document.getElementById('filterBtnDate').addEventListener('click', function() {
+		  var startDate = document.getElementById('startdate').value;
+		  var endDate = document.getElementById('enddate').value;
+
+		  var table = document.getElementById('myTable');
+		  var rows = table.getElementsByTagName('tr');
+
+		  for (var i = 1; i < rows.length; i++) {
+		    var rowDate = rows[i].getElementsByTagName('td')[3].innerHTML;
+		    if (rowDate >= startDate && rowDate <= endDate) {
+		      rows[i].style.display = '';
+		    } else {
+		      rows[i].style.display = 'none';
+		    }
+		  }
+		});
+
+		document.getElementById('clearBtn').addEventListener('click', function() {
+		  document.getElementById('startdate').value = '';
+		  document.getElementById('enddate').value = '';
+
+		  var table = document.getElementById('myTable');
+		  var rows = table.getElementsByTagName('tr');
+
+		  for (var i = 1; i < rows.length; i++) {
+		    rows[i].style.display = '';
+		  }
+		});
+	</script>
 	<table id="myTable" class="table table-striped " style="width: 100%;">
 		<thead>
 			<tr>
@@ -86,8 +167,8 @@ if ($result->num_rows === 0) {
 			<td><?php echo $row['MaPN']; ?></td>
 			<td>
 				<ul>
-					<li>ID: <?php echo $row['MaNV']; ?></li></li>
-					<li>Tên: <?php echo $row['HoTenNV']; ?> </li>
+					<li>ID: <?php echo $row['Ma']; ?></li></li>
+					<li>Tên: <?php echo $row['HoTen']; ?> </li>
 					<li>SĐT: <?php echo $row['SDT']; ?></li>
 				</ul>
 			</td>
@@ -125,6 +206,7 @@ if ($result->num_rows === 0) {
 		</tbody>
 	</table>
 </div>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 	$('table').on('click', 'td' , function (event) {
