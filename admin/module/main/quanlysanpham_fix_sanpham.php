@@ -1,83 +1,96 @@
 <?php
 // Xử lý dữ liệu từ form
 $maSP = $_POST['MaSP']; 
-$tenSP = $_POST['TenSP'];
-$moTa = $_POST['MoTa'];
-$SoSaoDanhGia = $_POST['saoDG'];
-$SoLuotDanhGia = $_POST['luotDG'];
+$tenSP = $_POST['tenSP'];
+$moTa = $_POST['editorContent'];
+$SoSaoDanhGia = $_POST['SoSaoDanhGia'];
+$SoLuotDanhGia = $_POST['SoLuotDanhGia'];
 $SoLuongDaBan = $_POST['SoLuongDaBan'];
-// $SanPhamMoi = $_POST['SanPhamMoi'];
-// $SanPhamHot = $_POST['SanPhamHot'];
-$giaMoi = $_POST['GiaMoi'];
-$maNhanHieu = $_POST['MaNhanHieu'];
-$maLoai = $_POST['MaLoai'];
-$GiaCu = $_POST['GiaCu'];
-$GiaMoi = $_POST['GiaMoi'];
+$GiaCu = $_POST['giacu'];
+$giaMoi = $_POST['giamoi'];
+$tenNhanHieu = $_POST['tenNhanHieu'];
+$tenLoai = $_POST['tenLoai'];
+$SanPhamMoi = $_POST['SanPhamMoi'];
+$SanPhamHot = $_POST['SanPhamHot'];
 
-$uploadOk = 0;
-if ($_FILES['hinhanh2']['size'] != 0) {
-	$Dir_nm = __DIR__;
+$Dir_nm = __DIR__;
+$targetDir = str_replace("admin\\module\\main", "config\\config.php", $Dir_nm);
+require $targetDir;
+
+$sql = "SELECT MaNhanHieu FROM nhanhieu WHERE TenNhanHieu = ?";
+// Chuẩn bị và thực thi câu truy vấn sử dụng prepared statement
+if ($stmt = $connect->prepare($sql)) {
+    $stmt->bind_param("s", $tenNhanHieu); // "s" đại diện cho kiểu dữ liệu string
+    $stmt->execute();
+    $stmt->bind_result($maNhanHieu);
+    $stmt->fetch();
+    $stmt->close();
+}
+$sql = "SELECT MaLoai FROM loaisp WHERE TenLoai = ?";
+// Chuẩn bị và thực thi câu truy vấn sử dụng prepared statement
+if ($stmt = $connect->prepare($sql)) {
+    $stmt->bind_param("s", $tenLoai); // "s" đại diện cho kiểu dữ liệu string
+    $stmt->execute();
+    $stmt->bind_result($maLoai);
+    $stmt->fetch();
+    $stmt->close();
+}
+if ($_FILES['hinhanh']['size'] != 0) {
 	$targetDir = str_replace("admin\\module\\main", "assets\\img\\", $Dir_nm);
-	$target_file = $targetDir . basename($_FILES['hinhanh2']["name"]);
-	echo $target_file;
+	$target_file = $targetDir . basename($_FILES['hinhanh']["name"]);
+	// echo $target_file;
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 	// Kiểm tra nếu tệp đã tồn tại
 	if (file_exists($target_file)) {
-	    echo "Xin lỗi, tệp đã tồn tại.";
+	    echo "Xin lỗi, tên tệp đã tồn tại. ";
 	    $uploadOk = 0;
 	}
 
 	// Kiểm tra kích thước của tệp
-	if ($_FILES['hinhanh2']["size"] > 500000) {
-	    echo "Xin lỗi, tệp của bạn quá lớn.";
+	if ($_FILES['hinhanh']["size"] > 500000) {
+	    echo "Xin lỗi, tệp của bạn quá lớn. ";
 	    $uploadOk = 0;
 	}
 
 	// Cho phép chỉ một số định dạng tệp ảnh
 	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 	&& $imageFileType != "gif" ) {
-	    echo "Xin lỗi, chỉ cho phép tải lên các tệp JPG, JPEG, PNG & GIF.";
+	    echo "Xin lỗi, chỉ cho phép tải lên các tệp JPG, JPEG, PNG & GIF. ";
 	    $uploadOk = 0;
 	}
 
 	// Kiểm tra $uploadOk có bị lỗi nào không
-	if ($uploadOk == 0) {
-	    echo "Xin lỗi, tệp của bạn không được tải lên.";
-	// Nếu mọi thứ đều ổn, thử tải tệp lên
-	} else {
-	    if (move_uploaded_file($_FILES['hinhanh2']["tmp_name"], $target_file)) {
-	        echo "Tệp ". basename( $_FILES['hinhanh2']["name"]). " đã được tải lên thành công. ";
+	if ($uploadOk == 1) {
+	    if (move_uploaded_file($_FILES['hinhanh']["tmp_name"], $target_file)) {
+	        $tenhinh = $_FILES['hinhanh']["name"];
+			$sph = $SanPhamHot == 'true' ? 1:0;
+			$spm = $SanPhamMoi == 'true' ? 1:0;
+		    $sql = "UPDATE sanpham SET TenSP = '$tenSP', SanPhamMoi = $spm, SanPhamHot = $sph, SoSaoDanhGia = $SoSaoDanhGia, SoLuotDanhGia = $SoLuotDanhGia, MoTa = '$moTa', 
+		    SoLuongDaBan = $SoLuongDaBan,HinhAnh = '$tenhinh',GiaCu = $GiaCu, GiaMoi = $giaMoi, MaNhanHieu = $maNhanHieu, MaLoai = $maLoai WHERE MaSP = $maSP";
+	    	if ($connect->query($sql) === TRUE){
+	    		echo "Cập Nhật Thành Công!";
+	    	} else {
+	    		echo "Cập Nhật Không Thành Công!";
+	    	}
 	    } else {
-	        echo "Xảy ra lỗi khi tải lên tệp.";
+	        echo "Xảy ra lỗi khi tải lên tệp. ";
 	        $uploadOk = 0;
 	    }
 	}
-} else 
-	echo "Không có ảnh!";
-
-$connect=mysqli_connect('localhost','root','','shoestore');
-if($connect){
-    mysqli_query($connect,"SET NAMES 'UTF8'");
-}
-else{
-    echo "Kết nối thất bại";
-}
-$sql = " ";
-if ($uploadOk == 1) {
-    $tenhinh = $_FILES['hinhanh2']["name"];
-    $sql = "UPDATE sanpham SET TenSP = '$tenSP', SoSaoDanhGia = $SoSaoDanhGia, SoLuotDanhGia = $SoLuotDanhGia, MoTa = '$moTa', 
-    SoLuongDaBan = $SoLuongDaBan,HinhAnh = '$tenhinh', GiaMoi = $giaMoi, MaNhanHieu = $maNhanHieu, MaLoai = $maLoai WHERE MaSP = $maSP";
 } else {
-	$sql = "UPDATE sanpham SET TenSP = '$tenSP', SoSaoDanhGia = $SoSaoDanhGia, SoLuotDanhGia = $SoLuotDanhGia, MoTa = '$moTa', 
-    SoLuongDaBan = $SoLuongDaBan, GiaCu = $GiaCu, GiaMoi = $giaMoi, MaNhanHieu = $maNhanHieu, MaLoai = $maLoai WHERE MaSP = $maSP";
+	$spm = $SanPhamMoi == 'true' ? 1:0;
+	$sph = $SanPhamHot == 'true' ? 1:0;
+    $sql = "UPDATE sanpham SET TenSP = '$tenSP', SanPhamMoi = $spm, SanPhamHot = $sph, SoSaoDanhGia = $SoSaoDanhGia, SoLuotDanhGia = $SoLuotDanhGia, MoTa = '$moTa', 
+    SoLuongDaBan = $SoLuongDaBan,GiaCu = $GiaCu, GiaMoi = $giaMoi, MaNhanHieu = $maNhanHieu, MaLoai = $maLoai WHERE MaSP = $maSP";
+	if ($connect->query($sql) === TRUE){
+		echo "Cập Nhật Thành Công!";
+	} else {
+		echo "Cập Nhật Không Thành Công!";
+	}
 }
 
-// Thực thi câu truy vấn và kiểm tra kết quả
-if ($connect->query($sql) === TRUE) {
-    echo "Cập nhật dữ liệu thành công!!!";
-} else {
-    echo "Sửa Không thành công!";
-}
+
+
 ?>

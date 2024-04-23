@@ -75,9 +75,9 @@ require '../config/config.php';
         <div id="editor">
               
         </div><br><br>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <a class="btn btn-secondary" href="index.php?danhmuc=quanlysanpham">Đóng</a>
         <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
-        <button type="submit" class="btn btn-primary" id="resetForm">Clear</button>
+        <a class="btn btn-primary" href="index.php?danhmuc=themsanpham">Clear</a>
     </div>
 </div>
 

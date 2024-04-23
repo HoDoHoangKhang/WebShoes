@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
 
 <div id="divTong" class="container mt-4 mb-4">
     <div>
-        <p id="responsepp"></p>
+        <h1>Mã Sản phẩm: <?php echo $MaSP; ?></h1>
         <div style="display: flex; width: 100%;"> 
             <div class="input-group">
                 <input id="tensp" type="text" value="<?php echo $TenSP; ?>" required>
@@ -171,9 +171,9 @@ if ($result->num_rows > 0) {
         <div id="editor">
             <?php echo $MoTa; ?>
         </div><br><br>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <a class="btn btn-secondary" href="index.php?danhmuc=quanlysanpham">Đóng</a>
         <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
-        <button type="submit" class="btn btn-primary" id="resetForm">Clear</button>
+
     </div>
 </div>
 
@@ -229,6 +229,7 @@ if ($result->num_rows > 0) {
     });
 </script>
 <script>
+    var MaSP = <?php echo $MaSP; ?>;
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('hinhanh');
     const imagePreview = document.getElementById('imagePreview');
@@ -284,12 +285,13 @@ if ($result->num_rows > 0) {
         var SoSaoDanhGia = document.getElementById('SoSaoDanhGia').value;
         var SoLuotDanhGia = document.getElementById('SoLuotDanhGia').value;
         var SanPhamMoi = document.getElementById('SanPhamMoi').checked;
+        var SanPhamHot = document.getElementById('SanPhamHot').checked;
         var tenNhanHieu = document.getElementById('TenNhanHieu').textContent;
-        var maLoai = document.getElementById('MaLoai').textContent;
+        var tenLoai = document.getElementById('MaLoai').textContent;
         var hinhanh = document.getElementById('hinhanh').files[0]; // Lấy file ảnh
         var editorContent = editor.getData();
 
-        console.log(SanPhamMoi.checked);
+        console.log(SanPhamMoi + ' ' + SanPhamHot);
 
         // Kiểm tra và thay đổi màu sắc của các trường không có dữ liệu
         var d = 0;
@@ -342,7 +344,7 @@ if ($result->num_rows > 0) {
             document.getElementById('TenNhanHieu').style.color = '';
         }
 
-        if (maLoai === 'Chọn Loại') {
+        if (tenLoai === 'Chọn Loại') {
             document.getElementById('MaLoai').style.color = 'red';
             d = 1;
         } else {
@@ -350,55 +352,62 @@ if ($result->num_rows > 0) {
         }
 
         if (hinhanh == null) {
-            document.getElementById('dropZone').style.color = 'red';
-            document.getElementById('dropZone').style.border = '2px dashed red';
-            d = 1;
-        } else {
-            document.getElementById('dropZone').style.border = '2px dashed black';
-            document.getElementById('dropZone').style.color = '';
-        }
+            hinhanh = new Blob();
+        } 
 
         if (d === 1){
             alert('Vui lòng nhập đầy đủ');
         } else {
             // Tạo đối tượng FormData để chứa dữ liệu
             var formData = new FormData();
+            formData.append('MaSP', MaSP);
             formData.append('tenSP', tenSP);
-            formData.append('giaSP', giaSP);
+            formData.append('giacu', giacu);
+            formData.append('giamoi', giamoi);
+            formData.append('SoLuongDaBan', SoLuongDaBan);
+            formData.append('SoLuotDanhGia', SoLuotDanhGia);
+            formData.append('SoSaoDanhGia', SoSaoDanhGia);
+            formData.append('SanPhamMoi', SanPhamMoi);
+            formData.append('SanPhamHot', SanPhamHot);
             formData.append('tenNhanHieu', tenNhanHieu);
-            formData.append('maLoai', maLoai);
+            formData.append('tenLoai', tenLoai);
             formData.append('editorContent', editorContent);
             formData.append('hinhanh', hinhanh);
+            
+            // Tạo đối tượng XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            // Mở kết nối
+            xhr.open('POST', 'module/main/quanlysanpham_fix_sanpham.php', true);
 
-            // // Tạo đối tượng XMLHttpRequest
-            // var xhr = new XMLHttpRequest();
+            // Gửi dữ liệu
+            xhr.send(formData);
 
-            // // Mở kết nối
-            // xhr.open('POST', 'module/main/quanlysanpham_add_product.php', true);
-
-            // // Gửi dữ liệu
-            // xhr.send(formData);
-
-            // // Xử lý kết quả trả về
-            // xhr.onreadystatechange = function() {
-            //     if (xhr.readyState == XMLHttpRequest.DONE) {
-            //         if (xhr.status == 200) {
-            //             // Xử lý phản hồi từ server (nếu cần)
-            //             var response = xhr.responseText;
-            //             alert(response);
-            //         } else {
-            //             // Xử lý lỗi (nếu có)
-            //             console.error('Đã xảy ra lỗi:', xhr.status);
-            //         }
-            //     }
-            // };
+            // Xử lý kết quả trả về
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        // Xử lý phản hồi từ server (nếu cần)
+                        var response = xhr.responseText;
+                        alert(response);
+                    } else {
+                        // Xử lý lỗi (nếu có)
+                        console.error('Đã xảy ra lỗi:', xhr.status);
+                    }
+                }
+            };
         }
 
         // In dữ liệu lấy được ra console để kiểm tra
-        // console.log('Tên Sản Phẩm:', tenSP);
-        // console.log('Giá:', giaSP);
+        // console.log('Mã Sản Phẩm:', MaSP);
+        // console.log('Giá cũ:', giacu);
+        // console.log('Giá mới:', giamoi);
+        // console.log('Số lượng bán:', SoLuongDaBan);
+        // console.log('Số lượt đánh giá:', SoLuotDanhGia);
+        // console.log('Số Sao đánh giá:', SoSaoDanhGia);
+        // console.log('Là Sản phẩm Mới:', SanPhamMoi);
+        // console.log('Là Sản phẩm Hot:', SanPhamHot);
         // console.log('Nhãn Hiệu:', tenNhanHieu);
-        // console.log('Loại:', maLoai);
+        // console.log('Loại:', tenLoai);
         // console.log('Hình ảnh:', hinhanh);
         // console.log('Nội dung:', editorContent);
 

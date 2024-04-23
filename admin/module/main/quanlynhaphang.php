@@ -67,30 +67,49 @@ if ($result->num_rows === 0) {
 <div class="tableBox ">
 	<div class="tableTitle">
 		<p>Danh sách nhập hàng</p>
-		<div class="table-func">
+		<div class="table-func" style="width: 50%">
 			<select id="selectBox" onchange="changeContent()">
 				    <option value="option1">Theo Ngày</option>
 				    <option value="option2">Theo Tiền</option>
-				    <option value="option3">Option 3</option>
+				    <option value="option3">Theo Số lượng</option>
+				    <option value="option4">Trạng thái</option>
 				</select>
-			<div id="contentdivselect1" class="contentdivselect filter-container">
-				<label>Start date:</label>
+			<div id="contentdivselect1" class="contentdivselect filter-container" style="width: 100%">
+				<label>Bắt đầu:</label>
 			    <input type="date" id="startdate">
-				<label>End date:</label>
+				<label>Kết thúc:</label>
 				<input type="date" id="enddate">
 				<button class="btn btn-primary" id="filterBtnDate">Filter</button>
-				<button class="btn btn-secondary" id="clearBtn">Clear</button>
+				<button class="btn btn-secondary" id="clearBtnDate">Clear</button>
 			</div>
-			<div id="contentdivselect2" class="contentdivselect filter-container">
-			    <label>Start Money:</label>
+			<div id="contentdivselect2" class="contentdivselect filter-container" style="width: 100%">
+				<label>Bắt đầu:</label>
 			    <input type="number" id="startmoney">
-				<label>End Money:</label>
+				<label>Kết thúc:</label>
 				<input type="number" id="endmoney">
 				<button class="btn btn-primary" id="filterBtnMoney">Filter</button>
-				<button class="btn btn-secondary" id="clearBtn">Clear</button>
+				<button class="btn btn-secondary" id="clearBtnMoney">Clear</button>
 			</div>
-			<div id="contentdivselect3" class="contentdivselect filter-container">
-			    Nội dung cho Option 3
+			<div id="contentdivselect3" class="contentdivselect filter-container" style="width: 100%">
+				<label>Bắt đầu:</label>
+			    <input type="number" id="startSL">
+				<label>Kết thúc:</label>
+				<input type="number" id="endSL">
+				<button class="btn btn-primary" id="filterBtnNumber">Filter</button>
+				<button class="btn btn-secondary" id="clearBtnNumber">Clear</button>
+			</div>
+			<div id="contentdivselect4" class="contentdivselect filter-container" style="width: 100%">
+				<label>Trạng thái:</label>
+				<select id="selectTrangThai">
+				    <option value=" ">All</option>
+				    <option value="Đã Nhận">Đã Nhận</option>
+				    <option value="Chưa Nhận">Chưa Nhận</option>
+				</select>
+				<script type="text/javascript">
+					$('#selectTrangThai').on('change', function() {
+					    $('#myTable').DataTable().column(6).search($(this).val()).draw();
+					  });
+				</script>
 			</div>
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
@@ -117,25 +136,90 @@ if ($result->num_rows === 0) {
 	</script>
 	<script>
 		document.getElementById('filterBtnDate').addEventListener('click', function() {
-		  var startDate = document.getElementById('startdate').value;
-		  var endDate = document.getElementById('enddate').value;
+		  	var startDate = document.getElementById('startdate').value;
+		  	var endDate = document.getElementById('enddate').value;
+
+		  	if (startDate != '' && endDate != '') {
+				var table = document.getElementById('myTable');
+				var rows = table.getElementsByTagName('tr');
+
+				for (var i = 1; i < rows.length; i++) {
+					var rowDate = rows[i].getElementsByTagName('td')[3].innerHTML;
+					if (rowDate >= startDate && rowDate <= endDate) {
+						rows[i].style.display = '';
+					} else {
+				  		rows[i].style.display = 'none';
+					}
+				}
+		  	}
+		});
+		document.getElementById('clearBtnDate').addEventListener('click', function() {
+		  document.getElementById('startdate').value = '';
+		  document.getElementById('enddate').value = '';
 
 		  var table = document.getElementById('myTable');
 		  var rows = table.getElementsByTagName('tr');
 
 		  for (var i = 1; i < rows.length; i++) {
-		    var rowDate = rows[i].getElementsByTagName('td')[3].innerHTML;
-		    if (rowDate >= startDate && rowDate <= endDate) {
-		      rows[i].style.display = '';
-		    } else {
-		      rows[i].style.display = 'none';
-		    }
+		    rows[i].style.display = '';
+		  }
+		});
+		document.getElementById('filterBtnMoney').addEventListener('click', function() {
+		  	var startmoney = document.getElementById('startmoney').value;
+		  	var endmoney = document.getElementById('endmoney').value;
+		  	// console.log(startmoney + ' ' + endmoney);
+		  	if (startmoney != '' && endmoney != '') {
+				var table = document.getElementById('myTable');
+				var rows = table.getElementsByTagName('tr');
+
+				for (var i = 1; i < rows.length; i++) {
+					var rowMoney = rows[i].getElementsByTagName('td')[4].innerHTML;
+					var numberString = rowMoney.replace(/\D/g, '');
+					var number = parseFloat(numberString);
+					if (number >= startmoney && number <= endmoney) {
+						rows[i].style.display = '';
+					} else {
+				  		rows[i].style.display = 'none';
+					}
+				}
+		  	}
+		});
+		document.getElementById('clearBtnMoney').addEventListener('click', function() {
+		  document.getElementById('startmoney').value = '';
+		  document.getElementById('endmoney').value = '';
+
+		  var table = document.getElementById('myTable');
+		  var rows = table.getElementsByTagName('tr');
+
+		  for (var i = 1; i < rows.length; i++) {
+		    rows[i].style.display = '';
 		  }
 		});
 
-		document.getElementById('clearBtn').addEventListener('click', function() {
-		  document.getElementById('startdate').value = '';
-		  document.getElementById('enddate').value = '';
+
+		document.getElementById('filterBtnNumber').addEventListener('click', function() {
+		  	var startSL = document.getElementById('startSL').value;
+		  	var endSL = document.getElementById('endSL').value;
+		  	// console.log(startmoney + ' ' + endmoney);
+		  	if (startSL != '' && endSL != '') {
+				var table = document.getElementById('myTable');
+				var rows = table.getElementsByTagName('tr');
+
+				for (var i = 1; i < rows.length; i++) {
+					var sl = rows[i].getElementsByTagName('td')[5].textContent;
+					var number = parseInt(sl.match(/\d+/)[0]);
+					console.log(sl);
+					if (number >= startSL && number <= endSL) {
+						rows[i].style.display = '';
+					} else {
+				  		rows[i].style.display = 'none';
+					}
+				}
+		  	}
+		});
+		document.getElementById('clearBtnNumber').addEventListener('click', function() {
+		  document.getElementById('startSL').value = '';
+		  document.getElementById('endSL').value = '';
 
 		  var table = document.getElementById('myTable');
 		  var rows = table.getElementsByTagName('tr');
@@ -198,8 +282,8 @@ if ($result->num_rows === 0) {
 			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
-				<button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="">Sửa</button>
-				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="">Xóa</button>
+				<!-- <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="">Sửa</button>
+				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="">Xóa</button> -->
 			</td>
 		</tr>
 	<?php } } ?>

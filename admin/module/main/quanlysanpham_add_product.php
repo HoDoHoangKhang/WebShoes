@@ -7,12 +7,8 @@ $tenLoai = $_POST['maLoai'];
 $moTa = $_POST['editorContent'];
 
 $Dir_nm = __DIR__;
-$targetDir = str_replace("admin\\module\\main", "assets\\img\\", $Dir_nm);
-$target_file = $targetDir . basename($_FILES['hinhanh']["name"]);
-
 $targetDir = str_replace("admin\\module\\main", "config\\config.php", $Dir_nm);
 require $targetDir;
-
 
 $sql = "SELECT MaNhanHieu FROM nhanhieu WHERE TenNhanHieu = ?";
 // Chuẩn bị và thực thi câu truy vấn sử dụng prepared statement
@@ -36,7 +32,6 @@ if ($stmt = $connect->prepare($sql)) {
 
 $uploadOk = 0;
 if ($_FILES['hinhanh']['size'] != 0) {
-	$Dir_nm = __DIR__;
 	$targetDir = str_replace("admin\\module\\main", "assets\\img\\", $Dir_nm);
 	$target_file = $targetDir . basename($_FILES['hinhanh']["name"]);
 	// echo $target_file;

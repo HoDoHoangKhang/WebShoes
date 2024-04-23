@@ -161,7 +161,7 @@ $(document).ready(function() {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>Column</th>
@@ -183,15 +183,18 @@ $(document).ready(function() {
 $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
+        if (productId != null) {
+            $.ajax({
+                url: 'module/main/quanlysanpham_get_product_info.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response){
+                    $('#list_data_product').html(response);
+                }
+            });
+        }
         // console.log(productId);
-        $.ajax({
-            url: 'module/main/quanlysanpham_get_product_info.php',
-            type: 'POST',
-            data: { productId: productId },
-            success: function(response){
-                $('#list_data_product').html(response);
-            }
-        });
+       
     });
 });
 </script>
@@ -227,14 +230,16 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
-        $.ajax({
-            url: 'module/main/quanlysanpham_get_list_size_and_number.php',
-            type: 'POST',
-            data: { productId: productId },
-            success: function(response){
-                $('#list_size_and_number').html(response);
-            }
-        });
+        if (productId != null) {
+            $.ajax({
+                url: 'module/main/quanlysanpham_get_list_size_and_number.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response){
+                    $('#list_size_and_number').html(response);
+                }
+            });
+        }
     });
 });
 </script>
