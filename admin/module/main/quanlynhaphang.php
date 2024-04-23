@@ -282,8 +282,7 @@ if ($result->num_rows === 0) {
 			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
-				<!-- <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="">Sửa</button>
-				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="">Xóa</button> -->
+				<button type="button" class="btn btn-primary xoa-pn-button" data-bs-toggle="modal" data-bs-target="#xoaPhieunhap" id="<?php echo $row['MaPN'] ?>">Xóa</button>
 			</td>
 		</tr>
 	<?php } } ?>
@@ -361,17 +360,52 @@ if ($result->num_rows === 0) {
 	$(document).ready(function(){
 		$('table').on('click', 'td' , function (event) {
 			var phieunhapId = $('button', this).attr('id');
-			console.log(phieunhapId)
-			$.ajax({
-				url: 'module/main/quanlynhaphang_get_ctpn_info.php',
-				type: 'POST',
-				data: { phieunhapId: phieunhapId },
-				success: function(response){
-					$('#list_size_and_number').html(response);
-				}
-			});
+        	if (phieunhapId != null) {
+				console.log(phieunhapId)
+				$.ajax({
+					url: 'module/main/quanlynhaphang_get_ctpn_info.php',
+					type: 'POST',
+					data: { phieunhapId: phieunhapId },
+					success: function(response){
+						$('#list_size_and_number').html(response);
+					}
+				});
+			}
 		});
+
 	});
 </script>
 </body>
 </html>
+<div class="modal fade" id="xoaPhieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabelXoasanpham">Sửa Sản Phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="contendelete">
+            <style>
+                .inline-p {
+                    display: inline-block;
+                }
+            </style>
+            <p class="inline-p">Mã sản phẩm: </p><p id="idpn" class="inline-p"></p>
+            <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+            <button type="submit" class="btn btn-primary" id="submitXoa">Xóa</button>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $('table').on('click', 'td' , function (event) {
+    	var productId = $('button', this).attr('id');
+	        if (productId != null) {
+	        var pElement = document.getElementById("idpn");
+	        // Thay đổi nội dung bằng thuộc tính textContent
+	        pElement.textContent = productId;
+	    }
+    });
+</script>

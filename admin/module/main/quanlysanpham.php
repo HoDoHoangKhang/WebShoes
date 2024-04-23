@@ -268,9 +268,11 @@ $(document).ready(function(){
 <script>
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
-        var pElement = document.getElementById("idsp");
-        // Thay đổi nội dung bằng thuộc tính textContent
-        pElement.textContent = productId;
+        if (productId != null) {
+            var pElement = document.getElementById("idsp");
+            // Thay đổi nội dung bằng thuộc tính textContent
+            pElement.textContent = productId;
+        }
     });
 </script>
 <script>
