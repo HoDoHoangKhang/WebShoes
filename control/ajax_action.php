@@ -361,5 +361,44 @@
             echo 0;
         }
     }
+    if($_POST['action']=='themvaoyeuthich'){
+        echo 0;
+    }
+    if($_POST['action']=='showWish'){
+        $output='';
+        $wish=json_decode($_POST['wish']);
+        foreach($wish as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->maSP);
+            $output.='
+            <tr>
+                <td>
+                    <div class="shell-product">
+                        <div class="shell-img">
+                            <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
+                        </div>
+                        <div class="shell-title-repository">
+                            <div class="shell-title">
+                                '.$sanPham->getTenSP().'
+                            </div>
+                            <div class="shell-repository">
+                                Đã bán :'.$sanPham->getSoLuongDaBan().'
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                </td>
+                <td>'.formatCurrency($sanPham->getGiaMoi()).'</td>
+                <td>
+                    <button class="buttonDeleteWish" id="'.$sanPham->getMaSP().'" style="width: 20px; height: 20px;"> 
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>   
+                </td>
+            </tr>
+
+            ';
+        }
+        echo $output;
+    }
 
 ?>

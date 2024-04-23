@@ -80,7 +80,7 @@
                     <i class="header__action-icon header__action-search-icon fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="header__action-search-input" placeholder="Search">
                 </div>
-                <a href="" class="header__action-like">
+                <a href="index.php?danhmuc=listwish" class="header__action-like">
                     <i class="header__action-icon header__action-like-icon fa-regular fa-heart"></i>
                 </a>
                 <div class="header__action-cart">

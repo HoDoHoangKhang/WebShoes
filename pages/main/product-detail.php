@@ -453,39 +453,6 @@
                                     </div>
                                 </div>  
                             </div>
-                            <div class="page">
-                                <div class="page-main">
-                                    <div class="page-left page-left-right page-item--disable">
-                                        <i class="fa-solid fa-angle-left"></i>
-                                    </div>
-                                    <div class="page-number">
-                                        <div class="page-item page-item--select">
-                                            1
-                                        </div>
-                                        <div class="page-item">
-                                            2
-                                        </div>
-                                        <div class="page-item">
-                                            3
-                                        </div>
-                                        <div class="page-item">
-                                            4
-                                        </div>
-                                        <div class="page-item">
-                                            5
-                                        </div>
-                                        <div class="page-dot">
-                                            ...
-                                        </div>
-                                        <div class="page-item">
-                                            10
-                                        </div>
-                                    </div>
-                                    <div class="page-right page-left-right">
-                                        <i class="fa-solid fa-angle-right "></i>
-                                    </div>
-                                </div>
-                            </div>  
                         </div>
                     </div>
                 </div>
@@ -504,98 +471,13 @@
                         SAME
                         <a href="">SẢN PHẨM TƯƠNG TỰ</a>
                     </span>
-                    <div class="relate__slick btn-slick">
-                        <i class="btn-slick__left fa-solid fa-angle-left"></i>
-                        <i class="btn-slick__right fa-solid fa-angle-right"></i>
-                    </div>
+
                 </div>
                 <div class="relate__list">
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                        
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
+                    <?php
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                        echo showListProductString(getListProductFromNhanHieu($_GET['id']));
+                    ?>
                 </div>
             </div>
         </div>
@@ -608,114 +490,17 @@
                         VIEW
                         <a href="">XEM GẦN ĐÂY</a>
                     </span>
-                    <div class="recent__slick btn-slick">
+                    <!-- <div class="recent__slick btn-slick">
                         <i class="btn-slick__left fa-solid fa-angle-left"></i>
                         <i class="btn-slick__right fa-solid fa-angle-right"></i>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="recent__list">
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
+                    <?php
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                        $productIds = array(1, 2, 3, 4, 5,6);
+                        echo showListProductString(getListProductFromArr($productIds));
+                    ?>
                 </div>
             </div>
         </div>
@@ -726,6 +511,28 @@
 </script>
 <script>
     $(document).ready(function(){
+        var btnAddWish=document.querySelector(".detail-btn__like");
+        btnAddWish.addEventListener('click',function(){
+            console.log("aaaaaa")
+            $.ajax({
+                url: "./control/ajax_action.php",
+                method: "POST",
+                data: {
+                    action: "themvaoyeuthich"
+                },
+                success: function(data){
+                    creatToast("item-success","Thêm vào yêu thích thàng công !","fa-solid fa-circle-check","item-end-success");
+                    var maSP=parseInt(<?php echo $_GET['id'] ?>);
+                    var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                    var object={
+                        maSP: maSP,
+                        taikhoan:taikhoan
+                    }
+                    console.log(object);
+                    addToWish(object);
+                }
+            });
+        })
         var btnAddCart=document.querySelector(".detail-btn__cart");
         btnAddCart.addEventListener('click',function(){
             if(getSize()==0){// chưa chọn size
@@ -778,6 +585,23 @@
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        function addToWish(object) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+            var found = false;
+
+            wish.forEach(element => {
+                if (element['taikhoan'] == object['taikhoan'] && element['maSP'] == object['maSP']) {
+                    found = true;
+                    return;
+                }
+            });
+
+            if (!found) {
+                wish.push(object);
+            }
+
+            localStorage.setItem('wish', JSON.stringify(wish));
         }
 
         function getSize(){
@@ -878,7 +702,108 @@
                 });
             }
 
+        
         }
+        function getIdFromUrl(url) {
+            // Tách chuỗi URL bằng dấu "&"
+            var params = url.split('&');
+            // Lặp qua từng phần tử của mảng params
+            for (var i = 0; i < params.length; i++) {
+                // Tách từng cặp key=value bằng dấu "="
+                var keyValue = params[i].split('=');
+                // Kiểm tra nếu key là "id"
+                if (keyValue[0] === 'id') {
+                    // Trả về giá trị của key "id"
+                    return keyValue[1];
+                }
+            }
+            // Nếu không tìm thấy key "id", trả về null
+            return null;
+        }
+        function removeFromWish(MaSP, TaiKhoan) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+
+            var index = wish.findIndex(function(item) {
+                return item['maSP'] === MaSP && item['taikhoan'] === TaiKhoan;
+            });
+            if (index !== -1) {
+                // Nếu tìm thấy sản phẩm trong giỏ hàng, xóa sản phẩm đó khỏi mảng
+                wish.splice(index, 1);
+                localStorage.setItem('wish', JSON.stringify(wish));
+                console.log("Sản phẩm đã được xóa khỏi giỏ hàng.");
+            } else {
+                console.log("Không tìm thấy sản phẩm trong giỏ hàng.");
+            }
+        }
+        var likes = document.querySelectorAll(".card-btn__like");
+        likes.forEach(like => {
+            like.addEventListener('click', function(event) {
+                var parentLink = like.closest('a');
+                var href = parentLink.getAttribute('href'); 
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+                event.stopPropagation(); // Ngăn chặn sự lan truyền của sự kiện
+                if (like.classList.contains("fa-regular")) {
+                    like.classList.remove("fa-regular");
+                    like.classList.add("fa-solid");
+                    like.style.color = "#F02757";
+                    console.log(getIdFromUrl(href));
+                    $.ajax({
+                        url: "./control/ajax_action.php",
+                        method: "POST",
+                        data: {
+                            action: "themvaoyeuthich"
+                        },
+                        success: function(data){
+                            var maSP=parseInt(getIdFromUrl(href));
+                            var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                            var object={
+                                maSP: maSP,
+                                taikhoan:taikhoan
+                            }
+                            console.log(object);
+                            addToWish(object);
+                        }
+                    });
+                } else {
+                    // Xóa trái tim trên giao diện
+                    like.classList.remove("fa-solid");
+                    like.classList.add("fa-regular");
+                    like.style.color = "";
+                    //Xóa khỏi danh sách
+                    var MaSP=parseInt(getIdFromUrl(href));
+                    var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                    console.log(MaSP+" "+TaiKhoan);
+                    removeFromWish(MaSP,TaiKhoan);
+                }
+            }); 
+        });
+        function showLikes(){
+            $.ajax({
+                url: "./control/ajax_action.php",
+                method: "POST",
+                data: {
+                    action: "themvaoyeuthich"
+                },
+                success: function(data){
+                    var cards=document.querySelectorAll(".card");
+                    cards.forEach(card => {
+                        href=card.closest('a').getAttribute('href');
+                        var MaSP=parseInt(getIdFromUrl(href));
+                        var wish = JSON.parse(localStorage.getItem('wish')) || [];
+                        wish.forEach(element => {
+                            if (element['taikhoan'] == "<?php echo $_SESSION['taikhoan']?>" && element['maSP'] == MaSP) {
+                                var like = card.querySelector(".card-btn__like");
+                                like.classList.remove("fa-regular");
+                                like.classList.add("fa-solid");
+                                like.style.color = "#F02757";
+                            }
+                        });
+                    });
+                }
+            });
+        }
+        showLikes();
+
     });
 
 </script>
