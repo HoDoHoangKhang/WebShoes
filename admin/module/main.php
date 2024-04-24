@@ -23,6 +23,9 @@
                 case 'quanlyquyen':
                     require_once 'module/main/quanlyquyen.php';
                     break;
+                case 'quanlyquyen_chitietquyen':
+                    require_once 'module/main/quanlyquyen_chitietquyen.php';
+                    break;
                 case 'quanlytaikhoan':
                     require_once 'module/main/quanlytaikhoan.php';
                     break;
@@ -30,7 +33,7 @@
                     require_once 'module/main/caidatwebsite.php';
                     break;   
                 case 'quanlydonhang-chitiet':                     
-                    require_once 'module/main/quanlydonhang-chitiet.php';             
+                    require_once 'module/main/quanlydonhang-chitiet.php?cc=1';             
                     break;  
                 case 'quanlydonhang-timkiem':                     
                     require_once 'module/main/quanlydonhang-timkiem.php';             

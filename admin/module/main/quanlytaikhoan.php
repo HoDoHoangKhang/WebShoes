@@ -23,12 +23,12 @@
             <div class="filter-container">
                 <select id="filterSelect1">
                     <option value="">Trạng thái</option>
-                    <option value="">Hoạt Động</option>
-                    <option value="">Bị khóa</option>
+                    <option value="Hoạt Động">Hoạt Động</option>
+                    <option value="Bị khóa">Bị khóa</option>
                 </select>
             </div>
             <div class="filter-container">
-                <select id="filterSelect">
+                <select id="filterSelect2">
                     <option value="">Loại tài khoản</option>
                     <?php
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
@@ -37,7 +37,7 @@
                         $result = mysqli_query($connect,$sql);
                         while ( $row=mysqli_fetch_array($result) ) {
                             ?>
-                            <option value="<?php echo $row['TenQuyen'] ?>"> <?php echo $row['TenQuyen'] ?> </option>
+                            <option value="<?php echo $row['MaQuyen'] ?>"> <?php echo $row['TenQuyen'] ?> </option>
                             <?php
                         }
                     ?> 
@@ -90,15 +90,17 @@
                 </td>
                 <td>
                     <div class="filter-container">
-                        <select id="filterSelect2" name="slectquyen" style="width: 100%;">
+
+                            <select  name="selectquyen" style="width: 100%;" class="getselect" id="<?php echo $row['TenDangNhap']?>">
                             <?php
                                 $sql ="SELECT * From quyen";
                                 $result1 = mysqli_query($connect,$sql);
                                 while ($row1=mysqli_fetch_array($result1)) { ?>
-                                    <option  value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
+                                    <option class="valueMaQuyen" value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
                                 <?php
                                 }
                             ?>
+
                         </select>
                     </div>
                 </td>
@@ -108,9 +110,9 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_gettaikhoan.php?id=<?php echo $row['TenDangNhap']?>">Xóa</a></li>
-                            <li><a class="dropdown-item" href="#">Kích hoạt</a></li>
-                            <li><a class="dropdown-item" href="#">Khóa</a></li>
+                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li>
+                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
+                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
                         </ul>
                     </div>
                 </td>
@@ -136,7 +138,6 @@
 <!-- Form thông báo -->
 <div class="modal fade" id="thongbao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
   <div class="modal-dialog">
-    <form action="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $_GET['TenDangNhap']?>" method="post">
         <div class="modal-content" style="">
             <div class="modal-header">
                 <h2 class="modal-title" id="ModalLabelThemsanpham">Thông báo </h2>
@@ -144,24 +145,112 @@
             </div>
             <div class="modal-body">
                 <p id="responsepp"></p> 
-                <h4>Bạn có chắc chắn không?</h4>
+                <?php
+                    if (isset($_GET['note'])) {
+                        switch ($_GET['note']) {
+                            case 'khoataikhoantrue':
+                                echo "<h4>Đã khóa tài khoản "; echo $_GET['TenDangNhap']; echo "</h4>";
+                                break;
+                            case 'khoataikhoanfalse':
+                                echo "<h4>Tài khoản này đã bị khóa trước đó rồi!</h4>";
+                                break;
+                            case 'kichhoattaikhoantrue':
+                                echo "<h4>Kích hoạt tài khoản "; echo $_GET['TenDangNhap']; echo " thành công!</h4>";
+                                break;
+                            case 'kichhoattaikhoanfalse':
+                                echo "<h4>Tài khoản này đang hoạt động mà, kích hoạt gì nữa cha nội!</h4>";
+                                break;
+                            case 'xoataikhoantrue':
+                                echo "<h4>Đã xóa tài khoản "; echo $_GET['TenDangNhap']; echo " ra khỏi hệ thống</h4>";
+                                break;
+                        }
+                    }
+                ?>
             </div>    
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
             </div>
         </div>
+  </div>
+</div>
+
+<!-- form thông báo sửa quyền cho tài khoản -->
+<!-- Form Sửa tên quyền -->
+<div class="modal fade" id="suaquyenchotaikhoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
+  <div class="modal-dialog">
+  <form action="module/main/quanlytaikhoan_suaquyen.php" method="post" >
+    <div class="modal-content" style="">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabelSuaquyenchotk">Sửa Tên Quyền </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="responsepp"></p>
+                    <h4>Bạn có chắc chắn muốn thay đổi nhóm quyền cho tài khoản này không?</h4>
+      </div>    
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" name="buttonUpdateQuyen" id="UpdateQuyen">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
     </form>
   </div>
 </div>
 
 <?php
-    if (isset($_GET['Getsuccess']) && $_GET['Getsuccess']==true) {
-        echo '<script>
-        document.addEventListener("DOMContentLoaded", function() {
-          var myModal = new bootstrap.Modal(document.getElementById("thongbao"));
-          myModal.show();
-        });
-      </script>';
-      }
+    if (isset($_GET['success']) && $_GET['success']==true) {
+    echo '<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var myModal = new bootstrap.Modal(document.getElementById("thongbao"));
+        myModal.show();
+    });
+    </script>';
+    }
 ?>
+
+<!-- xữ lý thay đổi nhóm quyền cho tài khoản -->
+<script>
+  const selects = document.querySelectorAll('.getselect');
+  for (const select of selects) {
+    select.addEventListener('change', function() {
+        
+      const MaQuyen = this.value;
+      const TenDangNhap = this.id;
+      // Hiện confirm box trước khi gửi
+      const confirmation = confirm(`Bạn có thực sự muốn thay đổi quyền cho tài khoản ${TenDangNhap} này không?`);
+
+      if (confirmation) {
+        console.error(`Ma quyen: ${MaQuyen}`);
+        console.error(`Ten dang nhap ${TenDangNhap}`);
+        // Gửi dữ liệu đến tệp PHP
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'module/main/quanlytaikhoan_suaquyen.php');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            
+            alert(`Đã cập nhật quyền cho tài khoản ${TenDangNhap}!`);
+          } else {
+            console.error('Lỗi khi gửi dữ liệu:', xhr.statusText);
+          }
+        };
+        xhr.send(`TenDangNhap=${TenDangNhap}&MaQuyen=${MaQuyen}`);
+      }
+    });
+  }
+</script>
+
+<!-- Lọc theo trạng thái -->
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+        $('#filterSelect1').on('change', function() {
+            $('#myTable').DataTable().column(3).search($(this).val()).draw();  
+        });
+        $('#filterSelect2').on('change', function() {
+            $('#myTable').DataTable().column(2).search($(this).val()).draw();
+
+        });
+    });
+</script>
+

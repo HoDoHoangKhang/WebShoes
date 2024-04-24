@@ -17,18 +17,30 @@
     }
 </style>
 <div class="tableBox ">
-    <div class="tableTitle">Danh sách các nhóm quyền</p>
+    <a href="index.php?danhmuc=quanlyquyen" class="header_banhang">
+                <i class="fa-solid fa-circle-right icon-banhang"></i><span>Trở về</span>
+        </a>
+    <?php
+         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql
+         $sql = "SELECT * FROM quyen";
+         $result = mysqli_query($connect,$sql);
+         while ($row = mysqli_fetch_array($result)) {
+            if($row['MaQuyen']==$_GET['id']) {
+    ?>
+    <div class="tableTitle">Chi tiết quyền <?php echo $row['TenQuyen']?></p>
+    <?php }}?>
         <div class="table-func">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#themquyen">
-                Thêm
+                Thêm Chức năng mới
             </button>
         </div>
     </div>
     <table id="myTable" class="table table-striped " style="width: 100%;">
         <thead>
             <tr>
-                <th >Mã quyền</th>
-                <th>Tên quyền</th>
+                <th>Tên các chức năng</th>
+                <th>Các hành động của chức năng</th>
+                <th>Được phép sử dụng </th>
                 <th>Hành động<g/th>
             </tr>
         </thead>
@@ -36,26 +48,27 @@
             
             <?php
                 require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql
-                $sql = "SELECT * FROM quyen";
+                $sql = "SELECT * FROM `chitietquyenchucnang` ctqcn join chucnang cn on cn.MaCN=ctqcn.MaCN GROUP by HanhDong";
                 $result = mysqli_query($connect,$sql);
                 while ($row = mysqli_fetch_array($result)) {
-            ?>
+            ?>                    
                 <tr>
-                    <td><?php echo $row['MaQuyen'] ?></td>
-                    <td><?php echo $row['TenQuyen'] ?></td>
+                  <td> <?php echo $row['TenCN'] ?></td>  
+                    <td> </td>                
+                    <td> <?php echo $row['HanhDong'] ?></td>
+                    <td><input type="checkbox"></td>
                     <td>
                         <div class="dropdown" >
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="index.php?danhmuc=quanlyquyen_chitietquyen&id=<?php echo $row['MaQuyen']?>">Chi tiết</a></li>
-                                <li><a class="dropdown-item edit-btn"  href="module/main/quanlyquyen_gettenquyen.php?id=<?php echo $row['MaQuyen']?>&ten=<?php echo $row['TenQuyen']?>" >Sửa</a></li>
-                                <li><a class="dropdown-item" href="module/main/quanlyquyen_xoaquyen.php?id=<?php echo $row['MaQuyen']?>">Xóa</a></li>
+                                <li><a class="dropdown-item edit-btn"  href="#" >Sửa tên chức năng</a></li>
+                                <li><a class="dropdown-item" href="#">Xóa</a></li>
                             </ul>
                         </div>
                     </td>
                 </tr>
-                
+  
             <?php
                 }
                 mysqli_close($connect);
