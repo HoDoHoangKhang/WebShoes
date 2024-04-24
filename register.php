@@ -93,7 +93,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
-                                                    <label>Họ và tên</label>
+                                                
+                                                    <label>Họ và tên</label> <span class="warning-hoten">Phải có họ và tên và không chứa ký tự số</span>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group col-lg-6">
