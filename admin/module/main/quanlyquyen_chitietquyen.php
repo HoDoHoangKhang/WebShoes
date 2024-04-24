@@ -29,50 +29,53 @@
     ?>
     <div class="tableTitle">Chi tiết quyền <?php echo $row['TenQuyen']?></p>
     <?php }}?>
-        <div class="table-func">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#themquyen">
-                Thêm Chức năng mới
-            </button>
-        </div>
     </div>
     <table id="myTable" class="table table-striped " style="width: 100%;">
         <thead>
-            <tr>
-                <th>Tên các chức năng</th>
-                <th>Các hành động của chức năng</th>
-                <th>Được phép sử dụng </th>
-                <th>Hành động<g/th>
-            </tr>
+          <tr>
+              <th>Tên các chức năng</th>
+              <th>Được phép sử dụng </th>
+              <th>Hành động<g/th>
+          </tr>
         </thead>
         <tbody>
-            
-            <?php
-                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql
-                $sql = "SELECT * FROM `chitietquyenchucnang` ctqcn join chucnang cn on cn.MaCN=ctqcn.MaCN GROUP by HanhDong";
-                $result = mysqli_query($connect,$sql);
-                while ($row = mysqli_fetch_array($result)) {
-            ?>                    
-                <tr>
-                  <td> <?php echo $row['TenCN'] ?></td>  
-                    <td> </td>                
-                    <td> <?php echo $row['HanhDong'] ?></td>
-                    <td><input type="checkbox"></td>
-                    <td>
-                        <div class="dropdown" >
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                                <li><a class="dropdown-item edit-btn"  href="#" >Sửa tên chức năng</a></li>
-                                <li><a class="dropdown-item" href="#">Xóa</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-  
-            <?php
-                }
-                mysqli_close($connect);
-            ?> 
+               
+          <tr>
+            <td>Tên chức năng lỡn</td>  
+            <td>
+              <ul>
+                <li>Chức năng nhỏ 1</li>
+                <li>Chức năng nhỏ 2</li>
+                <li>Chức năng nhỏ 3</li>
+                <li>Chức năng nhỏ 4</li>
+                <li>Chức năng nhỏ 5</li>
+                <li>Chức năng nhỏ 6</li>
+              </ul>
+            </td>
+              <td>
+                <ul>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+                  <li>
+                    <input type="checkbox">
+                  </li>
+
+                </ul>
+              </td>
+          </tr>
             
         </tbody>
     </table>
