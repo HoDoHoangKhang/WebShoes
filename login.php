@@ -20,8 +20,8 @@
         }
         .account-block {
             padding: 0;
-            background-image: url(assets/img/background-login.png);
-            background-repeat: no-repeat;
+            background-image: url(assets/img/login-img.png);
+            background-repeat:no-repeat;
             background-size: cover;
             height: 100%;
             position: relative;
@@ -64,9 +64,13 @@
         .link{
             text-decoration: none;
         }
+        .formLogin{
+            margin-top: 80px;
+        }
     </style>
 </head>
 <body>
+    <form action="xulylogin.php" method="post" class="formLogin">
         <!-- Login 6 - Bootstrap Brain Component -->
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center" style="border-radius: 10px;">
@@ -110,7 +114,7 @@
                     </div>
                     <!-- end card -->
 
-                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="" class="link text-primary ml-1">register</a></p>
+                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.php" class="link text-primary ml-1">register</a></p>
 
                     <!-- end row -->
 

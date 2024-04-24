@@ -18,11 +18,15 @@
                 </div>
                 <div class="hero__image">
                     <?php 
-                    $_SESSION['img'];
-                    if($_SESSION['img'] == '')
-                      $_SESSION['img'] = 'hero.png';
+                    $conn = new mysqli("localhost", "root", "", "shoestore");
+                    $sql="SELECT *
+                    FROM website";
+                    $result = $conn->query($sql);
+                      $data = mysqli_fetch_assoc($result);
+                      $image = $data["imghome"];
+                      $thuonghieu = $data["thuonghieu"];
                     ?>
-                    <img src="./assets/img/<?php echo $_SESSION['img']; ?>" alt="" class="hero__image-img">
+                    <img src="./assets/img/<?php echo $image; ?>" alt="" class="hero__image-img">
                     <!-- <a href="" class="hero__image-btn-sale button">
                         <i class="hero__image-btn-sale-icon fa-regular fa-badge-percent"></i>
                         <div>
@@ -31,7 +35,7 @@
                         </div>
                     </a> -->
                     <div class="hero__image-text">
-                        NIKE
+                    <?php echo $thuonghieu; ?>
                     </div>
                 </div>
             </div>
@@ -241,27 +245,126 @@
 </main>
 
 <script>
-var cards = document.querySelectorAll(".card");
-cards.forEach(function(card) {
-    card.addEventListener("click", function() {
-        var like = card.querySelector(".card-btn__like");
-        if (like) {
-            like.addEventListener('click', function(e) {
-                e.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào liên kết
-                e.stopPropagation();
+    document.addEventListener('DOMContentLoaded', function() {
+
+        function addToWish(object) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+            var found = false;
+
+            wish.forEach(element => {
+                if (element['taikhoan'] == object['taikhoan'] && element['maSP'] == object['maSP']) {
+                    found = true;
+                    return;
+                }
+            });
+
+            if (!found) {
+                wish.push(object);
+            }
+
+            localStorage.setItem('wish', JSON.stringify(wish));
+        }
+        function getIdFromUrl(url) {
+            // Tách chuỗi URL bằng dấu "&"
+            var params = url.split('&');
+            // Lặp qua từng phần tử của mảng params
+            for (var i = 0; i < params.length; i++) {
+                // Tách từng cặp key=value bằng dấu "="
+                var keyValue = params[i].split('=');
+                // Kiểm tra nếu key là "id"
+                if (keyValue[0] === 'id') {
+                    // Trả về giá trị của key "id"
+                    return keyValue[1];
+                }
+            }
+            // Nếu không tìm thấy key "id", trả về null
+            return null;
+        }
+        function removeFromWish(MaSP, TaiKhoan) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+
+            var index = wish.findIndex(function(item) {
+                return item['maSP'] === MaSP && item['taikhoan'] === TaiKhoan;
+            });
+            if (index !== -1) {
+                // Nếu tìm thấy sản phẩm trong giỏ hàng, xóa sản phẩm đó khỏi mảng
+                wish.splice(index, 1);
+                localStorage.setItem('wish', JSON.stringify(wish));
+                console.log("Sản phẩm đã được xóa khỏi giỏ hàng.");
+            } else {
+                console.log("Không tìm thấy sản phẩm trong giỏ hàng.");
+            }
+        }
+        var likes = document.querySelectorAll(".card-btn__like");
+        likes.forEach(like => {
+            like.addEventListener('click', function(event) {
+                var parentLink = like.closest('a');
+                var href = parentLink.getAttribute('href'); 
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+                event.stopPropagation(); // Ngăn chặn sự lan truyền của sự kiện
                 if (like.classList.contains("fa-regular")) {
                     like.classList.remove("fa-regular");
                     like.classList.add("fa-solid");
                     like.style.color = "#F02757";
+                    console.log(getIdFromUrl(href));
+                    $.ajax({
+                        url: "./control/ajax_action.php",
+                        method: "POST",
+                        data: {
+                            action: "themvaoyeuthich"
+                        },
+                        success: function(data){
+                            var maSP=parseInt(getIdFromUrl(href));
+                            var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                            var object={
+                                maSP: maSP,
+                                taikhoan:taikhoan
+                            }
+                            console.log(object);
+                            addToWish(object);
+                        }
+                    });
                 } else {
+                    // Xóa trái tim trên giao diện
                     like.classList.remove("fa-solid");
                     like.classList.add("fa-regular");
                     like.style.color = "";
+                    //Xóa khỏi danh sách
+                    var MaSP=parseInt(getIdFromUrl(href));
+                    var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                    console.log(MaSP+" "+TaiKhoan);
+                    removeFromWish(MaSP,TaiKhoan);
+                }
+            }); 
+        });
+        function showLikes(){
+            $.ajax({
+                url: "./control/ajax_action.php",
+                method: "POST",
+                data: {
+                    action: "themvaoyeuthich"
+                },
+                success: function(data){
+                    var cards=document.querySelectorAll(".card");
+                    cards.forEach(card => {
+                        href=card.closest('a').getAttribute('href');
+                        var MaSP=parseInt(getIdFromUrl(href));
+                        var wish = JSON.parse(localStorage.getItem('wish')) || [];
+                        wish.forEach(element => {
+                            if (element['taikhoan'] == "<?php echo $_SESSION['taikhoan']?>" && element['maSP'] == MaSP) {
+                                var like = card.querySelector(".card-btn__like");
+                                like.classList.remove("fa-regular");
+                                like.classList.add("fa-solid");
+                                like.style.color = "#F02757";
+                            }
+                        });
+                    });
                 }
             });
         }
+        showLikes();
     });
-});
+    
 
 </script>
 

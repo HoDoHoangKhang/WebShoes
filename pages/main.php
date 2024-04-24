@@ -28,6 +28,9 @@
             case 'paysucess':
                 include_once 'pages/main/paysucess.php';
                 break; 
+            case 'listwish':
+                include_once 'pages/main/listwish.php';
+                break; 
             default:
                 include_once 'pages/main/home.php';
                 break; 

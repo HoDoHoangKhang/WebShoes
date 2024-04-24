@@ -155,6 +155,7 @@
         $db->disconnect();
         return $productArr;
     }
+    
 
     function showListProductString($arrProduct){
         $output = '';
@@ -212,5 +213,61 @@
         $db = new DTB();
         $query="UPDATE `sanpham` SET `SoLuongDaBan`=$soLuongMoi WHERE MaSP=$maSP";
         $kq = mysqli_query($db->getConnection(), $query);
+    }
+    // function getMaNhanHieu($id){
+    //     getProduct($id);
+    //     return getProduct($id)->getMaNhanHieu();
+    // }
+    function getListProductFromNhanHieu($id){
+        $maNhanHieu=  intval(getProduct($id)->getMaNhanHieu());
+        $db = new DTB();
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaNhanHieu = $maNhanHieu LIMIT 6");
+        $productArr = array();
+        while ($row = mysqli_fetch_assoc($kq)) {
+            $sanPham = new SanPham(
+                $row['MaSP'],
+                $row['TenSP'],
+                $row['SoSaoDanhGia'],
+                $row['SoLuotDanhGia'],
+                $row['MoTa'],
+                $row['HinhAnh'],
+                $row['SanPhamMoi'],
+                $row['SanPhamHot'],
+                $row['GiaCu'],
+                $row['GiaMoi'],
+                $row['SoLuongDaBan'],
+                $row['MaNhanHieu'],
+                $row['MaLoai']
+            );
+            $productArr[] = $sanPham;
+        }
+        $db->disconnect();
+        return $productArr;
+    }
+    function getListProductFromArr($arr){
+        $db = new DTB();
+        $valuesString = implode(', ', $arr);
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaSP IN ($valuesString) LIMIT 6");
+        $productArr = array();
+        while ($row = mysqli_fetch_assoc($kq)) {
+            $sanPham = new SanPham(
+                $row['MaSP'],
+                $row['TenSP'],
+                $row['SoSaoDanhGia'],
+                $row['SoLuotDanhGia'],
+                $row['MoTa'],
+                $row['HinhAnh'],
+                $row['SanPhamMoi'],
+                $row['SanPhamHot'],
+                $row['GiaCu'],
+                $row['GiaMoi'],
+                $row['SoLuongDaBan'],
+                $row['MaNhanHieu'],
+                $row['MaLoai']
+            );
+            $productArr[] = $sanPham;
+        }
+        $db->disconnect();
+        return $productArr;
     }
 ?>

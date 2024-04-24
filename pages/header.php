@@ -26,10 +26,13 @@
                 </div>
                 <a  href="index.php?danhmuc=home">
                 <?php               
-                    $_SESSION['logo'];
-                    if($_SESSION['logo'] == '')
-                      $_SESSION['logo'] = 'logo.png';    
-                    $logo = $_SESSION['logo'];
+                    $conn = mysqli_connect("localhost", "root", "", "shoestore");
+                    $sql="SELECT *
+                    FROM website";
+                    $result = $conn->query($sql);
+                      $data = mysqli_fetch_assoc($result);
+                      $logo = $data["logo"];
+                      $conn->close();
                     ?>
                     <img src="./assets/img/<?php echo $logo; ?>" alt="Logo" class="header__logo" style=" width: 130px;">                 
                 </a>
@@ -77,7 +80,7 @@
                     <i class="header__action-icon header__action-search-icon fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="header__action-search-input" placeholder="Search">
                 </div>
-                <a href="" class="header__action-like">
+                <a href="index.php?danhmuc=listwish" class="header__action-like">
                     <i class="header__action-icon header__action-like-icon fa-regular fa-heart"></i>
                 </a>
                 <div class="header__action-cart">
