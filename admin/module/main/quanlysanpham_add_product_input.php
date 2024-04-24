@@ -65,10 +65,14 @@ require '../config/config.php';
                 </ul>
             </div>
         </div>
-
+        <div class="drop-zone" id="dropZoneAvata">
+            <span class="drop-zone__prompt">Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh Đại diện</span>
+            <input type="file" class="drop-zone__input" id="avataSP">
+            <div class="image-preview" id="imagePreviewAvata"></div>
+        </div> <br><br>
         <div class="drop-zone" id="dropZone">
             <span class="drop-zone__prompt">Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh</span>
-            <input type="file" class="drop-zone__input" id="hinhanh" accept="image/*">
+            <input type="file" class="drop-zone__input" id="hinhanh" multiple>
             <div class="image-preview" id="imagePreview"></div>
         </div> <br><br>
         
@@ -133,35 +137,62 @@ require '../config/config.php';
     });
 </script>
 <script>
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('hinhanh');
-    const imagePreview = document.getElementById('imagePreview');
+    function previewImages() {
+        var preview = document.getElementById('imagePreview');
+        var files   = document.getElementById('hinhanh').files;
 
-    dropZone.addEventListener('click', () => {
-        fileInput.click();
+        preview.innerHTML = '';
+
+        if (files) {
+            [].forEach.call(files, function(file) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.height = '400px'; // set kích thước tối đa của ảnh
+                    preview.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+
+    document.getElementById('hinhanh').addEventListener('change', previewImages);
+</script>
+<script>
+    const dropZone = document.getElementById('dropZone');
+    const dropZoneAvata = document.getElementById('dropZoneAvata');
+    const fileInput = document.getElementById('hinhanh');
+    const avataInput = document.getElementById('avataSP');
+
+
+    dropZoneAvata.addEventListener('click', () => {
+        avataInput.click();
     });
 
-    fileInput.addEventListener('change', (e) => {
+    avataInput.addEventListener('change', (e) => {
         handleFiles(e.target.files);
     });
 
-    dropZone.addEventListener('dragover', (e) => {
+    dropZoneAvata.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.classList.add('drop-zone--over');
+        dropZoneAvata.classList.add('drop-zone--over');
     });
 
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('drop-zone--over');
+    dropZoneAvata.addEventListener('dragleave', () => {
+        dropZoneAvata.classList.remove('drop-zone--over');
     });
 
-    dropZone.addEventListener('drop', (e) => {
+    dropZoneAvata.addEventListener('drop', (e) => {
         e.preventDefault();
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-            fileInput.files = files;
+            avataInput.files = files;
             handleFiles(files);
         }
-        dropZone.classList.remove('drop-zone--over');
+        dropZoneAvata.classList.remove('drop-zone--over');
     });
 
     function handleFiles(files) {
@@ -175,9 +206,16 @@ require '../config/config.php';
         };
         imageElement.src = imageUrl;
         imageElement.classList.add('image-preview__image');
-        imagePreview.innerHTML = '';
-        imagePreview.appendChild(imageElement);
+        imagePreviewAvata.innerHTML = '';
+        imagePreviewAvata.appendChild(imageElement);
     }
+
+
+
+    dropZone.addEventListener('click', () => {
+        fileInput.click();
+    });
+
     var submitButton = document.getElementById('submitForm');
 
     // Thêm sự kiện click cho nút Lưu
@@ -187,7 +225,8 @@ require '../config/config.php';
         var giaSP = document.getElementById('giasp').value;
         var tenNhanHieu = document.getElementById('TenNhanHieu').textContent;
         var maLoai = document.getElementById('MaLoai').textContent;
-        var hinhanh = document.getElementById('hinhanh').files[0]; // Lấy file ảnh
+        var hinhanh = document.getElementById('hinhanh').files; // Lấy file ảnh
+        var hinhAvata = avataInput.files[0];
         var editorContent = editor.getData();
 
         // Kiểm tra và thay đổi màu sắc của các trường không có dữ liệu
@@ -220,14 +259,22 @@ require '../config/config.php';
             document.getElementById('MaLoai').style.color = '';
         }
 
-        if (hinhanh == null) {
+        if (hinhanh[0] == null) {
             document.getElementById('dropZone').style.color = 'red';
             document.getElementById('dropZone').style.border = '2px dashed red';
             d = 1;
         } else {
             document.getElementById('dropZone').style.border = '2px dashed black';
             document.getElementById('dropZone').style.color = '';
-        }
+        } 
+        if (hinhAvata == null){
+            document.getElementById('dropZoneAvata').style.color = 'red';
+            document.getElementById('dropZoneAvata').style.border = '2px dashed red';
+            d = 1;
+        } else {
+            document.getElementById('dropZoneAvata').style.border = '2px dashed black';
+            document.getElementById('dropZoneAvata').style.color = '';
+        } 
 
         if (d === 1){
             alert('Vui lòng nhập đầy đủ');
@@ -239,7 +286,11 @@ require '../config/config.php';
             formData.append('tenNhanHieu', tenNhanHieu);
             formData.append('maLoai', maLoai);
             formData.append('editorContent', editorContent);
-            formData.append('hinhanh', hinhanh);
+            
+            formData.append('hinhanh[]', hinhAvata);
+            for (var i = 0; i < hinhanh.length; i++) {
+                formData.append('hinhanh[]', hinhanh[i]);
+            }
 
             // Tạo đối tượng XMLHttpRequest
             var xhr = new XMLHttpRequest();

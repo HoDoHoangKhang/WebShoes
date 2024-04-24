@@ -273,7 +273,7 @@ if ($result->num_rows === 0) {
 			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
-				<button type="button" class="btn btn-primary" id="<?php echo $row['MaPN'] ?>">Xóa</button>
+				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoaphieunhap" id="<?php echo $row['MaPN'] ?>">Xóa</button>
 			</td>
 		</tr>
 	<?php } } ?>
@@ -294,7 +294,7 @@ if ($result->num_rows === 0) {
 					type: 'POST',
 					data: { maPhieuNhap: maPhieuNhap },
 					success: function(response){
-						console.log(response);
+						// console.log(response);
 						document.getElementById("p" + maPhieuNhap).innerHTML = "Đã nhận";
 					}
 				});
@@ -368,38 +368,79 @@ if ($result->num_rows === 0) {
 </script>
 </body>
 </html>
+
+<div class="modal fade" id="xoaphieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="contendelete">
+            <style>
+                .inline-p {
+                    display: inline-block;
+                }
+            </style>
+            <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+            <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+            <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 <script>
     $('table').on('click', 'td' , function (event) {
-    	$('button', this).each(function() {
-		    if ($(this).text().trim() === "Xóa") {
-		        var productId = $(this).attr('id');
-		        if (productId != null) {
-		        	if (confirm("Bạn có muốn xóa phiếu nhập mã: " + productId + " không?")) {
-	                    // Nếu người dùng đồng ý xóa
-	                    $.ajax({
-	                        type: 'POST',
-	                        url: 'module/main/quanlynhaphang_xoa_phieu_nhap.php', // Đường dẫn đến tệp PHP xử lý
-	                        data: { productId: productId },
-	                        success: function(response) {
-	                            // Xử lý kết quả từ tệp PHP nếu cần
-	                            alert(response); 
-                				var searchValue = productId;
-	                            $("#myTable tbody tr").each(function() {
-				                    var rowData = $(this).find("td:eq(0)").text(); // Lấy dữ liệu của cột 0 trong hàng
-				                    if (rowData === searchValue) {
-				                        $(this).remove(); // Xóa hàng nếu dữ liệu cột 0 trùng khớp với giá trị tìm kiếm
-				                        return false; // Dừng vòng lặp sau khi xóa hàng
-				                    }
-				                });
-	                        },
-	                        error: function(xhr, status, error) {
-	                            console.error(xhr.responseText);
-	                        }
-	                    });
-	                }
-			    }
-		    }
-		});
-    	
+        var productId = $('button', this).attr('id');
+        if (productId != null) {
+            var pElement = document.getElementById("idpn");
+            // Thay đổi nội dung bằng thuộc tính textContent
+            pElement.textContent = productId;
+        }
+    });
+</script>
+<script>
+$(document).ready(function(){
+  $('#xoaphieunhap').on('hidden.bs.modal', function () {
+    // Ví dụ: Reset form
+    $('#contendelete').html(`
+      <style>
+            .inline-p {
+                display: inline-block;
+            }
+        </style>
+        <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+        <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+        <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+    `);
+  });
+});
+</script>
+<script>
+    document.getElementById('submitXoaPN').addEventListener('click', function() {
+        var productId = document.getElementById('idpn').innerText;
+        console.log('Xoa: ' + productId);
+		$.ajax({
+            type: 'POST',
+            url: 'module/main/quanlynhaphang_xoa_phieu_nhap.php', // Đường dẫn đến tệp PHP xử lý
+            data: { productId: productId },
+            success: function(response) {
+                // Xử lý kết quả từ tệp PHP nếu cần
+                $('#contendelete').html(response);
+				var searchValue = productId;
+                $("#myTable tbody tr").each(function() {
+                    var rowData = $(this).find("td:eq(0)").text(); // Lấy dữ liệu của cột 0 trong hàng
+                    if (rowData === searchValue) {
+                        $(this).remove(); // Xóa hàng nếu dữ liệu cột 0 trùng khớp với giá trị tìm kiếm
+                        return false; // Dừng vòng lặp sau khi xóa hàng
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 </script>

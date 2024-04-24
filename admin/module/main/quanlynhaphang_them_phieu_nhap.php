@@ -9,7 +9,7 @@ require '../config/config.php';
         <h2 style="padding: 10px;">Nhập Phiếu Nhập</h2>
         <div style="display: flex; width: 100%;"> 
             <div class="input-group">
-                <input id="MaNV" type="text" value="1" required>
+                <input id="MaNV" type="text" value="<?php echo $_SESSION['taikhoan'] ?>" required>
                 <label for="">MaNV</label>
             </div>
             <div class="input-group">
@@ -195,7 +195,7 @@ require '../config/config.php';
                 return response.text();
             })
             .then(data => {
-                // Xử lý phản hồi từ máy chủ nếu cần
+                alert(data);
                 console.log(data);
             })
             .catch(error => {

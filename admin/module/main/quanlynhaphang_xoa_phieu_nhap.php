@@ -11,13 +11,11 @@ $sql = "UPDATE phieunhap SET Trangthai = '0' WHERE MaPN = " . $MaPN;
 
 // Thực thi truy vấn
 if ($connect->query($sql) === TRUE) {
-    echo "Cập nhật trạng thái thành công";
+    echo "Xóa Phiếu nhập thành công!";
 } else {
     echo "Lỗi: " . $connect->error;
 }
 
 // Đóng kết nối
 $connect->close();
-
-
  ?>
