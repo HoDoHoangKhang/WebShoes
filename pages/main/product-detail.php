@@ -201,7 +201,7 @@
                     <h3>Describe</h3>
                 </div>
                 <div class="describe-detail">
-                    <h4>
+                    <!-- <h4>
                         LEGENDARY STYLE REFINED.
                     </h4>
                     <p>
@@ -251,7 +251,10 @@
                     <p>
                         Debuting in 1982, the AF-1 was the first basketball shoe to house Nike Air, revolutionising the game while rapidly gaining traction around the world. Today, the Air Force 1 stays true to its roots with the same soft and springy cushioning that changed sneaker history.
                     </p>
-        
+         -->    
+                    <?php
+                        echo $MoTa;
+                    ?>
                 </div>
                 <ul class="describe__menu">
                     <li class="describe__menu-sub describe__menu-sub_reviews describe--primary">
