@@ -84,15 +84,16 @@
                                         </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="text" class="form-control" id="username" name="txtUser">
+                                                <input type="text" class="form-control" id="username">
                                             </div>
                                             <div class="form-group mb-5">
                                                 <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="password" name="txtPass">
+                                                <input type="password" class="form-control" id="password">
                                             </div>
-                                            <p id="thongbao" style="color: red"></p>
                                             <button class="btn btn-theme" id="dangnhap">Login</button>
                                             <a href="#l" class="link float-right text-primary">Forgot password?</a>
+                                            <p id="thongbao" style="color: red; margin-top: 10px;"></p>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 d-none d-lg-inline-block">
@@ -108,9 +109,7 @@
                         <!-- end card-body -->
                     </div>
                     <!-- end card -->
-
                     <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.php" class="link text-primary ml-1">register</a></p>
-
                     <!-- end row -->
 
                 </div>
