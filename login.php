@@ -70,7 +70,6 @@
     </style>
 </head>
 <body>
-    <form action="xulylogin.php" method="post" class="formLogin">
         <!-- Login 6 - Bootstrap Brain Component -->
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center" style="border-radius: 10px;">
@@ -83,7 +82,6 @@
                                         <div class="mb-5">
                                             <h3 class="h4 font-weight-bold text-theme">Login</h3>
                                         </div>
-
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
                                                 <input type="text" class="form-control" id="username" name="txtUser">
@@ -93,17 +91,14 @@
                                                 <input type="password" class="form-control" id="password" name="txtPass">
                                             </div>
                                             <p id="thongbao" style="color: red"></p>
-                                            <button type="submit" class="btn btn-theme" id="dangnhap" name="btnLogin">Login</button>
+                                            <button class="btn btn-theme" id="dangnhap">Login</button>
                                             <a href="#l" class="link float-right text-primary">Forgot password?</a>
-
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6 d-none d-lg-inline-block">
                                     <div class="account-block rounded-right">
                                         <div class="overlay rounded-right"></div>
                                         <div class="account-testimonial">
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +139,7 @@
                     },
                     success: function(data) {
                         var thongbao=document.getElementById("thongbao");
-                        if (data === 'Để trống tên đăng nhập và mật khẩu') {
+                        if (data == 'Để trống tên đăng nhập và mật khẩu') {
                             thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin!';
                         }
                         else if(data == 'Để trống tên đăng nhập') {
@@ -165,7 +160,6 @@
                         else{                       
                             window.location.href = 'index.php';
                         }
-                        
                     },
                     error: function(xhr, status, error) {
                         console.error('Error:', status, error);

@@ -2,7 +2,6 @@
 
 	$userId   = $_POST['username'];
 	$password = $_POST['password'];
-
 	include("config/config.php");
 	//Kiểm tra xem tài khoản có tồn tại hay không
 	$SqlCheckUser = "SELECT TenDangNhap,MatKhau,TrangThai
@@ -42,30 +41,31 @@
 	//     exit();
 	// }
 
-	if (empty($userId) && empty($password)) {
-		echo 'Để trống tên đăng nhập và mật khẩu';
-	}
-	else if(empty($userId)){
-		echo 'Để trống tên đăng nhập';
-	}
-	else if(empty($password)){
-		echo 'Để trống mật khẩu';
-	}
-	else if( mysqli_num_rows($resultCheck)!=1 ){
-		echo 'Tên đăng nhập không tồn tại';
-	}
-	else if( mysqli_num_rows($resultCheck)==1 && mysqli_num_rows($result)!=1){
-		echo 'Sai mật khẩu';
-	}
-	else if($row['TrangThai']==1){
-		echo 'Tài khoản bị khóa';
-	}
-	else {
-		// Đăng nhập thành công
-		session_start();  
-		$_SESSION['taikhoan'] = $userId;
-		echo "success";
-	}
+	echo $userId." ". $password;
+	// if (empty($userId) && empty($password)) {
+	// 	echo 'Để trống tên đăng nhập và mật khẩu';
+	// }
+	// else if(empty($userId)){
+	// 	echo 'Để trống tên đăng nhập';
+	// }
+	// else if(empty($password)){
+	// 	echo 'Để trống mật khẩu';
+	// }
+	// else if( mysqli_num_rows($resultCheck)!=1 ){
+	// 	echo 'Tên đăng nhập không tồn tại';
+	// }
+	// else if( mysqli_num_rows($resultCheck)==1 && mysqli_num_rows($result)!=1){
+	// 	echo 'Sai mật khẩu';
+	// }
+	// else if($row['TrangThai']==1){
+	// 	echo 'Tài khoản bị khóa';
+	// }
+	// else {
+	// 	// Đăng nhập thành công
+	// 	session_start();
+	// 	$_SESSION['taikhoan'] = $userId;
+	// 	echo "success";
+	// }
 
 
 	mysqli_close($connect);
