@@ -9,7 +9,18 @@ require '../config/config.php';
         <h2 style="padding: 10px;">Nhập Phiếu Nhập</h2>
         <div style="display: flex; width: 100%;"> 
             <div class="input-group">
-                <input id="MaNV" type="text" value="<?php echo $_SESSION['taikhoan'] ?>" required>
+                <input id="MaNV" type="text" value="<?php 
+                $sql = "SELECT Ma FROM `user` WHERE TenDangNhap = ?";
+                // Chuẩn bị và thực thi câu truy vấn sử dụng prepared statement
+                if ($stmt = $connect->prepare($sql)) {
+                    $stmt->bind_param("s", $_SESSION['taikhoan']); // "s" đại diện cho kiểu dữ liệu string
+                    $stmt->execute();
+                    $stmt->bind_result($MaNV);
+                    $stmt->fetch();
+                    $stmt->close();
+                }
+                echo $MaNV;
+                ?>" required>
                 <label for="">MaNV</label>
             </div>
             <div class="input-group">
@@ -263,7 +274,7 @@ require '../config/config.php';
         } else {
             // Lấy đối tượng bảng
             var table = document.getElementById('mTable');
-
+            var dachinh = false;
             // Kiểm tra xem có hàng nào trong bảng chứa dữ liệu giống với dữ liệu mới không
             var rows = table.getElementsByTagName('tr');
             for (var i = 0; i < rows.length; i++) {
@@ -271,14 +282,18 @@ require '../config/config.php';
                 if (cells.length >= 2) {
                     var code = cells[0].innerHTML;
                     var size = cells[1].innerHTML;
-                    if (code === newCode && size === newSize) {
-                        // Nếu tìm thấy hàng có dữ liệu giống, cập nhật lại hàng đó
-                        cells[2].innerHTML = newQuantity;
+                    if (code === newCode) {
                         cells[3].innerHTML = newPrice;
-                        return; // Thoát khỏi hàm sau khi cập nhật
+                        if (size === newSize) {
+                            cells[2].innerHTML = newQuantity;
+                            dachinh = true;
+                        }
                     }
+                    
                 }
             }
+            if (dachinh) return;
+
             // Nếu không tìm thấy hàng có dữ liệu giống, thêm một hàng mới
             var newRow = table.insertRow(-1); // Thêm vào cuối bảng
             var cell1 = newRow.insertCell(0);
