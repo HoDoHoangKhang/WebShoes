@@ -201,6 +201,50 @@
         }
         return $output;
     }
+    function showListProductStringTuongTu($arrProduct){
+        $output = '';
+        foreach ($arrProduct as $row) {
+            $output .= '
+            <a href="index.php?danhmuc=product-detail&id=' . $row->getMaSP() . '">
+                <div class="card cardTuongTu">
+                    <div class="card-img">
+                        <img src="./assets/img/' . $row->getHinhAnh(). '" alt="">
+                    </div>
+                    <p class="card-title">' . $row->getTenSP() . '</p>
+                    <div class="card-price-rate">
+                        <div class="card-price">
+                            <span>' . formatCurrency($row->getGiaMoi()) .' </span>
+                            <span><del>' . formatCurrency($row->getGiaCu()) .'  </del></span>  
+                        </div>
+                        <div class="card-rate">
+                            <i class="fa-solid fa-star"></i>
+                            '. $row->getSoSaoDanhGia() . ' 
+                        </div>
+                    </div>   
+                    <i class=" card-btn__like fa-regular fa-heart"></i>
+                    <div class="card-new-hot">';
+            if ($row->getSanPhamMoi()== 1) {
+                $output .= '
+                <div class="card-special card-hot">
+                    Mới
+                </div>
+                ';
+            }
+            if ($row->getSanPhamHot() == 1) {
+                $output .= '
+                <div class="card-special card-new">
+                    Hot
+                </div>
+                ';
+            }
+            $output .= '
+                        </div>
+                    </div>
+                </a>
+            ';
+        }
+        return $output;
+    }
     function getSoLuongDaBan($maSP){
         $db = new DTB();
         $query="SELECT * FROM `sanpham` WHERE MaSP=$maSP";
@@ -221,7 +265,7 @@
     function getListProductFromNhanHieu($id){
         $maNhanHieu=  intval(getProduct($id)->getMaNhanHieu());
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaNhanHieu = $maNhanHieu LIMIT 6");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaNhanHieu = $maNhanHieu");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(

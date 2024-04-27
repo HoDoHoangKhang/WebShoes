@@ -17,18 +17,18 @@
     <section class="shell">
         <div class="container">
             <div class="wish-main">
-                <div class="shell-show">
-                    <table style="width: 100%; font-size: 16px;" class="table-shell">
+                <div class="shell-show" style="overflow-x: auto;">
+                    <table style="width: 100%; font-size: 16px; " class="table-shell">
                         <thead style="">
                             <tr>
-                                <th >Sản phẩm</th>
-                                <th>Giá</th>
-                                <th>Thao tác</th>
+                                <th style="min-width: 300px;" >Sản phẩm</th>
+                                <th style="min-width: 150px;">Giá</th>
+                                <th style="min-width: 150px;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody id="wishProduct">
                             <tr>
-                                <td>
+                                <td style="min-width: 200px;">
                                     <div class="shell-product">
                                         <div class="shell-img">
                                             <img src="./assets/img/pd-1.png" alt="" class="">
@@ -44,8 +44,8 @@
                                     </div>
                                 </td>
                                 </td>
-                                <td>500.000 đ</td>
-                                <td>
+                                <td style="min-width: 200px;">500.000 đ</td>
+                                <td style="min-width: 200px;">
                                 <button class="buttonDeleteCart" id="" style="width: 20px; height: 20px;"> 
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>   

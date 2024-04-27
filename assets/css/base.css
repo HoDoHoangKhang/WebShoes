@@ -273,6 +273,11 @@ a{
 .relate__list{
     display: flex;
     gap: 2rem;
+    width: 100%;
+    overflow-x: auto;
+}
+.cardTuongTu{
+    min-width: 171px;
 }
 .relate__title{
     margin: 2rem 0;

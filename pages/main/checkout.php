@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="./assets/css/bootstrap.css" />
-<main class="container" style="margin-top: 100px; font-size: 16px;">
+<main class="container" style="margin-top: 120px; font-size: 16px;">
 
     <div class="row my-4">
                 <div class="col">
@@ -43,11 +43,11 @@
 
                                                         </div>
                                                     </label>
-                                                    <div class="edit-btn bg-light rounded">
+                                                    <!-- <div class="edit-btn bg-light rounded">
                                                         <div class="edit-address edit-address--checked" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit">
                                                             <i class="bx bx-pencil font-size-16"></i>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -84,7 +84,7 @@
                                     <h5 class="font-size-14 mb-3">Phương thức :</h5>
                                     <div class="row">       
                                         
-                                        <div class="col-lg-3 col-sm-6">
+                                        <div class="col-lg-3 col-sm-6 p-1">
                                             <div data-bs-toggle="collapse">
                                                 <label class="card-radio-label">
                                                     <input type="radio" name="pay-method" id="pay-methodoption1" class="card-radio-input" checked>
@@ -95,7 +95,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-sm-6">
+                                        <div class="col-lg-3 col-sm-6 p-1">
                                             <div>
                                                 <label class="card-radio-label">
                                                     <input type="radio" name="pay-method" id="pay-methodoption2" class="card-radio-input">
@@ -106,7 +106,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-sm-6">
+                                        <div class="col-lg-3 col-sm-6 p-1">
                                             <div>
                                                 <label class="card-radio-label">
                                                     <input type="radio" name="pay-method" id="pay-methodoption3" class="card-radio-input">
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
                             </div>
-                                        <!-- <div class="col-lg-3 col-sm-6">
+                                        <!-- <div class="col-lg-3 col-sm-6 p-1">
                                             <div>
                                                 <label class="card-radio-label">
                                                     <input type="radio" name="pay-method" id="pay-methodoption4" class="card-radio-input" >
@@ -185,7 +185,7 @@
                                     <p class="text-muted text-truncate mb-4">Chọn phương thức giao hàng</p>
                                     <div class="mb-3">
                                         <div class="row">                
-                                            <div class="col-lg-3 col-sm-6 delivery_checkout">
+                                            <div class="col-lg-3 col-sm-6 p-1 delivery_checkout">
                                                 <div>
                                                     <label class="card-radio-label">
                                                         <input type="radio" name="pay-delivery" id="pay-methodoption1" class="card-radio-input" checked>
@@ -196,7 +196,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-sm-6 delivery_checkout">
+                                            <div class="col-lg-3 col-sm-6 p-1 delivery_checkout">
                                                 <div>
                                                     <label class="card-radio-label">
                                                         <input type="radio" name="pay-delivery" id="pay-methodoption1" class="card-radio-input">

@@ -67,8 +67,16 @@
             <div class="detail-main">
                 <div class="detail-show">
                     <ul class="detail-show__slick">
+                        <li class="detail-show__item">
+                            <img src="./assets/img/<?php echo $HinhAnh ?>" alt="" class="">
+                        </li>
+                       <?php
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/hinhanh-act.php');
+                            echo showListAnh($MaSP);
+                            // echo $HinhAnh;
+                        ?>
                         <!-- <li class="detail-show__item ">
-                            <img src="./assets/img/detail-1.jpeg" alt="" class="">
+                            <img src="./assets/img/pd-21,2.webp" alt="" class="">
                         </li> -->
                     </ul>
                     <div class="detail-show__image">
@@ -143,12 +151,12 @@
                                     $result_sizeSp=mysqli_query($connect,$sql_sizeSp);
                                     $product_sizeSp=mysqli_fetch_array($result_sizeSp);
                                     while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
-                                            if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
-                                                <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
-                                            <?php }
-                                            else{ ?>
-                                                <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
-                                            <?php } 
+                                        if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
+                                            <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                        <?php }
+                                        else{ ?>
+                                            <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                        <?php } 
                                 } ?>                                
                             </ul>
                         </div>
@@ -479,13 +487,13 @@
                 <div class="relate__list">
                     <?php
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
-                        echo showListProductString(getListProductFromNhanHieu($_GET['id']));
+                        echo showListProductStringTuongTu(getListProductFromNhanHieu($_GET['id']));
                     ?>
                 </div>
             </div>
         </div>
     </section>
-    <section class="recent">
+    <section class=" none recent">
         <div class="container">
             <div class="recent-main">
                 <div class="recent__title-slick">
@@ -807,6 +815,73 @@
         }
         showLikes();
 
+        function convertStringToImageArray(imageString) {
+            if (typeof imageString !== 'string' || imageString.trim().length === 0) {
+                return []; 
+            }
+            const newStr = imageString.slice(0, -1); // Loại bỏ phần tử cuối cùng ("!")
+            const imageNames = newStr.split('|');
+            const trimmedImageNames = imageNames.map(imageName => imageName.trim());
+            return trimmedImageNames;
+        }
+
+        //slick product-detial
+        var next=document.querySelector(".detail-show__image-slick i:nth-child(2)");
+        var back=document.querySelector(".detail-show__image-slick i:nth-child(1)");
+
+        var hero=document.querySelector(".detail-show__image img");
+        var list_img=document.querySelectorAll(".detail-show__item");
+
+        // var arr_img=["pd-21.png","pd-21,6.webp","pd-21,5.webp","pd-21,4.webp","pd-21,3.webp","pd-21,2.webp","pd-21,1.jpg"]
+        var imageArray="<?php echo $HinhAnh."|".getListAnh($MaSP) ?>";
+        var arr_img = convertStringToImageArray(imageArray);
+        console.log(arr_img);
+        function removeBorder(){
+            list_img.forEach(element => {
+                element.classList.remove("select-product-detail");
+            });
+        }
+        var curentIndex=0;
+        list_img[0].classList.add("select-product-detail")
+        list_img.forEach((element,index) => {
+            element.addEventListener('click',function(){
+                removeBorder();
+                // console.log(curentIndex);
+                console.log(index);
+                hero.src="./assets/img/"+arr_img[index]; // trong 1 lớp có nhiều lớp con nên phải lấy ra phần tử đầu tiên
+                curentIndex=index;
+                element.classList.add("select-product-detail");
+            })
+        });
+        
+        next.addEventListener('click',function(){
+            removeBorder();
+            console.log(curentIndex);
+            if(curentIndex===arr_img.length-1){
+                curentIndex=0;
+                hero.src=list_img[0].children[0].src;
+                list_img[curentIndex].classList.add("select-product-detail");
+            }
+            else{
+                hero.src=list_img[curentIndex+1].children[0].src;
+                list_img[curentIndex+1].classList.add("select-product-detail");
+                curentIndex++;
+            }
+        });
+
+        back.addEventListener('click',function(){
+            removeBorder();
+            if(curentIndex===0){
+                curentIndex=arr_img.length-1;
+                hero.src=list_img[arr_img.length-1].children[0].src;
+                list_img[arr_img.length-1].classList.add("select-product-detail");
+            }
+            else{
+                hero.src=list_img[curentIndex-1].children[0].src;
+                list_img[curentIndex-1].classList.add("select-product-detail");
+                curentIndex--;
+            }
+        });
     });
 
 </script>

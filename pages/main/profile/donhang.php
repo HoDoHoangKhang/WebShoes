@@ -45,24 +45,26 @@ table tr:nth-child(odd) {
 </style>
 <main class="profile-item">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap.css"> -->
-    <table class="table-order" style="width: 100%;">
-        <thead style="">
-            <tr>
-                <th>ĐƠN HÀNG</th>
-                <th>NGÀY</th>
-                <th>TÌNH TRẠNG</th>
-                <th>TỔNG</th>
-                <th>THAO TÁC</th>
-            </tr>
-        </thead>
-        <tbody id="donhang">
-            <?php 
-                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
-                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
-                echo showPhieuXuat(intval(getUser($_SESSION['taikhoan'])->getMa()));
-            ?>
-        </tbody>
-    </table>
+    <div class="donhang-main" style="overflow-x: auto; width: 100%;">
+        <table class="table-order" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="min-width: 100px;">ĐƠN HÀNG</th>
+                    <th style="min-width: 150px;">NGÀY</th>
+                    <th style="min-width: 150px;">TÌNH TRẠNG</th>
+                    <th style="min-width: 150px;">TỔNG</th>
+                    <th style="min-width: 150px;">THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody id="donhang">
+                <?php 
+                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
+                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                    echo showPhieuXuat(intval(getUser($_SESSION['taikhoan'])->getMa()));
+                ?>
+            </tbody>
+        </table>
+    </div>
     <div id="myModal" class="modal" >
         <div class="modal-content" style="width: 500px;">
             <!-- <div style="display: flex; align-items: center; justify-content: end;">

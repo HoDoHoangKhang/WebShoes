@@ -7,7 +7,7 @@
                     <p class="footer-detail">
                         Địa chỉ: Ladeco Building, 266 Doi Can Street, Ba Dinh District, Hanoi.<br>
                         Hotline: 1900 6750<br>
-                        Email: hodohoangkhang@gmail.com
+                        Email: webshoes@gmail.com
                     </p>
                 </div>
                 <div class="footer-item">
@@ -17,7 +17,7 @@
                         <br>
                         Hotline: 1900 6750
                         <br>
-                        Email: hodohoangkhang@gmail.com
+                        Email: webshoes@gmail.com
                     </p>
                 </div>
                 <div class="footer-item">
@@ -27,7 +27,7 @@
                         <br>
                         Hotline: 1900 6750
                         <br>
-                        Email: hodohoangkhang@gmail.com
+                        Email: webshoes@gmail.com
                     </p>
                 </div>
             </div>
@@ -37,19 +37,19 @@
                     <i class="footer-btn-icon fa-solid fa-angle-right"></i>
                 </a>
             </div>
-            <ul class="footer-nav">
+            <!-- <ul class="footer-nav">
                 <li class="footer-nav-item">Womem</li>
                 <li class="footer-nav-item">Men</li>
                 <li class="footer-nav-item">Kis</li>
                 <li class="footer-nav-item">Sale</li>
                 <li class="footer-nav-item">Contact</li>
-            </ul>
+            </ul> -->
         </div>
 
     </div>
     <div class="footer-end">
         <div class="container">
-            <span class="footer-end-text">© 2023 Bản quyền thuộc về Nguyên Đán.</span>
+            <span class="footer-end-text">© 2023 Bản quyền thuộc về Group 4 - Web 2.</span>
         </div>
     </div>
 </footer>

@@ -17,15 +17,15 @@
     <section class="shell">
         <div class="container">
             <div class="shell-main">
-                <div class="shell-show">
+                <div class="shell-show" style="overflow: auto;">
                     <table style="width: 100%; font-size: 16px;" class="table-shell">
                         <thead style="">
                             <tr>
-                                <th >Sản phẩm</th>
-                                <th>Size</th>
-                                <th>Số lượng</th>
-                                <th>Giá</th>
-                                <th>Thao tác</th>
+                                <th style="min-width: 300px;" >Sản phẩm</th>
+                                <th style="min-width: 80px;">Size</th>
+                                <th style="min-width: 100px;">Số lượng</th>
+                                <th style="min-width: 150px;">Giá</th>
+                                <th style="min-width: 70px;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody id="cartProduct">
