@@ -12,6 +12,7 @@ require $targetDir;
 
 $uploadOk = 0;
 $nameImg = [];
+
 foreach ($_FILES['hinhanh']['tmp_name'] as $key => $tmp_name) {
 	$file_name = $_FILES['hinhanh']['name'][$key];
     $file_tmp = $_FILES['hinhanh']['tmp_name'][$key];
@@ -79,6 +80,18 @@ if ($uploadOk == 1) {
 			if ($connect->query($sql_hinh) !== TRUE) {
                 echo "Lỗi: " . $sql_hinh . "<br>" . $connect->error;
             }
+		}
+		$sql_size = "SELECT SizeSP FROM `sizesp`"; // Removed `WHERE 1` since it's unnecessary
+		$result = $connect->query($sql_size);
+		if ($result->num_rows > 0) {
+		    while ($row = $result->fetch_assoc()) {
+		        // Assuming $MaSP is already defined somewhere in your code
+		        $SizeSP = $row['SizeSP']; // Store the value of 'SizeSP' from the row
+		        // Now, construct the SQL query for insertion
+		        $sql_insert = "INSERT INTO `ctsizesp`(`MaSP`, `SizeSP`, `SoLuong`) VALUES ('$MaSP', '$SizeSP', 0)";
+		        // Execute the insertion query
+		        $connect->query($sql_insert);
+		    }
 		}
 	    echo "Thêm dữ liệu thành công!!!";
 	} else {

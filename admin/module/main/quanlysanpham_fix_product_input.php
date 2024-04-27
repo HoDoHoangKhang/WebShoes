@@ -161,10 +161,23 @@ if ($result->num_rows > 0) {
 
 
         <div class="drop-zone" id="dropZone">
-            <span class="drop-zone__prompt">Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh</span>
+            <span class="drop-zone__prompt">Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh đại diện</span>
             <input type="file" class="drop-zone__input" id="hinhanh" accept="image/*">
             <div class="image-preview" id="imagePreview">
                 <img src="../assets/img/<?php echo $HinhAnh; ?>" style="width: 800px;">
+            </div>
+        </div> <br><br>
+        <div class="drop-zone" id="dropZoneNhieuAnh">
+            <span class="drop-zone__prompt">Kéo và thả ảnh vào đây hoặc nhấn để chọn các ảnh</span>
+            <input type="file" class="drop-zone__input" id="nhieuAnh" multiple>
+            <div class="image-preview" id="imagePreviewNhieuAnh">
+                <?php 
+                    $sql = "SELECT SCR_ANH FROM `hinhanh` WHERE MaSP = " . $MaSP;
+                    $result = $connect->query($sql);
+                    while ($rowd = $result->fetch_assoc()) {
+                        echo '<img src="../assets/img/' . $rowd['SCR_ANH'] . '" style="height: 400px;">';
+                    }
+                    ?>
             </div>
         </div> <br><br>
 
@@ -230,6 +243,37 @@ if ($result->num_rows > 0) {
 </script>
 <script>
     var MaSP = <?php echo $MaSP; ?>;
+    const dropZoneNhieuAnh = document.getElementById('dropZoneNhieuAnh');
+    const manyFileInput = document.getElementById('nhieuAnh');
+    dropZoneNhieuAnh.addEventListener('click', () => {
+        manyFileInput.click();
+    });
+
+    function previewImages() {
+        var preview = document.getElementById('imagePreviewNhieuAnh');
+        var files   = document.getElementById('nhieuAnh').files;
+
+        preview.innerHTML = '';
+
+        if (files) {
+            [].forEach.call(files, function(file) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.height = '400px'; // set kích thước tối đa của ảnh
+                    preview.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+
+    document.getElementById('nhieuAnh').addEventListener('change', previewImages);
+
+
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('hinhanh');
     const imagePreview = document.getElementById('imagePreview');
@@ -289,6 +333,8 @@ if ($result->num_rows > 0) {
         var tenNhanHieu = document.getElementById('TenNhanHieu').textContent;
         var tenLoai = document.getElementById('MaLoai').textContent;
         var hinhanh = document.getElementById('hinhanh').files[0]; // Lấy file ảnh
+        var nhieuhinhanh = document.getElementById('nhieuAnh').files;
+
         var editorContent = editor.getData();
 
         console.log(SanPhamMoi + ' ' + SanPhamHot);
@@ -353,7 +399,12 @@ if ($result->num_rows > 0) {
 
         if (hinhanh == null) {
             hinhanh = new Blob();
+            console.log('Không có hình avatar thay thế!');
         } 
+        if (nhieuhinhanh[0] == null) {
+            nhieuhinhanh[0] = new Blob();
+            console.log('Không danh sách hình thay thế!');
+        }
 
         if (d === 1){
             alert('Vui lòng nhập đầy đủ');
@@ -372,7 +423,11 @@ if ($result->num_rows > 0) {
             formData.append('tenNhanHieu', tenNhanHieu);
             formData.append('tenLoai', tenLoai);
             formData.append('editorContent', editorContent);
-            formData.append('hinhanh', hinhanh);
+
+            formData.append('hinhanh[]', hinhanh);
+            for (var i = 0; i < nhieuhinhanh.length; i++) {
+                formData.append('hinhanh[]', nhieuhinhanh[i]);
+            }
             
             // Tạo đối tượng XMLHttpRequest
             var xhr = new XMLHttpRequest();

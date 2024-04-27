@@ -137,6 +137,13 @@ require '../config/config.php';
     });
 </script>
 <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('hinhanh');
+
+    dropZone.addEventListener('click', () => {
+        fileInput.click();
+    });
+
     function previewImages() {
         var preview = document.getElementById('imagePreview');
         var files   = document.getElementById('hinhanh').files;
@@ -162,9 +169,7 @@ require '../config/config.php';
     document.getElementById('hinhanh').addEventListener('change', previewImages);
 </script>
 <script>
-    const dropZone = document.getElementById('dropZone');
     const dropZoneAvata = document.getElementById('dropZoneAvata');
-    const fileInput = document.getElementById('hinhanh');
     const avataInput = document.getElementById('avataSP');
 
 
@@ -212,9 +217,6 @@ require '../config/config.php';
 
 
 
-    dropZone.addEventListener('click', () => {
-        fileInput.click();
-    });
 
     var submitButton = document.getElementById('submitForm');
 
