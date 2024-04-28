@@ -13,6 +13,7 @@
     }
 </style>
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <div class="tableBox ">
     <div class="tableTitle">
@@ -53,9 +54,7 @@
                     ?>
                 </select>
             </div>
-            <button type="button" class="btn btn-primary Add-SP-button" data-bs-toggle="modal" data-bs-target="#themsanpham">
-                Thêm
-            </button>
+            <a class="btn btn-primary" href="index.php?danhmuc=themsanpham">Thêm</a><!-- quanlysanpham_add_product_input.php-->
             
         </div>
     </div>
@@ -121,7 +120,9 @@
                                         <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
                                             Chi tiết
                                             </button>
-                                        <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="' .$row["MaSP"] . '">Sửa</button>
+                                        
+                                            <a class="btn btn-primary" href="index.php?danhmuc=suasanpham&idsp=' . $row["MaSP"] . '">Sửa</a>
+
                                         <button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>
                                         
                                     </div>
@@ -134,7 +135,7 @@
                     echo "<tr><td colspan='2'>Không có dữ liệu</td></tr>";
                 }
             ?>
-            
+            <!-- <button type="button" class="btn btn-primary fix-sp-button" data-bs-toggle="modal" data-bs-target="#suasanpham"  id="' .$row["MaSP"] . '">Sửa</button> -->
         </tbody>
     </table>
 </div>
@@ -151,139 +152,6 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Modal thêm sản phẩm -->
-<div class="modal fade" id="themsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 800px;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelThemsanpham">Thêm Sản Phẩm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="responsepp"></p>
-        <form id="new_data_product">
-          <table>
-            <tr>
-              <td>Tên Sản Phẩm:</td>
-              <td><input type="text" name="TenSP"></td>
-            </tr>
-            <tr>
-              <td>Mô Tả:</td>
-              <td><textarea name="MoTa"></textarea></td>
-            </tr>
-            <tr>
-              <td>Hình Ảnh:</td>
-              <td><input type="file" name="HinhSanPham" id="hinhanh"></td>
-            </tr>
-            <tr>
-              <td>Giá Mới:</td>
-              <td><input type="number" name="GiaMoi"></td>
-            </tr>
-            <tr>
-                <td>Mã Nhãn Hiệu:</td>
-                <td>
-                    <select name="MaNhanHieu">
-                        <?php
-                        // Chuẩn bị câu truy vấn SQL
-                        $sql = "SELECT MaNhanHieu, TenNhanHieu FROM nhanhieu";
-                        $result = $connect->query($sql);
-
-                        // Kiểm tra số dòng trả về từ câu truy vấn
-                        if ($result->num_rows > 0) {
-                            // Đổ dữ liệu vào dropdown menu
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . $row["MaNhanHieu"] . '">' . $row["TenNhanHieu"] . '</option>';
-                            }
-                        } else {
-                            echo "<option value=''>Không có dữ liệu</option>";
-                        }
-                        ?>
-                    </select>
-                </td>
-
-            </tr>
-            <tr>
-              <td>Mã Loại:</td>
-              <td>
-                <select name="MaLoai">
-                    <?php 
-                    $sql = "SELECT MaLoai, TenLoai FROM loaisp";
-                    $result = $connect->query($sql);
-
-                    // Kiểm tra số dòng trả về từ câu truy vấn
-                    if ($result->num_rows > 0) {
-                        // Đổ dữ liệu vào dropdown menu
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row["MaLoai"] . '">' . $row["TenLoai"] . '</option>';
-                        }
-                    } else {
-                        echo "<option value=''>Không có dữ liệu</option>";
-                    }
-                    ?>
-                </select>
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="submit" class="btn btn-primary" id="submitForm">Lưu</button>
-        <button type="submit" class="btn btn-primary" id="resetForm">Clear</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script> 
-    document.getElementById('resetForm').addEventListener('click', function() {
-    // Lấy danh sách các trường input
-    var inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
-
-    // Đặt lại giá trị của từng trường input thành chuỗi rỗng
-    inputs.forEach(function(input) {
-        input.value = '';
-    });
-
-    document.getElementById("responsepp").innerHTML = "";
-});
-</script>
-<script>
-$(document).ready(function(){
-
-    $('#submitForm').on('click', function(e){
-        e.preventDefault(); // Ngăn chặn gửi form thông qua trình duyệt
-
-        var formData = new FormData($('#new_data_product')[0]);
-
-        // Lấy dữ liệu từ input file và thêm vào formData
-        var hinhanh = $('#hinhanh')[0].files[0];
-        if (hinhanh == null)
-            formData.append('hinhanh', new Blob());
-        else 
-            formData.append('hinhanh', hinhanh);
-
-        console.log(formData);
-
-        // Gửi dữ liệu bằng AJAX
-        $.ajax({
-            type: 'POST',
-            url: 'module/main/quanlysanpham_add_product.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
-            data: formData,
-            processData: false, // Không xử lý dữ liệu
-            contentType: false, // Không thiết lập kiểu dữ liệu
-            success: function(response){
-                $('#responsepp').html(response);
-            },
-            error: function(xhr, status, error){
-                console.error(error); // Hiển thị lỗi nếu có
-            }
-        });
-
-    });
-});
-</script>
-
-
 <!-- Modal chi tiết sản phẩm -->
 <div class="modal fade" id="chitietsanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog">
@@ -293,7 +161,7 @@ $(document).ready(function(){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>Column</th>
@@ -315,15 +183,18 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
+        if (productId != null) {
+            $.ajax({
+                url: 'module/main/quanlysanpham_get_product_info.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response){
+                    $('#list_data_product').html(response);
+                }
+            });
+        }
         // console.log(productId);
-        $.ajax({
-            url: 'module/main/quanlysanpham_get_product_info.php',
-            type: 'POST',
-            data: { productId: productId },
-            success: function(response){
-                $('#list_data_product').html(response);
-            }
-        });
+       
     });
 });
 </script>
@@ -359,14 +230,16 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
-        $.ajax({
-            url: 'module/main/quanlysanpham_get_list_size_and_number.php',
-            type: 'POST',
-            data: { productId: productId },
-            success: function(response){
-                $('#list_size_and_number').html(response);
-            }
-        });
+        if (productId != null) {
+            $.ajax({
+                url: 'module/main/quanlysanpham_get_list_size_and_number.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response){
+                    $('#list_size_and_number').html(response);
+                }
+            });
+        }
     });
 });
 </script>
@@ -383,7 +256,6 @@ $(document).ready(function(){
                     display: inline-block;
                 }
             </style>
-
             <p class="inline-p">Mã sản phẩm: </p><p id="idsp" class="inline-p"></p>
             <h2>Bạn có chắc muốn xóa sản phẩm này?</h2>
             <button type="submit" class="btn btn-primary" id="submitXoa">Xóa</button>
@@ -396,9 +268,11 @@ $(document).ready(function(){
 <script>
     $('table').on('click', 'td' , function (event) {
         var productId = $('button', this).attr('id');
-        var pElement = document.getElementById("idsp");
-        // Thay đổi nội dung bằng thuộc tính textContent
-        pElement.textContent = productId;
+        if (productId != null) {
+            var pElement = document.getElementById("idsp");
+            // Thay đổi nội dung bằng thuộc tính textContent
+            pElement.textContent = productId;
+        }
     });
 </script>
 <script>
@@ -443,69 +317,4 @@ $(document).ready(function(){
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("idSanPham=" + idSanPham);
     });
-</script>
-
-
-<div class="modal fade" id="suasanpham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelSuasanpham">Sửa Sản Phẩm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="fix_data_product">
-          
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="submit" class="btn btn-primary" id="submitFormforfix">Lưu</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-    $('table').on('click', 'td' , function (event) {
-        var productId = $('button', this).attr('id');
-        $.ajax({
-            url: 'module/main/quanlysanpham_get_product_info_for_fix_info.php',
-            type: 'POST',
-            data: { productId: productId },
-            success: function(response){
-                $('#fix_data_product').html(response);
-            }
-        });
-    });
-</script>
-
-<script>
-$(document).ready(function(){
-    $('#submitFormforfix').on('click', function(e){
-        e.preventDefault(); // Ngăn chặn gửi form thông qua trình duyệt
-        var formData = new FormData($('#fix_data_product')[0]);
-        // Lấy dữ liệu từ input file và thêm vào formData
-        var hinhanh = $('#hinhanh2')[0].files[0];
-        if (hinhanh == null)
-            formData.append('hinhanh2', new Blob());
-        else 
-            formData.append('hinhanh2', hinhanh);
-        console.log(formData);
-        // Gửi dữ liệu bằng AJAX
-        $.ajax({
-            type: 'POST',
-            url: 'module/main/quanlysanpham_fix_sanpham.php', // Đường dẫn đến tệp PHP xử lý dữ liệu
-            data: formData,
-            processData: false, // Không xử lý dữ liệu
-            contentType: false, // Không thiết lập kiểu dữ liệu
-            success: function(response){
-                $('#responsfixed').html(response);
-            },
-            error: function(xhr, status, error){
-                console.error(error); // Hiển thị lỗi nếu có
-            }
-        });
-    });
-});
 </script>
