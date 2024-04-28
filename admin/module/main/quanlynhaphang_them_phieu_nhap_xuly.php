@@ -49,6 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($connect->query($sql_ctpn) !== TRUE) {
                 echo "Lỗi: " . $sql_ctpn . "<br>" . $connect->error;
             }
+            if ($tinhTrang != "Chưa nhận") {
+                $sql_sua_gia = "UPDATE sanpham SET GiaCu = GiaMoi, GiaMoi = $GiaNhap WHERE MaSP = " . $MaSP;
+                if ($connect->query($sql_sua_gia) !== TRUE) {
+                    echo "Lỗi: " . $sql_sua_gia . "<br>" . $connect->error;
+                }
+                $sql_sua_ctsize = "UPDATE `ctsizesp` SET `SoLuong`= $SoLuong WHERE MaSP = $MaSP and SizeSP = $SizeSP";
+                if ($connect->query($sql_sua_ctsize) !== TRUE) {
+                    echo "Lỗi: " . $sql_sua_ctsize . "<br>" . $connect->error;
+                }
+            }
         }
         echo "Dữ liệu đã được thêm vào cơ sở dữ liệu thành công!";
     } else {
