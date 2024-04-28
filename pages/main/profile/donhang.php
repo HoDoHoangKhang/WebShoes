@@ -164,11 +164,12 @@ table tr:nth-child(odd) {
                     },
                     success: function(data){
                         if(data==1){
-                            btn.parentElement.parentElement.parentElement.remove();
+                            btn.parentElement.parentElement.parentElement.children[2].innerHTML="Đã hủy";
+                            btn.remove();
                             creatToast("item-success","Hủy đơn hàng thành công","fa-solid fa-circle-check","item-end-success");
                         }
                         else{
-                            creatToast("item-error","Đơn hàng đã được gửi cho đơn vị vận chuyển, không thể hủy đơn hàng này","fa-solid fa-triangle-exclamation","item-end-error");
+                            creatToast("item-error","Đơn hàng đã được gửi cho đơn vị vận chuyển, không thể hủy đơn hàng này","fa-solid fa-triangle-exclamation","item-end-error");                        
                         }
                     }
                 });

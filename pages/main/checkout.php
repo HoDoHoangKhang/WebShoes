@@ -356,12 +356,12 @@
             
             return integerAmount;
         }
-        var btnEdit=document.querySelector(".edit-address");
-        btnEdit.addEventListener('click', function(){
-            btnEdit.classList.toggle('edit-address--checked');
-            var divEditAddress= document.querySelector(".div-pay-address");
-            divEditAddress.classList.toggle("block");
-        });
+        // var btnEdit=document.querySelector(".edit-address");
+        // btnEdit.addEventListener('click', function(){
+        //     btnEdit.classList.toggle('edit-address--checked');
+        //     var divEditAddress= document.querySelector(".div-pay-address");
+        //     divEditAddress.classList.toggle("block");
+        // });
 
         
         var btnDelivery=document.querySelectorAll(".delivery_checkout");

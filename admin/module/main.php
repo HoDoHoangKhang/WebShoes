@@ -33,7 +33,7 @@
                     require_once 'module/main/caidatwebsite.php';
                     break;   
                 case 'quanlydonhang-chitiet':                     
-                    require_once 'module/main/quanlydonhang-chitiet.php?cc=1';             
+                    require_once 'module/main/quanlydonhang-chitiet.php';             
                     break;  
                 case 'quanlydonhang-timkiem':                     
                     require_once 'module/main/quanlydonhang-timkiem.php';             

@@ -11,9 +11,9 @@
         $new_id = mysqli_insert_id($db->getConnection());
         return $new_id;
     }
-    function deletePhieuXuat($MaPX){
+    function huyPhieuXuat($MaPX){
         $db = new DTB();
-        $query = "DELETE FROM `phieuxuat` WHERE MaPX=$MaPX";
+        $query = "UPDATE phieuxuat SET TinhTrangDH = 'Đã hủy' WHERE MaPX = $MaPX";
         $result = mysqli_query($db->getConnection(), $query);
     }
     // insertPhieuXuat(2, 2 ,"2024-05-04","Tạm giữ",300000,1,1);

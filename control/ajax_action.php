@@ -326,10 +326,12 @@
         // $soLuong=intval($_POST['SoLuong']);
         // $size=intval($_POST['Size']);
         if(getTinhTrangPhieuXat($maPX)=='Tạm giữ'){
-            deleteChiTietPhieuXuat($maPX);
-            deletePhieuXuat($maPX);
+            // deleteChiTietPhieuXuat($maPX);
+            huyPhieuXuat($maPX);
+
             //Hoàn lại số lượng sản phẩm khi hủy đơn
             // tangSoLuongTrongKho($maSP,$size,$soLuong);
+
             echo 1;
         }
         else{
