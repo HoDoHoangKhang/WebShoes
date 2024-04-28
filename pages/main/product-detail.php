@@ -185,9 +185,12 @@
                         </div>
                         
                         <div class="detail-button">
-                            <div  class="detail-btn__buy card-btn">Mua ngay</div>
+                            <!-- <div  class="detail-btn__buy card-btn">Thêm vào vỏ hàng 
+                            <i  style="margin-left: 10px;" class="fa-regular fa-bag-shopping"></i>
+                            </div> -->
                             <button class="detail-btn__cart card-btn ">
-                                <i class="fa-regular fa-bag-shopping"></i>
+                            Thêm vào vỏ hàng 
+                                <i class=" fa-regular fa-basket-shopping-simple"></i>
                             </button>
                             <button class="detail-btn__like card-btn">
                                 <i class="fa-regular fa-heart"></i>
