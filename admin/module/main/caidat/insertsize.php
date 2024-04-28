@@ -3,39 +3,43 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "shoestore";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
-?>
-<?php
-if(isset($_POST['size'])) {
-    // Lấy dữ liệu từ form
+
+if (isset($_POST['size'])) {
     $size = $_POST['size'];
-    
-    // Chuẩn bị câu truy vấn SQL để thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO sizesp (SizeSP) VALUES ('$size')";
-    
-    // Thực thi truy vấn
-    if ($conn->query($sql) === TRUE) {
-        $result = $conn->query("SELECT * FROM sizesp WHERE SizeSP ='$size'");
+
+    // Kiểm tra xem size đã tồn tại trong cơ sở dữ liệu chưa
+    $sql = "SELECT * FROM sizesp WHERE SizeSP = '$size'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Size đã tồn tại
         $row = $result->fetch_assoc();
-        echo "<tr data-size='" . $size . "'>";
-        echo "<td>" . $size . "</td>";
-        echo "<td>
-              <div class='dropdown'>
-              <button class='btn btn-secondary dropdown-toggle btn-delete' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-              Xóa
-              </button>
-              <ul class='dropdown-menu' style='z-index: 2;'> 
-              <li><a class='dropdown-item delete-option' href='#'>Xóa</a></li>
-              </ul>
-              </div>
-              </td>";
-        echo "</tr>";
+        if ($row['hide'] == 0) {
+            // Cập nhật giá trị hide thành 1
+            $updateSql = "UPDATE sizesp SET hide = 1 WHERE SizeSP = '$size'";
+            if ($conn->query($updateSql) === TRUE) {
+                echo "updated";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+        } else {
+            // Size đã tồn tại và hide = 1
+            echo "exists";
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // Thêm size mới
+        $insertSql = "INSERT INTO sizesp (SizeSP, hide) VALUES ('$size', 1)";
+        if ($conn->query($insertSql) === TRUE) {
+            echo "<tr data-size='" . $size . "'>";
+            echo "<td>" . $size . "</td>";
+            echo "<td> <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'> Xóa </button> </td>";
+            echo "</tr>";
+        } else {
+            echo "Error: " . $insertSql . "<br>" . $conn->error;
+        }
     }
-    
-    // Đóng kết nối đến cơ sở dữ liệu
+
     $conn->close();
 }
 ?>
