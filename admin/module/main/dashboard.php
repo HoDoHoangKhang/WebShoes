@@ -42,10 +42,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 <body>
   
      <style>
-        body {
-            font-family: sans-serif;
-            margin: 20px;
-        }
         .container {
             display: flex;
         }
@@ -162,6 +158,7 @@ while ($row = mysqli_fetch_assoc($result)) {
       }
       $conn->close();
       ?>
+      
       var ctx2 = document.getElementById("myChart2").getContext("2d");
       var myChart2 = new Chart(ctx2, {
         type: "pie",

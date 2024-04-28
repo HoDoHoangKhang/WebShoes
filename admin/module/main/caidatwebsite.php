@@ -34,6 +34,10 @@ $result = mysqli_query($conn, $sql);
   width: 100%;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 input file, text{
   width: 300px;
   background-color: rgba(0, 0, 0, 0.9);
@@ -71,7 +75,7 @@ img{
   </style>
 
   <div class="container">
-  <form action="module/main/caidatwebsite-capnhat.php" method="post" enctype="multipart/form-data">
+  <form action="module/main/caidatwebsite-capnhat.php" method="post" enctype="multipart/form-data" style="width: 100%;">
   <h1>Cài đặt website</h1>
   <div class="form-group">
       <h5 for="logo">Thay đổi logo :</h5>
@@ -101,9 +105,9 @@ img{
   <div class="form-group" style="display: block;">
     <br></br>
     <h5>Chọn đánh giá đưa vào Feedback</h5>
-    <table id="myTable" class="table table-striped " style="width: 100%;">
+    <table style="width: 100%;">
         <thead>
-            <tr>
+            <tr style="background-color: cornflowerblue;">
                 <th >STT</th>
                 <th>Tên</th>
                 <th>Ảnh</th>
@@ -121,7 +125,7 @@ img{
         <td>
           <ul style="padding: 0px;margin: 0px;">
             <li><img src="../assets/img/<?php echo $row['Image']; ?>"  style="width: 70px;height: 70px;border-radius: 50%;margin-bottom: 10px;"></li>
-            <li style="width: 100px;"><input type="file" name="avt[]"></li>
+            <li><input type="file" name="avt[]"></li>
           </ul>
         </td>
         <td><textarea name="NoiDung[]" cols="50" rows="5" style="width: 100%;"><?php echo $row['NoiDung']; ?></textarea></td>
