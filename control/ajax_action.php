@@ -328,7 +328,6 @@
         if(getTinhTrangPhieuXat($maPX)=='Tạm giữ'){
             deleteChiTietPhieuXuat($maPX);
             deletePhieuXuat($maPX);
-
             //Hoàn lại số lượng sản phẩm khi hủy đơn
             // tangSoLuongTrongKho($maSP,$size,$soLuong);
             echo 1;
