@@ -10,8 +10,9 @@ $sql="SELECT
   px.NgayDatHang,
   px.TinhTrangDH,
   px.TongSoLuong,
-  nhanvien.HoTen as HotenNV,
   khachhang.HoTen as HotenKH,
+  khachhang.SDT as SDTKH,
+  khachhang.DiaChi as diachi,
   sanpham.TenSP,
   sanpham.HinhAnh,
   ctpx.SoLuong,
@@ -19,7 +20,6 @@ $sql="SELECT
 FROM phieuxuat px
 INNER JOIN ctpx ON px.MaPX = ctpx.MaPX
 INNER JOIN user khachhang ON px.MaKH = khachhang.Ma
-INNER JOIN user nhanvien ON px.MaNV = nhanvien.Ma
 INNER JOIN sanpham ON ctpx.MaSP = sanpham.MaSP
 WHERE px.MaPX = $id;";
 $result = $conn->query($sql);
@@ -33,8 +33,9 @@ if ($result->num_rows > 0) {
     $ngayDatHang = $row['NgayDatHang'];
    $tinhTrangDonHang = $row['TinhTrangDH'];
    $tongSoLuong = $row['TongSoLuong']; 
-    $hotenNV = $row['HotenNV'];
     $hotenKH = $row['HotenKH'];
+    $sdtKH = $row['SDTKH'];
+    $diaChi = $row['diachi'];
     $hinhAnh = $row['HinhAnh'];
     $tenSP = $row['TenSP'];
     $soLuong = $row['SoLuong'];
@@ -56,9 +57,17 @@ if ($result->num_rows > 0) {
         .container {
             max-width: 100%;
             margin: 0 auto;
- 
+            overflow: hidden;
         }
-
+        .left-column {
+            float: left;
+            width: 70%; 
+            padding-left:20px;
+        }
+        .right-column {
+            float: right;
+            width: 30%;
+        }
         h1 {
             text-align: center;
         }
@@ -94,9 +103,6 @@ if ($result->num_rows > 0) {
         .table-info th, .table-info td {
             border: 1px solid #ddd;
             padding: 5px;
-        }
-
-        .table-info th {
             text-align: center;
         }
 
@@ -123,16 +129,30 @@ if ($result->num_rows > 0) {
 
 <div id="form-chi-tiet">
         <div class="container">  
-        <div id="back"><a href="javascript:history.back()">Quay lại</a></div>
-        <h1>Thông tin chi tiết hóa đơn</h1>          
-            <div class="row">
-                <div class="label">Tên nhân viên:</div>
-                <div class="value"><?php echo $hotenNV; ?></div>
-            </div>
+        <button type="button" id="back" >Quay lại</button>
+        <script>
+            document.getElementById("back").addEventListener("click", function() {
+  history.back();
+});
+
+        </script>
+        <h1>Thông tin chi tiết hóa đơn</h1> 
+        <br>  
+        <div class="left-column">
             <div class="row">
                 <div class="label">Tên khách hàng:</div>
                 <div class="value"><?php echo $hotenKH; ?></div>
             </div>
+            <div class="row">
+                <div class="label">Số điện thoại:</div>
+                <div class="value"><?php echo $sdtKH; ?></div>
+            </div>
+            <div class="row">
+                <div class="label">Địa chỉ giao hàng:</div>
+                <div class="value"><?php echo $diaChi; ?></div>
+            </div>
+        </div>
+        <div class="right-column">
             <div class="row">
                 <div class="label">Ngày đặt hàng:</div>
                 <div class="value"><?php echo $ngayDatHang; ?></div>
@@ -141,14 +161,14 @@ if ($result->num_rows > 0) {
                 <div class="label">Tình trạng đơn hàng:</div>
                 <div class="value"><?php echo $tinhTrangDonHang; ?></div>
             </div>
-            <div class="row">
+                <div class="row">
                 <div class="label">Tổng số lượng:</div>
                 <div class="value"><?php echo $tongSoLuong; ?></div>
             </div>
-
+        </div>
             <table class="table-info">
                 <thead>
-                    <tr>
+                    <tr style="background-color: cornflowerblue;">
                         <th>STT</th>
                         <th>Tên sản phẩm</th>
                         <th>Hình ảnh</th>
@@ -160,7 +180,7 @@ if ($result->num_rows > 0) {
                 <tbody>
                         <tr>
                             <td>1</td>
-                            <td><?php echo $tenSP; ?></td>
+                            <td style="text-align: left;"><?php echo $tenSP; ?></td>
                             <td><img src="../assets/img/<?php echo $hinhAnh; ?>" alt="<?php echo $hinhAnh; ?>"></td>
                             <td><?php echo $soLuong; ?></td>
                             <td><?php echo number_format($giaBan, 0, ',', '.'); ?> VNĐ</td>
@@ -178,7 +198,7 @@ if ($result->num_rows > 0) {
                     ?>
                         <tr>
                             <td><?php echo $stt++; ?></td>
-                            <td><?php echo $tenSP; ?></td>
+                            <td style="text-align: left;"><?php echo $tenSP; ?></td>
                             <td><img src="../assets/img/<?php echo $hinhAnh; ?>" alt="<?php echo $hinhAnh; ?>"></td>
                             <td><?php echo $soLuong; ?></td>
                             <td><?php echo number_format($giaBan, 0, ',', '.'); ?> VNĐ</td>

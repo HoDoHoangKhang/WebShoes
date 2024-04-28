@@ -72,8 +72,31 @@ $result = $conn->query($sql);
     ul{
        padding: 0;
     }
+    #tinhtrang{
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 110px;
+        text-align: center;
+    }
+    .hoan-thanh {
+        background-color: blue;
+        color: aliceblue;
+    }
+    .dang-xu-ly {
+        background-color: cadetblue;
+        color: aliceblue;
+    }
+    .tam-giu {
+        background-color: red;
+        color: aliceblue;
+    }
+    .da-huy {
+        background-color: darkgrey;
+        color: aliceble;
+    }
 </style>
-<!-- //myTable_wrapper ở đâu -->
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
     <div class="tableTitle">
@@ -89,6 +112,7 @@ $result = $conn->query($sql);
                         <option value="Tạm giữ">Tạm giữ</option>
                         <option value="Đang xử lý">Đang xử lý</option>
                         <option value="Đã hoàn thành">Đã hoàn thành</option>
+                        <option value="Đã hủy">Đã hủy</option>
                     </select>
                     <input type="submit" value="Lọc">
                 </form>
@@ -135,15 +159,17 @@ $result = $conn->query($sql);
                 <td><?php echo $row['NgayDatHang']; ?></td>
                 <td><?php echo $row['TongSoLuong']; ?></td>
                 <td><?php echo $row['TongTien']; ?></td>
-                <td><?php echo $row['TinhTrangDH']; ?></td>
+                <td><span id="tinhtrang" class="<?php echo ($row['TinhTrangDH'] == 'Đã hoàn thành') ? 'hoan-thanh' : (($row['TinhTrangDH'] == 'Đang xử lý') ? 'dang-xu-ly' : (($row['TinhTrangDH'] == 'Đã hủy') ? 'da-huy' : 'tam-giu')) ?>"><?php echo $row['TinhTrangDH']; ?></span></td>
                 <td>
                     <div class="dropdown" >
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
                             <li><a class="dropdown-item" href="index.php?danhmuc=quanlydonhang-chitiet&id=<?php echo $row['MaPX']; ?>">Xem chi tiết</a></li>                   
-                            <li><a class="dropdown-item" href="module/main/quanlydonhang-trangthai.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa chuyển trạng thái đơn hàng?');" >Chuyển trạng thái</a></li>
-                            <li><a class="dropdown-item" href="module/main/quanlydonhang-xoa.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng?');" >Xóa đơn hàng</a></li>
+                            <?php if ($row['TinhTrangDH'] != "Đã hủy") { ?>
+                                <li><button class="chuyen-trang-thai dropdown-item">Chuyển trạng thái</button></li>
+                                <li><button class="huy-don dropdown-item">Hủy đơn hàng</button></li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </td>
@@ -152,6 +178,56 @@ $result = $conn->query($sql);
         </tbody>
     </table>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    
+$(document).ready(function() {
+    //Hủy đơn hàng
+    $(document).on('click', '.huy-don', function() {
+        var MaPX = $(this).closest('tr').find('td:first-child').text();
+        if(confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")) {
+        $.ajax({
+        url: 'module/main/quanlydonhang-huy.php',
+        method: 'POST',
+        data: {
+            MaPX: MaPX
+        },
+        success: function(response) {
+            console.log("MaPX:", response);
+            if (response === 'success') {
+                alert('Đơn hàng đã được hủy!');
+            location.reload();
+            } else {
+                //hiển thị thông báo khi không hủy được
+            alert(response);
+            }
+        }
+        });
+    }});
+    //Chuyển trạng thái
+    $(document).on('click', '.chuyen-trang-thai', function() {
+        var MaPX = $(this).closest('tr').find('td:first-child').text();
+        if(confirm("Bạn có chắc chắn muốn chuyển trạng thái đơn hàng này không?")) {
+        $.ajax({
+        url: 'module/main/quanlydonhang-trangthai.php',
+        method: 'POST',
+        data: {
+            MaPX: MaPX
+        },
+        success: function(response) {
+            console.log("MaPX:", response);
+            if (response === 'success') {
+                alert('Đã chuyển trạng thái đơn hàng!');
+            location.reload();
+            } else {
+                //hiển thị thông báo khi không chuyển được
+            alert(response);
+            }
+        }
+        });
+    }});
+});
+</script>
 <?php
   // Đóng kết nối
   $conn->close();
