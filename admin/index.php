@@ -25,7 +25,6 @@
     <script defer src="./js/dataTables.js"></script>
     <script defer src="./js/dataTables.boostrap5.js"></script>
     <script defer src="./js/table.js"></script>
-    
         
     
 

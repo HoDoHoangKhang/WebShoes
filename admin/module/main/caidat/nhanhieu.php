@@ -122,21 +122,32 @@ $result = $conn->query($sql);
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-   $('.btn-primary-1').click(function(e){
-      e.preventDefault();
-      var tenNhanHieu = $('#exampleFormControlInput').val(); // Lấy dữ liệu từ trường input
-      $.ajax({
-          url: 'module/main/caidat/insertnh.php', // Đường dẫn đến file PHP xử lý thêm dữ liệu
-          method: 'POST',
-          data: {tenNhanHieu: tenNhanHieu}, // Dữ liệu gửi đi
-          success: function(response){
-              // Cập nhật giao diện sau khi thêm dữ liệu thành công
-              $('#myTable tbody').append(response);
-              $('#myModal').modal('hide'); // Đóng modal sau khi thêm dữ liệu thành công
-          }
-      });
-   });
+$(document).ready(function() {
+  $('.btn-primary-1').click(function(e) {
+    e.preventDefault();
+    var tenNhanHieu = $('#exampleFormControlInput').val();
+
+    $.ajax({
+      url: 'module/main/caidat/insertnh.php',
+      method: 'POST',
+      data: {tenNhanHieu: tenNhanHieu},
+      success: function(response) {
+    if (response.trim() === 'exists') {
+        // Hiển thị thông báo nếu giá trị đã tồn tại
+        alert('Đã Tồn Tại Nhãn Hiệu');
+    } else if (response.trim() === 'updated') {
+        // Cập nhật giao diện nếu giá trị đã được kích hoạt
+        $('#myTable tbody').append(response);
+        alert('Giá trị đã được cập nhật thành công');
+    } else {
+        // Thêm dữ liệu mới vào bảng
+        $('#myTable tbody').append(response);
+        alert('Thêm Nhãn Hiệu Thành Công');
+    }
+    $('#myModal').modal('hide');
+}
+    });
+  });
 });
 </script>
 <script>

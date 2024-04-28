@@ -111,27 +111,42 @@ $result = $connect->query($sql);
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-   // Gắn sự kiện click cho nút "Thêm"
-   $('.btn-primary-1').click(function(e){
-      e.preventDefault();
-      var tenNCC = $('#exampleFormControlInput').val();
-      var diaChiNCC = $('#exampleFormControlInput1').val();
-      var sdtNCC = $('#exampleFormControlInput2').val();
-      var emailNCC = $('#exampleFormControlInput3').val();
-      
-      // Gửi dữ liệu đến máy chủ để xử lý thêm vào cơ sở dữ liệu
-      $.ajax({
-          url: 'module/main/caidat/insertncc.php', // Đường dẫn đến file PHP xử lý thêm dữ liệu
-          method: 'POST',
-          data: {tenNCC: tenNCC, diaChiNCC: diaChiNCC, sdtNCC: sdtNCC, emailNCC: emailNCC}, // Dữ liệu gửi đi
-          success: function(response){
-              // Cập nhật giao diện sau khi thêm dữ liệu thành công
-              $('#myTable tbody').append(response);
-              $('#myModal').modal('hide'); // Đóng modal sau khi thêm dữ liệu thành công
-          }
-      });
-   });
+$(document).ready(function() {
+  // Gắn sự kiện click cho nút "Thêm"
+  $('.btn-primary-1').click(function(e) {
+    e.preventDefault();
+    var tenNCC = $('#exampleFormControlInput').val();
+    var diaChiNCC = $('#exampleFormControlInput1').val();
+    var sdtNCC = $('#exampleFormControlInput2').val();
+    var emailNCC = $('#exampleFormControlInput3').val();
+
+    // Gửi dữ liệu đến máy chủ để xử lý thêm vào cơ sở dữ liệu
+    $.ajax({
+      url: 'module/main/caidat/insertncc.php',
+      method: 'POST',
+      data: {
+        tenNCC: tenNCC,
+        diaChiNCC: diaChiNCC,
+        sdtNCC: sdtNCC,
+        emailNCC: emailNCC
+      },
+      success: function(response) {
+        if (response.trim() === 'exists') {
+          // Hiển thị thông báo nếu nhà cung cấp đã tồn tại
+          alert('Nhà cung cấp đã tồn tại');
+        } else if (response.trim() === 'updated') {
+          // Cập nhật giao diện nếu nhà cung cấp đã được kích hoạt
+          $('#myTable tbody').append(response);
+          alert('Nhà cung cấp đã được cập nhật thành công');
+        } else {
+          // Thêm nhà cung cấp mới vào bảng
+          $('#myTable tbody').append(response);
+          alert('Thêm nhà cung cấp mới thành công');
+        }
+        $('#myModal').modal('hide');
+      }
+    });
+  });
 });
 </script>
 <script>

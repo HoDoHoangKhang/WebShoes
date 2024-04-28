@@ -111,21 +111,42 @@ $result = $conn->query($sql);
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-   $('.btn-primary-1').click(function(e){
-      e.preventDefault();
-      var tenLoai = $('#exampleFormControlInput').val(); // Lấy dữ liệu từ trường input
-      $.ajax({
-          url: 'module/main/caidat/insertdm.php', // Đường dẫn đến file PHP xử lý thêm dữ liệu
-          method: 'POST',
-          data: {tenLoai: tenLoai}, // Dữ liệu gửi đi
-          success: function(response){
-              // Cập nhật giao diện sau khi thêm dữ liệu thành công
-              $('#myTable tbody').append(response);
-              $('#myModal').modal('hide'); // Đóng modal sau khi thêm dữ liệu thành công
+$(document).ready(function() {
+  $('.btn-primary-1').click(function(e) {
+    e.preventDefault();
+    var tenLoai = $('#exampleFormControlInput').val();
+
+    $.ajax({
+      url: 'module/main/caidat/insertdm.php',
+      method: 'POST',
+      data: { tenLoai: tenLoai },
+      success: function(response) {
+        if (response.trim() === 'exists') {
+          // Hiển thị thông báo nếu loại sản phẩm đã tồn tại
+          alert('Loại sản phẩm đã tồn tại');
+        } else if (response.trim() === 'updated') {
+          // Cập nhật giao diện nếu loại sản phẩm đã được kích hoạt
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
           }
-      });
-   });
+          alert('Loại sản phẩm đã được cập nhật thành công');
+        } else {
+          // Thêm loại sản phẩm mới vào bảng
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
+          alert('Thêm loại sản phẩm mới thành công');
+        }
+        $('#myModal').modal('hide');
+      }
+    });
+  });
 });
 </script>
 <script>
