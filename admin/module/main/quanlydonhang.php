@@ -91,7 +91,6 @@ $result = $conn->query($sql);
                     <input type="submit" value="Lọc">
                 </form>
             </div>
-            
         </div>
     </div>
     <table id="myTable" class="table table-striped " style="width: 100%;">

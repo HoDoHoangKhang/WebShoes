@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
     function getAllProduct(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM sanpham ORDER BY RAND()");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM sanpham where `hide`=1 ORDER BY RAND()");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -46,7 +46,7 @@
     }
     function getProductHot(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamHot` = 1 ORDER BY RAND() LIMIT 12");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamHot` = 1 AND `hide`=1 ORDER BY RAND() LIMIT 12");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -132,7 +132,7 @@
     }
     function getProductNew(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamMoi` = 1 ORDER BY RAND() LIMIT 12");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamMoi` = 1  AND `hide`=1 ORDER BY RAND() LIMIT 12");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -291,7 +291,7 @@
     function getListProductFromArr($arr){
         $db = new DTB();
         $valuesString = implode(', ', $arr);
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaSP IN ($valuesString) LIMIT 6");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `hide`=1 AND MaSP IN ($valuesString) LIMIT 6");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(

@@ -149,7 +149,7 @@
                                 <?php 
                                     $sql_sizeSp= "SELECT * FROM `sizesp`";
                                     $result_sizeSp=mysqli_query($connect,$sql_sizeSp);
-                                    $product_sizeSp=mysqli_fetch_array($result_sizeSp);
+                                    // $product_sizeSp=mysqli_fetch_array($result_sizeSp);
                                     while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
                                         if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
                                             <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>

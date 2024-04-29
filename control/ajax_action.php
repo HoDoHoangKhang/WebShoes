@@ -49,6 +49,7 @@
         if(isset($_POST['hotValue']) && $_POST['hotValue']!=0){
             $query.=" AND sanpham.SanPhamHot = ".$hotValue."";
         }
+        $query.=" AND sanpham.hide = 1";
         if(isset($_POST['sortprice']) && $_POST['sortprice']!=""){
             $sortPrice=$_POST['sortprice'];
             if($sortPrice=="asc"){
