@@ -16,6 +16,7 @@ $sql="SELECT
   sanpham.TenSP,
   sanpham.HinhAnh,
   ctpx.SoLuong,
+  ctpx.SizeSP,
   ctpx.GiaBan
 FROM phieuxuat px
 INNER JOIN ctpx ON px.MaPX = ctpx.MaPX
@@ -39,6 +40,7 @@ if ($result->num_rows > 0) {
     $hinhAnh = $row['HinhAnh'];
     $tenSP = $row['TenSP'];
     $soLuong = $row['SoLuong'];
+    $size = $row['SizeSP'];
     $giaBan = $row['GiaBan'];
     $tongTienSP = $soLuong * $giaBan;
     $tongTien =0;
@@ -129,12 +131,11 @@ if ($result->num_rows > 0) {
 
 <div id="form-chi-tiet">
         <div class="container">  
-        <button type="button" id="back" >Quay lại</button>
+        <button onclick="quayLai()" id="back">Quay lại</button>
         <script>
-            document.getElementById("back").addEventListener("click", function() {
-  history.back();
-});
-
+            function quayLai() {
+            window.location.href = "index.php?danhmuc=quanlydonhang";
+            }
         </script>
         <h1>Thông tin chi tiết hóa đơn</h1> 
         <br>  
@@ -173,6 +174,7 @@ if ($result->num_rows > 0) {
                         <th>Tên sản phẩm</th>
                         <th>Hình ảnh</th>
                         <th>Số lượng</th>
+                        <th>Size</th>
                         <th>Giá bán</th>
                         <th>Tổng tiền</th>
                     </tr>
@@ -183,6 +185,7 @@ if ($result->num_rows > 0) {
                             <td style="text-align: left;"><?php echo $tenSP; ?></td>
                             <td><img src="../assets/img/<?php echo $hinhAnh; ?>" alt="<?php echo $hinhAnh; ?>"></td>
                             <td><?php echo $soLuong; ?></td>
+                            <td><?php echo $size; ?></td>
                             <td><?php echo number_format($giaBan, 0, ',', '.'); ?> VNĐ</td>
                             <td><?php echo number_format($tongTienSP, 0, ',', '.'); ?> VNĐ</td>
                         </tr>
@@ -192,6 +195,7 @@ if ($result->num_rows > 0) {
                         $hinhAnh = $row['HinhAnh'];
                         $tenSP = $row['TenSP'];
                         $soLuong = $row['SoLuong'];
+                        $size = $row['SizeSP'];
                         $giaBan = $row['GiaBan'];
                         $tongTienSP = $soLuong * $giaBan;
                         $tongTien += $tongTienSP;
@@ -201,6 +205,7 @@ if ($result->num_rows > 0) {
                             <td style="text-align: left;"><?php echo $tenSP; ?></td>
                             <td><img src="../assets/img/<?php echo $hinhAnh; ?>" alt="<?php echo $hinhAnh; ?>"></td>
                             <td><?php echo $soLuong; ?></td>
+                            <td><?php echo $size; ?></td>
                             <td><?php echo number_format($giaBan, 0, ',', '.'); ?> VNĐ</td>
                             <td><?php echo number_format($tongTienSP, 0, ',', '.'); ?> VNĐ</td>
                         </tr>
@@ -208,7 +213,7 @@ if ($result->num_rows > 0) {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5">Tổng tiền</th>
+                        <th colspan="6">Tổng tiền</th>
                         <th><?php echo number_format($tongTien, 0, ',', '.'); ?> VNĐ</th>
                     </tr>
                 </tfoot>

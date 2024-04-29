@@ -155,6 +155,8 @@ $result = $conn->query($sql);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
+    //lọc đơn hàng
+
     //Hủy đơn hàng
     $(document).on('click', '.huy-don', function() {
         var MaPX = $(this).closest('tr').find('td:first-child').text();
