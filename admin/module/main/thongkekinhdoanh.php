@@ -128,7 +128,7 @@ $conn->close();
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel">Thống kê sản phẩm bán chạy theo khoảng thời gian</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
                                 <form id="date-range-form">
@@ -143,107 +143,14 @@ $conn->close();
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Đóng</button>
                                 <button type="button" class="btn btn-primary" id="submit-date-range">OK</button>
                             </div>
                         </div>
                     </div>
                 </div>';
                 ?>
-                <button type="button" class="btn btn-primary loc-button" data-bs-toggle="modal" data-bs-target="#locsanphamModal">Lọc</button>
-                <div class="modal fade" id="locsanphamModal" tabindex="-1" role="dialog" aria-labelledby="locsanphamLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="locsanphamLabel">Lọc sản phẩm</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="locTheo">Lọc theo:</label>
-                                    <select class="form-control" id="locTheo">
-                                        <option value="ngay">Ngày</option>
-                                        <option value="nhanhieu">Nhãn Hiệu</option>
-                                        <option value="loai">Loại</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="ngayInput" style="display: none;">
-                                    <label for="ngay">Chọn ngày:</label>
-                                    <input type="date" class="form-control" id="ngay" name="ngay">
-                                </div>
-                                <div class="form-group" id="nhanhieuInput" style="display: none;">
-                                <label for="productCategory-1" class="form-label">Nhãn Hiệu</label>
-                                    <select class="form-select" id="productCategory-1">
-                                        <?php
-                                        // Kết nối đến cơ sở dữ liệu
-                                        $servername = "localhost";
-                                        $username = "root";
-                                        $password = "";
-                                        $dbname = "shoestore";
-                                        $conn = new mysqli($servername, $username, $password, $dbname);
-            
-                                        // Kiểm tra kết nối
-                                        if ($conn->connect_error) {
-                                            die("Kết nối thất bại: " . $conn->connect_error);
-                                        }
-            
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
-                                        $sql = "SELECT TenNhanHieu FROM nhanhieu WHERE hide = 1";
-                                        $result = $conn->query($sql);
-            
-                                        // Tạo các tùy chọn cho combobox
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row["TenNhanHieu"] . "'>" . $row["TenNhanHieu"] . "</option>";
-                                            }
-                                        }
-            
-                                        // Đóng kết nối
-                                        $conn->close();
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="loaiInput" style="display: none;">
-                                <label for="productCategory-2" class="form-label">Loại sản phẩm</label>
-                                    <select class="form-select" id="productCategory-2">
-                                        
-                                        <?php
-                                        // Kết nối đến cơ sở dữ liệu
-                                        $servername = "localhost";
-                                        $username = "root";
-                                        $password = "";
-                                        $dbname = "shoestore";
-                                        $conn = new mysqli($servername, $username, $password, $dbname);
-            
-                                        // Kiểm tra kết nối
-                                        if ($conn->connect_error) {
-                                            die("Kết nối thất bại: " . $conn->connect_error);
-                                        }
-            
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
-                                        $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
-                                        $result = $conn->query($sql);
-            
-                                        // Tạo các tùy chọn cho combobox
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
-                                            }
-                                        }
-            
-                                        // Đóng kết nối
-                                        $conn->close();
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary" id="loc-submit">Lọc</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <button type="button" class="btn btn-primary thongke-button" data-bs-toggle="modal" data-bs-target="#thongkeModal">Thống kê</button>
                 <div class="modal fade" id="thongkeModal" tabindex="-1" aria-labelledby="thongkeModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -267,30 +174,30 @@ $conn->close();
                                     <select class="form-select" id="productCategory">
                                         <option value="">Tất cả</option>
                                         <?php
-                                        // Kết nối đến cơ sở dữ liệu
+                                        
                                         $servername = "localhost";
                                         $username = "root";
                                         $password = "";
                                         $dbname = "shoestore";
                                         $conn = new mysqli($servername, $username, $password, $dbname);
             
-                                        // Kiểm tra kết nối
+                                     
                                         if ($conn->connect_error) {
                                             die("Kết nối thất bại: " . $conn->connect_error);
                                         }
             
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
+                                       
                                         $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
                                         $result = $conn->query($sql);
             
-                                        // Tạo các tùy chọn cho combobox
+                                     
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
                                                 echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
                                             }
                                         }
             
-                                        // Đóng kết nối
+                             
                                         $conn->close();
                                         ?>
                                     </select>
@@ -304,6 +211,100 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-primary loc-button" data-bs-toggle="modal" data-bs-target="#locsanphamModal">Lọc</button>
+                <div class="modal fade" id="locsanphamModal" tabindex="-1" role="dialog" aria-labelledby="locsanphamLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="locsanphamLabel">Lọc sản phẩm</h4>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="locTheo">Lọc theo:</label>
+                                    <select class="form-control" id="locTheo">
+                                        <option value="ngay">Ngày</option>
+                                        <option value="nhanhieu">Nhãn Hiệu</option>
+                                        <option value="loai">Loại</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="ngayInput" style="display: none;">
+                                    <label for="ngay">Chọn ngày:</label>
+                                    <input type="date" class="form-control" id="ngay" name="ngay">
+                                </div>
+                                <div class="form-group" id="nhanhieuInput" style="display: none;">
+                                <label for="productCategory-1" class="form-label">Nhãn Hiệu</label>
+                                    <select class="form-select" id="productCategory-1">
+                                        <?php
+                                      
+                                        $servername = "localhost";
+                                        $username = "root";
+                                        $password = "";
+                                        $dbname = "shoestore";
+                                        $conn = new mysqli($servername, $username, $password, $dbname);
+            
+                                        
+                                        if ($conn->connect_error) {
+                                            die("Kết nối thất bại: " . $conn->connect_error);
+                                        }
+            
+                                    
+                                        $sql = "SELECT TenNhanHieu FROM nhanhieu WHERE hide = 1";
+                                        $result = $conn->query($sql);
+            
+                                    
+                                        if ($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row["TenNhanHieu"] . "'>" . $row["TenNhanHieu"] . "</option>";
+                                            }
+                                        }
+            
+                              
+                                        $conn->close();
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="loaiInput" style="display: none;">
+                                <label for="productCategory-2" class="form-label">Loại sản phẩm</label>
+                                    <select class="form-select" id="productCategory-2">
+                                        
+                                        <?php
+                                   
+                                        $servername = "localhost";
+                                        $username = "root";
+                                        $password = "";
+                                        $dbname = "shoestore";
+                                        $conn = new mysqli($servername, $username, $password, $dbname);
+            
+                         
+                                        if ($conn->connect_error) {
+                                            die("Kết nối thất bại: " . $conn->connect_error);
+                                        }
+            
+                                    
+                                        $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
+                                        $result = $conn->query($sql);
+            
+                                  
+                                        if ($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
+                                            }
+                                        }
+            
+                    
+                                        $conn->close();
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" id="loc-submit">Lọc</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="tongTienDisplay">
@@ -507,7 +508,7 @@ $conn->close();
     var endDate = $('#end-date').val();
     if (startDate > endDate) {
         alert("Lỗi ngày nhập");
-        return; // Thoát khỏi hàm click
+        return; 
     }
     $.ajax({
       url: 'module/main/dulieu/get_sales_data.php',
@@ -522,40 +523,35 @@ $conn->close();
     var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
     if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-        // Hiển thị thông báo
-        alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
 
-        // Xóa các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+    alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
 
-        // Xóa các phần tử hiển thị cũ
-        $('.tongTienDisplay').remove();
+ 
+    $('.tongTienDisplay').remove();
 
-        // Xóa bảng sản phẩm
-        $('#productTable').empty();
+   
+    $('#productTable').empty();
 
-        return; // Thoát khỏi hàm success
-    }
+  
+    return; 
+}
 
-        // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
 
-        // Kiểm tra nếu data.nhan_hieu và data.loai_sp không phải là null hoặc undefined
+if (donutChartNhanHieu) donutChartNhanHieu.destroy();
+if (donutChartLoaiSP) donutChartLoaiSP.destroy();
+if (myChart) myChart.destroy();
+        
         if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
     var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
 
-    // Xóa các phần tử hiển thị cũ
+
     $('.tongTienDisplay').remove();
 
-    // Kiểm tra nếu có dữ liệu về tổng tiền
+
     if (data.tong_tien[0]?.value) {
         var tongTienHoaDon = data.tong_tien[0].value;
 
-        // Tạo phần tử hiển thị tổng tiền
+    
         const totalTienBox = document.createElement('div');
         totalTienBox.classList.add('tongTienDisplay');
         totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
@@ -563,7 +559,7 @@ $conn->close();
         const chartContainer = $('#myChart').parent();
         chartContainer.append(totalTienBox);
     } else {
-        // Hiển thị thông báo khi không có dữ liệu về tổng tiền
+        
         const chartContainer = $('#myChart').parent();
         const noDataMessage = document.createElement('div');
         noDataMessage.classList.add('tongTienDisplay');
@@ -571,34 +567,34 @@ $conn->close();
         chartContainer.append(noDataMessage);
     }
 
-    // Tạo phần tử hiển thị tổng số lượng sản phẩm
+    
     const totalSoLuongBox = document.createElement('div');
     totalSoLuongBox.classList.add('tongTienDisplay');
     totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
 
     const chartContainer = $('#myChart').parent();
     chartContainer.append(totalSoLuongBox);
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+     
           configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
           configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu .map(item => item.value);
 
-          // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
+   
           donutChartNhanHieu = new Chart(
             document.getElementById('donutChartNhanHieu'),
             configDonutChartNhanHieu
           );
 
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+     
           configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
           configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-          // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
+       
           donutChartLoaiSP = new Chart(
             document.getElementById('donutChartLoaiSP'),
             configDonutChartLoaiSP
           );
 
-          // Cập nhật dữ liệu cho biểu đồ cột
+     
           var configMyChart = {
             type: 'bar',
             data: {
@@ -656,17 +652,17 @@ $conn->close();
             ]
           };
 
-          // Tạo đối tượng Chart mới cho biểu đồ cột
+
           myChart = new Chart(document.getElementById('myChart'), configMyChart);
         }
         $('#productTable').empty();
         if (data.san_pham && data.san_pham.length > 0) {
             var selectHTML = '<div class="row mb-3"><div class="col-md-6"><select id="rowLimitSelect" class="form-control"><option value="all">All</option><option value="5">Top 5</option><option value="10">Top 10</option></select></div></div>';
           $('#productTable').before(selectHTML);
-            // Lấy giá trị từ select box
+      
             var rowLimit = $('#rowLimitSelect').val();
 
-            // Tạo bảng sản phẩm với số hàng được giới hạn
+       
             createProductTable(data, rowLimit);
         }
 
@@ -679,7 +675,7 @@ $conn->close();
     // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
     var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
 
-    // Thêm dữ liệu vào bảng
+   
     $.each(products, function(index, product) {
         var row = $('<tr>');
         row.append('<td>' + product.TenSP + '</td>');
@@ -757,7 +753,7 @@ $('#rowLimitSelect').on('change', function() {
             $.ajax({
                 url: 'module/main/dulieu/locnhanhieu.php',
                 type: 'POST',
-                data: { nhan_hieu: nhanhieu }, // Sử dụng 'nhan_hieu' thay vì 'nhanhieu'
+                data: { nhan_hieu: nhanhieu }, 
                 success: function(response) {
                     var data = JSON.parse(response);
                     updateCharts(data);
@@ -813,21 +809,21 @@ $('#rowLimitSelect').on('change', function() {
         const chartContainer = $('#myChart').parent();
         chartContainer.append(totalTienBox, totalSoLuongBox);
 
-        // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
+  
         configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
         configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-        // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
+       
         donutChartNhanHieu = new Chart(
             document.getElementById('donutChartNhanHieu'),
             configDonutChartNhanHieu
         );
 
-        // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+      
         configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
         configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-        // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
+    
         donutChartLoaiSP = new Chart(
             document.getElementById('donutChartLoaiSP'),
             configDonutChartLoaiSP
@@ -926,7 +922,7 @@ $('#rowLimitSelect').on('change', function() {
     var endDate = $('#endDate-1').val();
     var tenLoai = $('#productCategory').val();
     if (tenLoai === "") {
-    tenLoai = "ALL"; // hoặc "Tất cả"
+    tenLoai = "ALL";
 }
 
     $.ajax({
@@ -943,27 +939,23 @@ $('#rowLimitSelect').on('change', function() {
     var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
     if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-        // Hiển thị thông báo
-        alert("Không tồn tại đơn hàng nào trong khoảng thời gian và loại sản phẩm đã chọn.");
+    // Hiển thị thông báo
+    alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
 
-        // Xóa các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+    // Xóa các phần tử hiển thị cũ
+    $('.tongTienDisplay').remove();
 
-        // Xóa các phần tử hiển thị cũ
-        $('.tongTienDisplay').remove();
+    // Xóa bảng sản phẩm
+    $('#productTable').empty();
 
-        // Xóa bảng sản phẩm
-        $('#productTable').empty();
+    // Không phá hủy biểu đồ
+    return; // Thoát khỏi hàm success
+}
 
-        return; // Thoát khỏi hàm success
-    }
-
-        // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+// Phá hủy các đối tượng Chart cũ (nếu có)
+if (donutChartNhanHieu) donutChartNhanHieu.destroy();
+if (donutChartLoaiSP) donutChartLoaiSP.destroy();
+if (myChart) myChart.destroy();
 
         // Kiểm tra nếu data.nhan_hieu và data.loai_sp không phải là null hoặc undefined
         if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {

@@ -114,7 +114,19 @@ $(document).ready(function() {
   // Gắn sự kiện click cho nút "Thêm"
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var size = $('#exampleFormControlInput').val();
+    var size = $('#exampleFormControlInput').val().trim();
+
+    if (size === '') {
+      alert('Vui lòng nhập Size');
+      return;
+    }
+
+    // Thêm dữ liệu vào bảng HTML
+    var newRow = '<tr data-size="' + size + '">' +
+                 '<td>' + size + '</td>' +
+                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
+                 '</tr>';
+    $('#myTable tbody').append(newRow);
 
     $.ajax({
       url: 'module/main/caidat/insertsize.php',
@@ -122,7 +134,6 @@ $(document).ready(function() {
       data: { size: size },
       success: function(response) {
         if (response.trim() === 'exists') {
-          // Hiển thị thông báo nếu size đã tồn tại
           alert('Size đã tồn tại');
         } else if (response.trim() === 'updated') {
           // Cập nhật giao diện nếu size đã được kích hoạt

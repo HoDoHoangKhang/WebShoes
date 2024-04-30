@@ -125,27 +125,37 @@ $result = $conn->query($sql);
 $(document).ready(function() {
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var tenNhanHieu = $('#exampleFormControlInput').val();
+    var tenNhanHieu = $('#exampleFormControlInput').val().trim();
+
+    if (tenNhanHieu === '') {
+      alert('Vui lòng nhập Tên Nhãn Hiệu');
+      return;
+    }
+
+    // Thêm dữ liệu vào bảng HTML
+    var newRow = '<tr data-nh="' + tenNhanHieu + '">' +
+                 '<td></td>' + // Mã nhãn hiệu sẽ được cập nhật sau khi thêm thành công
+                 '<td>' + tenNhanHieu + '</td>' +
+                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
+                 '</tr>';
+    $('#myTable tbody').append(newRow);
 
     $.ajax({
       url: 'module/main/caidat/insertnh.php',
       method: 'POST',
       data: {tenNhanHieu: tenNhanHieu},
       success: function(response) {
-    if (response.trim() === 'exists') {
-        // Hiển thị thông báo nếu giá trị đã tồn tại
-        alert('Đã Tồn Tại Nhãn Hiệu');
-    } else if (response.trim() === 'updated') {
-        // Cập nhật giao diện nếu giá trị đã được kích hoạt
-        $('#myTable tbody').append(response);
-        alert('Giá trị đã được cập nhật thành công');
-    } else {
-        // Thêm dữ liệu mới vào bảng
-        $('#myTable tbody').append(response);
-        alert('Thêm Nhãn Hiệu Thành Công');
-    }
-    $('#myModal').modal('hide');
-}
+        if (response.trim() === 'exists') {
+          alert('Đã Tồn Tại Nhãn Hiệu');
+        } else if (response.trim() === 'updated') {
+          $('#myTable tbody').append(response);
+          alert('Giá trị đã được cập nhật thành công');
+        } else {
+          $('#myTable tbody').append(response);
+          alert('Thêm Nhãn Hiệu Thành Công');
+        }
+        $('#myModal').modal('hide');
+      }
     });
   });
 });

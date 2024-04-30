@@ -114,7 +114,20 @@ $result = $conn->query($sql);
 $(document).ready(function() {
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var tenLoai = $('#exampleFormControlInput').val();
+    var tenLoai = $('#exampleFormControlInput').val().trim();
+
+    if (tenLoai === '') {
+      alert('Vui lòng nhập Tên Loại');
+      return;
+    }
+
+    // Thêm dữ liệu vào bảng HTML
+    var newRow = '<tr data-loai="">' +
+                 '<td></td>' + // Mã loại sản phẩm sẽ được cập nhật sau khi thêm thành công
+                 '<td>' + tenLoai + '</td>' +
+                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
+                 '</tr>';
+    $('#myTable tbody').append(newRow);
 
     $.ajax({
       url: 'module/main/caidat/insertdm.php',
@@ -122,10 +135,8 @@ $(document).ready(function() {
       data: { tenLoai: tenLoai },
       success: function(response) {
         if (response.trim() === 'exists') {
-          // Hiển thị thông báo nếu loại sản phẩm đã tồn tại
           alert('Loại sản phẩm đã tồn tại');
         } else if (response.trim() === 'updated') {
-          // Cập nhật giao diện nếu loại sản phẩm đã được kích hoạt
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);
@@ -134,7 +145,6 @@ $(document).ready(function() {
           }
           alert('Loại sản phẩm đã được cập nhật thành công');
         } else {
-          // Thêm loại sản phẩm mới vào bảng
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);
