@@ -507,8 +507,8 @@ $conn->close();
     var startDate = $('#start-date').val();
     var endDate = $('#end-date').val();
     if (startDate > endDate) {
-        alert("Lỗi ngày nhập");
-        return; 
+      alert("Lỗi ngày nhập");
+      return;
     }
     $.ajax({
       url: 'module/main/dulieu/get_sales_data.php',
@@ -520,81 +520,70 @@ $conn->close();
       success: function(response) {
         var data = JSON.parse(response);
         var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
-    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
+        var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
-    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+        if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+          alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+          return;
+        }
 
-    alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
-
- 
-    $('.tongTienDisplay').remove();
-
-   
-    $('#productTable').empty();
-
-  
-    return; 
-}
-
-
-if (donutChartNhanHieu) donutChartNhanHieu.destroy();
-if (donutChartLoaiSP) donutChartLoaiSP.destroy();
-if (myChart) myChart.destroy();
-        
         if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
-    var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+          var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
 
+          // Xóa các phần tử hiển thị cũ
+          $('.tongTienDisplay').remove();
 
-    $('.tongTienDisplay').remove();
+          if (data.tong_tien[0]?.value) {
+            var tongTienHoaDon = data.tong_tien[0].value;
 
+            const totalTienBox = document.createElement('div');
+            totalTienBox.classList.add('tongTienDisplay');
+            totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
 
-    if (data.tong_tien[0]?.value) {
-        var tongTienHoaDon = data.tong_tien[0].value;
+            const chartContainer = $('#myChart').parent();
+            chartContainer.append(totalTienBox);
+          } else {
+            const chartContainer = $('#myChart').parent();
+            const noDataMessage = document.createElement('div');
+            noDataMessage.classList.add('tongTienDisplay');
+            noDataMessage.innerHTML = '<h3>Không có dữ liệu về tổng tiền đơn hàng</h3>';
+            chartContainer.append(noDataMessage);
+          }
 
-    
-        const totalTienBox = document.createElement('div');
-        totalTienBox.classList.add('tongTienDisplay');
-        totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
+          const totalSoLuongBox = document.createElement('div');
+          totalSoLuongBox.classList.add('tongTienDisplay');
+          totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
 
-        const chartContainer = $('#myChart').parent();
-        chartContainer.append(totalTienBox);
-    } else {
-        
-        const chartContainer = $('#myChart').parent();
-        const noDataMessage = document.createElement('div');
-        noDataMessage.classList.add('tongTienDisplay');
-        noDataMessage.innerHTML = '<h3>Không có dữ liệu về tổng tiền đơn hàng</h3>';
-        chartContainer.append(noDataMessage);
-    }
+          const chartContainer = $('#myChart').parent();
+          chartContainer.append(totalSoLuongBox);
 
-    
-    const totalSoLuongBox = document.createElement('div');
-    totalSoLuongBox.classList.add('tongTienDisplay');
-    totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
-
-    const chartContainer = $('#myChart').parent();
-    chartContainer.append(totalSoLuongBox);
-     
+          // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
           configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
-          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu .map(item => item.value);
+          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-   
-          donutChartNhanHieu = new Chart(
-            document.getElementById('donutChartNhanHieu'),
-            configDonutChartNhanHieu
-          );
+          if (!donutChartNhanHieu) {
+            donutChartNhanHieu = new Chart(
+              document.getElementById('donutChartNhanHieu'),
+              configDonutChartNhanHieu
+            );
+          } else {
+            donutChartNhanHieu.update();
+          }
 
-     
+          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
           configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
           configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-       
-          donutChartLoaiSP = new Chart(
-            document.getElementById('donutChartLoaiSP'),
-            configDonutChartLoaiSP
-          );
+          if (!donutChartLoaiSP) {
+            donutChartLoaiSP = new Chart(
+              document.getElementById('donutChartLoaiSP'),
+              configDonutChartLoaiSP
+            );
+          } else {
+            donutChartLoaiSP.update();
+          }
 
-     
+          // Cập nhật dữ liệu cho biểu đồ cột
           var configMyChart = {
             type: 'bar',
             data: {
@@ -652,49 +641,24 @@ if (myChart) myChart.destroy();
             ]
           };
 
+          if (!myChart) {
+            myChart = new Chart(document.getElementById('myChart'), configMyChart);
+          } else {
+            myChart.data.labels = data.nhan_hieu.map(item => item.label);
+            myChart.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
+            myChart.update();
+          }
 
-          myChart = new Chart(document.getElementById('myChart'), configMyChart);
-        }
-        $('#productTable').empty();
-        if (data.san_pham && data.san_pham.length > 0) {
+          $('#productTable').empty();
+          if (data.san_pham && data.san_pham.length > 0) {
             var selectHTML = '<div class="row mb-3"><div class="col-md-6"><select id="rowLimitSelect" class="form-control"><option value="all">All</option><option value="5">Top 5</option><option value="10">Top 10</option></select></div></div>';
-          $('#productTable').before(selectHTML);
-      
+            $('#productTable').before(selectHTML);
+
             var rowLimit = $('#rowLimitSelect').val();
 
-       
             createProductTable(data, rowLimit);
+          }
         }
-
-    // Nếu đang lọc theo nhãn hiệu
-    function createProductTable(data, rowLimit) {
-    var productTable = $('<table>').addClass('table table-striped');
-    var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
-    var tbody = $('<tbody>');
-
-    // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
-    var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
-
-   
-    $.each(products, function(index, product) {
-        var row = $('<tr>');
-        row.append('<td>' + product.TenSP + '</td>');
-        row.append('<td>' + product.TenNhanHieu + '</td>');
-        row.append('<td>' + product.TongSoLuong + '</td>');
-        tbody.append(row);
-    });
-
-    productTable.append(thead).append(tbody);
-    $('#productTable').html(productTable);
-}
-$('#rowLimitSelect').on('change', function() {
-    var rowLimit = $(this).val();
-
-    // Nếu đã có dữ liệu sản phẩm
-    if (data.san_pham && data.san_pham.length > 0) {
-        createProductTable(data, rowLimit);
-    }
-});
 
         // Đóng modal sau khi cập nhật dữ liệu
         $('#myModal').modal('hide');
@@ -703,6 +667,36 @@ $('#rowLimitSelect').on('change', function() {
         console.error(error);
       }
     });
+  });
+
+  // Nếu đang lọc theo nhãn hiệu
+  function createProductTable(data, rowLimit) {
+    var productTable = $('<table>').addClass('table table-striped');
+    var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
+    var tbody = $('<tbody>');
+
+    // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
+    var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
+
+    $.each(products, function(index, product) {
+      var row = $('<tr>');
+      row.append('<td>' + product.TenSP + '</td>');
+      row.append('<td>' + product.TenNhanHieu + '</td>');
+      row.append('<td>' + product.TongSoLuong + '</td>');
+      tbody.append(row);
+    });
+
+    productTable.append(thead).append(tbody);
+    $('#productTable').html(productTable);
+  }
+
+  $('#rowLimitSelect').on('change', function() {
+    var rowLimit = $(this).val();
+
+    // Nếu đã có dữ liệu sản phẩm
+    if (data.san_pham && data.san_pham.length > 0) {
+      createProductTable(data, rowLimit);
+    }
   });
 });
 </script> 
@@ -784,11 +778,13 @@ $('#rowLimitSelect').on('change', function() {
             alert('Vui lòng nhập loại sản phẩm');
         }
     }
-            function updateCharts(data) {
+    function updateCharts(data) {
+
+        if (data.nhan_hieu && data.nhan_hieu.length > 0 && data.loai_sp && data.loai_sp.length > 0 && data.tong_tien && data.tong_tien.length > 0 && data.tong_so_luong && data.tong_so_luong.length > 0) {
         // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+        if (donutChartNhanHieu) donutChartNhanHieu.destroy();
+        if (donutChartLoaiSP) donutChartLoaiSP.destroy();
+        if (myChart) myChart.destroy();
 
         var tongTienHoaDon = data.tong_tien[0].value;
         var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
@@ -809,28 +805,27 @@ $('#rowLimitSelect').on('change', function() {
         const chartContainer = $('#myChart').parent();
         chartContainer.append(totalTienBox, totalSoLuongBox);
 
-  
+        // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
         configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
         configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-       
+        // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
         donutChartNhanHieu = new Chart(
             document.getElementById('donutChartNhanHieu'),
             configDonutChartNhanHieu
         );
 
-      
+
         configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
         configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-    
+        
         donutChartLoaiSP = new Chart(
             document.getElementById('donutChartLoaiSP'),
             configDonutChartLoaiSP
         );
-        
 
-        // Cập nhật dữ liệu cho biểu đồ cột
+       
         var configMyChart = {
             type: 'bar',
             data: {
@@ -882,48 +877,51 @@ $('#rowLimitSelect').on('change', function() {
                 }
             }
         };
+
         $('#productTable').empty();
 
-    // Nếu đang lọc theo nhãn hiệu
-    if (data.san_pham && data.san_pham.length > 0) {
-        // Tạo bảng sản phẩm
-        var productTable = $('<table>').addClass('table table-striped');
-        var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Loại sản phẩm</th><th>Tổng Số Lượng</th></tr>');
-        var tbody = $('<tbody>');
+    
+        if (data.san_pham && data.san_pham.length > 0) {
+            var productTable = $('<table>').addClass('table table-striped');
+            var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Loại sản phẩm</th><th>Tổng Số Lượng</th></tr>');
+            var tbody = $('<tbody>');
 
-        // Thêm dữ liệu vào bảng
-        $.each(data.san_pham, function(index, product) {
-            var row = $('<tr>');
-            row.append('<td>' + product.TenSP + '</td>');
-            row.append('<td>' + product.TenNhanHieu + '</td>');
-            row.append('<td>' + product.TenLoai + '</td>');
-            row.append('<td>' + product.TongSoLuong + '</td>');
-            tbody.append(row);
-        });
+            $.each(data.san_pham, function(index, product) {
+                var row = $('<tr>');
+                row.append('<td>' + product.TenSP + '</td>');
+                row.append('<td>' + product.TenNhanHieu + '</td>');
+                row.append('<td>' + product.TenLoai + '</td>');
+                row.append('<td>' + product.TongSoLuong + '</td>');
+                tbody.append(row);
+            });
 
-        productTable.append(thead).append(tbody);
-        $('#productTable').append(productTable);
+            productTable.append(thead).append(tbody);
+            $('#productTable').append(productTable);
+        }
+
+        myChart = new Chart(document.getElementById('myChart'), configMyChart);
+    } else {
+        alert('Không có đơn hàng nào tồn tại.');
     }
 
-        // Tạo đối tượng Chart mới cho biểu đồ cột
         myChart = new Chart(document.getElementById('myChart'), configMyChart);
     }
 
             
         });
-        // Đóng modal sau khi xử lý xong
+      
         $('#locsanpham').modal('hide');
     });
     
 </script>
 <script>
-    $('#submit-date-range-thongke').click(function() {
+   $('#submit-date-range-thongke').click(function() {
     var startDate = $('#startDate-1').val();
     var endDate = $('#endDate-1').val();
     var tenLoai = $('#productCategory').val();
     if (tenLoai === "") {
-    tenLoai = "ALL";
-}
+        tenLoai = "ALL";
+    }
 
     $.ajax({
         url: 'module/main/dulieu/thongke1loai.php',
@@ -934,73 +932,63 @@ $('#rowLimitSelect').on('change', function() {
             ten_loai: tenLoai
         },
         success: function(response) {
-        var data = JSON.parse(response);
-        var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
-    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
+            var data = JSON.parse(response);
+            var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+            var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
-    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-    // Hiển thị thông báo
-    alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+            if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+                alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+                return;
+            }
 
-    // Xóa các phần tử hiển thị cũ
-    $('.tongTienDisplay').remove();
+            if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
+                // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
+                var tongTienHoaDon = data.tong_tien[0].value;
+                var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
 
-    // Xóa bảng sản phẩm
-    $('#productTable').empty();
+                // Xóa các phần tử hiển thị cũ
+                $('.tongTienDisplay').remove();
 
-    // Không phá hủy biểu đồ
-    return; // Thoát khỏi hàm success
-}
+                const totalTienBox = document.createElement('div');
+                totalTienBox.classList.add('tongTienDisplay');
+                totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
 
-// Phá hủy các đối tượng Chart cũ (nếu có)
-if (donutChartNhanHieu) donutChartNhanHieu.destroy();
-if (donutChartLoaiSP) donutChartLoaiSP.destroy();
-if (myChart) myChart.destroy();
+                const totalSoLuongBox = document.createElement('div');
+                totalSoLuongBox.classList.add('tongTienDisplay');
+                totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
 
-        // Kiểm tra nếu data.nhan_hieu và data.loai_sp không phải là null hoặc undefined
-        if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
-          // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
-          var tongTienHoaDon = data.tong_tien[0].value;
-          var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+                const chartContainer = $('#myChart').parent();
+                chartContainer.append(totalTienBox, totalSoLuongBox);
 
-          // Xóa các phần tử hiển thị cũ
-          $('.tongTienDisplay').remove();
+                // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
+                configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
+                configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-          // Tạo các phần tử hiển thị mới
-          const totalTienBox = document.createElement('div');
-          totalTienBox.classList.add('tongTienDisplay');
-          totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
+                if (!donutChartNhanHieu) {
+                    donutChartNhanHieu = new Chart(
+                        document.getElementById('donutChartNhanHieu'),
+                        configDonutChartNhanHieu
+                    );
+                } else {
+                    donutChartNhanHieu.update();
+                }
 
-          const totalSoLuongBox = document.createElement('div');
-          totalSoLuongBox.classList.add('tongTienDisplay');
-          totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
+                // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+                configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
+                configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-          // Thêm các phần tử mới vào DOM
-          const chartContainer = $('#myChart').parent();
-          chartContainer.append(totalTienBox, totalSoLuongBox);
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
-          configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
-          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu .map(item => item.value);
+                if (!donutChartLoaiSP) {
+                    donutChartLoaiSP = new Chart(
+                        document.getElementById('donutChartLoaiSP'),
+                        configDonutChartLoaiSP
+                    );
+                } else {
+                    donutChartLoaiSP.update();
+                }
 
-          // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
-          donutChartNhanHieu = new Chart(
-            document.getElementById('donutChartNhanHieu'),
-            configDonutChartNhanHieu
-          );
-
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
-          configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
-          configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
-
-          // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
-          donutChartLoaiSP = new Chart(
-            document.getElementById('donutChartLoaiSP'),
-            configDonutChartLoaiSP
-          );
-
-          // Cập nhật dữ liệu cho biểu đồ cột
-          var configMyChart = {
-            type: 'bar',
+                // Cập nhật dữ liệu cho biểu đồ cột
+                var configMyChart = {
+                    type: 'bar',
             data: {
               labels: data.nhan_hieu.map(item => item.label),
               datasets: [
@@ -1054,40 +1042,42 @@ if (myChart) myChart.destroy();
             plugins: [
              
             ]
-          };
+                };
 
-          // Tạo đối tượng Chart mới cho biểu đồ cột
-          myChart = new Chart(document.getElementById('myChart'), configMyChart);
+                if (!myChart) {
+                    myChart = new Chart(document.getElementById('myChart'), configMyChart);
+                } else {
+                    myChart.data.labels = data.nhan_hieu.map(item => item.label);
+                    myChart.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
+                    myChart.update();
+                }
+            }
+
+            $('#productTable').empty();
+
+            if (data.san_pham && data.san_pham.length > 0) {
+                var productTable = $('<table>').addClass('table table-striped');
+                var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
+                var tbody = $('<tbody>');
+
+                $.each(data.san_pham, function(index, product) {
+                    var row = $('<tr>');
+                    row.append('<td>' + product.TenSP + '</td>');
+                    row.append('<td>' + product.TenNhanHieu + '</td>');
+                    row.append('<td>' + product.TenLoai + '</td>');
+                    row.append('<td>' + product.TongSoLuong + '</td>');
+                    tbody.append(row);
+                });
+
+                productTable.append(thead).append(tbody);
+                $('#productTable').append(productTable);
+            }
+
+            $('#thongkeModal').modal('hide');
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
         }
-        $('#productTable').empty();
-
-    // Nếu đang lọc theo nhãn hiệu
-    if (data.san_pham && data.san_pham.length > 0) {
-        // Tạo bảng sản phẩm
-        var productTable = $('<table>').addClass('table table-striped');
-        var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
-        var tbody = $('<tbody>');
-
-        // Thêm dữ liệu vào bảng
-        $.each(data.san_pham, function(index, product) {
-            var row = $('<tr>');
-            row.append('<td>' + product.TenSP + '</td>');
-            row.append('<td>' + product.TenNhanHieu + '</td>');
-            row.append('<td>' + product.TenLoai + '</td>');
-            row.append('<td>' + product.TongSoLuong + '</td>');
-            tbody.append(row);
-        });
-
-        productTable.append(thead).append(tbody);
-        $('#productTable').append(productTable);
-    }
-
-        // Đóng modal sau khi cập nhật dữ liệu
-        $('#thongkeModal').modal('hide');
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
     });
 });
 </script>
