@@ -7,7 +7,7 @@ require '../config/config.php';
 <div id="divTong" class="container mt-4 mb-4">
     <div>
         <h2 style="padding: 10px;">Nhập Phiếu Nhập</h2>
-        <div style="display: flex; width: 100%;"> 
+        <div style="display: flex; width: 100%; pointer-events: none;"> 
             <div class="input-group">
                 <input id="MaNV" type="text" value="<?php 
                 $sql = "SELECT Ma FROM `user` WHERE TenDangNhap = ?";
@@ -20,7 +20,7 @@ require '../config/config.php';
                     $stmt->close();
                 }
                 echo $MaNV;
-                ?>" required>
+                ?>" >
                 <label for="">MaNV</label>
             </div>
             <div class="input-group">
@@ -29,17 +29,15 @@ require '../config/config.php';
             </div>
             <script type="text/javascript">
                 var inputElement = document.getElementById('NgayNhap');
-                setInterval(function() {
-                    var currentDate = new Date();
+                var currentDate = new Date();
 
-                    var currentDay = currentDate.getDate();
-                    var currentMonth = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
-                    var currentYear = currentDate.getFullYear();
+                var currentDay = currentDate.getDate();
+                var currentMonth = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+                var currentYear = currentDate.getFullYear();
 
-                    var formattedDate = currentYear + "-" + (currentMonth < 10 ? '0' : '') + currentMonth + "-" + (currentDay < 10 ? '0' : '') + currentDay;
+                var formattedDate = currentYear + "-" + (currentMonth < 10 ? '0' : '') + currentMonth + "-" + (currentDay < 10 ? '0' : '') + currentDay;
 
-                    inputElement.value = formattedDate;
-                }, 1000);
+                inputElement.value = formattedDate;
             </script>
         </div>
             
@@ -68,8 +66,8 @@ require '../config/config.php';
                 </ul>
             </div>
             <div class="dropdown">
-                <div class="select">
-                    <span class="selected" id="tinhTrang">Tình Trạng Đơn Hàng</span>
+                <div class="select" style="display: none;">
+                    <span class="selected" id="tinhTrang">Chưa nhận</span>
                     <div class="caret"></div>
                 </div>
                 <ul class="menu" >
@@ -151,7 +149,6 @@ require '../config/config.php';
         var NgayNhap = document.getElementById('NgayNhap').value;
         var nhacungcap = document.getElementById('nhacungcap').textContent;
         var tinhTrang = document.getElementById('tinhTrang').textContent;
-
 
         var d = 0;
         if (MaNV === '') {
