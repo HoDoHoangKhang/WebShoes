@@ -2,6 +2,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/loaisp-act.php');
 
 
     $product= new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
@@ -26,7 +27,7 @@
         $sql_kiemTraKho= "SELECT sanpham.MaSP, ctsizesp.SizeSP,ctsizesp.SoLuong FROM sanpham INNER JOIN ctsizesp ON ctsizesp.MaSP = sanpham.MaSP WHERE sanpham.MaSP = '" . $MaSP . "' AND ctsizesp.SizeSP ='" . $SizeSP . "' ";
         $result_kiemTraKho=mysqli_query($connect,$sql_kiemTraKho);
         $product_kiemTraKho=mysqli_fetch_array($result_kiemTraKho);
-        if($product_kiemTraKho['SoLuong']>0){
+        if($product_kiemTraKho && $product_kiemTraKho['SoLuong']>0){
             return True;
         }
         else{
@@ -66,8 +67,16 @@
             <div class="detail-main">
                 <div class="detail-show">
                     <ul class="detail-show__slick">
+                        <li class="detail-show__item">
+                            <img src="./assets/img/<?php echo $HinhAnh ?>" alt="" class="">
+                        </li>
+                       <?php
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/hinhanh-act.php');
+                            echo showListAnh($MaSP);
+                            // echo $HinhAnh;
+                        ?>
                         <!-- <li class="detail-show__item ">
-                            <img src="./assets/img/detail-1.jpeg" alt="" class="">
+                            <img src="./assets/img/pd-21,2.webp" alt="" class="">
                         </li> -->
                     </ul>
                     <div class="detail-show__image">
@@ -83,6 +92,14 @@
                         <h3 class="detail-content__title" style="font-size: 25px; margin-bottom: 10px;">
                             <?php echo $TenSP ?>
                         </h3>
+                        <div class="detail-content__tag">
+                            <ul class="detail-content__tag-list">
+                                <?php 
+                                    showNhanHieuProductDetail($_GET['id']);
+                                    showLoaiProductDetail($_GET['id']);
+                                ?>
+                            </ul>
+                        </div>
                         <div class="detail-content__rate-review-sold">
                             <div class="detail-content__rate">
                                 <i class="detail-content__rate-icon fa-solid fa-star"></i>
@@ -132,14 +149,14 @@
                                 <?php 
                                     $sql_sizeSp= "SELECT * FROM `sizesp`";
                                     $result_sizeSp=mysqli_query($connect,$sql_sizeSp);
-                                    $product_sizeSp=mysqli_fetch_array($result_sizeSp);
+                                    // $product_sizeSp=mysqli_fetch_array($result_sizeSp);
                                     while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
-                                            if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
-                                                <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
-                                            <?php }
-                                            else{ ?>
-                                                <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
-                                            <?php } 
+                                        if(kiemTraKho($MaSP,$product_sizeSp['SizeSP'])){?>
+                                            <li class="detail-content__size-item"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                        <?php }
+                                        else{ ?>
+                                            <li class="detail-content__size-item detail-content__size-item--disable"><?php echo $product_sizeSp['SizeSP'] ?></li>
+                                        <?php } 
                                 } ?>                                
                             </ul>
                         </div>
@@ -147,7 +164,7 @@
                             <div class="detail-content__title" style="padding-bottom: 10px; margin: 0;">
                                 <h4 style="font-size: 20px;">Số lượng</h4>
                                 <div class="detail-content__instock">
-                                    còn lại: <span class="detail-content__instock-value">1000</span>
+                                    Còn lại: <span class="detail-content__instock-value">1000</span>
                                 </div>
                                 <div class="stock-warning">
                                     <i class="fa-solid fa-exclamation-circle"></i>
@@ -168,9 +185,12 @@
                         </div>
                         
                         <div class="detail-button">
-                            <div  class="detail-btn__buy card-btn">Mua ngay</div>
+                            <!-- <div  class="detail-btn__buy card-btn">Thêm vào vỏ hàng 
+                            <i  style="margin-left: 10px;" class="fa-regular fa-bag-shopping"></i>
+                            </div> -->
                             <button class="detail-btn__cart card-btn ">
-                                <i class="fa-regular fa-bag-shopping"></i>
+                            Thêm vào vỏ hàng 
+                                <i class=" fa-regular fa-basket-shopping-simple"></i>
                             </button>
                             <button class="detail-btn__like card-btn">
                                 <i class="fa-regular fa-heart"></i>
@@ -192,7 +212,7 @@
                     <h3>Describe</h3>
                 </div>
                 <div class="describe-detail">
-                    <h4>
+                    <!-- <h4>
                         LEGENDARY STYLE REFINED.
                     </h4>
                     <p>
@@ -242,7 +262,10 @@
                     <p>
                         Debuting in 1982, the AF-1 was the first basketball shoe to house Nike Air, revolutionising the game while rapidly gaining traction around the world. Today, the Air Force 1 stays true to its roots with the same soft and springy cushioning that changed sneaker history.
                     </p>
-        
+         -->    
+                    <?php
+                        echo $MoTa;
+                    ?>
                 </div>
                 <ul class="describe__menu">
                     <li class="describe__menu-sub describe__menu-sub_reviews describe--primary">
@@ -444,39 +467,6 @@
                                     </div>
                                 </div>  
                             </div>
-                            <div class="page">
-                                <div class="page-main">
-                                    <div class="page-left page-left-right page-item--disable">
-                                        <i class="fa-solid fa-angle-left"></i>
-                                    </div>
-                                    <div class="page-number">
-                                        <div class="page-item page-item--select">
-                                            1
-                                        </div>
-                                        <div class="page-item">
-                                            2
-                                        </div>
-                                        <div class="page-item">
-                                            3
-                                        </div>
-                                        <div class="page-item">
-                                            4
-                                        </div>
-                                        <div class="page-item">
-                                            5
-                                        </div>
-                                        <div class="page-dot">
-                                            ...
-                                        </div>
-                                        <div class="page-item">
-                                            10
-                                        </div>
-                                    </div>
-                                    <div class="page-right page-left-right">
-                                        <i class="fa-solid fa-angle-right "></i>
-                                    </div>
-                                </div>
-                            </div>  
                         </div>
                     </div>
                 </div>
@@ -495,103 +485,18 @@
                         SAME
                         <a href="">SẢN PHẨM TƯƠNG TỰ</a>
                     </span>
-                    <div class="relate__slick btn-slick">
-                        <i class="btn-slick__left fa-solid fa-angle-left"></i>
-                        <i class="btn-slick__right fa-solid fa-angle-right"></i>
-                    </div>
+
                 </div>
                 <div class="relate__list">
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                        
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
+                    <?php
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                        echo showListProductStringTuongTu(getListProductFromNhanHieu($_GET['id']));
+                    ?>
                 </div>
             </div>
         </div>
     </section>
-    <section class="recent">
+    <section class=" none recent">
         <div class="container">
             <div class="recent-main">
                 <div class="recent__title-slick">
@@ -599,114 +504,17 @@
                         VIEW
                         <a href="">XEM GẦN ĐÂY</a>
                     </span>
-                    <div class="recent__slick btn-slick">
+                    <!-- <div class="recent__slick btn-slick">
                         <i class="btn-slick__left fa-solid fa-angle-left"></i>
                         <i class="btn-slick__right fa-solid fa-angle-right"></i>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="recent__list">
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="./assets/img/pd-1.png" alt="">
-                        </div>
-                        <p class="card-title">Nike Running Shoes</p>
-                        <div class="card-price-rate">
-                            <div class="card-price">
-                                <span>18.900.000 <u>đ</u></span>
-                                <span><del>18.900.000 <u>đ</u></del></span>  
-                            </div>
-                            <div class="card-rate">
-                                <i class="fa-solid fa-star"></i>
-                                4.5
-                            </div>
-                        </div>   
-                        <i class="card-btn__like fa-regular fa-heart"></i>
-                    </div>
+                    <?php
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
+                        $productIds = array(1, 2, 3, 4, 5,6);
+                        echo showListProductString(getListProductFromArr($productIds));
+                    ?>
                 </div>
             </div>
         </div>
@@ -717,6 +525,28 @@
 </script>
 <script>
     $(document).ready(function(){
+        var btnAddWish=document.querySelector(".detail-btn__like");
+        btnAddWish.addEventListener('click',function(){
+            console.log("aaaaaa")
+            $.ajax({
+                url: "./control/ajax_action.php",
+                method: "POST",
+                data: {
+                    action: "themvaoyeuthich"
+                },
+                success: function(data){
+                    creatToast("item-success","Thêm vào yêu thích thàng công !","fa-solid fa-circle-check","item-end-success");
+                    var maSP=parseInt(<?php echo $_GET['id'] ?>);
+                    var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                    var object={
+                        maSP: maSP,
+                        taikhoan:taikhoan
+                    }
+                    console.log(object);
+                    addToWish(object);
+                }
+            });
+        })
         var btnAddCart=document.querySelector(".detail-btn__cart");
         btnAddCart.addEventListener('click',function(){
             if(getSize()==0){// chưa chọn size
@@ -769,6 +599,23 @@
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        function addToWish(object) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+            var found = false;
+
+            wish.forEach(element => {
+                if (element['taikhoan'] == object['taikhoan'] && element['maSP'] == object['maSP']) {
+                    found = true;
+                    return;
+                }
+            });
+
+            if (!found) {
+                wish.push(object);
+            }
+
+            localStorage.setItem('wish', JSON.stringify(wish));
         }
 
         function getSize(){
@@ -869,7 +716,175 @@
                 });
             }
 
+        
         }
+        function getIdFromUrl(url) {
+            // Tách chuỗi URL bằng dấu "&"
+            var params = url.split('&');
+            // Lặp qua từng phần tử của mảng params
+            for (var i = 0; i < params.length; i++) {
+                // Tách từng cặp key=value bằng dấu "="
+                var keyValue = params[i].split('=');
+                // Kiểm tra nếu key là "id"
+                if (keyValue[0] === 'id') {
+                    // Trả về giá trị của key "id"
+                    return keyValue[1];
+                }
+            }
+            // Nếu không tìm thấy key "id", trả về null
+            return null;
+        }
+        function removeFromWish(MaSP, TaiKhoan) {
+            var wish = JSON.parse(localStorage.getItem('wish')) || [];
+
+            var index = wish.findIndex(function(item) {
+                return item['maSP'] === MaSP && item['taikhoan'] === TaiKhoan;
+            });
+            if (index !== -1) {
+                // Nếu tìm thấy sản phẩm trong giỏ hàng, xóa sản phẩm đó khỏi mảng
+                wish.splice(index, 1);
+                localStorage.setItem('wish', JSON.stringify(wish));
+                console.log("Sản phẩm đã được xóa khỏi giỏ hàng.");
+            } else {
+                console.log("Không tìm thấy sản phẩm trong giỏ hàng.");
+            }
+        }
+        var likes = document.querySelectorAll(".card-btn__like");
+        likes.forEach(like => {
+            like.addEventListener('click', function(event) {
+                var parentLink = like.closest('a');
+                var href = parentLink.getAttribute('href'); 
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+                event.stopPropagation(); // Ngăn chặn sự lan truyền của sự kiện
+                if (like.classList.contains("fa-regular")) {
+                    like.classList.remove("fa-regular");
+                    like.classList.add("fa-solid");
+                    like.style.color = "#F02757";
+                    console.log(getIdFromUrl(href));
+                    $.ajax({
+                        url: "./control/ajax_action.php",
+                        method: "POST",
+                        data: {
+                            action: "themvaoyeuthich"
+                        },
+                        success: function(data){
+                            var maSP=parseInt(getIdFromUrl(href));
+                            var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                            var object={
+                                maSP: maSP,
+                                taikhoan:taikhoan
+                            }
+                            console.log(object);
+                            addToWish(object);
+                        }
+                    });
+                } else {
+                    // Xóa trái tim trên giao diện
+                    like.classList.remove("fa-solid");
+                    like.classList.add("fa-regular");
+                    like.style.color = "";
+                    //Xóa khỏi danh sách
+                    var MaSP=parseInt(getIdFromUrl(href));
+                    var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                    console.log(MaSP+" "+TaiKhoan);
+                    removeFromWish(MaSP,TaiKhoan);
+                }
+            }); 
+        });
+        function showLikes(){
+            $.ajax({
+                url: "./control/ajax_action.php",
+                method: "POST",
+                data: {
+                    action: "themvaoyeuthich"
+                },
+                success: function(data){
+                    var cards=document.querySelectorAll(".card");
+                    cards.forEach(card => {
+                        href=card.closest('a').getAttribute('href');
+                        var MaSP=parseInt(getIdFromUrl(href));
+                        var wish = JSON.parse(localStorage.getItem('wish')) || [];
+                        wish.forEach(element => {
+                            if (element['taikhoan'] == "<?php echo $_SESSION['taikhoan']?>" && element['maSP'] == MaSP) {
+                                var like = card.querySelector(".card-btn__like");
+                                like.classList.remove("fa-regular");
+                                like.classList.add("fa-solid");
+                                like.style.color = "#F02757";
+                            }
+                        });
+                    });
+                }
+            });
+        }
+        showLikes();
+
+        function convertStringToImageArray(imageString) {
+            if (typeof imageString !== 'string' || imageString.trim().length === 0) {
+                return []; 
+            }
+            const newStr = imageString.slice(0, -1); // Loại bỏ phần tử cuối cùng ("!")
+            const imageNames = newStr.split('|');
+            const trimmedImageNames = imageNames.map(imageName => imageName.trim());
+            return trimmedImageNames;
+        }
+
+        //slick product-detial
+        var next=document.querySelector(".detail-show__image-slick i:nth-child(2)");
+        var back=document.querySelector(".detail-show__image-slick i:nth-child(1)");
+
+        var hero=document.querySelector(".detail-show__image img");
+        var list_img=document.querySelectorAll(".detail-show__item");
+
+        // var arr_img=["pd-21.png","pd-21,6.webp","pd-21,5.webp","pd-21,4.webp","pd-21,3.webp","pd-21,2.webp","pd-21,1.jpg"]
+        var imageArray="<?php echo $HinhAnh."|".getListAnh($MaSP) ?>";
+        var arr_img = convertStringToImageArray(imageArray);
+        console.log(arr_img);
+        function removeBorder(){
+            list_img.forEach(element => {
+                element.classList.remove("select-product-detail");
+            });
+        }
+        var curentIndex=0;
+        list_img[0].classList.add("select-product-detail")
+        list_img.forEach((element,index) => {
+            element.addEventListener('click',function(){
+                removeBorder();
+                // console.log(curentIndex);
+                console.log(index);
+                hero.src="./assets/img/"+arr_img[index]; // trong 1 lớp có nhiều lớp con nên phải lấy ra phần tử đầu tiên
+                curentIndex=index;
+                element.classList.add("select-product-detail");
+            })
+        });
+        
+        next.addEventListener('click',function(){
+            removeBorder();
+            console.log(curentIndex);
+            if(curentIndex===arr_img.length-1){
+                curentIndex=0;
+                hero.src=list_img[0].children[0].src;
+                list_img[curentIndex].classList.add("select-product-detail");
+            }
+            else{
+                hero.src=list_img[curentIndex+1].children[0].src;
+                list_img[curentIndex+1].classList.add("select-product-detail");
+                curentIndex++;
+            }
+        });
+
+        back.addEventListener('click',function(){
+            removeBorder();
+            if(curentIndex===0){
+                curentIndex=arr_img.length-1;
+                hero.src=list_img[arr_img.length-1].children[0].src;
+                list_img[arr_img.length-1].classList.add("select-product-detail");
+            }
+            else{
+                hero.src=list_img[curentIndex-1].children[0].src;
+                list_img[curentIndex-1].classList.add("select-product-detail");
+                curentIndex--;
+            }
+        });
     });
 
 </script>

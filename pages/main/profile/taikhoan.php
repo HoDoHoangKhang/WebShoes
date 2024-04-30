@@ -19,55 +19,202 @@
     // Lấy từ cuối cùng trong mảng
     $Ten = end($slipt);
     $Ho = $slipt[0];
-    echo $avt." ".$Ma ." ".$hoTen." ".$ngaySinh." ".$sdt." ".$email." ".$diaChi." ".$gioiTinh." ".$matKhau;
 ?>
 <main class="profile-item">
     <div class="woocommerce-MyAccount-content">
-        <form class="form-changeProfile" action="" method="post">
-            <div class="form-name">
+        <div class="form-changeProfile" >
+            <p class="">
+                <label for="account_display_name">Tên hiển thị&nbsp;<span class="required"></span></label>
+                <br>
+                <input type="text" class="hoTen"  name="account_display_name" id="account_display_name" value="<?php echo $hoTen ?>"> <span><em>Tên này sẽ hiển thị trong trang Tài khoản và phần Đánh giá sản phẩm</em></span>
+            </p>
+            <p class="">
+                <label for="account_display_name">Ngày sinh&nbsp; (MM/DD/YYYY)<span class="required"></span></label>
+                <br>
+                <input type="date" id="dateInput" class="ngaySinh" value="<?php echo $ngaySinh ?>" />            
+            </p>
+            <div class="form-email-sdt">
                 <p class="">
-                    <label for="account_first_name">Tên&nbsp;<span class="">*</span></label>
+                    <label for="account_display_name">Số điện thoại&nbsp;<span class="required"></span></label>
+                    <span class="warning warning-sdt">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        SDT phải có 10 hoặc 11 số
+                    </span>
                     <br>
-                    <input type="text" class="" name="" id="" value="<?php echo $Ten ?>">
+                    <input type="text" class="soDienThoai"  name="account_display_name" id="account_display_name" value="<?php echo $sdt ?>">
                 </p>
+
                 <p class="">
-                    <label for="account_last_name">Họ&nbsp;<span class="required">*</span></label>
+                    <label for="account_email">Địa chỉ email&nbsp;<span class="required"></span></label>
+                    <span class="warning warning-email">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        Email phải có đuôi @gmail.com
+                    </span>
                     <br>
-                    <input type="text" class="" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo $Ho?>">
+                    <input type="email" class="inputEmail" name="account_email" id="account_email" autocomplete="email" value="<?php echo $email ?>">
                 </p>
             </div>
             <p class="">
-                <label for="account_display_name">Tên hiển thị&nbsp;<span class="required">*</span></label>
-                <br>
-                <input type="text" class=""  name="account_display_name" id="account_display_name" value="admin"> <span><em>Tên này sẽ hiển thị trong trang Tài khoản và phần Đánh giá sản phẩm</em></span>
-            </p>
-            <p class="">
-                <label for="account_email">Địa chỉ email&nbsp;<span class="required">*</span></label>
-                <br>
-                <input type="email" class="" name="account_email" id="account_email" autocomplete="email" value="<?php echo $email ?>">
-            </p>
-            <p class="">
-                <label for="password_current">Mật khẩu hiện tại</label>
-                <span class="password-input">
-                    <input type="password" class="t" name="password_current" id="password_current" autocomplete="off"
-                    ><span class="show-password-input"></span>
+                <label for="account_email">Địa chỉ&nbsp;<span class="required"></span></label>
+                    <span class="warning warning-diachi">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Địa chỉ không đúng định dạng
                 </span>
+                <br>
+                <input type="text" class="diaChi" name="account_email" id="account_email" autocomplete="email" value="<?php echo $diaChi ?>">
             </p>
             <p class="">
                 <label for="password_1">Mật khẩu mới</label>
-                <span class="password-input"><input type="password" class="" name="password_1" id="password_1" autocomplete="off">
+                <span class="password-input">
+                    <input type="password" class="passwordNew" name="" value="" id="" autocomplete="off">
                     <span class="show-password-input"></span>
                 </span>
             </p>
             <p class="">
                 <label for="password_2">Xác nhận mật khẩu mới</label>
-                <span class="password-input"><input type="password" class="" name="password_2" id="password_2" autocomplete="off"><span class="show-password-input"></span></span>
+                <span class="warning warning-passath">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Mật khẩu xác thực không đúng
+                </span>
+                <span class="password-input">
+                    <input type="password" class="passwordNewAth" name="" id="" autocomplete="off">
+                    <span class="show-password-input"></span>
+                </span>
             </p>
             <p>
-                <a href="">Lưu thay đổi</a>
+                <button class="btnSave">Lưu thay đổi</button>
             </p>
 
-        </form>
-
+        </div>
+    </div>
+    <div class="notification">
     </div>
 </main>
+<script>
+    $(document).ready(function(){
+        console.log(getNgaySinh());
+        function getHoTen(){
+            var hoTen=document.querySelector(".hoTen");
+            return hoTen.value;
+        }
+        function getSDT(){
+            var sdt=document.querySelector(".soDienThoai");
+            return sdt.value;
+        }
+        function getEmail(){
+            var email=document.querySelector(".inputEmail");
+            return email.value;
+        }
+        function getNgaySinh(){
+            var ngaySinh=document.querySelector(".ngaySinh");
+            return ngaySinh.value;
+        }
+        function getDiaChi(){
+            var diaChi=document.querySelector(".diaChi");
+            return diaChi.value;
+        }
+        var maUser=<?php echo $Ma ?>;
+        function getPassNew(){
+            var passNew= document.querySelector(".passwordNew");
+            return passNew.value;
+        }
+        function getPassNewAth(){
+            var passNewAth= document.querySelector(".passwordNewAth");
+            return passNewAth.value;
+        }
+        function isValidPhoneNumber(phoneNumber) {
+            var phonePattern = /^\d{10,11}$/; 
+            return phonePattern.test(phoneNumber);
+        }
+        function isValidEmail(email) {
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+            return emailPattern.test(email);
+        }
+        var soDienThoai=document.querySelector(".soDienThoai");
+        soDienThoai.addEventListener("blur", function(){
+            var warningSdt=document.querySelector(".warning-sdt");
+            if(isValidPhoneNumber(soDienThoai.value)){
+                warningSdt.style.opacity=0;
+            }
+            else{
+                warningSdt.style.opacity=1;
+            }
+        });
+        var email=document.querySelector(".inputEmail");
+        email.addEventListener("blur", function(){
+            var warningEmail=document.querySelector(".warning-email");
+            if(isValidEmail(email.value)){
+                warningEmail.style.opacity=0;
+            }
+            else{
+                warningEmail.style.opacity=1;
+            }
+        });
+        var passNewAth= document.querySelector(".passwordNewAth");
+        passNewAth.addEventListener('input', function(){
+            var warningPass=document.querySelector(".warning-passath");
+            if(getPassNew()==getPassNewAth()){
+                warningPass.style.opacity=0;
+            }
+            else{
+                warningPass.style.opacity=1;
+            }
+        });
+        var btnSave=document.querySelector(".btnSave");
+        btnSave.addEventListener('click', function(){
+            var passNewAth= document.querySelector(".passwordNewAth");
+            var passNew= document.querySelector(".passwordNew");
+            var warningEmail=document.querySelector(".warning-email");
+            var warningPass=document.querySelector(".warning-passath");
+            var warningSdt=document.querySelector(".warning-sdt");
+            if(passNew.value==passNewAth.value){
+                if(isValidPhoneNumber(soDienThoai.value)){
+                    if(isValidEmail(email.value)){
+                        $.ajax({
+                            url: "./control/ajax_action.php",
+                            method: "POST",
+                            data: {
+                                tenDangNhap: "<?php echo $_SESSION['taikhoan'] ?>",
+                                hoTen:getHoTen(),
+                                ngaySinh:getNgaySinh(),
+                                sdt:getSDT(),
+                                email:getEmail(),
+                                diaChi:getDiaChi(),
+                                passNew: getPassNew(),
+                                action: "updateProfile"
+                            },
+                            success: function(data){
+                                if(data==1){// Cập nhật thành công
+                                    var tenUser=document.querySelector(".profile-user-name");
+                                    tenUser.innerHTML=getHoTen();
+                                    var headerInfo=document.querySelector(".header__action-login-name");
+                                    var slipt = getHoTen().split(" ");
+                                    // Lấy từ cuối cùng trong mảng
+                                    var Ten = slipt[slipt.length - 1] + " " + getHoTen();
+                                    headerInfo.innerHTML=Ten;
+                                    creatToast("item-success","Thay đổi thành công !","fa-solid fa-circle-check","item-end-success");
+                                }
+                                else{// Không có hàng nào được cập nhật
+                                    creatToast("item-warning","Không có bất kì thay đổi nào!","fa-solid fa-circle-exclamation","item-end-warning");
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        warningEmail.style.opacity=1;
+                        creatToast("item-error","Vui lòng nhập đúng định dạng Email","fa-solid fa-triangle-exclamation","item-end-error");
+                    }
+                }
+                else{
+                    warningSdt.style.opacity=1;
+                    creatToast("item-error","Vui lòng nhập đúng định dạng SDT","fa-solid fa-triangle-exclamation","item-end-error");
+                }
+            }
+            else{
+                warningPass.style.opacity=1;
+                creatToast("item-error","Mật khẩu xác thực không chính xác","fa-solid fa-triangle-exclamation","item-end-error");
+            }
+           
+        });
+    });
+</script>

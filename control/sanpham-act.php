@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/sanpham.php');
     function getAllProduct(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM sanpham ORDER BY RAND()");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM sanpham where `hide`=1 ORDER BY RAND()");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -46,7 +46,7 @@
     }
     function getProductHot(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamHot` = 1 ORDER BY RAND() LIMIT 12");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamHot` = 1 AND `hide`=1 ORDER BY RAND() LIMIT 12");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -132,7 +132,7 @@
     }
     function getProductNew(){
         $db = new DTB();
-        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamMoi` = 1 ORDER BY RAND() LIMIT 12");
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `SanPhamMoi` = 1  AND `hide`=1 ORDER BY RAND() LIMIT 12");
         $productArr = array();
         while ($row = mysqli_fetch_assoc($kq)) {
             $sanPham = new SanPham(
@@ -155,6 +155,7 @@
         $db->disconnect();
         return $productArr;
     }
+    
 
     function showListProductString($arrProduct){
         $output = '';
@@ -199,5 +200,118 @@
             ';
         }
         return $output;
+    }
+    function showListProductStringTuongTu($arrProduct){
+        $output = '';
+        foreach ($arrProduct as $row) {
+            $output .= '
+            <a href="index.php?danhmuc=product-detail&id=' . $row->getMaSP() . '">
+                <div class="card cardTuongTu">
+                    <div class="card-img">
+                        <img src="./assets/img/' . $row->getHinhAnh(). '" alt="">
+                    </div>
+                    <p class="card-title">' . $row->getTenSP() . '</p>
+                    <div class="card-price-rate">
+                        <div class="card-price">
+                            <span>' . formatCurrency($row->getGiaMoi()) .' </span>
+                            <span><del>' . formatCurrency($row->getGiaCu()) .'  </del></span>  
+                        </div>
+                        <div class="card-rate">
+                            <i class="fa-solid fa-star"></i>
+                            '. $row->getSoSaoDanhGia() . ' 
+                        </div>
+                    </div>   
+                    <i class=" card-btn__like fa-regular fa-heart"></i>
+                    <div class="card-new-hot">';
+            if ($row->getSanPhamMoi()== 1) {
+                $output .= '
+                <div class="card-special card-hot">
+                    Mới
+                </div>
+                ';
+            }
+            if ($row->getSanPhamHot() == 1) {
+                $output .= '
+                <div class="card-special card-new">
+                    Hot
+                </div>
+                ';
+            }
+            $output .= '
+                        </div>
+                    </div>
+                </a>
+            ';
+        }
+        return $output;
+    }
+    function getSoLuongDaBan($maSP){
+        $db = new DTB();
+        $query="SELECT * FROM `sanpham` WHERE MaSP=$maSP";
+        $kq = mysqli_query($db->getConnection(), $query);
+        $row = mysqli_fetch_assoc($kq);
+        return $row['SoLuongDaBan'];
+    }
+    function updateSoLuongDaBan($maSP, $soLuongBan){
+        $soLuongMoi=intval(getSoLuongDaBan($maSP)) + intval($soLuongBan);
+        $db = new DTB();
+        $query="UPDATE `sanpham` SET `SoLuongDaBan`=$soLuongMoi WHERE MaSP=$maSP";
+        $kq = mysqli_query($db->getConnection(), $query);
+    }
+    // function getMaNhanHieu($id){
+    //     getProduct($id);
+    //     return getProduct($id)->getMaNhanHieu();
+    // }
+    function getListProductFromNhanHieu($id){
+        $maNhanHieu=  intval(getProduct($id)->getMaNhanHieu());
+        $db = new DTB();
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE MaNhanHieu = $maNhanHieu");
+        $productArr = array();
+        while ($row = mysqli_fetch_assoc($kq)) {
+            $sanPham = new SanPham(
+                $row['MaSP'],
+                $row['TenSP'],
+                $row['SoSaoDanhGia'],
+                $row['SoLuotDanhGia'],
+                $row['MoTa'],
+                $row['HinhAnh'],
+                $row['SanPhamMoi'],
+                $row['SanPhamHot'],
+                $row['GiaCu'],
+                $row['GiaMoi'],
+                $row['SoLuongDaBan'],
+                $row['MaNhanHieu'],
+                $row['MaLoai']
+            );
+            $productArr[] = $sanPham;
+        }
+        $db->disconnect();
+        return $productArr;
+    }
+    function getListProductFromArr($arr){
+        $db = new DTB();
+        $valuesString = implode(', ', $arr);
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM `sanpham` WHERE `hide`=1 AND MaSP IN ($valuesString) LIMIT 6");
+        $productArr = array();
+        while ($row = mysqli_fetch_assoc($kq)) {
+            $sanPham = new SanPham(
+                $row['MaSP'],
+                $row['TenSP'],
+                $row['SoSaoDanhGia'],
+                $row['SoLuotDanhGia'],
+                $row['MoTa'],
+                $row['HinhAnh'],
+                $row['SanPhamMoi'],
+                $row['SanPhamHot'],
+                $row['GiaCu'],
+                $row['GiaMoi'],
+                $row['SoLuongDaBan'],
+                $row['MaNhanHieu'],
+                $row['MaLoai']
+            );
+            $productArr[] = $sanPham;
+        }
+        $db->disconnect();
+        return $productArr;
     }
 ?>

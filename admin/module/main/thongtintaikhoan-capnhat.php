@@ -1,4 +1,7 @@
 <?php
+session_start();
+$ten = "$_SESSION[taikhoan]";
+echo $ten;
 // Lấy dữ liệu từ form
 $avatarName = $_FILES["avatar"]["name"];
 $avatarTmpName = $_FILES["avatar"]["tmp_name"];
@@ -10,7 +13,6 @@ $email = $_POST["email"];
 $diaChi = $_POST["address"];
 $matKhauCu = $_POST["password"];
 $matKhauMoi = $_POST["new_password"];
-$ten = 'admin2';
 // Kiểm tra dữ liệu
 if (empty($hoTenNV) || empty($email) || empty($sdt) || empty($diaChi)) {
   echo "<script>alert('Vui lòng điền đầy đủ thông tin!');</script>";
@@ -22,7 +24,7 @@ if (empty($hoTenNV) || empty($email) || empty($sdt) || empty($diaChi)) {
   $conn = mysqli_connect("localhost", "root", "", "shoestore");
   $sql ="SELECT MatKhau,Avt
         FROM taikhoan
-        WHERE TenDangNhap = 'admin2';";
+        WHERE TenDangNhap = '$ten';";
   $result = $conn->query($sql);
   $data = mysqli_fetch_assoc($result);
   $mkCu = $data["MatKhau"];
@@ -63,7 +65,7 @@ if (isset($avatarName) && !empty($avatarName)) {
   }
 
   // Di chuyển file từ đường dẫn tạm thời sang thư mục lưu trữ
-  $avatarPath = "C:/xampp/htdocs/WebShoes/admin/assets/img/" . $avatarName;
+  $avatarPath = "C:/xampp/htdocs/webbangiay/admin/assets/img/" . $avatarName;
   if (move_uploaded_file($avatarTmpName, $avatarPath)) {
     echo "Upload file thành công!";
   } else {
@@ -79,15 +81,14 @@ if($matKhauMoi == ''){
   $matKhauMoi = $mkCu;}
 try {
     // Chuẩn bị câu lệnh SQL
-    $sql = "UPDATE nhanvien nv
+    $sql = "UPDATE user nv
     INNER JOIN taikhoan tk ON nv.TenDangNhap = tk.TenDangNhap
-    SET nv.HoTenNV = ?, nv.NgaySinh = ?, nv.GioiTinh = ?, nv.SDT = ?, nv.Email = ?, nv.Diachi = ?, tk.Avt = ?, tk.MatKhau = ?
-    WHERE nv.TenDangNhap = ?";
+    SET nv.HoTen = ?, nv.NgaySinh = ?, nv.GioiTinh = ?, nv.SDT = ?, nv.Email = ?, nv.Diachi = ?, tk.Avt = ?, tk.MatKhau = ?
+    WHERE nv.TenDangNhap = '$ten'";
   
     // Gán giá trị cho các tham số
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssi", $hoTenNV, $ngaySinh, $gioiTinh, $sdt, $email, $diaChi, $avatarName, $matKhauMoi, $ten);
-  
+    $stmt->bind_param("ssssssss", $hoTenNV, $ngaySinh, $gioiTinh, $sdt, $email, $diaChi, $avatarName, $matKhauMoi);
     // Thực thi câu lệnh SQL
     $stmt->execute();
   

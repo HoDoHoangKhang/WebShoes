@@ -49,6 +49,7 @@
         if(isset($_POST['hotValue']) && $_POST['hotValue']!=0){
             $query.=" AND sanpham.SanPhamHot = ".$hotValue."";
         }
+        $query.=" AND sanpham.hide = 1";
         if(isset($_POST['sortprice']) && $_POST['sortprice']!=""){
             $sortPrice=$_POST['sortprice'];
             if($sortPrice=="asc"){
@@ -99,9 +100,9 @@
             $total_pages = ceil($total_records/$record_per_page);    // pagination
             for($i=1; $i<=$total_pages; $i++)                        // pagination    
             {                                                        // pagination
-                $pagination .= "<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='".$i."'>".$i."</span>";  
+                $pagination .= "<span class='pagination_link' style='cursor:pointer; padding:6px; margin:0 5px; border:1px solid #ccc;' id='".$i."'>".$i."</span>";  
             }                                                        // pagination
-            $pagination .= '</div><br /><br />';                     // pagination
+            $pagination .= '<br /><br />';                     // pagination
             /////////////////////////////////////////////////////////// pagination
             $response = array(
                 'data1' => showListProductString($productArr),
@@ -143,7 +144,7 @@
                                 '.$sanPham->getTenSP().'
                             </div>
                             <div class="shell-repository">
-                                23 stocks remaining
+                                Còn lại: '.getSoluongTuMaVaSize(intval($product->MaSP) , intval($product->Size))->getSoLuong().'
                             </div>
                         </div>
                     </div>
@@ -247,4 +248,159 @@
         }
         echo $output;
     }
+    if($_POST['action']=='updateProfile'){
+        $tenDangNhap=$_POST['tenDangNhap'];
+        $hoTen=$_POST['hoTen'];
+        $ngaySinh=$_POST['ngaySinh'];
+        $sdt=$_POST['sdt'];
+        $email=$_POST['email'];
+        $diaChi=$_POST['diaChi'];
+        $passNew=$_POST['passNew'];
+        $db = new DTB();
+        $query="UPDATE user
+        INNER JOIN taikhoan ON user.TenDangNhap=taikhoan.TenDangNhap
+        SET user.HoTen='".$hoTen."',
+            user.NgaySinh='".$ngaySinh."',
+            user.SDT='".$sdt."',
+            user.Email='".$email."',
+            user.DiaChi='".$diaChi."',
+            taikhoan.MatKhau='".$passNew."'
+        WHERE user.TenDangNhap='".$tenDangNhap."'";
+        $result = mysqli_query($db->getConnection(), $query);
+        if ($result) {
+            $affectedRows = mysqli_affected_rows($db->getConnection());
+            if ($affectedRows > 0) {
+                echo 1; // Cập nhật thành công
+            } else {
+                echo 0;//không hàm nào được cập nhật
+            }
+        } else {
+            echo "Lỗi khi thực hiện câu lệnh SQL: " . mysqli_error($db->getConnection());
+        }
+    }
+    if($_POST['action']=='checkout'){
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctpx-act.php');
+        $tongTienHang=$_POST['tongTienHang'];
+        $phiVanChuyen=$_POST['phiVanChuyen'];
+        $tongThanhToan=$_POST['tongThanhToan'];
+        $products=json_decode($_POST['listCart']);
+
+        //Insert phiếu xuất
+        $maKH=intval(getUser($_POST['tenDangNhap'])->getMa());
+        $ngayDatHang = date('Y-m-d');
+        $tinhTrangDonHang="Tạm giữ";
+        $tongThanhToan=intval($_POST['tongThanhToan']); 
+        $tongSoLuong=0;
+        $trangThai=1;
+        foreach($products as $product){
+            $tongSoLuong+=$product->SoLuong;
+        }
+        $insertSql=insertPhieuXuat($maKH, $maKH ,$ngayDatHang,$tinhTrangDonHang,$tongThanhToan,$tongSoLuong,$trangThai);
+        // Insert chi tiết phiếu xuất
+        foreach($products as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->MaSP);
+            $maPX=$insertSql;
+            $maSP=$product->MaSP;
+            $soLuong=$product->SoLuong;
+            $giaBan=intval($sanPham->getGiaMoi());
+            $size=$product->Size;
+            $trangThai=1;
+
+            insertChiTietPhieuXuat($maPX, $maSP ,$soLuong,$giaBan,$size,$trangThai);
+
+            giamSoLuongTrongKho($maSP,$size,$soLuong);
+            updateSoLuongDaBan($product->MaSP,$product->SoLuong);
+        }
+        // Số lượng đã bán trong bản sản phẩm tăng lên
+        //trừ đi số lượng trong kho các sản phẩm
+
+
+    }
+    if($_POST['action']=='deleteDonHang'){
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctpx-act.php');
+        $maPX=intval($_POST['MaPX']);
+        // $maSP=intval($_POST['MaSP']);
+        // $soLuong=intval($_POST['SoLuong']);
+        // $size=intval($_POST['Size']);
+        if(getTinhTrangPhieuXat($maPX)=='Tạm giữ'){
+            // deleteChiTietPhieuXuat($maPX);
+            huyPhieuXuat($maPX);
+
+            //Hoàn lại số lượng sản phẩm khi hủy đơn
+            // tangSoLuongTrongKho($maSP,$size,$soLuong);
+
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+    }
+    if($_POST['action']=='showChiTietPhieuXuat'){
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctpx-act.php');
+        $maPX=intval($_POST['MaPX']);
+        echo showChiTietPhieuXuat($maPX);
+    }
+    if($_POST['action']=='checkSoLuongTonKho'){
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctsizesp-act.php');
+        $flag=1;
+        $output='';
+        $products=json_decode($_POST['products']);
+        foreach($products as $product){
+            $output.=$product->TaiKhoan.",".$product->MaSP.",".$product->Size.",".$product->SoLuong."/";
+            if($product->SoLuong > getSoluongTuMaVaSize($product->MaSP,$product->Size)->getSoLuong()){
+                $flag=0;
+                break;
+            }
+        }
+        if($flag==1){
+            echo $output;
+        }
+        else{
+            echo 0;
+        }
+    }
+    if($_POST['action']=='themvaoyeuthich'){
+        echo 0;
+    }
+    if($_POST['action']=='showWish'){
+        $output='';
+        $wish=json_decode($_POST['wish']);
+        foreach($wish as $product){
+            $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
+            $sanPham=getProduct($product->maSP);
+            $output.='
+            <tr>
+                <td>
+                    <div class="shell-product">
+                        <div class="shell-img">
+                            <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
+                        </div>
+                        <div class="shell-title-repository">
+                            <div class="shell-title">
+                                '.$sanPham->getTenSP().'
+                            </div>
+                            <div class="shell-repository">
+                                Đã bán :'.$sanPham->getSoLuongDaBan().'
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                </td>
+                <td>'.formatCurrency($sanPham->getGiaMoi()).'</td>
+                <td>
+                    <button class="buttonDeleteWish" id="'.$sanPham->getMaSP().'" style="width: 20px; height: 20px;"> 
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>   
+                </td>
+            </tr>
+
+            ';
+        }
+        echo $output;
+    }
+
 ?>

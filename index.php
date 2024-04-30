@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/reponsive.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- font pro -->
@@ -42,7 +44,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
+
 <body>
+
     <?php require_once 'config/config.php' ?>
 
     <div class="app">
@@ -52,13 +56,32 @@
         <!-- Main -->
         <?php include_once 'pages/main.php' ?>
 
+        <div class="load-main">
+            <div class="load-img">
+                <img src="./assets/img/loadpage.gif" alt="" class="">
+            </div>
+        </div>
         <!-- Footer -->
         <?php include_once 'pages/footer.php' ?>
-
-        
+        <!-- <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
+<div class="commonninja_component pid-16db97ad-06ff-4bdd-ac35-d5f634a3af0e"></div>
+         -->
     </div>
     
-
+    <script>
+        window.addEventListener("load", function(){
+            var load= document.querySelector('.load-main');
+            // load.style.display='none';
+            setTimeout(function() {
+            if (load) {
+                load.classList.add('fadeOut'); // Thêm lớp 'fadeOut'
+                setTimeout(function() {
+                    load.style.display = 'none'; // Ẩn phần tử
+                }, 200); // Thời gian cho animation 'fast' là 200 milliseconds trong jQuery
+            }
+        }, 300);
+        });
+    </script>
     <!-- Slick -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

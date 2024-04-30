@@ -21,36 +21,30 @@ $timestampKetThuc = strtotime($ngayKetThuc);
 if ($timestampBatDau > $timestampKetThuc) {
   // Hiển thị thông báo lỗi
   echo "<script>alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');</script>";
-  echo "<script>window.location.href = '../../index.php?danhmuc=quanlydonhang';</script>";
-  exit(); // Dừng thực thi script
+  echo "<script>history.back();</script>";
+ exit();
 }
 
 $conn = mysqli_connect("localhost", "root", "", "shoestore"); 
 // Truy vấn database
-$sql = "SELECT
+$sql="SELECT
 px.MaPX,
 px.NgayDatHang,
 px.TinhTrangDH,
 px.TongTien,
 px.TongSoLuong,
 px.trangThai,
-khachhang.MaKH,
-khachhang.HoTenKH,
-khachhang.Sdt,
-nhanvien.MaNV,
-nhanvien.HoTenNV,
-nhanvien.SDT
-
+khachhang.Ma as MaKH,
+khachhang.HoTen as HoTenKH,
+khachhang.SDT as SDTKH,
+nhanvien.Ma as MaNV,
+nhanvien.HoTen as HoTenNV,
+nhanvien.SDT as SDTNV
 FROM phieuxuat px
-INNER JOIN khachhang ON px.MaKH = khachhang.MaKH
-INNER JOIN nhanvien ON px.MaNV = nhanvien.MaNV
+INNER JOIN user khachhang ON px.MaKH = khachhang.Ma
+INNER JOIN user nhanvien ON px.MaNV = nhanvien.Ma
 WHERE (TinhTrangDH = '$tinhTrang' OR '$tinhTrang' = '') AND NgayDatHang BETWEEN '$ngayBatDau' AND '$ngayKetThuc';";
 $result = $conn->query($sql);
-if ($result->num_rows === 0) {
-  echo "<p>Không có thông tin tìm kiếm</p>";
-  die();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,8 +72,31 @@ if ($result->num_rows === 0) {
     ul{
        padding: 0;
     }
+    #tinhtrang{
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 110px;
+        text-align: center;
+    }
+    .hoan-thanh {
+        background-color: blue;
+        color: aliceblue;
+    }
+    .dang-xu-ly {
+        background-color: cadetblue;
+        color: aliceblue;
+    }
+    .tam-giu {
+        background-color: red;
+        color: aliceblue;
+    }
+    .da-huy {
+        background-color: darkgrey;
+        color: aliceble;
+    }
 </style>
-<!-- //myTable_wrapper ở đâu -->
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
     <div class="tableTitle">
@@ -94,7 +111,8 @@ if ($result->num_rows === 0) {
                         <option value="">Tất cả</option>
                         <option value="Tạm giữ">Tạm giữ</option>
                         <option value="Đang xử lý">Đang xử lý</option>
-                        <option value="Đã giao hàng">Đã hoàn thành</option>
+                        <option value="Đã hoàn thành">Đã hoàn thành</option>
+                        <option value="Đã hủy">Đã hủy</option>
                     </select>
                     <input type="submit" value="Lọc">
                 </form>
@@ -126,7 +144,7 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaKH']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenKH']; ?> </li>
-                        <li>SĐT:<?php echo $row['Sdt']; ?></li> 
+                        <li>SĐT:<?php echo $row['SDTKH']; ?></li> 
                         <li></li>
                     </ul>
                 </td>
@@ -134,22 +152,24 @@ if ($result->num_rows === 0) {
                     <ul>
                         <li>ID: <?php echo $row['MaNV']; ?></li></li>
                         <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
-                        <li>SĐT: <?php echo $row['SDT']; ?></li>
+                        <li>SĐT: <?php echo $row['SDTNV']; ?></li>
                         <li></li>
                     </ul>
                 </td>
                 <td><?php echo $row['NgayDatHang']; ?></td>
                 <td><?php echo $row['TongSoLuong']; ?></td>
                 <td><?php echo $row['TongTien']; ?></td>
-                <td><?php echo $row['TinhTrangDH']; ?></td>
+                <td><span id="tinhtrang" class="<?php echo ($row['TinhTrangDH'] == 'Đã hoàn thành') ? 'hoan-thanh' : (($row['TinhTrangDH'] == 'Đang xử lý') ? 'dang-xu-ly' : (($row['TinhTrangDH'] == 'Đã hủy') ? 'da-huy' : 'tam-giu')) ?>"><?php echo $row['TinhTrangDH']; ?></span></td>
                 <td>
                     <div class="dropdown" >
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
                             <li><a class="dropdown-item" href="index.php?danhmuc=quanlydonhang-chitiet&id=<?php echo $row['MaPX']; ?>">Xem chi tiết</a></li>                   
-                            <li><a class="dropdown-item" href="module/main/quanlydonhang-trangthai.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa chuyển trạng thái đơn hàng?');" >Chuyển trạng thái</a></li>
-                            <li><a class="dropdown-item" href="module/main/quanlydonhang-xoa.php?id=<?php echo $row['MaPX']; ?>" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng?');" >Xóa đơn hàng</a></li>
+                            <?php if ($row['TinhTrangDH'] != "Đã hủy") { ?>
+                                <li><button class="chuyen-trang-thai dropdown-item">Chuyển trạng thái</button></li>
+                                <li><button class="huy-don dropdown-item">Hủy đơn hàng</button></li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </td>
@@ -158,6 +178,56 @@ if ($result->num_rows === 0) {
         </tbody>
     </table>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    
+$(document).ready(function() {
+    //Hủy đơn hàng
+    $(document).on('click', '.huy-don', function() {
+        var MaPX = $(this).closest('tr').find('td:first-child').text();
+        if(confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")) {
+        $.ajax({
+        url: 'module/main/quanlydonhang-huy.php',
+        method: 'POST',
+        data: {
+            MaPX: MaPX
+        },
+        success: function(response) {
+            console.log("MaPX:", response);
+            if (response === 'success') {
+                alert('Đơn hàng đã được hủy!');
+            location.reload();
+            } else {
+                //hiển thị thông báo khi không hủy được
+            alert(response);
+            }
+        }
+        });
+    }});
+    //Chuyển trạng thái
+    $(document).on('click', '.chuyen-trang-thai', function() {
+        var MaPX = $(this).closest('tr').find('td:first-child').text();
+        if(confirm("Bạn có chắc chắn muốn chuyển trạng thái đơn hàng này không?")) {
+        $.ajax({
+        url: 'module/main/quanlydonhang-trangthai.php',
+        method: 'POST',
+        data: {
+            MaPX: MaPX
+        },
+        success: function(response) {
+            console.log("MaPX:", response);
+            if (response === 'success') {
+                alert('Đã chuyển trạng thái đơn hàng!');
+            location.reload();
+            } else {
+                //hiển thị thông báo khi không chuyển được
+            alert(response);
+            }
+        }
+        });
+    }});
+});
+</script>
 <?php
   // Đóng kết nối
   $conn->close();
@@ -206,4 +276,3 @@ if ($result->num_rows === 0) {
 </div>
 </body>
 </html>
-

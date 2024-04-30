@@ -1,4 +1,5 @@
-<?php session_start();
+<?php 
+    // session_start();
  ?>
 
 <header class="header">
@@ -24,7 +25,16 @@
                     <!-- <i class="fa-sharp fa-solid fa-list-ul"></i> -->
                 </div>
                 <a  href="index.php?danhmuc=home">
-                    <img src="./assets/img/logo.png" alt="Logo" class="header__logo">
+                <?php               
+                    $conn = mysqli_connect("localhost", "root", "", "shoestore");
+                    $sql="SELECT *
+                    FROM website";
+                    $result = $conn->query($sql);
+                      $data = mysqli_fetch_assoc($result);
+                      $logo = $data["logo"];
+                      $conn->close();
+                    ?>
+                    <img src="./assets/img/<?php echo $logo; ?>" alt="Logo" class="header__logo" style=" width: 130px;">                 
                 </a>
             </div>
             <div class="header__menu">
@@ -70,7 +80,7 @@
                     <i class="header__action-icon header__action-search-icon fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="header__action-search-input" placeholder="Search">
                 </div>
-                <a href="" class="header__action-like">
+                <a href="index.php?danhmuc=listwish" class="header__action-like">
                     <i class="header__action-icon header__action-like-icon fa-regular fa-heart"></i>
                 </a>
                 <div class="header__action-cart">
@@ -116,7 +126,7 @@
                 <?php 
                     if(isset($_SESSION['taikhoan'])){?>
                        <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
-                            <span>
+                            <span class="header__action-login-name">
                                 <?php
                                     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
                                     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');

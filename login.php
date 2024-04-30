@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.3/components/logins/login-6/assets/css/login-6.css">
     <style>
@@ -19,8 +20,8 @@
         }
         .account-block {
             padding: 0;
-            background-image: url(assets/img/background-login.png);
-            background-repeat: no-repeat;
+            background-image: url(assets/img/login-img.png);
+            background-repeat:no-repeat;
             background-size: cover;
             height: 100%;
             position: relative;
@@ -63,10 +64,12 @@
         .link{
             text-decoration: none;
         }
+        .formLogin{
+            margin-top: 80px;
+        }
     </style>
 </head>
 <body>
-    <form action="xulylogin.php" method="post">
         <!-- Login 6 - Bootstrap Brain Component -->
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center" style="border-radius: 10px;">
@@ -79,26 +82,24 @@
                                         <div class="mb-5">
                                             <h3 class="h4 font-weight-bold text-theme">Login</h3>
                                         </div>
-                                        <form>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" name="txtUser">
+                                                <input type="text" class="form-control" id="username">
                                             </div>
                                             <div class="form-group mb-5">
                                                 <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" name="txtPass">
+                                                <input type="password" class="form-control" id="password">
                                             </div>
-                                            <button type="submit" class="btn btn-theme" name="btnLogin">Login</button>
+                                            <button class="btn btn-theme" id="dangnhap">Login</button>
                                             <a href="#l" class="link float-right text-primary">Forgot password?</a>
-                                        </form>
+                                            <p id="thongbao" style="color: red; margin-top: 10px;"></p>
+
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6 d-none d-lg-inline-block">
                                     <div class="account-block rounded-right">
                                         <div class="overlay rounded-right"></div>
                                         <div class="account-testimonial">
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -108,9 +109,7 @@
                         <!-- end card-body -->
                     </div>
                     <!-- end card -->
-
-                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="" class="link text-primary ml-1">register</a></p>
-
+                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.php" class="link text-primary ml-1">register</a></p>
                     <!-- end row -->
 
                 </div>
@@ -118,6 +117,56 @@
             </div>
             <!-- Row -->
         </div>
-    </form>
+
 </body>
 </html>
+
+<!-- Kiểm thử chức năng đăng nhập -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function() {
+            var btnSubmit=document.getElementById('dangnhap');
+            btnSubmit.addEventListener('click',function(){
+                var username = document.getElementById('username').value;
+                var password = document.getElementById('password').value;
+                $.ajax({
+                    url: 'xulylogin.php',
+                    method: 'POST',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function(data) {
+                        var thongbao=document.getElementById("thongbao");
+                        if (data == 'Để trống tên đăng nhập và mật khẩu') {
+                            thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin!';
+                        }
+                        else if(data == 'Để trống tên đăng nhập') {
+                            thongbao.innerHTML = ' Vui lòng nhập tên đăng nhập!';
+                        }
+                        else if (data == 'Để trống mật khẩu'){
+                            thongbao.innerHTML = ' Vui lòng nhập mật khẩu!';
+                        }
+                        else if (data == 'Tên đăng nhập không tồn tại'){
+                            thongbao.innerHTML = 'Tên đăng nhập không tồn tại!';
+                        }
+                        else if (data == 'Sai mật khẩu'){
+                            thongbao.innerHTML='Sai mật khẩu!';
+                        }
+                        else if (data == 'Tài khoản bị khóa'){
+                            thongbao.innerHTML = 'Tài khoản này đã bị khóa!';
+                        }
+                        else{                       
+                            window.location.href = 'index.php';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                        $('#login-message').text('Có lỗi xảy ra! Vui lòng thử lại.');
+                    }
+                });
+            });
+        });
+    </script>
+
+

@@ -23,11 +23,11 @@
                 case 'quanlyquyen':
                     require_once 'module/main/quanlyquyen.php';
                     break;
+                case 'quanlyquyen_chitietquyen':
+                    require_once 'module/main/quanlyquyen_chitietquyen.php';
+                    break;
                 case 'quanlytaikhoan':
                     require_once 'module/main/quanlytaikhoan.php';
-                    break;
-                case 'caidat':
-                    require_once 'module/main/caidat.php';
                     break;
                 case 'caidatwebsite':
                     require_once 'module/main/caidatwebsite.php';
@@ -44,6 +44,25 @@
                 case 'chitietphieunhap':                     
                     require_once 'module/main/quanlynhaphang_view_chi_tiet_phieu.php';
                     break;
+                case 'caidat':   
+                    if(isset($_GET['id'])){
+                        if($_GET['id']=='size'){
+                            require_once 'module/main/caidat/size.php';
+                        }
+                        else if($_GET['id']=='nhacungcap'){
+                            require_once 'module/main/caidat/nhacungcap.php';
+                        }
+                        else if($_GET['id']=='nhanhieu'){
+                            require_once 'module/main/caidat/nhanhieu.php';
+                        }
+                        else if($_GET['id']=='danhmuc'){
+                            require_once 'module/main/caidat/danhmuc.php';
+                        }   
+                    }
+                    else {
+                        require_once 'module/main/caidat/size.php';
+                    }    
+                    break;
                 case 'themsanpham':                     
                     require_once 'module/main/quanlysanpham_add_product_input.php';
                     break;
@@ -55,11 +74,12 @@
                     break;
                 default:
                     require_once 'module/main/dashboard.php';
-                break;
+                    break;
             }
         }
         else{
             require_once 'module/main/dashboard.php';
         }
+
     ?>
 </div>

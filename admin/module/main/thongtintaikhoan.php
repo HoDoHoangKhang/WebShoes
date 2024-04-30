@@ -1,12 +1,12 @@
 <?php
 
-//$id = $_GET['id'];
-$ten = 'admin1';
+
+$ten = $_SESSION['taikhoan'];
 // Kết nối với cơ sở dữ liệu
 $conn = mysqli_connect("localhost", "root", "", "shoestore");
   //lấy thông tin tài khoản,nhân viên
 $sql="SELECT
-  nv.HoTenNV,
+  nv.HoTen,
   nv.NgaySinh,
   nv.GioiTinh,
   nv.SDT,
@@ -15,15 +15,15 @@ $sql="SELECT
   tk.Avt,
   tk.MatKhau
 FROM taikhoan tk  
-INNER JOIN nhanvien nv ON tk.TenDangNhap = nv.TenDangNhap
-WHERE nv.MaNV = 2;";
+INNER JOIN user nv ON tk.TenDangNhap = nv.TenDangNhap
+WHERE nv.TenDangNhap = '$ten';";
 $result = $conn->query($sql);
 if ($result->num_rows === 0) {
     echo "<p>Không có dữ liệu.</p>";
     die();
   }
   $data = mysqli_fetch_assoc($result);
-  $hoTenNV = $data["HoTenNV"];
+  $hoTenNV = $data["HoTen"];
   $ngaySinh = $data["NgaySinh"];
   $gioiTinh = $data["GioiTinh"];
   $sdt = $data["SDT"];
@@ -53,13 +53,33 @@ if ($result->num_rows === 0) {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  margin-left: 50px;
 }
 
 .update-button {
+  color: white;
+  width: 100px;
+  height: 50px;
   margin: 0 auto; 
   display: block;
+  border: 3px solid #ddd;
+  border-radius: 10px;
+  background: rgb(34,193,195);
+background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(103,73,242,1) 100%);
 }
 
+.reset{
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin: 0 auto; 
+  display: block;
+  border: 3px solid #ddd;
+  border-radius: 10px;
+  background: rgb(34,193,195);
+  background: rgb(212,170,170);
+  background: linear-gradient(0deg, rgba(212,170,170,1) 0%, rgba(255,0,0,1) 100%);
+}
 #password {
   -webkit-text-security: disc; /* Safari và Chrome */
   -moz-text-security: disc; /* Firefox */
@@ -119,5 +139,8 @@ img{
     <label for="new_password">Mật khẩu mới:</label>
     <input type="password" name="new_password" id="new_password" class="form-control">
 </div>
-<button class="update-button" type="submit">Cập nhật</button>
+<div style="display: flex;">
+    <button class="update-button" type="submit">Cập nhật</button>
+    <input type="reset" value="Reset" class="reset">
+  </div>
 </div>
