@@ -23,7 +23,6 @@ if ($connect->query($sql) === TRUE) {
 		    }
 		}
 	}
-
 	// 
     echo "Cập nhật trạng thái đơn hàng thành công";
 } else {
