@@ -70,7 +70,6 @@
     </style>
 </head>
 <body>
-    <form action="xulylogin.php" method="post" class="formLogin">
         <!-- Login 6 - Bootstrap Brain Component -->
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center" style="border-radius: 10px;">
@@ -140,10 +139,13 @@
                     method: 'POST',
                     data: {
                         username: username,
-                        password: password
+                        password: password,
                     },
                     success: function(data) {
                         var thongbao=document.getElementById("thongbao");
+                        console.log(username);
+                        console.log(password);
+                        console.log(data);
                         if (data === 'Để trống tên đăng nhập và mật khẩu') {
                             thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin!';
                         }

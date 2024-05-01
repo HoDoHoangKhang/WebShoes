@@ -34,177 +34,137 @@
         <thead>
           <tr>
               <th>Tên các chức năng</th>
-              <th>Được phép sử dụng </th>
-              <th>Hành động<g/th>
+              <th>Hành động</th>
+              <th>Được phép sử dụng <g/th>
           </tr>
         </thead>
         <tbody>
-               
-          <tr>
-            <td>Tên chức năng lỡn</td>  
-            <td>
-              <ul>
-                <li>Chức năng nhỏ 1</li>
-                <li>Chức năng nhỏ 2</li>
-                <li>Chức năng nhỏ 3</li>
-                <li>Chức năng nhỏ 4</li>
-                <li>Chức năng nhỏ 5</li>
-                <li>Chức năng nhỏ 6</li>
-              </ul>
-            </td>
-              <td>
-                <ul>
-                  <li>
-                    <input type="checkbox">
-                  </li>
-                  <li>
-                    <input type="checkbox">
-                  </li>
-                  <li>
-                    <input type="checkbox">
-                  </li>
-                  <li>
-                    <input type="checkbox">
-                  </li>
-                  <li>
-                    <input type="checkbox">
-                  </li>
-                  <li>
-                    <input type="checkbox">
-                  </li>
+          <?php
+            $sqlChucNang = "SELECT * FROM ChucNang ORDER BY MaCN ASC";
+            $resultChucNang = mysqli_query($connect, $sqlChucNang);
 
-                </ul>
-              </td>
-          </tr>
+            $allHanhDong = [];
+            $sqlHanhDong = "SELECT * FROM `chitietquyenchucnang` ctqcn join chucnang cn on cn.MaCN=ctqcn.MaCN group by HanhDong ORDER BY cn.MaCN ASC";
+            $resultHanhDong = mysqli_query($connect, $sqlHanhDong);
+            while ($rowHanhDong = mysqli_fetch_array($resultHanhDong)) {
+                $allHanhDong[] = $rowHanhDong;
+            }
+
+            while ($rowChucNang = mysqli_fetch_array($resultChucNang)) {
+                ?>
+                <tr>
+                    <td><?php echo $rowChucNang['TenCN'] ?></td>
+                    <td>
+                        <ul>
+                            <?php
+                            foreach ($allHanhDong as $rowHanhDong) {
+                                if ($rowChucNang['TenCN'] == $rowHanhDong['TenCN']) {
+                                    ?>
+                                    <li><?php echo $rowHanhDong['HanhDong'] ?></li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <?php
+                            foreach ($allHanhDong as $rowHanhDong) {
+                                if ($rowChucNang['TenCN'] == $rowHanhDong['TenCN']) {
+                                    ?>
+                                      <li>                                         
+                                          <input  type="checkbox"  class="myCheckbox" id="<?php echo $rowHanhDong['MaCN']?>" name="<?php echo $rowHanhDong['HanhDong']?>"
+                                          
+                                                  <?php 
+                                                    $sql="SELECT * FROM chitietquyenchucnang";
+                                                    $result=mysqli_query($connect,$sql);
+                                                      while($row=mysqli_fetch_array($result)){
+                                                          if ( $row['MaQuyen']==$_GET['id'] ) {
+                                                            if ($row['HanhDong']==$rowHanhDong['HanhDong']) {
+                                                              if ( $row['TrangThai']==1 ){
+                                                                echo 'checked'; 
+                                                              }
+                                                            }
+                                                          }
+                                                      }
+                                                  ?>
+                                          >
+                                      </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </td>
+                </tr>
+          <?php
+            }
+          ?>
+
             
         </tbody>
     </table>
 </div>
 
-<!-- form thêm quyền mới -->
-<div class="modal fade" id="themquyen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
-  <div class="modal-dialog">
-  <form action="module/main/quanlyquyen_themquyen.php" method="post" >
 
-    <div class="modal-content" style="">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelThemquyen">Thêm Quyền mới</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="responsepp"></p>
+<script src="./js/jquery.js"></script>
+<script>
+  var checkeds = document.querySelectorAll('.myCheckbox');
+  for (var check of checkeds) {
+    check.addEventListener('click', function() {
         
-          <table>
-            <tr>
-              <td>Tên Quyền:</td>
-              <td><input type="text" name="txtTenQuyen"></td>
-            </tr>
-            </table>
-        
-      </div>    
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" name="buttonAddQuyen" id="submitForm">Thêm</button>
-      </div>
-    </div>
-    </form>
-  </div>
-</div>
-
-<!-- Form Sửa tên quyền -->
-<div class="modal fade" id="suaquyen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
-  <div class="modal-dialog">
-  <form action="module/main/quanlyquyen_suaquyen.php?id=<?php echo $_GET['MaQuyen'] ?>" method="post" >
-    <div class="modal-content" style="">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelSuaquyen">Sửa Tên Quyền </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="responsepp"></p>
-        
-          <table>
-            <tr>
-                <td>Tên Hiện tại:</td>
-                <td>
-                    <?php 
-                        if (isset($_GET['TenQuyen'])) {
-                          echo $_GET['TenQuyen'];
-                        }
-                    ?>
-                </td>
-            </tr>
-            <tr>
-              <td>Nhập Tên Mới:</td>
-              <td><input type="text" name="txtTenQuyenCanSua"></td>
-            </tr>
-            </table>
-        
-      </div>    
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" name="buttonUpdateQuyen" id="UpdateQuyen">Lưu</button>
-      </div>
-    </div>
-    </form>
-  </div>
-</div>
-
-<!-- Form thông báo -->
-<div class="modal fade" id="suaquyenthanhcong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="">
-      <div class="modal-header">
-        <h2 class="modal-title" id="ModalLabelthongbao">Thông báo </h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="responsepp"></p> 
-          <?php
-            if ( isset($_GET['note']) ) {   
-              switch ($_GET['note']) {
-                case 'detrongtenquyen':
-                  echo "<h4>Vui lòng nhập tên quyền!</h4>";
-                  break;
-                case 'themquyentrue':
-                  echo "<h4>Thêm quyền thành công!</h4>";
-                  break;
-                case 'themquyenfail':
-                  echo "<h4>Tên quyền này đã tồn tại trong hệ thống.Vui lòng nhập tên khác!</h4>";
-                  break;
-                case 'suaquyentrue':
-                  echo "<h4>Đã sửa tên quyền thành công!</h4>";
-                  break;
-                case 'suaquyenfalse':
-                  echo "<h4>Tên quyền này đã tồn tại trong hệ thống.Vui lòng nhập tên khác!</h4>";
-                  break;
-                case 'xoaquyentrue':
-                  echo "<h4>Đã xóa quyền này ra khỏi hệ thống!</h4>";
-                  break;
-                case 'xoaquyenfalse':
-                  echo "<h4>Quyền này đã có tài khoản sử dụng, không thể xóa nhé!</h4>";
-                  break;
-              }
+      var MaQuyen = <?php echo $_GET['id']?>;
+      var MaCN = this.id;
+      var HanhDong = this.name;
+      // Hiện confirm box trước khi gửi
+      var confirmation = confirm(`Bạn có muốn thay đổi hành động cho nhóm quyền này?`);
+      console.log(MaQuyen);
+      console.log(MaCN);
+      console.log(HanhDong);
+      if (this.checked == true) {
+        if (confirmation) {
+          // Gửi dữ liệu đến tệp PHP
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'module/main/quanlyquyen_chitietquyen_checked.php');
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              alert(`Đã cập nhật hành động cho nhóm quyền này!`);
+            } else {
+              console.error('Lỗi khi gửi dữ liệu:', xhr.statusText);
             }
-          ?>
-      </div>    
-    </div>
-  </div>
-</div>
+          };
+          xhr.send(`MaQuyen=${MaQuyen}&MaCN=${MaCN}&HanhDong=${HanhDong}`);
+          this.checked = true;
+        }
+        else {
+          this.checked = false;
+        }
+      }
+      else {
+        if (confirmation) {
+          // Gửi dữ liệu đến tệp PHP
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'module/main/quanlyquyen_chitietquyen_checked.php');
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              alert(`Đã cập nhật hành động cho nhóm quyền này!`);
+            } else {
+              console.error('Lỗi khi gửi dữ liệu:', xhr.statusText);
+            }
+          };
+          xhr.send(`MaQuyen=${MaQuyen}&MaCN=${MaCN}&HanhDong=${HanhDong}`);
+          this.checked = false;
+        }
+        else {
+          this.checked = true;
+        }
+      }
+        
+      
+    });
+  }
+</script>
 
-<?php 
-  if (isset($_GET['Getsuccess']) && $_GET['Getsuccess']==true) {
-    echo '<script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var myModal = new bootstrap.Modal(document.getElementById("suaquyen"));
-      myModal.show();
-    });
-  </script>';
-  }
-  if (isset($_GET['success']) && $_GET['success']==true) {
-    echo '<script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var myModal = new bootstrap.Modal(document.getElementById("suaquyenthanhcong"));
-      myModal.show();
-    });
-  </script>';
-  }
-?>
