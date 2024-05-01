@@ -28,6 +28,5 @@ function tangSoLuongTrongKho($maSP, $sizeSP, $soLuongBan){
     $db = new DTB();
     $soLuongConLai=intval(getSoluongTuMaVaSize($maSP, $sizeSP)->getSoLuong())+intval($soLuongBan);
     $query="UPDATE `ctsizesp` SET `SoLuong`=$soLuongConLai WHERE `MaSP`=$maSP AND `SizeSP`=$sizeSP";
-    $kq = mysqli_query($db->getConnection(), $query);
 }
 ?>

@@ -7,7 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
 
 function getNhanHieuList(){
     $db = new DTB();
-    $kq = mysqli_query($db->getConnection(), "SELECT * FROM nhanhieu");
+    $kq = mysqli_query($db->getConnection(), "SELECT * FROM nhanhieu where hide=1");
     $nhanHieuArr = array();
     while ($row = mysqli_fetch_assoc($kq)) {
         $nhanHieu = new NhanHieu(

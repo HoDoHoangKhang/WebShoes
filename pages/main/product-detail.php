@@ -147,7 +147,7 @@
                             <ul class="detail-content__size-list">
                                 <!-- Hiển thị size sản phẩm -->
                                 <?php 
-                                    $sql_sizeSp= "SELECT * FROM `sizesp`";
+                                    $sql_sizeSp= "SELECT * FROM `sizesp` where `hide`=1 ";
                                     $result_sizeSp=mysqli_query($connect,$sql_sizeSp);
                                     // $product_sizeSp=mysqli_fetch_array($result_sizeSp);
                                     while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){

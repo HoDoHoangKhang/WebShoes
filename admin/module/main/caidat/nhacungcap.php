@@ -95,8 +95,8 @@ $result = $connect->query($sql);
                         echo "<td>" . $row["EmailNCC"] . "</td>";
                         echo "<td>
                         <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'>
-                        Xóa
-                    </button>
+                            Xóa
+                        </button>
                               </td>";
                         echo "</tr>";
                     }

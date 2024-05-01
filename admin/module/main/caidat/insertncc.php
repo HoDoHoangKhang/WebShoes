@@ -10,16 +10,6 @@ if (isset($_POST['tenNCC']) && isset($_POST['diaChiNCC']) && isset($_POST['sdtNC
     $diaChiNCC = $_POST['diaChiNCC'];
     $sdtNCC = $_POST['sdtNCC'];
     $emailNCC = $_POST['emailNCC'];
-<<<<<<< HEAD
-    
-    // Chuẩn bị câu truy vấn SQL để thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO nhacungcap (TenNCC, DiaChiNCC, SdtNCC, EmailNCC,hide) VALUES ('$tenNCC', '$diaChiNCC', '$sdtNCC', '$emailNCC',1)";
-    
-    // Thực thi truy vấn
-    if ($conn->query($sql) === TRUE) {
-        // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
-        $result = $conn->query("SELECT * FROM nhacungcap WHERE TenNCC='$tenNCC'");
-=======
 
     // Kiểm tra xem nhà cung cấp đã tồn tại trong cơ sở dữ liệu chưa
     $sql = "SELECT * FROM nhacungcap WHERE TenNCC = '$tenNCC'";
@@ -27,7 +17,6 @@ if (isset($_POST['tenNCC']) && isset($_POST['diaChiNCC']) && isset($_POST['sdtNC
 
     if ($result->num_rows > 0) {
         // Nhà cung cấp đã tồn tại
->>>>>>> levy
         $row = $result->fetch_assoc();
         if ($row['hide'] == 0) {
             // Cập nhật giá trị hide thành 1

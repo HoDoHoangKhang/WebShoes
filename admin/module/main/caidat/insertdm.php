@@ -7,14 +7,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if (isset($_POST['tenLoai'])) {
     $tenLoai = $_POST['tenLoai'];
-<<<<<<< HEAD
-    
-    // Thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO loaisp (TenLoai,hide) VALUES ('$tenLoai',1)";
-    if ($conn->query($sql) === TRUE) {
-        // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
-        $result = $conn->query("SELECT * FROM loaisp WHERE TenLoai='$tenLoai'");
-=======
 
     // Kiểm tra xem loại sản phẩm đã tồn tại trong cơ sở dữ liệu chưa
     $sql = "SELECT * FROM loaisp WHERE TenLoai = '$tenLoai'";
@@ -22,7 +14,6 @@ if (isset($_POST['tenLoai'])) {
 
     if ($result->num_rows > 0) {
         // Loại sản phẩm đã tồn tại
->>>>>>> levy
         $row = $result->fetch_assoc();
         if ($row['hide'] == 0) {
             // Cập nhật giá trị hide thành 1

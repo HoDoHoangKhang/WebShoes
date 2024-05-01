@@ -49,7 +49,7 @@
     </div>
     <div class="footer-end">
         <div class="container">
-            <span class="footer-end-text">© 2023 Bản quyền thuộc về Group 4 - Web 2.</span>
+            <span class="footer-end-text">© 2024 Bản quyền thuộc về Group 4 - Web 2.</span>
         </div>
     </div>
 </footer>

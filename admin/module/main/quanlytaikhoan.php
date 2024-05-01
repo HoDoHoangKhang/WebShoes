@@ -60,7 +60,7 @@
             
             <?php
             
-            $sql = "SELECT * FROM taikhoan tk JOIN user u on tk.TenDangNhap=u.TenDangNhap ";
+            $sql = "SELECT * FROM taikhoan tk JOIN user u on tk.TenDangNhap=u.TenDangNhap WHERE tk.TenDangNhap != '0'";
             $result = mysqli_query($connect,$sql);
             while ($row=mysqli_fetch_array($result)) { ?>
                 <tr>
@@ -110,7 +110,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li>
+                            <!-- <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li> -->
                             <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
                             <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
                         </ul>

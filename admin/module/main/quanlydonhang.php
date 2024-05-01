@@ -123,9 +123,9 @@ $result = $conn->query($sql);
                 </td>
                 <td>
                     <ul>
-                        <li>ID: <?php echo $row['MaNV']; ?></li></li>
-                        <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
-                        <li>SĐT: <?php echo $row['SDTNV']; ?></li>
+                        <li><?php if($row['MaNV']==0){echo "";}else{ echo "ID: ".$row['MaNV'];} ?></li>
+                        <li><?php if($row['HoTenNV']==0){echo "";}else{ echo "Tên: ".$row['HoTenNV'];} ?></li>
+                        <li><?php if($row['SDTNV']==0){echo "";}else{ echo "SDT: ".$row['SDTNV'];} ?></li>
                         <li></li>
                     </ul>
                 </td>

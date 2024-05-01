@@ -26,17 +26,17 @@ $conn->query($sql);
 $sql = "SELECT MaSP,SoLuong,SizeSP FROM ctpx WHERE MaPX=$id";
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
-$ma = $row["MaSP"];
-$sl = $row["SoLuong"];
-$size = $row["SizeSP"];
+  $ma = $row["MaSP"];
+  $sl = $row["SoLuong"];
+  $size = $row["SizeSP"];
 
-//hoàn trả lại số lượng vô kho
-$sql = "UPDATE ctsizesp SET SoLuong = SoLuong - $sl WHERE MaSP = $ma AND SizeSP = $size";
-$conn->query($sql);
+  //hoàn trả lại số lượng vô kho
+  $sql = "UPDATE ctsizesp SET SoLuong = SoLuong + $sl WHERE MaSP = $ma AND SizeSP = $size";
+  $conn->query($sql);
 
-// trừ số lượng đã bán
-$sql = "UPDATE sanpham SET SoLuongDaBan = SoLuongDaBan - $sl WHERE MaSP = $ma";
-$conn->query($sql);
+  // trừ số lượng đã bán
+  $sql = "UPDATE sanpham SET SoLuongDaBan = SoLuongDaBan - $sl WHERE MaSP = $ma";
+  $conn->query($sql);
 }
 // Đóng kết nối
 $conn->close();

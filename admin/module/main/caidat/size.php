@@ -66,7 +66,7 @@ $result = $conn->query($sql);
                 <div class="modal-body">
                     <form>
                     <label for="exampleFormControlInput" class="form-label">Số Size</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput" placeholder="">
+                    <input class="form-control" id="exampleFormControlInput" placeholder="">
                     </form>
                 </div>
                 <div class="modal-footer">

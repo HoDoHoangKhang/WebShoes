@@ -3666,8 +3666,8 @@ main{
     position: relative;
 }
 .donhang-main{
-    position: absolute;
-    left: 0;
+    /* position: absolute;
+    left: 0; */
     width: 100%;
 }
 #donhang a{
@@ -3806,8 +3806,6 @@ main{
     top: 3px;
     left: -65px
 }
-
-
 
 .avatar-xs {
     height: 1rem;

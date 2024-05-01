@@ -14,9 +14,7 @@
                 </a>
             <?php }
         }
-        
     ?>
-
     <div class="container">
         <div class="header-main">
             <div class="header-logo">
@@ -72,7 +70,7 @@
                     </div>
                 </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
-                <a class="menu_sub" href="index.php?danhmuc=contact">Contact</a>
+                <a class="menu_sub" href="index.php?danhmuc=tiktokfeed">TikTok Feed</a>
 
             </div>
             <div class="header__action">
