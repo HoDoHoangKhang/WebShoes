@@ -19,7 +19,7 @@
             <div class="shell-main">
                 <div class="shell-show" style="overflow: auto;">
                     <table style="width: 100%; font-size: 16px;" class="table-shell">
-                        <thead>
+                        <thead style="">
                             <tr>
                                 <th style="min-width: 300px;" >Sản phẩm</th>
                                 <th style="min-width: 80px;">Size</th>

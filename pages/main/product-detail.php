@@ -102,12 +102,23 @@
                         </div>
                         <div class="detail-content__rate-review-sold">
                             <div class="detail-content__rate">
-                                <i class="detail-content__rate-icon fa-solid fa-star"></i>
-                                <i class="detail-content__rate-icon fa-solid fa-star"></i>
-                                <i class="detail-content__rate-icon fa-solid fa-star"></i>
-                                <i class="detail-content__rate-icon fa-solid fa-star"></i>
-                                <i class="detail-content__rate-icon fa-solid fa-star"></i>
-                                <span></span>
+                                <span>
+                                    <i class="detail-content__rate-icon fa-solid fa-star"></i>
+                                </span>
+                                <span>
+                                    <i class="detail-content__rate-icon fa-solid fa-star"></i>
+                                </span>
+                                <span>
+                                    <i class="detail-content__rate-icon fa-solid fa-star"></i>
+                                </span>
+                                <span>
+                                    <i class="detail-content__rate-icon fa-solid fa-star"></i>
+                                </span>
+                                <span>
+                                    <i class="detail-content__rate-icon fa-solid fa-star"></i>
+                                </span>
+
+                        
                             </div>
                             <div class="detail-content__review">
                                 <span>

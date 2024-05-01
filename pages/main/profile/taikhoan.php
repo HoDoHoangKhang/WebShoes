@@ -64,6 +64,13 @@
                 <input type="text" class="diaChi" name="account_email" id="account_email" autocomplete="email" value="<?php echo $diaChi ?>">
             </p>
             <p class="">
+                <label for="password_1">Mật khẩu cũ</label>
+                <span class="password-input">
+                    <input type="password" class="passwordOld" name="" id="" autocomplete="off">
+                    <span class="show-password-input"></span>
+                </span>
+            </p>
+            <p class="">
                 <label for="password_1">Mật khẩu mới</label>
                 <span class="password-input">
                     <input type="password" class="passwordNew" name="" value="" id="" autocomplete="off">
@@ -114,6 +121,10 @@
             return diaChi.value;
         }
         var maUser=<?php echo $Ma ?>;
+        function getPassOld(){
+            var passOld= document.querySelector(".passwordOld");
+            return passOld.value;
+        }
         function getPassNew(){
             var passNew= document.querySelector(".passwordNew");
             return passNew.value;
@@ -167,54 +178,58 @@
             var warningEmail=document.querySelector(".warning-email");
             var warningPass=document.querySelector(".warning-passath");
             var warningSdt=document.querySelector(".warning-sdt");
-            if(passNew.value==passNewAth.value){
-                if(isValidPhoneNumber(soDienThoai.value)){
-                    if(isValidEmail(email.value)){
-                        $.ajax({
-                            url: "./control/ajax_action.php",
-                            method: "POST",
-                            data: {
-                                tenDangNhap: "<?php echo $_SESSION['taikhoan'] ?>",
-                                hoTen:getHoTen(),
-                                ngaySinh:getNgaySinh(),
-                                sdt:getSDT(),
-                                email:getEmail(),
-                                diaChi:getDiaChi(),
-                                passNew: getPassNew(),
-                                action: "updateProfile"
-                            },
-                            success: function(data){
-                                if(data==1){// Cập nhật thành công
-                                    var tenUser=document.querySelector(".profile-user-name");
-                                    tenUser.innerHTML=getHoTen();
-                                    var headerInfo=document.querySelector(".header__action-login-name");
-                                    var slipt = getHoTen().split(" ");
-                                    // Lấy từ cuối cùng trong mảng
-                                    var Ten = slipt[slipt.length - 1] + " " + getHoTen();
-                                    headerInfo.innerHTML=Ten;
-                                    creatToast("item-success","Thay đổi thành công !","fa-solid fa-circle-check","item-end-success");
+            if(getPassOld()=="<?php echo $matKhau ?>"){
+                if(passNew.value==passNewAth.value){
+                    if(isValidPhoneNumber(soDienThoai.value)){
+                        if(isValidEmail(email.value)){
+                            $.ajax({
+                                url: "./control/ajax_action.php",
+                                method: "POST",
+                                data: {
+                                    tenDangNhap: "<?php echo $_SESSION['taikhoan'] ?>",
+                                    hoTen:getHoTen(),
+                                    ngaySinh:getNgaySinh(),
+                                    sdt:getSDT(),
+                                    email:getEmail(),
+                                    diaChi:getDiaChi(),
+                                    passNew: getPassNew(),
+                                    action: "updateProfile"
+                                },
+                                success: function(data){
+                                    if(data==1){// Cập nhật thành công
+                                        var tenUser=document.querySelector(".profile-user-name");
+                                        tenUser.innerHTML=getHoTen();
+                                        var headerInfo=document.querySelector(".header__action-login-name");
+                                        var slipt = getHoTen().split(" ");
+                                        // Lấy từ cuối cùng trong mảng
+                                        var Ten = slipt[slipt.length - 1] + " " + getHoTen();
+                                        headerInfo.innerHTML=Ten;
+                                        creatToast("item-success","Thay đổi thành công !","fa-solid fa-circle-check","item-end-success");
+                                    }
+                                    else{// Không có hàng nào được cập nhật
+                                        creatToast("item-warning","Không có bất kì thay đổi nào!","fa-solid fa-circle-exclamation","item-end-warning");
+                                    }
                                 }
-                                else{// Không có hàng nào được cập nhật
-                                    creatToast("item-warning","Không có bất kì thay đổi nào!","fa-solid fa-circle-exclamation","item-end-warning");
-                                }
-                            }
-                        });
+                            });
+                        }
+                        else{
+                            warningEmail.style.opacity=1;
+                            creatToast("item-error","Vui lòng nhập đúng định dạng Email","fa-solid fa-triangle-exclamation","item-end-error");
+                        }
                     }
                     else{
-                        warningEmail.style.opacity=1;
-                        creatToast("item-error","Vui lòng nhập đúng định dạng Email","fa-solid fa-triangle-exclamation","item-end-error");
+                        warningSdt.style.opacity=1;
+                        creatToast("item-error","Vui lòng nhập đúng định dạng SDT","fa-solid fa-triangle-exclamation","item-end-error");
                     }
                 }
                 else{
-                    warningSdt.style.opacity=1;
-                    creatToast("item-error","Vui lòng nhập đúng định dạng SDT","fa-solid fa-triangle-exclamation","item-end-error");
+                    warningPass.style.opacity=1;
+                    creatToast("item-error","Mật khẩu xác thực không chính xác","fa-solid fa-triangle-exclamation","item-end-error");
                 }
             }
             else{
-                warningPass.style.opacity=1;
-                creatToast("item-error","Mật khẩu xác thực không chính xác","fa-solid fa-triangle-exclamation","item-end-error");
+                creatToast("item-error","Mật khẩu cũ không chính xác","fa-solid fa-triangle-exclamation","item-end-error");
             }
-           
         });
     });
 </script>
