@@ -123,53 +123,63 @@ $(document).ready(function() {
       alert('Vui lòng nhập Tên Nhà Cung Cấp');
       return;
     }
-
     if (diaChiNCC === '') {
       alert('Vui lòng nhập Địa chỉ');
       return;
     }
-
     if (sdtNCC === '') {
       alert('Vui lòng nhập Số Điện Thoại');
       return;
     }
-
     if (emailNCC === '') {
       alert('Vui lòng nhập Email');
       return;
     }
 
-    // Thêm dữ liệu vào bảng HTML
-    var newRow = '<tr data-ncc="">' +
-                 '<td></td>' + // Mã nhà cung cấp sẽ được cập nhật sau khi thêm thành công
-                 '<td>' + tenNCC + '</td>' +
-                 '<td>' + diaChiNCC + '</td>' +
-                 '<td>' + sdtNCC + '</td>' +
-                 '<td>' + emailNCC + '</td>' +
-                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
-                 '</tr>';
-    $('#myTable tbody').append(newRow);
-
     $.ajax({
       url: 'module/main/caidat/insertncc.php',
       method: 'POST',
-      data: {
-        tenNCC: tenNCC,
-        diaChiNCC: diaChiNCC,
-        sdtNCC: sdtNCC,
-        emailNCC: emailNCC
-      },
+      data: { tenNCC: tenNCC, diaChiNCC: diaChiNCC, sdtNCC: sdtNCC, emailNCC: emailNCC },
       success: function(response) {
         if (response.trim() === 'exists') {
           alert('Nhà cung cấp đã tồn tại');
         } else if (response.trim() === 'updated') {
-          $('#myTable tbody').append(response);
+          // Cập nhật giao diện nếu nhà cung cấp đã được kích hoạt
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
           alert('Nhà cung cấp đã được cập nhật thành công');
         } else {
-          $('#myTable tbody').append(response);
+          // Thêm nhà cung cấp mới vào bảng
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
           alert('Thêm nhà cung cấp mới thành công');
         }
         $('#myModal').modal('hide');
+        $('.btn-delete').click(function(e){
+          e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+          var supplierId = $(this).closest('tr').data('ncc'); // Lấy mã nhà cung cấp từ data-id của hàng
+          if(confirm("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
+              $.ajax({
+                  url: 'module/main/caidat/deletencc.php', // Đường dẫn đến file xử lý xóa
+                  method: 'POST',
+                  data: {ncc: supplierId}, // Dữ liệu gửi đi (mã nhà cung cấp)
+                  success: function(response){
+                
+                          $('[data-ncc="' + supplierId + '"]').remove();
+                          console.log(response)
+                      
+                  }
+              });
+          }
+      });
       }
     });
   });

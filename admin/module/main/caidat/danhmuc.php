@@ -121,14 +121,6 @@ $(document).ready(function() {
       return;
     }
 
-    // Thêm dữ liệu vào bảng HTML
-    var newRow = '<tr data-loai="">' +
-                 '<td></td>' + // Mã loại sản phẩm sẽ được cập nhật sau khi thêm thành công
-                 '<td>' + tenLoai + '</td>' +
-                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
-                 '</tr>';
-    $('#myTable tbody').append(newRow);
-
     $.ajax({
       url: 'module/main/caidat/insertdm.php',
       method: 'POST',
@@ -154,6 +146,23 @@ $(document).ready(function() {
           alert('Thêm loại sản phẩm mới thành công');
         }
         $('#myModal').modal('hide');
+          $('.btn-delete').click(function(e){
+        e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+        var supplierId = $(this).closest('tr').data('loai');
+        if(confirm("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
+            $.ajax({
+                url: 'module/main/caidat/deletedm.php', // Đường dẫn đến file xử lý xóa
+                method: 'POST',
+                data: {loai: supplierId}, // Dữ liệu gửi đi 
+                success: function(response){
+              
+                        $('[data-loai="' + supplierId + '"]').remove();
+                        console.log(response)
+                    
+                }
+            });
+        }
+    });
       }
     });
   });

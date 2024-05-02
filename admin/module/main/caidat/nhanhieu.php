@@ -132,29 +132,50 @@ $(document).ready(function() {
       return;
     }
 
-    // Thêm dữ liệu vào bảng HTML
-    var newRow = '<tr data-nh="' + tenNhanHieu + '">' +
-                 '<td></td>' + // Mã nhãn hiệu sẽ được cập nhật sau khi thêm thành công
-                 '<td>' + tenNhanHieu + '</td>' +
-                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
-                 '</tr>';
-    $('#myTable tbody').append(newRow);
-
     $.ajax({
       url: 'module/main/caidat/insertnh.php',
       method: 'POST',
-      data: {tenNhanHieu: tenNhanHieu},
+      data: { tenNhanHieu: tenNhanHieu },
       success: function(response) {
         if (response.trim() === 'exists') {
-          alert('Đã Tồn Tại Nhãn Hiệu');
+          alert('Nhãn hiệu đã tồn tại');
         } else if (response.trim() === 'updated') {
-          $('#myTable tbody').append(response);
-          alert('Giá trị đã được cập nhật thành công');
+          // Cập nhật giao diện nếu nhãn hiệu đã được kích hoạt
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
+          alert('Nhãn hiệu đã được cập nhật thành công');
         } else {
-          $('#myTable tbody').append(response);
-          alert('Thêm Nhãn Hiệu Thành Công');
+          // Thêm nhãn hiệu mới vào bảng
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
+          alert('Thêm nhãn hiệu thành công');
         }
         $('#myModal').modal('hide');
+        $('.btn-delete').click(function(e){
+      e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+      var supplierId = $(this).closest('tr').data('nh'); // 
+      if(confirm("Bạn có chắc chắn muốn xóa nhãn hiệu này không?")) {
+          $.ajax({
+              url: 'module/main/caidat/deletenh.php', // Đường dẫn đến file xử lý xóa
+              method: 'POST',
+              data: {nh: supplierId}, // Dữ liệu gửi đi 
+              success: function(response){
+            
+                      $('[data-nh="' + supplierId + '"]').remove();
+                      console.log(response) 
+                  
+              }
+          });
+      }
+   });
       }
     });
   });
