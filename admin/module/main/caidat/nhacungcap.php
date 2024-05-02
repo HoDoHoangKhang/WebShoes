@@ -163,6 +163,23 @@ $(document).ready(function() {
           alert('Thêm nhà cung cấp mới thành công');
         }
         $('#myModal').modal('hide');
+        $('.btn-delete').click(function(e){
+          e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+          var supplierId = $(this).closest('tr').data('ncc'); // Lấy mã nhà cung cấp từ data-id của hàng
+          if(confirm("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
+              $.ajax({
+                  url: 'module/main/caidat/deletencc.php', // Đường dẫn đến file xử lý xóa
+                  method: 'POST',
+                  data: {ncc: supplierId}, // Dữ liệu gửi đi (mã nhà cung cấp)
+                  success: function(response){
+                
+                          $('[data-ncc="' + supplierId + '"]').remove();
+                          console.log(response)
+                      
+                  }
+              });
+          }
+      });
       }
     });
   });

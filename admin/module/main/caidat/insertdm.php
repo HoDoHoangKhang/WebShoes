@@ -40,9 +40,8 @@ if (isset($_POST['tenLoai'])) {
                     <td>" . $row["MaLoai"] . "</td>
                     <td>" . $row["TenLoai"] . "</td>
                     <td>
-                    <td>
-                <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'>Xóa</button>
-            </td>
+                        <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'>Xóa</button>
+                    </td>
                   </tr>";
         }
     }

@@ -159,6 +159,23 @@ $(document).ready(function() {
           alert('Thêm nhãn hiệu thành công');
         }
         $('#myModal').modal('hide');
+        $('.btn-delete').click(function(e){
+      e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+      var supplierId = $(this).closest('tr').data('nh'); // 
+      if(confirm("Bạn có chắc chắn muốn xóa nhãn hiệu này không?")) {
+          $.ajax({
+              url: 'module/main/caidat/deletenh.php', // Đường dẫn đến file xử lý xóa
+              method: 'POST',
+              data: {nh: supplierId}, // Dữ liệu gửi đi 
+              success: function(response){
+            
+                      $('[data-nh="' + supplierId + '"]').remove();
+                      console.log(response) 
+                  
+              }
+          });
+      }
+   });
       }
     });
   });
