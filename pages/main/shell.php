@@ -19,7 +19,7 @@
             <div class="shell-main">
                 <div class="shell-show" style="overflow: auto;">
                     <table style="width: 100%; font-size: 16px;" class="table-shell">
-                        <thead style="">
+                        <thead>
                             <tr>
                                 <th style="min-width: 300px;" >Sản phẩm</th>
                                 <th style="min-width: 80px;">Size</th>
@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody id="cartProduct">
-                            <tr>
+                            <!-- <tr>
                                 <td>
                                     <div class="shell-product">
                                         <div class="shell-img">
@@ -50,7 +50,7 @@
                                 </td>
                                 <td>500.000 đ</td>
                                 <td><input style="width: 20px; height: 20px;" type="checkbox"></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                     <!-- <div class="shell-header">
@@ -220,9 +220,11 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    cartUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        cartUser.push(item);
+                    }
+                <?php } ?>
             });
             return cartUser;
         }
@@ -367,7 +369,9 @@
                         button.parentElement.parentElement.remove();//Xóa trên giao diện
                         var MaSP=parseInt(button.getAttribute('id'));
                         var Size= parseInt(button.parentElement.parentElement.children[1].innerText);
-                        var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                        <?php if(isset($_SESSION['taikhoan'])){ ?>
+                            var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                        <?php } ?>
                         console.log(MaSP+" "+Size+" "+TaiKhoan);
                         removeFromCart(MaSP,Size,TaiKhoan);
                         setQuantityCard();
@@ -399,9 +403,11 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    cartUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        cartUser.push(item);
+                    }
+                <?php } ?>
             });
             return cartUser;
         }

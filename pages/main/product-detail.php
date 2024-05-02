@@ -531,67 +531,77 @@
         </div>
     </section>
 </main>
-<script src="index.js">
+<!-- <script src="index.js">
     
-</script>
+</script> -->
 <script>
     $(document).ready(function(){
         var btnAddWish=document.querySelector(".detail-btn__like");
         btnAddWish.addEventListener('click',function(){
             console.log("aaaaaa")
-            $.ajax({
-                url: "./control/ajax_action.php",
-                method: "POST",
-                data: {
-                    action: "themvaoyeuthich"
-                },
-                success: function(data){
-                    creatToast("item-success","Thêm vào yêu thích thàng công !","fa-solid fa-circle-check","item-end-success");
-                    var maSP=parseInt(<?php echo $_GET['id'] ?>);
-                    var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
-                    var object={
-                        maSP: maSP,
-                        taikhoan:taikhoan
-                    }
-                    console.log(object);
-                    addToWish(object);
-                }
-            });
-        })
-        var btnAddCart=document.querySelector(".detail-btn__cart");
-        btnAddCart.addEventListener('click',function(){
-            if(getSize()==0){// chưa chọn size
-                var sizeWarning=document.querySelector(".size-warning");
-                sizeWarning.style.opacity=1;
-            }
-            else{   //đã chọn size
+            <?php if(isset($_SESSION['taikhoan'])){ ?>
                 $.ajax({
                     url: "./control/ajax_action.php",
                     method: "POST",
                     data: {
-                        MaSP: parseInt(<?php echo $MaSP ?>),
-                        SizeSP: getSize(),
-                        SoLuong: getQuantity(),
-                        action: "themVaoGioHang"
+                        action: "themvaoyeuthich"
                     },
-                    success: function(data){//Nếu = 0 thì số luog trong kho không đủ
-                        if(data==0){
-                            var stock=document.querySelector(".stock-warning");
-                            stock.style.opacity=1;
+                    success: function(data){
+                        creatToast("item-success","Thêm vào yêu thích thàng công !","fa-solid fa-circle-check","item-end-success");
+                        var maSP=parseInt(<?php echo $_GET['id'] ?>);
+                        var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                        var object={
+                            maSP: maSP,
+                            taikhoan:taikhoan
                         }
-                        else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
-                            creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
-                            if(data>0){
-                                var product = { TaiKhoan: "<?php echo $_SESSION['taikhoan'] ?>",MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
-                                // Thêm sản phẩm vào giỏ hàng
-                                addToCart(product);
-                                setQuantityCard();
-                                // showCartUser();
-                            }
-                        }
+                        console.log(object);
+                        addToWish(object);
                     }
                 });
-            }
+            <?php } 
+            else{ ?>
+                alert("Vui lòng đăng nhập");
+            <?php } ?>
+        })
+        var btnAddCart=document.querySelector(".detail-btn__cart");
+        btnAddCart.addEventListener('click',function(){
+            <?php if(isset($_SESSION['taikhoan'])){ ?>
+                if(getSize()==0){// chưa chọn size
+                    var sizeWarning=document.querySelector(".size-warning");
+                    sizeWarning.style.opacity=1;
+                }
+                else{   //đã chọn size
+                    $.ajax({
+                        url: "./control/ajax_action.php",
+                        method: "POST",
+                        data: {
+                            MaSP: parseInt(<?php echo $MaSP ?>),
+                            SizeSP: getSize(),
+                            SoLuong: getQuantity(),
+                            action: "themVaoGioHang"
+                        },
+                        success: function(data){//Nếu = 0 thì số luog trong kho không đủ
+                            if(data==0){
+                                var stock=document.querySelector(".stock-warning");
+                                stock.style.opacity=1;
+                            }
+                            else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
+                                creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
+                                if(data>0){
+                                    var product = { TaiKhoan: "<?php echo $_SESSION['taikhoan'] ?>",MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
+                                    // Thêm sản phẩm vào giỏ hàng
+                                    addToCart(product);
+                                    setQuantityCard();
+                                    // showCartUser();
+                                }
+                            }
+                        }
+                    });
+                }
+            <?php } 
+            else{ ?>
+                alert("Vui lòng đăng nhập");
+            <?php } ?>
         })
         function addToCart(product) {
             var cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -677,9 +687,11 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    cartUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        cartUser.push(item);
+                    }
+                <?php } ?>
             });
             return cartUser;
         }
@@ -767,39 +779,44 @@
                 var href = parentLink.getAttribute('href'); 
                 event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
                 event.stopPropagation(); // Ngăn chặn sự lan truyền của sự kiện
-                if (like.classList.contains("fa-regular")) {
-                    like.classList.remove("fa-regular");
-                    like.classList.add("fa-solid");
-                    like.style.color = "#F02757";
-                    console.log(getIdFromUrl(href));
-                    $.ajax({
-                        url: "./control/ajax_action.php",
-                        method: "POST",
-                        data: {
-                            action: "themvaoyeuthich"
-                        },
-                        success: function(data){
-                            var maSP=parseInt(getIdFromUrl(href));
-                            var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
-                            var object={
-                                maSP: maSP,
-                                taikhoan:taikhoan
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if (like.classList.contains("fa-regular")) {
+                        like.classList.remove("fa-regular");
+                        like.classList.add("fa-solid");
+                        like.style.color = "#F02757";
+                        console.log(getIdFromUrl(href));
+                        $.ajax({
+                            url: "./control/ajax_action.php",
+                            method: "POST",
+                            data: {
+                                action: "themvaoyeuthich"
+                            },
+                            success: function(data){
+                                var maSP=parseInt(getIdFromUrl(href));
+                                var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
+                                var object={
+                                    maSP: maSP,
+                                    taikhoan:taikhoan
+                                }
+                                console.log(object);
+                                addToWish(object);
                             }
-                            console.log(object);
-                            addToWish(object);
-                        }
-                    });
-                } else {
-                    // Xóa trái tim trên giao diện
-                    like.classList.remove("fa-solid");
-                    like.classList.add("fa-regular");
-                    like.style.color = "";
-                    //Xóa khỏi danh sách
-                    var MaSP=parseInt(getIdFromUrl(href));
-                    var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
-                    console.log(MaSP+" "+TaiKhoan);
-                    removeFromWish(MaSP,TaiKhoan);
-                }
+                        });
+                    } else {
+                        // Xóa trái tim trên giao diện
+                        like.classList.remove("fa-solid");
+                        like.classList.add("fa-regular");
+                        like.style.color = "";
+                        //Xóa khỏi danh sách
+                        var MaSP=parseInt(getIdFromUrl(href));
+                        var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                        console.log(MaSP+" "+TaiKhoan);
+                        removeFromWish(MaSP,TaiKhoan);
+                    }
+                <?php } 
+                else{ ?>
+                    alert("Vui lòng đăng nhập");
+                <?php } ?>
             }); 
         });
         function showLikes(){
@@ -816,12 +833,14 @@
                         var MaSP=parseInt(getIdFromUrl(href));
                         var wish = JSON.parse(localStorage.getItem('wish')) || [];
                         wish.forEach(element => {
-                            if (element['taikhoan'] == "<?php echo $_SESSION['taikhoan']?>" && element['maSP'] == MaSP) {
-                                var like = card.querySelector(".card-btn__like");
-                                like.classList.remove("fa-regular");
-                                like.classList.add("fa-solid");
-                                like.style.color = "#F02757";
-                            }
+                            <?php if(isset($_SESSION['taikhoan'])){ ?>
+                                if (element['taikhoan'] == "<?php echo $_SESSION['taikhoan']?>" && element['maSP'] == MaSP) {
+                                    var like = card.querySelector(".card-btn__like");
+                                    like.classList.remove("fa-regular");
+                                    like.classList.add("fa-solid");
+                                    like.style.color = "#F02757";
+                                }
+                            <?php } ?>
                         });
                     });
                 }

@@ -1,8 +1,8 @@
 <?php
     session_start();
-    if(!isset($_SESSION['taikhoan'])){
-        header('Location: login.php');
-    }
+    // if(!isset($_SESSION['taikhoan'])){
+    //     header('Location: login.php');
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">

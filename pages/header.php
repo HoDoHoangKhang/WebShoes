@@ -160,9 +160,11 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    cartUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        cartUser.push(item);
+                    }
+                <?php } ?> 
             });
             return cartUser;
         }
