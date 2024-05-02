@@ -1,4 +1,6 @@
-<main>
+<main style="position: relative;">
+    <div class="notification">
+    </div>
     <section class="hero">
         <div class="container">
             <div class="hero-main">
@@ -339,7 +341,7 @@
                     }
                 <?php } 
                 else{ ?>
-                    alert("Vui lòng đăng nhập");
+                    creatToast("item-warning","Vui lòng đăng nhập!","fa-solid fa-circle-exclamation","item-end-warning");
                 <?php } ?>
                 
             }); 

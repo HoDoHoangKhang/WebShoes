@@ -727,3 +727,4 @@ function creatToast(status,mess,icon,end_color){
         newDiv.classList.add("hidden");
     }, 1000);
 }
+

@@ -123,21 +123,21 @@
                 </div>
                 <?php 
                     if(isset($_SESSION['taikhoan'])){?>
-                       <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
-                            <span class="header__action-login-name">
-                                <?php
-                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
-                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
-                                    $HoTen=getUser($_SESSION['taikhoan'])->getHoTen();
-                                    $slipt = explode(" ", $HoTen);
-                                    // Lấy từ cuối cùng trong mảng
-                                    $Ten = end($slipt)." ".$HoTen;
-                                    echo $Ten;
-                                ?>
-                            </span>
-                            
-                            <i class="fa-solid fa-user"></i>
-                        </a>
+                            <a href="index.php?danhmuc=profile"  class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
+                                <span class="header__action-login-name" >
+                                    <?php
+                                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
+                                        $HoTen=getUser($_SESSION['taikhoan'])->getHoTen();
+                                        $slipt = explode(" ", $HoTen);
+                                        // Lấy từ cuối cùng trong mảng
+                                        $Ten = end($slipt)." ".$HoTen;
+                                        echo $Ten;
+                                    ?>
+                                </span>
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+
                     <?php }
                     else{ ?>
                         <a href="login.php" class="header__action-login">

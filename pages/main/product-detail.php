@@ -560,7 +560,7 @@
                 });
             <?php } 
             else{ ?>
-                alert("Vui lòng đăng nhập");
+                creatToast("item-warning","Vui lòng đăng nhập!","fa-solid fa-circle-exclamation","item-end-warning");
             <?php } ?>
         })
         var btnAddCart=document.querySelector(".detail-btn__cart");
@@ -600,7 +600,7 @@
                 }
             <?php } 
             else{ ?>
-                alert("Vui lòng đăng nhập");
+                creatToast("item-warning","Vui lòng đăng nhập!","fa-solid fa-circle-exclamation","item-end-warning");
             <?php } ?>
         })
         function addToCart(product) {
@@ -815,7 +815,7 @@
                     }
                 <?php } 
                 else{ ?>
-                    alert("Vui lòng đăng nhập");
+                    creatToast("item-warning","Vui lòng đăng nhập!","fa-solid fa-circle-exclamation","item-end-warning");
                 <?php } ?>
             }); 
         });
