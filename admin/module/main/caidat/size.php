@@ -121,42 +121,37 @@ $(document).ready(function() {
       return;
     }
 
-    // Thêm dữ liệu vào bảng HTML
-    var newRow = '<tr data-size="' + size + '">' +
-                 '<td>' + size + '</td>' +
-                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
-                 '</tr>';
-    $('#myTable tbody').append(newRow);
+    
 
     $.ajax({
-      url: 'module/main/caidat/insertsize.php',
-      method: 'POST',
-      data: { size: size },
-      success: function(response) {
-        if (response.trim() === 'exists') {
-          alert('Size đã tồn tại');
-        } else if (response.trim() === 'updated') {
-          // Cập nhật giao diện nếu size đã được kích hoạt
-          var lastRow = $('#myTable tbody tr:last');
-          if (lastRow.length) {
-            lastRow.after(response);
-          } else {
-            $('#myTable tbody').append(response);
-          }
-          alert('Size đã được cập nhật thành công');
-        } else {
-          // Thêm size mới vào bảng
-          var lastRow = $('#myTable tbody tr:last');
-          if (lastRow.length) {
-            lastRow.after(response);
-          } else {
-            $('#myTable tbody').append(response);
-          }
-          alert('Thêm size mới thành công');
-        }
-        $('#myModal').modal('hide');
+  url: 'module/main/caidat/insertsize.php',
+  method: 'POST',
+  data: { size: size },
+  success: function(response) {
+    if (response.trim() === 'exists') {
+      alert('Size đã tồn tại');
+    } else if (response.trim() === 'updated') {
+      // Cập nhật giao diện nếu size đã được kích hoạt
+      var lastRow = $('#myTable tbody tr:last');
+      if (lastRow.length) {
+        lastRow.after(response);
+      } else {
+        $('#myTable tbody').append(response);
       }
-    });
+      alert('Size đã được cập nhật thành công');
+    } else {
+      // Thêm size mới vào bảng
+      var lastRow = $('#myTable tbody tr:last');
+      if (lastRow.length) {
+        lastRow.after(response);
+      } else {
+        $('#myTable tbody').append(response);
+      }
+      alert('Thêm size mới thành công');
+    }
+    $('#myModal').modal('hide');
+  }
+});
   });
 });
 </script>

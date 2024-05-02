@@ -121,14 +121,6 @@ $(document).ready(function() {
       return;
     }
 
-    // Thêm dữ liệu vào bảng HTML
-    var newRow = '<tr data-loai="">' +
-                 '<td></td>' + // Mã loại sản phẩm sẽ được cập nhật sau khi thêm thành công
-                 '<td>' + tenLoai + '</td>' +
-                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
-                 '</tr>';
-    $('#myTable tbody').append(newRow);
-
     $.ajax({
       url: 'module/main/caidat/insertdm.php',
       method: 'POST',
@@ -137,6 +129,7 @@ $(document).ready(function() {
         if (response.trim() === 'exists') {
           alert('Loại sản phẩm đã tồn tại');
         } else if (response.trim() === 'updated') {
+          // Cập nhật giao diện nếu loại sản phẩm đã được kích hoạt
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);
@@ -145,6 +138,7 @@ $(document).ready(function() {
           }
           alert('Loại sản phẩm đã được cập nhật thành công');
         } else {
+          // Thêm loại sản phẩm mới vào bảng
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);

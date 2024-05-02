@@ -115,6 +115,7 @@ $conn->close();
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <div class="content">
     <div class="tableBox">
         <div class="tableTitle">
@@ -688,6 +689,11 @@ $conn->close();
 
     productTable.append(thead).append(tbody);
     $('#productTable').html(productTable);
+    $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
   }
 
   $('#rowLimitSelect').on('change', function() {
@@ -897,6 +903,11 @@ $conn->close();
 
             productTable.append(thead).append(tbody);
             $('#productTable').append(productTable);
+            $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
         }
 
         myChart = new Chart(document.getElementById('myChart'), configMyChart);
@@ -916,32 +927,33 @@ $conn->close();
 </script>
 <script>
    $('#submit-date-range-thongke').click(function() {
-    var startDate = $('#startDate-1').val();
-    var endDate = $('#endDate-1').val();
-    var tenLoai = $('#productCategory').val();
-    if (tenLoai === "") {
-        tenLoai = "ALL";
-    }
-
-    $.ajax({
-        url: 'module/main/dulieu/thongke1loai.php',
-        type: 'POST',
-        data: {
-            start_date: startDate,
-            end_date: endDate,
-            ten_loai: tenLoai
-        },
-        success: function(response) {
-            var data = JSON.parse(response);
-            var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
-            var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
-
-            if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-                alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
-                return;
+            var startDate = $('#startDate-1').val();
+            var endDate = $('#endDate-1').val();
+            var tenLoai = $('#productCategory').val();
+            if (tenLoai === "") {
+                tenLoai = "ALL";
             }
 
-            if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
+            $.ajax({
+                url: 'module/main/dulieu/thongke1loai.php',
+                type: 'POST',
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    ten_loai: tenLoai
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+                    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
+
+                    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+                        alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+                        return;
+                    }
+
+                    if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
+                        if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
                 // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
                 var tongTienHoaDon = data.tong_tien[0].value;
                 var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
@@ -1053,33 +1065,41 @@ $conn->close();
                 }
             }
 
-            $('#productTable').empty();
+                        $('#productTable').empty();
 
-            if (data.san_pham && data.san_pham.length > 0) {
-                var productTable = $('<table>').addClass('table table-striped');
-                var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
-                var tbody = $('<tbody>');
+                        if (data.san_pham && data.san_pham.length > 0) {
+                            var productTable = $('<table>').addClass('table table-striped');
+                            var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
+                            var tbody = $('<tbody>');
 
-                $.each(data.san_pham, function(index, product) {
-                    var row = $('<tr>');
-                    row.append('<td>' + product.TenSP + '</td>');
-                    row.append('<td>' + product.TenNhanHieu + '</td>');
-                    row.append('<td>' + product.TenLoai + '</td>');
-                    row.append('<td>' + product.TongSoLuong + '</td>');
-                    tbody.append(row);
-                });
+                            $.each(data.san_pham, function(index, product) {
+                                var row = $('<tr>');
+                                row.append('<td>' + product.TenSP + '</td>');
+                                row.append('<td>' + product.TenNhanHieu + '</td>');
+                                row.append('<td>' + product.TenLoai + '</td>');
+                                row.append('<td>' + product.TongSoLuong + '</td>');
+                                tbody.append(row);
+                            });
 
-                productTable.append(thead).append(tbody);
-                $('#productTable').append(productTable);
-            }
+                            productTable.append(thead).append(tbody);
+                            $('#productTable').append(productTable);
 
-            $('#thongkeModal').modal('hide');
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-});
+                            // Khởi tạo DataTables cho bảng sản phẩm
+                            $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
+                        }
+
+                        $('#thongkeModal').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 </script>
 
    
