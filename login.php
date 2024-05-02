@@ -82,24 +82,27 @@
                                         <div class="mb-5">
                                             <h3 class="h4 font-weight-bold text-theme">Login</h3>
                                         </div>
+
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="text" class="form-control" id="username">
+                                                <input type="text" class="form-control" id="username" name="txtUser">
                                             </div>
                                             <div class="form-group mb-5">
                                                 <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="password">
+                                                <input type="password" class="form-control" id="password" name="txtPass">
                                             </div>
-                                            <button class="btn btn-theme" id="dangnhap">Login</button>
+                                            <p id="thongbao" style="color: red"></p>
+                                            <button type="submit" class="btn btn-theme" id="dangnhap" name="btnLogin">Login</button>
                                             <a href="#l" class="link float-right text-primary">Forgot password?</a>
-                                            <p id="thongbao" style="color: red; margin-top: 10px;"></p>
 
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6 d-none d-lg-inline-block">
                                     <div class="account-block rounded-right">
                                         <div class="overlay rounded-right"></div>
                                         <div class="account-testimonial">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +112,9 @@
                         <!-- end card-body -->
                     </div>
                     <!-- end card -->
+
                     <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.php" class="link text-primary ml-1">register</a></p>
+
                     <!-- end row -->
 
                 </div>
@@ -138,11 +143,9 @@
                     },
                     success: function(data) {
                         var thongbao=document.getElementById("thongbao");
-                        if (data == 'Để trống tên đăng nhập và mật khẩu') {
-                            console.log(username);
-                            console.log(password);
-                            console.log(data);
-                        }
+                        console.log(username);
+                        console.log(password);
+                        console.log(data);
                         if (data === 'Để trống tên đăng nhập và mật khẩu') {
                             thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin!';
                         }
@@ -164,6 +167,7 @@
                         else{                       
                             window.location.href = 'index.php';
                         }
+                        
                     },
                     error: function(xhr, status, error) {
                         console.error('Error:', status, error);
