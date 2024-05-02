@@ -134,11 +134,16 @@
                     method: 'POST',
                     data: {
                         username: username,
-                        password: password
+                        password: password,
                     },
                     success: function(data) {
                         var thongbao=document.getElementById("thongbao");
                         if (data == 'Để trống tên đăng nhập và mật khẩu') {
+                            console.log(username);
+                            console.log(password);
+                            console.log(data);
+                        }
+                        if (data === 'Để trống tên đăng nhập và mật khẩu') {
                             thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin!';
                         }
                         else if(data == 'Để trống tên đăng nhập') {
