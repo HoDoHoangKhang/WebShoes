@@ -67,11 +67,7 @@
         .form-group{
             margin: 10px 0;
         }
-        .warning-tendangnhap{
-            color: red;
-            margin-left: 20px;
-            opacity: 0;
-        }
+
     </style>
 </head>
 <body>
@@ -88,41 +84,41 @@
                                             <h3 class="h4 font-weight-bold text-theme">Register</h3>
                                         </div>
                                             <div class="form-group">
-                                                <label>Tên đăng nhập</label><span class="warning-tendangnhap">Tên đăng nhập đã tồn tại</span>
-                                                <input type="text" id="tenDangNhap" class="form-control">
+                                                <label>Tên đăng nhập</label>
+                                                <input type="text" id="txttenDangNhap" class="form-control">
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
                                                 
-                                                    <label>Họ và tên</label> <span class="warning-hoten">Phải có họ và tên và không chứa ký tự số</span>
-                                                    <input type="text" class="form-control">
+                                                    <label>Họ và tên</label>
+                                                    <input type="text" id="txtHoTen" class="form-control">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Ngày sinh</label>
-                                                    <input type="date" class="form-control">
+                                                    <input type="date" id="txtngaysinh" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-4">
                                                     <label>Số điện thoại</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" id ="txtSDT" class="form-control">
                                                 </div>
                                                 <div class="form-group col-lg-4">
                                                     <label>Email</label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" id="txtEmail" class="form-control">
                                                 </div>
                                                 <div class="form-group col-lg-4" >
                                                     <label>Giới tính</label>
                                                     <div style="display: flex; gap: 30px;">
-                                                        <div class="form-check" style="margin-top: 10px;">
+                                                        <div class="form-check" style="margin-top: 10px;" >
                                                             <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                                                            <label class="form-check-label" for="male">
+                                                            <label class="form-check-label" for="1">
                                                                 Nam
                                                             </label>
                                                         </div>
                                                         <div class="form-check" style="margin-top: 10px;">
                                                             <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                                                            <label class="form-check-label" for="female">
+                                                            <label class="form-check-label" for="0">
                                                                 Nữ
                                                             </label>
                                                         </div>
@@ -134,16 +130,17 @@
                                             
                                             <div class="form-group">
                                                 <label>Địa chỉ</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" id="txtdiachi" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Mật khẩu</label>
-                                                <input type="password" class="form-control">
+                                                <input type="password" id="txtMK" class="form-control">
                                             </div>
                                             <div class="form-group mb-5">
                                                 <label>Nhập lại mật khẩu</label>
-                                                <input type="password" class="form-control">
+                                                <input type="password" id="txtMK02" class="form-control">
                                             </div>
+                                            <p id="thongbao" style="color: red"></p>
                                             <button id="btnSubmit" class="btn btn-theme">Register</button>
                                     </div>
                                 </div>
@@ -174,21 +171,97 @@
                 type: 'POST',
                 data: {
                     tenDangNhap: getTenDangNhap(),
+                    hoTen: getHoTen(),
+                    sdt: getSDT(),
+                    email: getEmail(),
+                    day: getNgaysinh(),
+                    mk: getMK(),
+                    mk02: getMK02(),
+                    diachi: getDiachi(),
+                    gioitinh: getGioitinh(),
                 },
                 success: function(data){
-                    var warningTenDangNhap=document.querySelector(".warning-tendangnhap");
-                    if(data==1){
-                        warningTenDangNhap.style.opacity=1;
+                    var thongbao=document.getElementById("thongbao");
+                    if(data== 'botrongthongtin'){
+                        thongbao.innerHTML = 'Vui lòng điền đầy đủ thông tin';
+                    }
+                    else if (data == 'khongchongioitinh'){
+                        thongbao.innerHTML='Vui lòng chọn giới tính';
+                    }
+                    else if (data == 'khongchonngaysinh'){
+                        thongbao.innerHTML='Vui lòng chọn ngày sinh';
+                    }
+                    else if(data=='tendangnhapdatontai'){
+                        thongbao.innerHTML ='Tên Đăng nhập đã tồn tại trong hệ thống!';
+                    }
+                    else if (data=='saihoten'){
+                        thongbao.innerHTML ='Phải có họ và tên, không bao gồm kí tự số và kí tự đặc biệt(ví dụ: Nguyễn Văn Thọt)!';
+                    }
+                    else if (data=='saisdt'){
+                        thongbao.innerHTML ='Số điện thoại phải bắt đầu bằng số 0 và phải có 10 số (ví dụ: 0338873461)';
+                    }
+                    else if (data== 'sdtdatontai'){
+                        thongbao.innerHTML ='Số điện thoại đã tồn tại trong hệ thống!';
+                    }
+                    else if (data=='saiemail'){
+                        thongbao.innerHTML ='Email phải có dạng @gmail.com';
+                    }
+                    else if (data=='saingaysinh') {
+                        thongbao.innerHTML ='Ngày sinh không hợp lệ!';
+                    }
+                    else if (data=='saimk') {
+                        thongbao.innerHTML ='Mật khẩu không hợp lệ, mật khẩu là chữ cái hoặc chữ số, có độ dài hơn 8 và không chứa kí tự đặc biệt(ví dụ: Password123)!';
+                    }
+                    else if (data=='saimk02') {
+                        thongbao.innerHTML ='Xác nhận mật khẩu sai!';
                     }
                     else{
-                        warningTenDangNhap.style.opacity=0;
+                        thongbao.innerHTML ='Đăng kí thành công';
                     }
                 }
             });
         });
     });
     function getTenDangNhap(){
-        var tenDangNhap = document.getElementById('tenDangNhap').value;
+        var tenDangNhap = document.getElementById('txttenDangNhap').value;
         return tenDangNhap;
+    }
+    function getHoTen(){
+        var hoTen = document.getElementById('txtHoTen').value;
+        return hoTen;
+    }
+    function getSDT(){
+        var sdt = document.getElementById('txtSDT').value;
+        return sdt;
+    }
+    function getEmail(){
+        var email = document.getElementById('txtEmail').value;
+        return email;
+    }
+    function getNgaysinh(){
+        var day = document.getElementById('txtngaysinh').value;
+        return day;
+    }
+    function getMK(){
+        var mk = document.getElementById('txtMK').value;
+        return mk;
+    }
+    function getMK02(){
+        var mk02 = document.getElementById('txtMK02').value;
+        return mk02;
+    }
+    function getDiachi(){
+        var diachi = document.getElementById('txtdiachi').value;
+        return diachi;
+    }
+    function getGioitinh(){
+        var gioitinh = document.querySelector('input[name="gender"]:checked');
+        var selectedGender;
+        if (gioitinh) {
+            selectedGender = gioitinh.value;
+        } else {
+            selectedGender="";
+        }
+        return selectedGender;
     }
 </script>

@@ -123,9 +123,9 @@ $result = $conn->query($sql);
                 </td>
                 <td>
                     <ul>
-                        <li>ID: <?php echo $row['MaNV']; ?></li></li>
-                        <li>Tên: <?php echo $row['HoTenNV']; ?> </li>
-                        <li>SĐT: <?php echo $row['SDTNV']; ?></li>
+                        <li><?php if($row['MaNV']==0){echo "";}else{ echo "ID: ".$row['MaNV'];} ?></li>
+                        <li><?php if($row['HoTenNV']==0){echo "";}else{ echo "Tên: ".$row['HoTenNV'];} ?></li>
+                        <li><?php if($row['SDTNV']==0){echo "";}else{ echo "SDT: ".$row['SDTNV'];} ?></li>
                         <li></li>
                     </ul>
                 </td>
@@ -154,6 +154,8 @@ $result = $conn->query($sql);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
+    //lọc đơn hàng
+
     //Hủy đơn hàng
     $(document).on('click', '.huy-don', function() {
         var MaPX = $(this).closest('tr').find('td:first-child').text();

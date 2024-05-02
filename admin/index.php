@@ -37,11 +37,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,100;1,300&display=swap" rel="stylesheet">
     <!-- slick -->
-    <link
+    <!-- <link
     rel="stylesheet"
     type="text/css"
     href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-    />
+    /> -->
 
     <!-- Bootstrap -->
 
@@ -53,6 +53,8 @@
     
     <!-- <link rel="stylesheet" href="./assets/css/base.css"> -->
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/reponsive.css">
+
 
     <!-- font pro -->    
     <!-- <link rel="stylesheet" href="./assets/fonts/fontawesome.com/releases/v6.4.0/css/all.css">

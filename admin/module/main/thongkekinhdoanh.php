@@ -115,6 +115,7 @@ $conn->close();
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <div class="content">
     <div class="tableBox">
         <div class="tableTitle">
@@ -128,7 +129,7 @@ $conn->close();
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel">Thống kê sản phẩm bán chạy theo khoảng thời gian</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
                                 <form id="date-range-form">
@@ -143,107 +144,14 @@ $conn->close();
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Đóng</button>
                                 <button type="button" class="btn btn-primary" id="submit-date-range">OK</button>
                             </div>
                         </div>
                     </div>
                 </div>';
                 ?>
-                <button type="button" class="btn btn-primary loc-button" data-bs-toggle="modal" data-bs-target="#locsanphamModal">Lọc</button>
-                <div class="modal fade" id="locsanphamModal" tabindex="-1" role="dialog" aria-labelledby="locsanphamLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="locsanphamLabel">Lọc sản phẩm</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="locTheo">Lọc theo:</label>
-                                    <select class="form-control" id="locTheo">
-                                        <option value="ngay">Ngày</option>
-                                        <option value="nhanhieu">Nhãn Hiệu</option>
-                                        <option value="loai">Loại</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="ngayInput" style="display: none;">
-                                    <label for="ngay">Chọn ngày:</label>
-                                    <input type="date" class="form-control" id="ngay" name="ngay">
-                                </div>
-                                <div class="form-group" id="nhanhieuInput" style="display: none;">
-                                <label for="productCategory-1" class="form-label">Nhãn Hiệu</label>
-                                    <select class="form-select" id="productCategory-1">
-                                        <?php
-                                        // Kết nối đến cơ sở dữ liệu
-                                        $servername = "localhost";
-                                        $username = "root";
-                                        $password = "";
-                                        $dbname = "shoestore";
-                                        $conn = new mysqli($servername, $username, $password, $dbname);
-            
-                                        // Kiểm tra kết nối
-                                        if ($conn->connect_error) {
-                                            die("Kết nối thất bại: " . $conn->connect_error);
-                                        }
-            
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
-                                        $sql = "SELECT TenNhanHieu FROM nhanhieu WHERE hide = 1";
-                                        $result = $conn->query($sql);
-            
-                                        // Tạo các tùy chọn cho combobox
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row["TenNhanHieu"] . "'>" . $row["TenNhanHieu"] . "</option>";
-                                            }
-                                        }
-            
-                                        // Đóng kết nối
-                                        $conn->close();
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="loaiInput" style="display: none;">
-                                <label for="productCategory-2" class="form-label">Loại sản phẩm</label>
-                                    <select class="form-select" id="productCategory-2">
-                                        
-                                        <?php
-                                        // Kết nối đến cơ sở dữ liệu
-                                        $servername = "localhost";
-                                        $username = "root";
-                                        $password = "";
-                                        $dbname = "shoestore";
-                                        $conn = new mysqli($servername, $username, $password, $dbname);
-            
-                                        // Kiểm tra kết nối
-                                        if ($conn->connect_error) {
-                                            die("Kết nối thất bại: " . $conn->connect_error);
-                                        }
-            
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
-                                        $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
-                                        $result = $conn->query($sql);
-            
-                                        // Tạo các tùy chọn cho combobox
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
-                                            }
-                                        }
-            
-                                        // Đóng kết nối
-                                        $conn->close();
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary" id="loc-submit">Lọc</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <button type="button" class="btn btn-primary thongke-button" data-bs-toggle="modal" data-bs-target="#thongkeModal">Thống kê</button>
                 <div class="modal fade" id="thongkeModal" tabindex="-1" aria-labelledby="thongkeModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -267,30 +175,30 @@ $conn->close();
                                     <select class="form-select" id="productCategory">
                                         <option value="">Tất cả</option>
                                         <?php
-                                        // Kết nối đến cơ sở dữ liệu
+                                        
                                         $servername = "localhost";
                                         $username = "root";
                                         $password = "";
                                         $dbname = "shoestore";
                                         $conn = new mysqli($servername, $username, $password, $dbname);
             
-                                        // Kiểm tra kết nối
+                                     
                                         if ($conn->connect_error) {
                                             die("Kết nối thất bại: " . $conn->connect_error);
                                         }
             
-                                        // Lấy dữ liệu từ bảng "loaisp" với trạng thái "hide" là 1
+                                       
                                         $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
                                         $result = $conn->query($sql);
             
-                                        // Tạo các tùy chọn cho combobox
+                                     
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
                                                 echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
                                             }
                                         }
             
-                                        // Đóng kết nối
+                             
                                         $conn->close();
                                         ?>
                                     </select>
@@ -304,6 +212,100 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-primary loc-button" data-bs-toggle="modal" data-bs-target="#locsanphamModal">Lọc</button>
+                <div class="modal fade" id="locsanphamModal" tabindex="-1" role="dialog" aria-labelledby="locsanphamLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="locsanphamLabel">Lọc sản phẩm</h4>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="locTheo">Lọc theo:</label>
+                                    <select class="form-control" id="locTheo">
+                                        <option value="ngay">Ngày</option>
+                                        <option value="nhanhieu">Nhãn Hiệu</option>
+                                        <option value="loai">Loại</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="ngayInput" style="display: none;">
+                                    <label for="ngay">Chọn ngày:</label>
+                                    <input type="date" class="form-control" id="ngay" name="ngay">
+                                </div>
+                                <div class="form-group" id="nhanhieuInput" style="display: none;">
+                                <label for="productCategory-1" class="form-label">Nhãn Hiệu</label>
+                                    <select class="form-select" id="productCategory-1">
+                                        <?php
+                                      
+                                        $servername = "localhost";
+                                        $username = "root";
+                                        $password = "";
+                                        $dbname = "shoestore";
+                                        $conn = new mysqli($servername, $username, $password, $dbname);
+            
+                                        
+                                        if ($conn->connect_error) {
+                                            die("Kết nối thất bại: " . $conn->connect_error);
+                                        }
+            
+                                    
+                                        $sql = "SELECT TenNhanHieu FROM nhanhieu WHERE hide = 1";
+                                        $result = $conn->query($sql);
+            
+                                    
+                                        if ($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row["TenNhanHieu"] . "'>" . $row["TenNhanHieu"] . "</option>";
+                                            }
+                                        }
+            
+                              
+                                        $conn->close();
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="loaiInput" style="display: none;">
+                                <label for="productCategory-2" class="form-label">Loại sản phẩm</label>
+                                    <select class="form-select" id="productCategory-2">
+                                        
+                                        <?php
+                                   
+                                        $servername = "localhost";
+                                        $username = "root";
+                                        $password = "";
+                                        $dbname = "shoestore";
+                                        $conn = new mysqli($servername, $username, $password, $dbname);
+            
+                         
+                                        if ($conn->connect_error) {
+                                            die("Kết nối thất bại: " . $conn->connect_error);
+                                        }
+            
+                                    
+                                        $sql = "SELECT TenLoai FROM loaisp WHERE hide = 1";
+                                        $result = $conn->query($sql);
+            
+                                  
+                                        if ($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row["TenLoai"] . "'>" . $row["TenLoai"] . "</option>";
+                                            }
+                                        }
+            
+                    
+                                        $conn->close();
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" id="loc-submit">Lọc</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="tongTienDisplay">
@@ -506,8 +508,8 @@ $conn->close();
     var startDate = $('#start-date').val();
     var endDate = $('#end-date').val();
     if (startDate > endDate) {
-        alert("Lỗi ngày nhập");
-        return; // Thoát khỏi hàm click
+      alert("Lỗi ngày nhập");
+      return;
     }
     $.ajax({
       url: 'module/main/dulieu/get_sales_data.php',
@@ -519,84 +521,68 @@ $conn->close();
       success: function(response) {
         var data = JSON.parse(response);
         var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
-    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
+        var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
-    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-        // Hiển thị thông báo
-        alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+        if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+          alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+          return;
+        }
 
-        // Xóa các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
-
-        // Xóa các phần tử hiển thị cũ
-        $('.tongTienDisplay').remove();
-
-        // Xóa bảng sản phẩm
-        $('#productTable').empty();
-
-        return; // Thoát khỏi hàm success
-    }
-
-        // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
-
-        // Kiểm tra nếu data.nhan_hieu và data.loai_sp không phải là null hoặc undefined
         if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
-    var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+          var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
 
-    // Xóa các phần tử hiển thị cũ
-    $('.tongTienDisplay').remove();
+          // Xóa các phần tử hiển thị cũ
+          $('.tongTienDisplay').remove();
 
-    // Kiểm tra nếu có dữ liệu về tổng tiền
-    if (data.tong_tien[0]?.value) {
-        var tongTienHoaDon = data.tong_tien[0].value;
+          if (data.tong_tien[0]?.value) {
+            var tongTienHoaDon = data.tong_tien[0].value;
 
-        // Tạo phần tử hiển thị tổng tiền
-        const totalTienBox = document.createElement('div');
-        totalTienBox.classList.add('tongTienDisplay');
-        totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
+            const totalTienBox = document.createElement('div');
+            totalTienBox.classList.add('tongTienDisplay');
+            totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
 
-        const chartContainer = $('#myChart').parent();
-        chartContainer.append(totalTienBox);
-    } else {
-        // Hiển thị thông báo khi không có dữ liệu về tổng tiền
-        const chartContainer = $('#myChart').parent();
-        const noDataMessage = document.createElement('div');
-        noDataMessage.classList.add('tongTienDisplay');
-        noDataMessage.innerHTML = '<h3>Không có dữ liệu về tổng tiền đơn hàng</h3>';
-        chartContainer.append(noDataMessage);
-    }
+            const chartContainer = $('#myChart').parent();
+            chartContainer.append(totalTienBox);
+          } else {
+            const chartContainer = $('#myChart').parent();
+            const noDataMessage = document.createElement('div');
+            noDataMessage.classList.add('tongTienDisplay');
+            noDataMessage.innerHTML = '<h3>Không có dữ liệu về tổng tiền đơn hàng</h3>';
+            chartContainer.append(noDataMessage);
+          }
 
-    // Tạo phần tử hiển thị tổng số lượng sản phẩm
-    const totalSoLuongBox = document.createElement('div');
-    totalSoLuongBox.classList.add('tongTienDisplay');
-    totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
+          const totalSoLuongBox = document.createElement('div');
+          totalSoLuongBox.classList.add('tongTienDisplay');
+          totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
 
-    const chartContainer = $('#myChart').parent();
-    chartContainer.append(totalSoLuongBox);
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+          const chartContainer = $('#myChart').parent();
+          chartContainer.append(totalSoLuongBox);
+
+          // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
           configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
-          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu .map(item => item.value);
+          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-          // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
-          donutChartNhanHieu = new Chart(
-            document.getElementById('donutChartNhanHieu'),
-            configDonutChartNhanHieu
-          );
+          if (!donutChartNhanHieu) {
+            donutChartNhanHieu = new Chart(
+              document.getElementById('donutChartNhanHieu'),
+              configDonutChartNhanHieu
+            );
+          } else {
+            donutChartNhanHieu.update();
+          }
 
           // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
           configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
           configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-          // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
-          donutChartLoaiSP = new Chart(
-            document.getElementById('donutChartLoaiSP'),
-            configDonutChartLoaiSP
-          );
+          if (!donutChartLoaiSP) {
+            donutChartLoaiSP = new Chart(
+              document.getElementById('donutChartLoaiSP'),
+              configDonutChartLoaiSP
+            );
+          } else {
+            donutChartLoaiSP.update();
+          }
 
           // Cập nhật dữ liệu cho biểu đồ cột
           var configMyChart = {
@@ -656,49 +642,24 @@ $conn->close();
             ]
           };
 
-          // Tạo đối tượng Chart mới cho biểu đồ cột
-          myChart = new Chart(document.getElementById('myChart'), configMyChart);
-        }
-        $('#productTable').empty();
-        if (data.san_pham && data.san_pham.length > 0) {
+          if (!myChart) {
+            myChart = new Chart(document.getElementById('myChart'), configMyChart);
+          } else {
+            myChart.data.labels = data.nhan_hieu.map(item => item.label);
+            myChart.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
+            myChart.update();
+          }
+
+          $('#productTable').empty();
+          if (data.san_pham && data.san_pham.length > 0) {
             var selectHTML = '<div class="row mb-3"><div class="col-md-6"><select id="rowLimitSelect" class="form-control"><option value="all">All</option><option value="5">Top 5</option><option value="10">Top 10</option></select></div></div>';
-          $('#productTable').before(selectHTML);
-            // Lấy giá trị từ select box
+            $('#productTable').before(selectHTML);
+
             var rowLimit = $('#rowLimitSelect').val();
 
-            // Tạo bảng sản phẩm với số hàng được giới hạn
             createProductTable(data, rowLimit);
+          }
         }
-
-    // Nếu đang lọc theo nhãn hiệu
-    function createProductTable(data, rowLimit) {
-    var productTable = $('<table>').addClass('table table-striped');
-    var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
-    var tbody = $('<tbody>');
-
-    // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
-    var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
-
-    // Thêm dữ liệu vào bảng
-    $.each(products, function(index, product) {
-        var row = $('<tr>');
-        row.append('<td>' + product.TenSP + '</td>');
-        row.append('<td>' + product.TenNhanHieu + '</td>');
-        row.append('<td>' + product.TongSoLuong + '</td>');
-        tbody.append(row);
-    });
-
-    productTable.append(thead).append(tbody);
-    $('#productTable').html(productTable);
-}
-$('#rowLimitSelect').on('change', function() {
-    var rowLimit = $(this).val();
-
-    // Nếu đã có dữ liệu sản phẩm
-    if (data.san_pham && data.san_pham.length > 0) {
-        createProductTable(data, rowLimit);
-    }
-});
 
         // Đóng modal sau khi cập nhật dữ liệu
         $('#myModal').modal('hide');
@@ -707,6 +668,41 @@ $('#rowLimitSelect').on('change', function() {
         console.error(error);
       }
     });
+  });
+
+  // Nếu đang lọc theo nhãn hiệu
+  function createProductTable(data, rowLimit) {
+    var productTable = $('<table>').addClass('table table-striped');
+    var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
+    var tbody = $('<tbody>');
+
+    // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
+    var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
+
+    $.each(products, function(index, product) {
+      var row = $('<tr>');
+      row.append('<td>' + product.TenSP + '</td>');
+      row.append('<td>' + product.TenNhanHieu + '</td>');
+      row.append('<td>' + product.TongSoLuong + '</td>');
+      tbody.append(row);
+    });
+
+    productTable.append(thead).append(tbody);
+    $('#productTable').html(productTable);
+    $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
+  }
+
+  $('#rowLimitSelect').on('change', function() {
+    var rowLimit = $(this).val();
+
+    // Nếu đã có dữ liệu sản phẩm
+    if (data.san_pham && data.san_pham.length > 0) {
+      createProductTable(data, rowLimit);
+    }
   });
 });
 </script> 
@@ -757,7 +753,7 @@ $('#rowLimitSelect').on('change', function() {
             $.ajax({
                 url: 'module/main/dulieu/locnhanhieu.php',
                 type: 'POST',
-                data: { nhan_hieu: nhanhieu }, // Sử dụng 'nhan_hieu' thay vì 'nhanhieu'
+                data: { nhan_hieu: nhanhieu }, 
                 success: function(response) {
                     var data = JSON.parse(response);
                     updateCharts(data);
@@ -788,11 +784,13 @@ $('#rowLimitSelect').on('change', function() {
             alert('Vui lòng nhập loại sản phẩm');
         }
     }
-            function updateCharts(data) {
+    function updateCharts(data) {
+
+        if (data.nhan_hieu && data.nhan_hieu.length > 0 && data.loai_sp && data.loai_sp.length > 0 && data.tong_tien && data.tong_tien.length > 0 && data.tong_so_luong && data.tong_so_luong.length > 0) {
         // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+        if (donutChartNhanHieu) donutChartNhanHieu.destroy();
+        if (donutChartLoaiSP) donutChartLoaiSP.destroy();
+        if (myChart) myChart.destroy();
 
         var tongTienHoaDon = data.tong_tien[0].value;
         var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
@@ -823,18 +821,17 @@ $('#rowLimitSelect').on('change', function() {
             configDonutChartNhanHieu
         );
 
-        // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+
         configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
         configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-        // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
+        
         donutChartLoaiSP = new Chart(
             document.getElementById('donutChartLoaiSP'),
             configDonutChartLoaiSP
         );
-        
 
-        // Cập nhật dữ liệu cho biểu đồ cột
+       
         var configMyChart = {
             type: 'bar',
             data: {
@@ -886,129 +883,124 @@ $('#rowLimitSelect').on('change', function() {
                 }
             }
         };
+
         $('#productTable').empty();
 
-    // Nếu đang lọc theo nhãn hiệu
-    if (data.san_pham && data.san_pham.length > 0) {
-        // Tạo bảng sản phẩm
-        var productTable = $('<table>').addClass('table table-striped');
-        var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Loại sản phẩm</th><th>Tổng Số Lượng</th></tr>');
-        var tbody = $('<tbody>');
+    
+        if (data.san_pham && data.san_pham.length > 0) {
+            var productTable = $('<table>').addClass('table table-striped');
+            var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Loại sản phẩm</th><th>Tổng Số Lượng</th></tr>');
+            var tbody = $('<tbody>');
 
-        // Thêm dữ liệu vào bảng
-        $.each(data.san_pham, function(index, product) {
-            var row = $('<tr>');
-            row.append('<td>' + product.TenSP + '</td>');
-            row.append('<td>' + product.TenNhanHieu + '</td>');
-            row.append('<td>' + product.TenLoai + '</td>');
-            row.append('<td>' + product.TongSoLuong + '</td>');
-            tbody.append(row);
-        });
+            $.each(data.san_pham, function(index, product) {
+                var row = $('<tr>');
+                row.append('<td>' + product.TenSP + '</td>');
+                row.append('<td>' + product.TenNhanHieu + '</td>');
+                row.append('<td>' + product.TenLoai + '</td>');
+                row.append('<td>' + product.TongSoLuong + '</td>');
+                tbody.append(row);
+            });
 
-        productTable.append(thead).append(tbody);
-        $('#productTable').append(productTable);
+            productTable.append(thead).append(tbody);
+            $('#productTable').append(productTable);
+            $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
+        }
+
+        myChart = new Chart(document.getElementById('myChart'), configMyChart);
+    } else {
+        alert('Không có đơn hàng nào tồn tại.');
     }
 
-        // Tạo đối tượng Chart mới cho biểu đồ cột
         myChart = new Chart(document.getElementById('myChart'), configMyChart);
     }
 
             
         });
-        // Đóng modal sau khi xử lý xong
+      
         $('#locsanpham').modal('hide');
     });
     
 </script>
 <script>
-    $('#submit-date-range-thongke').click(function() {
-    var startDate = $('#startDate-1').val();
-    var endDate = $('#endDate-1').val();
-    var tenLoai = $('#productCategory').val();
-    if (tenLoai === "") {
-    tenLoai = "ALL"; // hoặc "Tất cả"
-}
+   $('#submit-date-range-thongke').click(function() {
+            var startDate = $('#startDate-1').val();
+            var endDate = $('#endDate-1').val();
+            var tenLoai = $('#productCategory').val();
+            if (tenLoai === "") {
+                tenLoai = "ALL";
+            }
 
-    $.ajax({
-        url: 'module/main/dulieu/thongke1loai.php',
-        type: 'POST',
-        data: {
-            start_date: startDate,
-            end_date: endDate,
-            ten_loai: tenLoai
-        },
-        success: function(response) {
-        var data = JSON.parse(response);
-        var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
-    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
+            $.ajax({
+                url: 'module/main/dulieu/thongke1loai.php',
+                type: 'POST',
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    ten_loai: tenLoai
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+                    var tongTienHoaDon = data.tong_tien[0]?.value ?? 0;
 
-    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
-        // Hiển thị thông báo
-        alert("Không tồn tại đơn hàng nào trong khoảng thời gian và loại sản phẩm đã chọn.");
+                    if (!data.san_pham || data.san_pham.length === 0 || (tongSoLuongSanPham === 0 && tongTienHoaDon === 0)) {
+                        alert("Không tồn tại đơn hàng nào trong khoảng thời gian đã chọn.");
+                        return;
+                    }
 
-        // Xóa các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+                    if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
+                        if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
+                // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
+                var tongTienHoaDon = data.tong_tien[0].value;
+                var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
 
-        // Xóa các phần tử hiển thị cũ
-        $('.tongTienDisplay').remove();
+                // Xóa các phần tử hiển thị cũ
+                $('.tongTienDisplay').remove();
 
-        // Xóa bảng sản phẩm
-        $('#productTable').empty();
+                const totalTienBox = document.createElement('div');
+                totalTienBox.classList.add('tongTienDisplay');
+                totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
 
-        return; // Thoát khỏi hàm success
-    }
+                const totalSoLuongBox = document.createElement('div');
+                totalSoLuongBox.classList.add('tongTienDisplay');
+                totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
 
-        // Phá hủy các đối tượng Chart cũ
-        donutChartNhanHieu.destroy();
-        donutChartLoaiSP.destroy();
-        myChart.destroy();
+                const chartContainer = $('#myChart').parent();
+                chartContainer.append(totalTienBox, totalSoLuongBox);
 
-        // Kiểm tra nếu data.nhan_hieu và data.loai_sp không phải là null hoặc undefined
-        if (data.nhan_hieu && data.loai_sp && data.tong_tien && data.tong_so_luong) {
-          // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
-          var tongTienHoaDon = data.tong_tien[0].value;
-          var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+                // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
+                configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
+                configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
 
-          // Xóa các phần tử hiển thị cũ
-          $('.tongTienDisplay').remove();
+                if (!donutChartNhanHieu) {
+                    donutChartNhanHieu = new Chart(
+                        document.getElementById('donutChartNhanHieu'),
+                        configDonutChartNhanHieu
+                    );
+                } else {
+                    donutChartNhanHieu.update();
+                }
 
-          // Tạo các phần tử hiển thị mới
-          const totalTienBox = document.createElement('div');
-          totalTienBox.classList.add('tongTienDisplay');
-          totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${tongTienHoaDon.toLocaleString('en-US')} (VNĐ)</span>`;
+                // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
+                configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
+                configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
 
-          const totalSoLuongBox = document.createElement('div');
-          totalSoLuongBox.classList.add('tongTienDisplay');
-          totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
+                if (!donutChartLoaiSP) {
+                    donutChartLoaiSP = new Chart(
+                        document.getElementById('donutChartLoaiSP'),
+                        configDonutChartLoaiSP
+                    );
+                } else {
+                    donutChartLoaiSP.update();
+                }
 
-          // Thêm các phần tử mới vào DOM
-          const chartContainer = $('#myChart').parent();
-          chartContainer.append(totalTienBox, totalSoLuongBox);
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
-          configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
-          configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu .map(item => item.value);
-
-          // Tạo đối tượng Chart mới cho biểu đồ tròn nhãn hiệu
-          donutChartNhanHieu = new Chart(
-            document.getElementById('donutChartNhanHieu'),
-            configDonutChartNhanHieu
-          );
-
-          // Cập nhật dữ liệu cho biểu đồ tròn loại sản phẩm
-          configDonutChartLoaiSP.data.labels = data.loai_sp.map(item => item.label);
-          configDonutChartLoaiSP.data.datasets[0].data = data.loai_sp.map(item => item.value);
-
-          // Tạo đối tượng Chart mới cho biểu đồ tròn loại sản phẩm
-          donutChartLoaiSP = new Chart(
-            document.getElementById('donutChartLoaiSP'),
-            configDonutChartLoaiSP
-          );
-
-          // Cập nhật dữ liệu cho biểu đồ cột
-          var configMyChart = {
-            type: 'bar',
+                // Cập nhật dữ liệu cho biểu đồ cột
+                var configMyChart = {
+                    type: 'bar',
             data: {
               labels: data.nhan_hieu.map(item => item.label),
               datasets: [
@@ -1062,42 +1054,52 @@ $('#rowLimitSelect').on('change', function() {
             plugins: [
              
             ]
-          };
+                };
 
-          // Tạo đối tượng Chart mới cho biểu đồ cột
-          myChart = new Chart(document.getElementById('myChart'), configMyChart);
-        }
-        $('#productTable').empty();
+                if (!myChart) {
+                    myChart = new Chart(document.getElementById('myChart'), configMyChart);
+                } else {
+                    myChart.data.labels = data.nhan_hieu.map(item => item.label);
+                    myChart.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
+                    myChart.update();
+                }
+            }
 
-    // Nếu đang lọc theo nhãn hiệu
-    if (data.san_pham && data.san_pham.length > 0) {
-        // Tạo bảng sản phẩm
-        var productTable = $('<table>').addClass('table table-striped');
-        var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
-        var tbody = $('<tbody>');
+                        $('#productTable').empty();
 
-        // Thêm dữ liệu vào bảng
-        $.each(data.san_pham, function(index, product) {
-            var row = $('<tr>');
-            row.append('<td>' + product.TenSP + '</td>');
-            row.append('<td>' + product.TenNhanHieu + '</td>');
-            row.append('<td>' + product.TenLoai + '</td>');
-            row.append('<td>' + product.TongSoLuong + '</td>');
-            tbody.append(row);
+                        if (data.san_pham && data.san_pham.length > 0) {
+                            var productTable = $('<table>').addClass('table table-striped');
+                            var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>loại</th><th>Tổng Số Lượng</th></tr>');
+                            var tbody = $('<tbody>');
+
+                            $.each(data.san_pham, function(index, product) {
+                                var row = $('<tr>');
+                                row.append('<td>' + product.TenSP + '</td>');
+                                row.append('<td>' + product.TenNhanHieu + '</td>');
+                                row.append('<td>' + product.TenLoai + '</td>');
+                                row.append('<td>' + product.TongSoLuong + '</td>');
+                                tbody.append(row);
+                            });
+
+                            productTable.append(thead).append(tbody);
+                            $('#productTable').append(productTable);
+
+                            // Khởi tạo DataTables cho bảng sản phẩm
+                            $('#productTable table').DataTable({
+                                language: {
+                                    search: "Tìm kiếm:"
+                                }
+                            });
+                        }
+
+                        $('#thongkeModal').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
-
-        productTable.append(thead).append(tbody);
-        $('#productTable').append(productTable);
-    }
-
-        // Đóng modal sau khi cập nhật dữ liệu
-        $('#thongkeModal').modal('hide');
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
-    });
-});
 </script>
 
    

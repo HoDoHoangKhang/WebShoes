@@ -1,4 +1,11 @@
 
+<script>
+    <?php if(!isset($_SESSION['taikhoan'])){ ?>
+        var url =
+                `index.php?danhmuc=home`;
+            window.location.href = url;
+    <?php } ?>
+</script>
 <?php
     //dtb taikhoan nhanvien khachhang
     require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');

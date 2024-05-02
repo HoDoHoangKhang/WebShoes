@@ -125,27 +125,58 @@ $result = $conn->query($sql);
 $(document).ready(function() {
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var tenNhanHieu = $('#exampleFormControlInput').val();
+    var tenNhanHieu = $('#exampleFormControlInput').val().trim();
+
+    if (tenNhanHieu === '') {
+      alert('Vui lòng nhập Tên Nhãn Hiệu');
+      return;
+    }
 
     $.ajax({
       url: 'module/main/caidat/insertnh.php',
       method: 'POST',
-      data: {tenNhanHieu: tenNhanHieu},
+      data: { tenNhanHieu: tenNhanHieu },
       success: function(response) {
-    if (response.trim() === 'exists') {
-        // Hiển thị thông báo nếu giá trị đã tồn tại
-        alert('Đã Tồn Tại Nhãn Hiệu');
-    } else if (response.trim() === 'updated') {
-        // Cập nhật giao diện nếu giá trị đã được kích hoạt
-        $('#myTable tbody').append(response);
-        alert('Giá trị đã được cập nhật thành công');
-    } else {
-        // Thêm dữ liệu mới vào bảng
-        $('#myTable tbody').append(response);
-        alert('Thêm Nhãn Hiệu Thành Công');
-    }
-    $('#myModal').modal('hide');
-}
+        if (response.trim() === 'exists') {
+          alert('Nhãn hiệu đã tồn tại');
+        } else if (response.trim() === 'updated') {
+          // Cập nhật giao diện nếu nhãn hiệu đã được kích hoạt
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
+          alert('Nhãn hiệu đã được cập nhật thành công');
+        } else {
+          // Thêm nhãn hiệu mới vào bảng
+          var lastRow = $('#myTable tbody tr:last');
+          if (lastRow.length) {
+            lastRow.after(response);
+          } else {
+            $('#myTable tbody').append(response);
+          }
+          alert('Thêm nhãn hiệu thành công');
+        }
+        $('#myModal').modal('hide');
+        $('.btn-delete').click(function(e){
+      e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+      var supplierId = $(this).closest('tr').data('nh'); // 
+      if(confirm("Bạn có chắc chắn muốn xóa nhãn hiệu này không?")) {
+          $.ajax({
+              url: 'module/main/caidat/deletenh.php', // Đường dẫn đến file xử lý xóa
+              method: 'POST',
+              data: {nh: supplierId}, // Dữ liệu gửi đi 
+              success: function(response){
+            
+                      $('[data-nh="' + supplierId + '"]').remove();
+                      console.log(response) 
+                  
+              }
+          });
+      }
+   });
+      }
     });
   });
 });

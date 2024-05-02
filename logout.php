@@ -10,5 +10,5 @@ if (isset($_SESSION['taikhoan']))
 }
 
 //Da dang xuat, quay tro lai trang login.php
-header('Location: login.php');
+header('Location: index.php');
 ?>

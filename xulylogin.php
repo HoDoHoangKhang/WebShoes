@@ -15,31 +15,6 @@
 					WHERE TenDangNhap = '$userId' AND MatKhau = '$password' ";
 	$result = mysqli_query($connect, $sql) or die('Query failed. ' . mysqli_error($connect)); 
 	$row=mysqli_fetch_array($result);
-	// if (empty($userId) && empty($password)) {
-	// 	echo $thongbao="Vui lòng điền đầy đủ thông tin!";
-	// 	exit();
-	// } else if(empty($userId)){
-	// 	echo $thongbao="Vui lòng nhập tên đăng nhập!";
-	// 	exit();
-	// }
-	// else if(empty($password)){
-	// 	echo $thongbao="Vui lòng nhập mật khẩu!";
-	// 	exit();
-	// } else if(mysqli_num_rows($result) != 1){
-	// 	echo $thongbao="Sai mật khẩu hoặc tài khoản không tồn tại!";
-	// 	exit();
-	// }
-	// else if ($row['TrangThai']==1)	{
-	// 	echo $thongbao="Tài khoản này đã bị khóa!";
-	// 	exit();
-	// } else{
-	// 	//Đăng nhập thành công
-	// 	echo $thongbao="Đăng nhập thành công!";
-	//     // session_start();
-	//     // $_SESSION['taikhoan'] = $userId;
-	//     // header('Location: index.php');
-	//     exit();
-	// }
 
 	if (empty($userId) && empty($password)) {
 		echo 'Để trống tên đăng nhập và mật khẩu';

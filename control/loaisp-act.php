@@ -7,7 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/sanpham-act.php');
 
 function getLoaiSanPhamList(){
     $db = new DTB();
-    $kq = mysqli_query($db->getConnection(), "SELECT * FROM loaisp");
+    $kq = mysqli_query($db->getConnection(), "SELECT * FROM loaisp where hide=1");
     $loaiSpArr = array();
     while ($row = mysqli_fetch_assoc($kq)) {
         $loaiSP = new LoaiSP(

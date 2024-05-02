@@ -6,50 +6,43 @@ $dbname = "shoestore";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if (isset($_POST['tenLoai'])) {
-    $tenLoai = $_POST['tenLoai'];
-<<<<<<< HEAD
-    
-    // Thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO loaisp (TenLoai,hide) VALUES ('$tenLoai',1)";
-    if ($conn->query($sql) === TRUE) {
-        // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
-        $result = $conn->query("SELECT * FROM loaisp WHERE TenLoai='$tenLoai'");
-=======
+   $tenLoai = $_POST['tenLoai'];
 
-    // Kiểm tra xem loại sản phẩm đã tồn tại trong cơ sở dữ liệu chưa
+    // Kiểm tra nếu loại sản phẩm đã tồn tại trong cơ sở dữ liệu
     $sql = "SELECT * FROM loaisp WHERE TenLoai = '$tenLoai'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         // Loại sản phẩm đã tồn tại
->>>>>>> levy
         $row = $result->fetch_assoc();
         if ($row['hide'] == 0) {
-            // Cập nhật giá trị hide thành 1
+            // Cập nhật hide = 1 nếu loại sản phẩm đã bị ẩn
             $updateSql = "UPDATE loaisp SET hide = 1 WHERE TenLoai = '$tenLoai'";
-            if ($conn->query($updateSql) === TRUE) {
-                echo "updated";
-            } else {
-                echo "Error updating record: " . $conn->error;
-            }
+            $conn->query($updateSql);
+            echo "<tr data-loai='" . $row["MaLoai"] . "'>
+                    <td>" . $row["MaLoai"] . "</td>
+                    <td>" . $row["TenLoai"] . "</td>
+                    <td>
+                <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'>Xóa</button>
+            </td>
+                  </tr>";
         } else {
-            // Loại sản phẩm đã tồn tại và hide = 1
+            // Loại sản phẩm đã tồn tại và đang được hiển thị
             echo "exists";
         }
     } else {
-        // Thêm loại sản phẩm mới
+        // Loại sản phẩm chưa tồn tại, thêm mới
         $insertSql = "INSERT INTO loaisp (TenLoai, hide) VALUES ('$tenLoai', 1)";
         if ($conn->query($insertSql) === TRUE) {
-            // Truy vấn dữ liệu vừa thêm vào để hiển thị lên giao diện
             $result = $conn->query("SELECT * FROM loaisp WHERE TenLoai='$tenLoai'");
             $row = $result->fetch_assoc();
-            echo "<tr data-loai='" . $row["MaLoai"] . "'>";
-            echo "<td>" . $row["MaLoai"] . "</td>";
-            echo "<td>" . $row["TenLoai"] . "</td>";
-            echo "<td> <div class='dropdown'> <button class='btn btn-secondary dropdown-toggle btn-delete' type='button' data-bs-toggle='dropdown' aria-expanded='false'> Xóa </button> <ul class='dropdown-menu' style='z-index: 2;'> <li><a class='dropdown-item delete-option' href='#'>Xóa</a></li> </ul> </div> </td>";
-            echo "</tr>";
-        } else {
-            echo "Error: " . $insertSql . "<br>" . $conn->error;
+            echo "<tr data-loai='" . $row["MaLoai"] . "'>
+                    <td>" . $row["MaLoai"] . "</td>
+                    <td>" . $row["TenLoai"] . "</td>
+                    <td>
+                        <button class='btn btn-secondary btn-delete' type='button' aria-expanded='false'>Xóa</button>
+                    </td>
+                  </tr>";
         }
     }
 

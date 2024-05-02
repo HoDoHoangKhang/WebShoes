@@ -7,8 +7,8 @@
             case 'products':
                 include_once 'pages/main/products.php';
                 break;
-            case 'contact':
-                include_once 'pages/main/contact.php';
+            case 'tiktokfeed':
+                include_once 'pages/main/tiktokfeed.php';
                 break;
             case 'blog':
                 include_once 'pages/main/blog.php';

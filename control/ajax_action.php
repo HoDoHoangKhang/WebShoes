@@ -297,7 +297,7 @@
         foreach($products as $product){
             $tongSoLuong+=$product->SoLuong;
         }
-        $insertSql=insertPhieuXuat($maKH, $maKH ,$ngayDatHang,$tinhTrangDonHang,$tongThanhToan,$tongSoLuong,$trangThai);
+        $insertSql=insertPhieuXuat(0, $maKH ,$ngayDatHang,$tinhTrangDonHang,$tongThanhToan,$tongSoLuong,$trangThai);
         // Insert chi tiết phiếu xuất
         foreach($products as $product){
             $sanPham=new SanPham(null,null,null,null,null,null,null,null,null,null,null,null,null);
@@ -316,8 +316,6 @@
         }
         // Số lượng đã bán trong bản sản phẩm tăng lên
         //trừ đi số lượng trong kho các sản phẩm
-
-
     }
     if($_POST['action']=='deleteDonHang'){
         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/px-act.php');
@@ -330,8 +328,22 @@
             // deleteChiTietPhieuXuat($maPX);
             huyPhieuXuat($maPX);
 
-            //Hoàn lại số lượng sản phẩm khi hủy đơn
-            // tangSoLuongTrongKho($maSP,$size,$soLuong);
+            $db = new DTB();
+            $query = "SELECT MaSP,SoLuong,SizeSP FROM ctpx WHERE MaPX=$maPX";
+            $result = mysqli_query($db->getConnection(), $query);
+            while ($row = $result->fetch_assoc()) {
+                $ma = $row["MaSP"];
+                $sl = $row["SoLuong"];
+                $size = $row["SizeSP"];
+
+                //hoàn trả lại số lượng vô kho
+                $query = "UPDATE ctsizesp SET SoLuong = SoLuong + $sl WHERE MaSP = $ma AND SizeSP = $size";
+                mysqli_query($db->getConnection(), $query);
+
+                // trừ số lượng đã bán
+                $query = "UPDATE sanpham SET SoLuongDaBan = SoLuongDaBan - $sl WHERE MaSP = $ma";
+                mysqli_query($db->getConnection(), $query);
+            }
 
             echo 1;
         }
@@ -375,19 +387,22 @@
             $output.='
             <tr>
                 <td>
+                    <a href="index.php?danhmuc=product-detail&id='.$sanPham->getMaSP().'">
                     <div class="shell-product">
                         <div class="shell-img">
                             <img src="./assets/img/'.$sanPham->getHinhAnh().'" alt="" class="">
                         </div>
                         <div class="shell-title-repository">
-                            <div class="shell-title">
+                            <div class="shell-title" style="color:black;">
                                 '.$sanPham->getTenSP().'
                             </div>
                             <div class="shell-repository">
-                                Đã bán :'.$sanPham->getSoLuongDaBan().'
+                                Đã bán :'.$sanPham->getSoLuongDaBan().' 
                             </div>
                         </div>
                     </div>
+                    </a>
+                    
                 </td>
                 </td>
                 <td>'.formatCurrency($sanPham->getGiaMoi()).'</td>
@@ -397,7 +412,6 @@
                     </button>   
                 </td>
             </tr>
-
             ';
         }
         echo $output;

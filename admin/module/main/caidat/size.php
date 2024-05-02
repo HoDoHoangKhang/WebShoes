@@ -66,7 +66,7 @@ $result = $conn->query($sql);
                 <div class="modal-body">
                     <form>
                     <label for="exampleFormControlInput" class="form-label">Số Size</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput" placeholder="">
+                    <input class="form-control" id="exampleFormControlInput" placeholder="">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -116,38 +116,44 @@ $(document).ready(function() {
   // Gắn sự kiện click cho nút "Thêm"
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var size = $('#exampleFormControlInput').val();
+    var size = $('#exampleFormControlInput').val().trim();
+
+    if (size === '') {
+      alert('Vui lòng nhập Size');
+      return;
+    }
+
+    
 
     $.ajax({
-      url: 'module/main/caidat/insertsize.php',
-      method: 'POST',
-      data: { size: size },
-      success: function(response) {
-        if (response.trim() === 'exists') {
-          // Hiển thị thông báo nếu size đã tồn tại
-          alert('Size đã tồn tại');
-        } else if (response.trim() === 'updated') {
-          // Cập nhật giao diện nếu size đã được kích hoạt
-          var lastRow = $('#myTable tbody tr:last');
-          if (lastRow.length) {
-            lastRow.after(response);
-          } else {
-            $('#myTable tbody').append(response);
-          }
-          alert('Size đã được cập nhật thành công');
-        } else {
-          // Thêm size mới vào bảng
-          var lastRow = $('#myTable tbody tr:last');
-          if (lastRow.length) {
-            lastRow.after(response);
-          } else {
-            $('#myTable tbody').append(response);
-          }
-          alert('Thêm size mới thành công');
-        }
-        $('#myModal').modal('hide');
+  url: 'module/main/caidat/insertsize.php',
+  method: 'POST',
+  data: { size: size },
+  success: function(response) {
+    if (response.trim() === 'exists') {
+      alert('Size đã tồn tại');
+    } else if (response.trim() === 'updated') {
+      // Cập nhật giao diện nếu size đã được kích hoạt
+      var lastRow = $('#myTable tbody tr:last');
+      if (lastRow.length) {
+        lastRow.after(response);
+      } else {
+        $('#myTable tbody').append(response);
       }
-    });
+      alert('Size đã được cập nhật thành công');
+    } else {
+      // Thêm size mới vào bảng
+      var lastRow = $('#myTable tbody tr:last');
+      if (lastRow.length) {
+        lastRow.after(response);
+      } else {
+        $('#myTable tbody').append(response);
+      }
+      alert('Thêm size mới thành công');
+    }
+    $('#myModal').modal('hide');
+  }
+});
   });
 });
 </script>

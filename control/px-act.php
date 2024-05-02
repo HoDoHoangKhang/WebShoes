@@ -6,7 +6,7 @@
     function insertPhieuXuat($MaNV, $MaKH, $NgayDatHang, $TinhTrangDH, $TongTien, $TongSoLuong, $trangThai){
         $db = new DTB();
         $query = "INSERT INTO phieuxuat (MaNV, MaKH, NgayDatHang, TinhTrangDH, TongTien, TongSoLuong, trangThai) 
-                    VALUES ('$MaNV', '$MaNV', '$NgayDatHang', '$TinhTrangDH', '$TongTien', '$TongSoLuong', '$trangThai')";
+                    VALUES ('$MaNV', '$MaKH', '$NgayDatHang', '$TinhTrangDH', '$TongTien', '$TongSoLuong', '$trangThai')";
         $result = mysqli_query($db->getConnection(), $query);
         $new_id = mysqli_insert_id($db->getConnection());
         return $new_id;

@@ -19,7 +19,7 @@
             <div class="wish-main">
                 <div class="shell-show" style="overflow-x: auto;">
                     <table style="width: 100%; font-size: 16px; " class="table-shell">
-                        <thead style="">
+                        <thead>
                             <tr>
                                 <th style="min-width: 300px;" >Sản phẩm</th>
                                 <th style="min-width: 150px;">Giá</th>
@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody id="wishProduct">
-                            <tr>
+                            <!-- <tr>
                                 <td style="min-width: 200px;">
                                     <div class="shell-product">
                                         <div class="shell-img">
@@ -43,14 +43,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                </td>
                                 <td style="min-width: 200px;">500.000 đ</td>
                                 <td style="min-width: 200px;">
                                 <button class="buttonDeleteCart" id="" style="width: 20px; height: 20px;"> 
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>   
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -63,9 +62,12 @@
             var wishAll = JSON.parse(localStorage.getItem('wish')) || [];
             var wishUser=[];
             wishAll.forEach(item => {
-                if(item['taikhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    wishUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['taikhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        wishUser.push(item);
+                    }    
+                <?php } ?>
+
             });
             return wishUser;
         }
@@ -87,7 +89,9 @@
                 button.addEventListener("click", function(){
                     button.parentElement.parentElement.remove();//Xóa trên giao diện
                     var MaSP=parseInt(button.getAttribute('id'));
-                    var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                    <?php if(isset($_SESSION['taikhoan'])){ ?>
+                        var TaiKhoan="<?php echo $_SESSION['taikhoan']?>";
+                    <?php } ?>
                     console.log(MaSP+" "+TaiKhoan);
                     removeFromWish(MaSP,TaiKhoan);
                     creatToast("item-success","Xóa khỏi danh sách yêu thích thàng công","fa-solid fa-circle-check","item-end-success");

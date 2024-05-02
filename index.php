@@ -1,8 +1,8 @@
 <?php
     session_start();
-    if(!isset($_SESSION['taikhoan'])){
-        header('Location: login.php');
-    }
+    // if(!isset($_SESSION['taikhoan'])){
+    //     header('Location: login.php');
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,100;1,300&display=swap" rel="stylesheet">
     <!-- slick -->
-    <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-    />
+    <link rel="stylesheet" type="text/css" href="./assets/css/slick.css">
 
     <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/main.css">
@@ -95,7 +91,7 @@
     ></script>
     <script
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+      src="./assets/js/slick.min.js"
     ></script>
     <script src="index.js">
     </script>

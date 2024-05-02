@@ -163,6 +163,7 @@ table tr:nth-child(odd) {
                         action:"deleteDonHang",
                     },
                     success: function(data){
+                        console.log(data);
                         if(data==1){
                             btn.parentElement.parentElement.parentElement.children[2].innerHTML="Đã hủy";
                             btn.remove();

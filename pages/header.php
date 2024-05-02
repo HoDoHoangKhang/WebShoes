@@ -14,9 +14,7 @@
                 </a>
             <?php }
         }
-        
     ?>
-
     <div class="container">
         <div class="header-main">
             <div class="header-logo">
@@ -72,7 +70,7 @@
                     </div>
                 </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
-                <a class="menu_sub" href="index.php?danhmuc=contact">Contact</a>
+                <a class="menu_sub" href="index.php?danhmuc=tiktokfeed">TikTok Feed</a>
 
             </div>
             <div class="header__action">
@@ -125,21 +123,21 @@
                 </div>
                 <?php 
                     if(isset($_SESSION['taikhoan'])){?>
-                       <a href="index.php?danhmuc=profile" class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
-                            <span class="header__action-login-name">
-                                <?php
-                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
-                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
-                                    $HoTen=getUser($_SESSION['taikhoan'])->getHoTen();
-                                    $slipt = explode(" ", $HoTen);
-                                    // Lấy từ cuối cùng trong mảng
-                                    $Ten = end($slipt)." ".$HoTen;
-                                    echo $Ten;
-                                ?>
-                            </span>
-                            
-                            <i class="fa-solid fa-user"></i>
-                        </a>
+                            <a href="index.php?danhmuc=profile"  class="header__action-login" style="display: flex; align-items: center; justify-content: space-between;">
+                                <span class="header__action-login-name" >
+                                    <?php
+                                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                                        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/model/user.php');
+                                        $HoTen=getUser($_SESSION['taikhoan'])->getHoTen();
+                                        $slipt = explode(" ", $HoTen);
+                                        // Lấy từ cuối cùng trong mảng
+                                        $Ten = end($slipt)." ".$HoTen;
+                                        echo $Ten;
+                                    ?>
+                                </span>
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+
                     <?php }
                     else{ ?>
                         <a href="login.php" class="header__action-login">
@@ -162,9 +160,11 @@
             var cartAll = JSON.parse(localStorage.getItem('cart')) || [];
             var cartUser=[];
             cartAll.forEach(item => {
-                if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
-                    cartUser.push(item);
-                }
+                <?php if(isset($_SESSION['taikhoan'])){ ?>
+                    if(item['TaiKhoan']=="<?php echo $_SESSION['taikhoan']; ?>"){
+                        cartUser.push(item);
+                    }
+                <?php } ?> 
             });
             return cartUser;
         }

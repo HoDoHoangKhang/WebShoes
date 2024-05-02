@@ -363,7 +363,6 @@
         //     divEditAddress.classList.toggle("block");
         // });
 
-        
         var btnDelivery=document.querySelectorAll(".delivery_checkout");
         btnDelivery.forEach(element => {
             element.addEventListener('click', function(){   

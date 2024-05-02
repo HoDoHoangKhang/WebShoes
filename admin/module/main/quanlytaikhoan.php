@@ -29,7 +29,7 @@
             </div>
             <div class="filter-container">
                 <select id="filterSelect2">
-                    <option value="">Loại tài khoản</option>
+                    <option value="0">Loại tài khoản</option>
                     <?php
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
                         $sql = "SELECT *
@@ -37,7 +37,11 @@
                         $result = mysqli_query($connect,$sql);
                         while ( $row=mysqli_fetch_array($result) ) {
                             ?>
-                            <option value="<?php echo $row['MaQuyen'] ?>"> <?php echo $row['TenQuyen'] ?> </option>
+                            <option value="<?php echo $row['MaQuyen'] ?>" 
+                            <?php 
+                            if (isset($_GET['MaQuyen'])) {
+                                if($_GET['MaQuyen']==$row['MaQuyen']){ echo 'selected';}
+                            }?>> <?php echo $row['TenQuyen'] ?> </option>
                             <?php
                         }
                     ?> 
@@ -60,64 +64,192 @@
             
             <?php
             
-            $sql = "SELECT * FROM taikhoan tk JOIN user u on tk.TenDangNhap=u.TenDangNhap ";
+            $sql = "SELECT * FROM taikhoan tk JOIN user u on tk.TenDangNhap=u.TenDangNhap WHERE tk.TenDangNhap != '0'";
             $result = mysqli_query($connect,$sql);
-            while ($row=mysqli_fetch_array($result)) { ?>
-                <tr>
-                
-                <td>
-                    <div style="display: flex; align-items: center; gap: 10px">
-                        <div class="img-pr">
-                            <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
-                        </div>
-                        <ul class="ml-2">
-                            <li> <?php echo $row['HoTen'] ?> </li>
-                            <li> <?php echo $row['Email'] ?> </li>
-                            <li> <?php echo $row['SDT'] ?> </li>
-                        </ul>
-                    </div>
+            while ($row=mysqli_fetch_array($result)) { 
+                if (isset($_GET['MaQuyen'])) {
+                    if ($_GET['MaQuyen']==0){
+                        ?>
+                        <tr>
+                        
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px">
+                                <div class="img-pr">
+                                    <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
+                                </div>
+                                <ul class="ml-2">
+                                    <li> <?php echo $row['HoTen'] ?> </li>
+                                    <li> <?php echo $row['Email'] ?> </li>
+                                    <li> <?php echo $row['SDT'] ?> </li>
+                                </ul>
+                            </div>
+                            
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <strong>Tài khoản: </strong> <?php echo $row['TenDangNhap'] ?>
+                                </li>
+                                <li>
+                                    <strong>Mật khẩu: </strong> <?php echo $row['MatKhau'] ?>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="filter-container">
+        
+                                    <select  name="selectquyen" style="width: 100%;" class="getselect" id="<?php echo $row['TenDangNhap']?>">
+                                    <?php
+                                        $sql ="SELECT * From quyen";
+                                        $result1 = mysqli_query($connect,$sql);
+                                        while ($row1=mysqli_fetch_array($result1)) { ?>
+                                                <option class="valueMaQuyen" value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
+                                        <?php
+                                            
+        
+                                        }
+                                    ?>
+        
+                                </select>
+                            </div>
+                        </td>
+                        <td> <?php if($row['TrangThai']==0){echo "Hoạt động";}else{echo "Bị Khóa";}?> </td>
+                        <td>
+                            <div class="dropdown" >
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                        <?php
+                    }else
+                    if ($_GET['MaQuyen']==$row['MaQuyen']) {
+                        ?>
                     
-                </td>
-                <td>
-                    <ul>
-                        <li>
-                            <strong>Tài khoản: </strong> <?php echo $row['TenDangNhap'] ?>
-                        </li>
-                        <li>
-                            <strong>Mật khẩu: </strong> <?php echo $row['MatKhau'] ?>
-                        </li>
-                    </ul>
-                </td>
-                <td>
-                    <div class="filter-container">
+                        <tr>
+                        
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px">
+                                <div class="img-pr">
+                                    <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
+                                </div>
+                                <ul class="ml-2">
+                                    <li> <?php echo $row['HoTen'] ?> </li>
+                                    <li> <?php echo $row['Email'] ?> </li>
+                                    <li> <?php echo $row['SDT'] ?> </li>
+                                </ul>
+                            </div>
+                            
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <strong>Tài khoản: </strong> <?php echo $row['TenDangNhap'] ?>
+                                </li>
+                                <li>
+                                    <strong>Mật khẩu: </strong> <?php echo $row['MatKhau'] ?>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="filter-container">
+        
+                                    <select  name="selectquyen" style="width: 100%;" class="getselect" id="<?php echo $row['TenDangNhap']?>">
+                                    <?php
+                                        $sql ="SELECT * From quyen";
+                                        $result1 = mysqli_query($connect,$sql);
+                                        while ($row1=mysqli_fetch_array($result1)) { ?>
+                                                <option class="valueMaQuyen" value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
+                                        <?php
+                                            
+        
+                                        }
+                                    ?>
+        
+                                </select>
+                            </div>
+                        </td>
+                        <td> <?php if($row['TrangThai']==0){echo "Hoạt động";}else{echo "Bị Khóa";}?> </td>
+                        <td>
+                            <div class="dropdown" >
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                        }
+                }else {
+                    ?>
+                    <tr>
+                
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px">
+                                <div class="img-pr">
+                                    <img src="assets/img/<?php echo $row['Avt']?>" alt="" class="">
+                                </div>
+                                <ul class="ml-2">
+                                    <li> <?php echo $row['HoTen'] ?> </li>
+                                    <li> <?php echo $row['Email'] ?> </li>
+                                    <li> <?php echo $row['SDT'] ?> </li>
+                                </ul>
+                            </div>
+                            
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <strong>Tài khoản: </strong> <?php echo $row['TenDangNhap'] ?>
+                                </li>
+                                <li>
+                                    <strong>Mật khẩu: </strong> <?php echo $row['MatKhau'] ?>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="filter-container">
 
-                            <select  name="selectquyen" style="width: 100%;" class="getselect" id="<?php echo $row['TenDangNhap']?>">
-                            <?php
-                                $sql ="SELECT * From quyen";
-                                $result1 = mysqli_query($connect,$sql);
-                                while ($row1=mysqli_fetch_array($result1)) { ?>
-                                    <option class="valueMaQuyen" value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
-                                <?php
-                                }
-                            ?>
+                                    <select  name="selectquyen" style="width: 100%;" class="getselect" id="<?php echo $row['TenDangNhap']?>">
+                                    <?php
+                                        $sql ="SELECT * From quyen";
+                                        $result1 = mysqli_query($connect,$sql);
+                                        while ($row1=mysqli_fetch_array($result1)) { ?>
+                                                <option class="valueMaQuyen" value="<?php echo $row1['MaQuyen']?>" <?php if($row['MaQuyen']==$row1['MaQuyen']){ echo "selected";} ?> ><?php echo $row1['TenQuyen'] ?></option>
+                                        <?php
+                                            
 
-                        </select>
-                    </div>
-                </td>
-                <td> <?php if($row['TrangThai']==0){echo "Hoạt động";}else{echo "Bị Khóa";}?> </td>
-                <td>
-                    <div class="dropdown" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li>
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
-                            <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <?php
+                                        }
+                                    ?>
+
+                                </select>
+                            </div>
+                        </td>
+                        <td> <?php if($row['TrangThai']==0){echo "Hoạt động";}else{echo "Bị Khóa";}?> </td>
+                        <td>
+                            <div class="dropdown" >
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
+                                    <!-- <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li> -->
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                
             }
             mysqli_close($connect);
             ?>
@@ -125,15 +257,6 @@
     </table>
 </div>
 <script src="./js/jquery.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable();
-        $('#filterSelect').on('change', function() {
-            $('#myTable').DataTable().column(2).search($(this).val()).draw();
-            console.log($(this).val());
-        });
-    });
-</script>
 
 <!-- Form thông báo -->
 <div class="modal fade" id="thongbao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="--bs-modal-width: 500px;">
@@ -253,4 +376,14 @@
         });
     });
 </script>
+<!-- Lọc theo loại tài khoản -->
+<script>
+        $(document).ready(function() {
+            var selected=document.getElementById('filterSelect2');
+            selected.addEventListener('change',function(){
+                var selectedValue = this.value;
+                window.location.href =`index.php?danhmuc=quanlytaikhoan&MaQuyen=${selectedValue}`;
+            });
+        });
+    </script>
 

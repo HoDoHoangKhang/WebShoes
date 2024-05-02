@@ -114,7 +114,12 @@ $result = $conn->query($sql);
 $(document).ready(function() {
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var tenLoai = $('#exampleFormControlInput').val();
+    var tenLoai = $('#exampleFormControlInput').val().trim();
+
+    if (tenLoai === '') {
+      alert('Vui lòng nhập Tên Loại');
+      return;
+    }
 
     $.ajax({
       url: 'module/main/caidat/insertdm.php',
@@ -122,10 +127,8 @@ $(document).ready(function() {
       data: { tenLoai: tenLoai },
       success: function(response) {
         if (response.trim() === 'exists') {
-          // Hiển thị thông báo nếu loại sản phẩm đã tồn tại
           alert('Loại sản phẩm đã tồn tại');
         } else if (response.trim() === 'updated') {
-          // Cập nhật giao diện nếu loại sản phẩm đã được kích hoạt
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);
@@ -134,7 +137,6 @@ $(document).ready(function() {
           }
           alert('Loại sản phẩm đã được cập nhật thành công');
         } else {
-          // Thêm loại sản phẩm mới vào bảng
           var lastRow = $('#myTable tbody tr:last');
           if (lastRow.length) {
             lastRow.after(response);
@@ -144,6 +146,23 @@ $(document).ready(function() {
           alert('Thêm loại sản phẩm mới thành công');
         }
         $('#myModal').modal('hide');
+          $('.btn-delete').click(function(e){
+        e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+        var supplierId = $(this).closest('tr').data('loai');
+        if(confirm("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
+            $.ajax({
+                url: 'module/main/caidat/deletedm.php', // Đường dẫn đến file xử lý xóa
+                method: 'POST',
+                data: {loai: supplierId}, // Dữ liệu gửi đi 
+                success: function(response){
+              
+                        $('[data-loai="' + supplierId + '"]').remove();
+                        console.log(response)
+                    
+                }
+            });
+        }
+    });
       }
     });
   });
