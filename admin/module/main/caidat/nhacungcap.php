@@ -112,15 +112,44 @@ $result = $connect->query($sql);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-  // Gắn sự kiện click cho nút "Thêm"
   $('.btn-primary-1').click(function(e) {
     e.preventDefault();
-    var tenNCC = $('#exampleFormControlInput').val();
-    var diaChiNCC = $('#exampleFormControlInput1').val();
-    var sdtNCC = $('#exampleFormControlInput2').val();
-    var emailNCC = $('#exampleFormControlInput3').val();
+    var tenNCC = $('#exampleFormControlInput').val().trim();
+    var diaChiNCC = $('#exampleFormControlInput1').val().trim();
+    var sdtNCC = $('#exampleFormControlInput2').val().trim();
+    var emailNCC = $('#exampleFormControlInput3').val().trim();
 
-    // Gửi dữ liệu đến máy chủ để xử lý thêm vào cơ sở dữ liệu
+    if (tenNCC === '') {
+      alert('Vui lòng nhập Tên Nhà Cung Cấp');
+      return;
+    }
+
+    if (diaChiNCC === '') {
+      alert('Vui lòng nhập Địa chỉ');
+      return;
+    }
+
+    if (sdtNCC === '') {
+      alert('Vui lòng nhập Số Điện Thoại');
+      return;
+    }
+
+    if (emailNCC === '') {
+      alert('Vui lòng nhập Email');
+      return;
+    }
+
+    // Thêm dữ liệu vào bảng HTML
+    var newRow = '<tr data-ncc="">' +
+                 '<td></td>' + // Mã nhà cung cấp sẽ được cập nhật sau khi thêm thành công
+                 '<td>' + tenNCC + '</td>' +
+                 '<td>' + diaChiNCC + '</td>' +
+                 '<td>' + sdtNCC + '</td>' +
+                 '<td>' + emailNCC + '</td>' +
+                 '<td><button class="btn btn-secondary btn-delete" type="button">Xóa</button></td>' +
+                 '</tr>';
+    $('#myTable tbody').append(newRow);
+
     $.ajax({
       url: 'module/main/caidat/insertncc.php',
       method: 'POST',
@@ -132,14 +161,11 @@ $(document).ready(function() {
       },
       success: function(response) {
         if (response.trim() === 'exists') {
-          // Hiển thị thông báo nếu nhà cung cấp đã tồn tại
           alert('Nhà cung cấp đã tồn tại');
         } else if (response.trim() === 'updated') {
-          // Cập nhật giao diện nếu nhà cung cấp đã được kích hoạt
           $('#myTable tbody').append(response);
           alert('Nhà cung cấp đã được cập nhật thành công');
         } else {
-          // Thêm nhà cung cấp mới vào bảng
           $('#myTable tbody').append(response);
           alert('Thêm nhà cung cấp mới thành công');
         }

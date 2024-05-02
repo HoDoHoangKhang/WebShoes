@@ -53,6 +53,8 @@
     
     <!-- <link rel="stylesheet" href="./assets/css/base.css"> -->
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/reponsive.css">
+
 
     <!-- font pro -->    
     <!-- <link rel="stylesheet" href="./assets/fonts/fontawesome.com/releases/v6.4.0/css/all.css">
