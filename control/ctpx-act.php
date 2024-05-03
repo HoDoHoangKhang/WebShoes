@@ -76,4 +76,14 @@
         $db->disconnect();
         return $output;
     }
+    function checkSanPhamInPhieuXuat($listMaPX, $MaSP){
+        $db = new DTB();
+        $query = "SELECT COUNT(*) as count FROM ctpx WHERE MaPX IN ($listMaPX) AND MaSP=$MaSP";
+        $result = mysqli_query($db->getConnection(), $query);
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        $db->disconnect();
+        return $count > 0;
+    }
+    // echo checkSanPhamInPhieuXuat(implode(',', getMaPhieuXuatListFromMaKH(1)),21);
 ?>

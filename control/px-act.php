@@ -78,4 +78,14 @@
         $row=mysqli_fetch_array($result);
         return $row['TongTien'];
     }
+    function getMaPhieuXuatListFromMaKH($MaKH){
+        $db = new DTB();
+        $kq = mysqli_query($db->getConnection(), "SELECT * FROM phieuxuat where MaKH= $MaKH AND TinhTrangDH ='Đã hoàn thành'");
+        $MaPXList = array();
+        while ($row = mysqli_fetch_assoc($kq)) {
+            $MaPXList[] = intval($row['MaPX']);
+        }
+        $db->disconnect();
+        return $MaPXList;
+    }
 ?>

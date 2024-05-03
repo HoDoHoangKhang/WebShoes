@@ -416,5 +416,55 @@
         }
         echo $output;
     }
+    if($_POST['action']=='review'){
+        $reviewContent=$_POST['reviewContent'];
+        $star=$_POST['star'];
+        $size=$_POST['size'];
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $gioHienTai=date("H:i Y-m-d");
+        $tenDangNhap=$_POST['tenDangNhap'];
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+        $hoTen=getUser($tenDangNhap)->getHoTen();
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/taikhoan-act.php');
+        $avt=getTaiKhoan($tenDangNhap)->getAvt();
+        $numberStar='';
+        for ($i=1; $i <=$star ; $i++) { 
+            $numberStar.='<i class="fa-solid fa-star" style="margin-right:3px;" ></i>';
+        }
+        for ($i=1; $i <=5-$star ; $i++) { 
+            $numberStar.='<i class="fa-light fa-star" style="margin-right:3px;" ></i>';
+        }
+        $output='
+        <div class="describe-reviews_detail-item">
+            <div class="describe-reviews_detail-info">
+                <div class="describe-reviews_detail-avt">
+                    <img src="./assets//img/'.$avt.'" alt="" class="">
+                    <div class="describe-reviews_detail-name_type">
+                        <div class="describe-reviews_detail-name">'.$hoTen.'</div>
+                        <div class="describe-reviews_detail-star">
+                            '.$numberStar.'
 
+                        </div>
+                    </div>
+                </div>
+                <div class="describe-reviews_detail-time">
+                    '.$gioHienTai.'
+                </div>
+            </div>
+            <div class="describe-reviews_detail-rating">
+                <div class="describe-reviews_detail-cmt">
+                    '.$reviewContent.'                                           
+                </div>
+            </div>
+            
+        </div>  
+        ';
+
+        // insert CSDL
+        $MaSP=intval($_POST['maSP']);
+        $MaKH=intval(getUser($tenDangNhap)->getMa());
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/danhgia-act.php');
+        insertDanhGia($MaSP,$MaKH,$reviewContent,$gioHienTai,intval($star));
+        echo $output;
+    }
 ?>

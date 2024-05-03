@@ -339,7 +339,7 @@
                             </div>
                         </div>
                         <div class="describe-reviews_detail">
-                            <div class="describe-reviews_detail-filter">
+                            <!-- <div class="describe-reviews_detail-filter">
                                 <div class="reviews_detail-filter_item reviews_detail-filter_item--select">
                                     All
                                 </div>
@@ -367,17 +367,49 @@
                                     <i class="fa-solid fa-star"></i>
                                     5
                                 </div>
-                            </div>
+                            </div> -->
+                            <?php
+                            if(isset($_SESSION['taikhoan'])){
+                                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/ctpx-act.php');
+                                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/user-act.php');
+                                require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/danhgia-act.php');
+                                $MaKH=intval(getUserId($_SESSION['taikhoan']));
+                                $MaSP=$_GET['id'];
+                                if(checkSanPhamInPhieuXuat(implode(',', getMaPhieuXuatListFromMaKH($MaKH)),$MaSP) && checkDanhGiaExists($MaSP,$MaKH)==false){?>
+                                    <div class="review">
+                                        <h2 style="font-size: 20px;" >Đánh giá</h2>
+                                        <div class="stars">
+                                            <input class="star star-5" id="star-5" type="radio" name="star"/>
+                                            <label class="star star-5" for="star-5"></label>
+                                            <input class="star star-4" id="star-4" type="radio" name="star"/>
+                                            <label class="star star-4" for="star-4"></label>
+                                            <input class="star star-3" id="star-3" type="radio" name="star"/>
+                                            <label class="star star-3" for="star-3"></label>
+                                            <input class="star star-2" id="star-2" type="radio" name="star"/>
+                                            <label class="star star-2" for="star-2"></label>
+                                            <input class="star star-1" id="star-1" type="radio" name="star"/>
+                                            <label class="star star-1" for="star-1"></label>
+                                        </div>
+                                        <div class="review-content">
+                                            <textarea name="review" id="review" placeholder="Viết đánh giá của bạn..."></textarea>
+                                        </div>
+                                        <button class="btn-review">Gửi</button>
+                                    </div>
+                                <?php } 
+                            }?>  
                             <div class="describe-reviews_detail-list">
-                                <div class="describe-reviews_detail-item">
+                                <!-- <div class="describe-reviews_detail-item">
                                     <div class="describe-reviews_detail-info">
                                         <div class="describe-reviews_detail-avt">
                                             <img src="./assets//img/rating.jpg" alt="" class="">
                                             <div class="describe-reviews_detail-name_type">
                                                 <div class="describe-reviews_detail-name">Elonmusk</div>
-                                                <div class="describe-reviews_detail-type">
-                                                    <div class="describe-reviews_detail-size">Size: 40</div>
-                                                    <div class="describe-reviews_detail-color">Color: Red</div>
+                                                <div class="describe-reviews_detail-star">
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,62 +418,17 @@
                                         </div>
                                     </div>
                                     <div class="describe-reviews_detail-rating">
-                                        <div class="describe-reviews_detail-star">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div class="describe-reviews_detail-title">
-                                            Sản phẩm rất tốt
-                                        </div>
                                         <div class="describe-reviews_detail-cmt">
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis culpa ipsum repudiandae magni labore perspiciatis ex consectetur cumque mollitia. Temporibus perspiciatis ratione ad a, nobis nisi obcaecati autem minus facere.
                                         </div>
                                     </div>
-                                    <div class="describe-reviews_detail-like">
-                                        <i class="fa-solid fa-thumbs-up describe-reviews_detail-like-icon"></i>
-                                        <span>Hữu ích</span>
-                                    </div>
-                                </div>  
-                                <div class="describe-reviews_detail-item">
-                                    <div class="describe-reviews_detail-info">
-                                        <div class="describe-reviews_detail-avt">
-                                            <img src="./assets//img/rating.jpg" alt="" class="">
-                                            <div class="describe-reviews_detail-name_type">
-                                                <div class="describe-reviews_detail-name">Elonmusk</div>
-                                                <div class="describe-reviews_detail-type">
-                                                    <div class="describe-reviews_detail-size">Size: 40</div>
-                                                    <div class="describe-reviews_detail-color">Color: Red</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="describe-reviews_detail-time">
-                                            20 hours ago
-                                        </div>
-                                    </div>
-                                    <div class="describe-reviews_detail-rating">
-                                        <div class="describe-reviews_detail-star">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div class="describe-reviews_detail-title">
-                                            Sản phẩm rất tốt
-                                        </div>
-                                        <div class="describe-reviews_detail-cmt">
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis culpa ipsum repudiandae magni labore perspiciatis ex consectetur cumque mollitia. Temporibus perspiciatis ratione ad a, nobis nisi obcaecati autem minus facere.
-                                        </div>
-                                    </div>
-                                    <div class="describe-reviews_detail-like">
-                                        <i class="fa-solid fa-thumbs-up"></i>
-                                        <span>Hữu ích</span>
-                                    </div>
-                                </div>  
-                                <div class="describe-reviews_detail-item">
+                                </div>   -->
+                                <?php
+                                    require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/danhgia-act.php');
+                                    showAllReview($_GET['id']);
+
+                                ?>
+                                <!-- <div class="describe-reviews_detail-item">
                                     <div class="describe-reviews_detail-info">
                                         <div class="describe-reviews_detail-avt">
                                             <img src="./assets//img/rating.jpg" alt="" class="">
@@ -476,7 +463,7 @@
                                         <i class="fa-solid fa-thumbs-up"></i>
                                         <span>Hữu ích</span>
                                     </div>
-                                </div>  
+                                </div>   -->
                             </div>
                         </div>
                     </div>
@@ -915,8 +902,55 @@
                 curentIndex--;
             }
         });
+        var btnReview=document.querySelector(".btn-review");
+        btnReview.addEventListener('click',function(){
+            if(getNumberStar()!=null){
+                if(getReviewContent()!=''){
+                    $.ajax({
+                        url: "./control/ajax_action.php",
+                        method: "POST",
+                        data: {
+                            reviewContent:getReviewContent(),
+                            star: getNumberStar(),
+                            size: 40,
+                            tenDangNhap: "<?php echo $_SESSION['taikhoan']?>",
+                            maSP: <?php echo $_GET['id']?>,
+                            action: "review"
+                        },
+                        success: function(data){
+                            var newDiv = document.createElement("div");
+                            newDiv.innerHTML = data;
+                            document.querySelector(".describe-reviews_detail-list").insertAdjacentElement("afterbegin",newDiv);
+                            creatToast("item-success","Đánh giá của bạn đã được ghi lại !","fa-solid fa-circle-check","item-end-success");
+                            var formReview=document.querySelector('.review').style.display='none';
+                        }
+                    });
+                }
+                else{
+                    creatToast("item-warning","Vui lòng nhập nội dung để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
+                }
+            }
+            else{
+                creatToast("item-warning","Vui chọn sao để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
+            }
+        });
+        function getReviewContent(){
+            var reviewContent=document.getElementById('review');
+            return reviewContent.value;
+        }
+        function getNumberStar(){
+            const stars = document.querySelectorAll('.stars input');
+            let selectedRating = null;
+            for (let i = 0; i < stars.length; i++) {
+                if (stars[i].checked) {
+                    selectedRating = stars[i].id.split('-')[1];
+                    break;
+                }
+            }
+            return selectedRating;
+        }
     });
-
+    
 </script>
 <!-- <script>
     function priceNew(priceOld,sale){

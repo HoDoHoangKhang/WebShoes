@@ -20,11 +20,11 @@
             <div class="filter-container">
                 <select id="filterSelect">
                     <option value="">Rate</option>
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
             
@@ -33,138 +33,49 @@
     <table id="myTable" class="table table-striped " style="width: 100%;">
         <thead>
             <tr>
-                <th >Mã DG</th>
-                <th>Mã SP</th>
-                <th>Tiêu đề</th>
+                <th style="min-width: 100px;">Mã DG</th>
+                <th style="min-width: 100px;">Mã SP</th>
+                <th style="min-width: 150px;">Mã Khách hàng</th>
                 <th>Nội dung</th>
-                <th>Thời gian</th>
-                <th>Số sao</th>
-                <th>Hành động</th>
+                <th style="min-width: 180px;">Thời gian</th>
+                <th style="min-width: 120px;">Số sao</th>
+                <th style="min-width: 120px;">Hành động</th>
 
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#themsanpham">
-                Xóa
-                </button>
-                </td>
-            </tr>
-            <tr>
-                <td>123</td>
-                <td>123</td>
-                <td>Sản phẩm tốt</td>
-                <td>Nội dung đánh giá</td>
-                <td>12/12/1212</td>
-                <td>
-                    5
-                </td>
-                <td>
-                <button type="button" class="btn btn-danger">
-                    Xóa
-                </button>
-                </td>
-            </tr>
-            
+            <?php     
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/danhgia-act.php');
+            showListDanhGiaAdmin();
+            ?>
         </tbody>
     </table>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    
+    $(document).ready(function(){
+        var btnDanhGias=document.querySelectorAll(".btnDanhGia");
+        btnDanhGias.forEach(element => {
+            element.addEventListener('click', function(){
+                $.ajax({
+                    url: "./module/main/quanlydanhgia-an.php",
+                    method: "POST",
+                    data: {
+                        maDanhGia:element.parentElement.parentElement.children[0].textContent,
+                        action: "AnDanhGia"
+                    },
+                    success: function(data){
+                        element.parentElement.parentElement.remove();
+                        alert(data);
+                    }
+                });
+            }); 
+        });
+        $('#filterSelect').on('change', function() {
+            $('#myTable').DataTable().column(5).search($(this).val()).draw();
+            console.log($(this).val());
+        });
+    });
+</script>
