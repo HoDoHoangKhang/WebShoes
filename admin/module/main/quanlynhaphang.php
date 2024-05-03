@@ -38,6 +38,7 @@ if ($result->num_rows === 0) {
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 <style
 >
 	.img-pr{
@@ -55,13 +56,13 @@ if ($result->num_rows === 0) {
 	ul{
 		 padding: 0;
 	}
-    .contentdivselect {
-        display: none; /* Ẩn tất cả các div */
-    }
-    /* Hiển thị div content1 mặc định */
-    #contentdivselect1 {
-        display: block;
-    }
+	.contentdivselect {
+		display: none; /* Ẩn tất cả các div */
+	}
+	/* Hiển thị div content1 mặc định */
+	#contentdivselect1 {
+		display: block;
+	}
 </style>
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
@@ -69,14 +70,14 @@ if ($result->num_rows === 0) {
 		<p>Danh sách nhập hàng</p>
 		<div class="table-func" style="width: 50%">
 			<select id="selectBox" onchange="changeContent()">
-				    <option value="option1">Theo Ngày</option>
-				    <option value="option2">Theo Tiền</option>
-				    <option value="option3">Theo Số lượng</option>
-				    <option value="option4">Trạng thái</option>
+					<option value="option1">Theo Ngày</option>
+					<option value="option2">Theo Tiền</option>
+					<option value="option3">Theo Số lượng</option>
+					<option value="option4">Trạng thái</option>
 				</select>
 			<div id="contentdivselect1" class="contentdivselect filter-container" style="width: 100%">
 				<label>Bắt đầu:</label>
-			    <input type="date" id="startdate">
+				<input type="date" id="startdate">
 				<label>Kết thúc:</label>
 				<input type="date" id="enddate">
 				<button class="btn btn-primary" id="filterBtnDate">Filter</button>
@@ -84,7 +85,7 @@ if ($result->num_rows === 0) {
 			</div>
 			<div id="contentdivselect2" class="contentdivselect filter-container" style="width: 100%">
 				<label>Bắt đầu:</label>
-			    <input type="number" id="startmoney">
+				<input type="number" id="startmoney">
 				<label>Kết thúc:</label>
 				<input type="number" id="endmoney">
 				<button class="btn btn-primary" id="filterBtnMoney">Filter</button>
@@ -92,7 +93,7 @@ if ($result->num_rows === 0) {
 			</div>
 			<div id="contentdivselect3" class="contentdivselect filter-container" style="width: 100%">
 				<label>Bắt đầu:</label>
-			    <input type="number" id="startSL">
+				<input type="number" id="startSL">
 				<label>Kết thúc:</label>
 				<input type="number" id="endSL">
 				<button class="btn btn-primary" id="filterBtnNumber">Filter</button>
@@ -101,13 +102,13 @@ if ($result->num_rows === 0) {
 			<div id="contentdivselect4" class="contentdivselect filter-container" style="width: 100%">
 				<label>Trạng thái:</label>
 				<select id="selectTrangThai">
-				    <option value=" ">All</option>
-				    <option value="Đã Nhận">Đã Nhận</option>
-				    <option value="Chưa Nhận">Chưa Nhận</option>
+					<option value=" ">All</option>
+					<option value="Đã Nhận">Đã Nhận</option>
+					<option value="Chưa Nhận">Chưa Nhận</option>
 				</select>
 				<script type="text/javascript">
 					$('#selectTrangThai').on('change', function() {
-					    $('#myTable').DataTable().column(6).search($(this).val()).draw();
+						$('#mTable').DataTable().column(6).search($(this).val()).draw();
 					  });
 				</script>
 			</div>
@@ -117,113 +118,11 @@ if ($result->num_rows === 0) {
 			<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
 		</div>
 	</div>
-	<script>
-	    // Hàm để thay đổi nội dung của div
-	    function changeContent() {
-	        var selectBox = document.getElementById("selectBox");
-	        var selectedOption = selectBox.options[selectBox.selectedIndex].value;
-
-	        // Ẩn tất cả các div
-	        var allContents = document.getElementsByClassName("contentdivselect");
-	        for (var i = 0; i < allContents.length; i++) {
-	            allContents[i].style.display = "none";
-	        }
-
-	        // Hiển thị div tương ứng với option đã chọn
-	        var contentDiv = document.getElementById("contentdivselect" + selectedOption.substr(-1));
-	        contentDiv.style.display = "block";
-	    }
-	</script>
-	<script>
-		$('#filterBtnDate').click(function() {
-		    var startDate = $('#startdate').val();
-		    var endDate = $('#enddate').val();
-
-		    if (startDate != '' && endDate != '') {
-		        $('#myTable tr').hide().each(function() {
-	            var rowDate = $(this).find('td:eq(3)').text();
-	            if (rowDate >= startDate && rowDate <= endDate) {
-	                $(this).show();
-	            }
-        });
-		    }
-		});
-
-		$('#clearBtnDate').click(function() {
-		    $('#startdate').val('');
-		    $('#enddate').val('');
-		    
-		    $('#myTable tr').show();
-		});
-		document.getElementById('filterBtnMoney').addEventListener('click', function() {
-		  	var startmoney = document.getElementById('startmoney').value;
-		  	var endmoney = document.getElementById('endmoney').value;
-		  	// console.log(startmoney + ' ' + endmoney);
-		  	if (startmoney != '' && endmoney != '') {
-				var table = document.getElementById('myTable');
-				var rows = table.getElementsByTagName('tr');
-
-				for (var i = 1; i < rows.length; i++) {
-					var rowMoney = rows[i].getElementsByTagName('td')[4].innerHTML;
-					var numberString = rowMoney.replace(/\D/g, '');
-					var number = parseFloat(numberString);
-					if (number >= startmoney && number <= endmoney) {
-						rows[i].style.display = '';
-					} else {
-				  		rows[i].style.display = 'none';
-					}
-				}
-		  	}
-		});
-		document.getElementById('clearBtnMoney').addEventListener('click', function() {
-		  document.getElementById('startmoney').value = '';
-		  document.getElementById('endmoney').value = '';
-
-		  var table = document.getElementById('myTable');
-		  var rows = table.getElementsByTagName('tr');
-
-		  for (var i = 1; i < rows.length; i++) {
-		    rows[i].style.display = '';
-		  }
-		});
-
-
-		document.getElementById('filterBtnNumber').addEventListener('click', function() {
-		  	var startSL = document.getElementById('startSL').value;
-		  	var endSL = document.getElementById('endSL').value;
-		  	// console.log(startmoney + ' ' + endmoney);
-		  	if (startSL != '' && endSL != '') {
-				var table = document.getElementById('myTable');
-				var rows = table.getElementsByTagName('tr');
-
-				for (var i = 1; i < rows.length; i++) {
-					var sl = rows[i].getElementsByTagName('td')[5].textContent;
-					var number = parseInt(sl.match(/\d+/)[0]);
-					console.log(sl);
-					if (number >= startSL && number <= endSL) {
-						rows[i].style.display = '';
-					} else {
-				  		rows[i].style.display = 'none';
-					}
-				}
-		  	}
-		});
-		document.getElementById('clearBtnNumber').addEventListener('click', function() {
-		  document.getElementById('startSL').value = '';
-		  document.getElementById('endSL').value = '';
-
-		  var table = document.getElementById('myTable');
-		  var rows = table.getElementsByTagName('tr');
-
-		  for (var i = 1; i < rows.length; i++) {
-		    rows[i].style.display = '';
-		  }
-		});
-	</script>
-	<table id="myTable" class="table table-striped " style="width: 100%;">
+	
+	<table id="mTable"  style="width: 100%;">
 		<thead>
 			<tr>
-				<th >Mã</th>
+				<th>Mã</th>
 				<th>Nhân viên</th>
 				<th>Nhà cung cấp</th>
 				<th>Ngày nhập</th>
@@ -264,12 +163,12 @@ if ($result->num_rows === 0) {
 				<input class="form-check-input" type="checkbox" value="" id="<?php echo $row['MaPN']; ?>"
 					<?php 
 						if ($row['TinhTrangDH'] == 'Đã nhận') 
-							echo ' checked';
-					?>
-				>
+							echo ' checked disabled ';
+					?> 
+				onchange="disableCheckbox(this)" >
 				<label class="form-check-label" id="p<?php echo $row['MaPN']; ?>">
-			        <?php echo $row['TinhTrangDH']; ?>
-			    </label>
+					<?php echo $row['TinhTrangDH']; ?>
+				</label>
 			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
@@ -282,49 +181,50 @@ if ($result->num_rows === 0) {
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-	$('table').on('click', 'td' , function (event) {
-		var checkbox = $('input', this); 
-		var maPhieuNhap = checkbox.attr('id');
-		if (checkbox.is(':checked')){
-			var confirmation = confirm("Xác nhận đã nhận được đơn hàng có mã = " + maPhieuNhap + " ?");
-			if (confirmation) {
-				$.ajax({
-					url: 'module/main/quanlynhaphang_xac_nhan_nhan_hang.php',
-					type: 'POST',
-					data: { maPhieuNhap: maPhieuNhap },
-					success: function(response){
-						// console.log(response);
-						document.getElementById("p" + maPhieuNhap).innerHTML = "Đã nhận";
-					}
-				});
-			} else {
-				checkbox.prop('checked', false);
-			}
-		}
-		
-		
-	});
-	$(document).ready(function(){
-    $('table').on('change', 'input[type="checkbox"]' , function (event) {
-        var checkbox = $(this);
-        var maPhieuNhap = checkbox.attr('id');
-        
-        if (!checkbox.is(':checked')) {
-        	$.ajax({
-				url: 'module/main/quanlynhaphang_huy_nhan_hang.php',
-				type: 'POST',
-				data: { maPhieuNhap: maPhieuNhap },
-				success: function(response){
-					console.log(response);
-        			document.getElementById("p" + maPhieuNhap).innerHTML = "Chưa nhận";
-				}
-			});
-        }
-    });
-});
-});
+	function disableCheckbox(checkbox) {
+	  checkbox.disabled = checkbox.checked;
+	}
 
+	$(document).ready(function(){
+		$('table').on('click', 'td' , function (event) {
+			var checkbox = $('input', this); 
+			var maPhieuNhap = checkbox.attr('id');
+			if (checkbox.is(':checked') && !checkbox.is(':disabled')){
+				var confirmation = confirm("Xác nhận đã nhận được đơn hàng có mã = " + maPhieuNhap + " ?");
+				if (confirmation) {
+					$.ajax({
+						url: 'module/main/quanlynhaphang_xac_nhan_nhan_hang.php',
+						type: 'POST',
+						data: { maPhieuNhap: maPhieuNhap },
+						success: function(response){
+							// console.log(response);
+							document.getElementById("p" + maPhieuNhap).innerHTML = "Đã nhận";
+						}
+					});
+				} else {
+					checkbox.prop('checked', false);
+				}
+			}
+		});
+	});
+	// $(document).ready(function(){
+	// 	$('table').on('change', 'input[type="checkbox"]' , function (event) {
+	// 		var checkbox = $(this);
+	// 		var maPhieuNhap = checkbox.attr('id');
+			
+	// 		if (!checkbox.is(':checked')) {
+	// 			$.ajax({
+	// 				url: 'module/main/quanlynhaphang_huy_nhan_hang.php',
+	// 				type: 'POST',
+	// 				data: { maPhieuNhap: maPhieuNhap },
+	// 				success: function(response){
+	// 					console.log(response);
+	// 					document.getElementById("p" + maPhieuNhap).innerHTML = "Chưa nhận";
+	// 				}
+	// 			});
+	// 		}
+	// 	});
+	// });
 </script>
 <?php $connect->close(); ?>
 <!-- Modal -->
@@ -351,7 +251,7 @@ if ($result->num_rows === 0) {
 	$(document).ready(function(){
 		$('table').on('click', 'td' , function (event) {
 			var phieunhapId = $('button', this).attr('id');
-        	if (phieunhapId != null) {
+			if (phieunhapId != null) {
 				console.log(phieunhapId)
 				$.ajax({
 					url: 'module/main/quanlynhaphang_get_ctpn_info.php',
@@ -371,76 +271,186 @@ if ($result->num_rows === 0) {
 
 <div class="modal fade" id="xoaphieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="contendelete">
-            <style>
-                .inline-p {
-                    display: inline-block;
-                }
-            </style>
-            <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
-            <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
-            <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body" id="contendelete">
+			<style>
+				.inline-p {
+					display: inline-block;
+				}
+			</style>
+			<p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+			<h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+			<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+	  </div>
+	  <div class="modal-footer">
+	  </div>
+	</div>
   </div>
 </div>
 <script>
-    $('table').on('click', 'td' , function (event) {
-        var productId = $('button', this).attr('id');
-        if (productId != null) {
-            var pElement = document.getElementById("idpn");
-            // Thay đổi nội dung bằng thuộc tính textContent
-            pElement.textContent = productId;
-        }
-    });
+	$('table').on('click', 'td' , function (event) {
+		var productId = $('button', this).attr('id');
+		if (productId != null) {
+			var pElement = document.getElementById("idpn");
+			// Thay đổi nội dung bằng thuộc tính textContent
+			pElement.textContent = productId;
+		}
+	});
 </script>
 <script>
 $(document).ready(function(){
   $('#xoaphieunhap').on('hidden.bs.modal', function () {
-    // Ví dụ: Reset form
-    $('#contendelete').html(`
-      <style>
-            .inline-p {
-                display: inline-block;
-            }
-        </style>
-        <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
-        <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
-        <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
-    `);
+	// Ví dụ: Reset form
+	$('#contendelete').html(`
+	  <style>
+			.inline-p {
+				display: inline-block;
+			}
+		</style>
+		<p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+		<h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+		<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+	`);
   });
 });
 </script>
 <script>
-    document.getElementById('submitXoaPN').addEventListener('click', function() {
-        var productId = document.getElementById('idpn').innerText;
-        console.log('Xoa: ' + productId);
+	document.getElementById('submitXoaPN').addEventListener('click', function() {
+		var productId = document.getElementById('idpn').innerText;
+		console.log('Xoa: ' + productId);
 		$.ajax({
-            type: 'POST',
-            url: 'module/main/quanlynhaphang_xoa_phieu_nhap.php', // Đường dẫn đến tệp PHP xử lý
-            data: { productId: productId },
-            success: function(response) {
-                // Xử lý kết quả từ tệp PHP nếu cần
-                $('#contendelete').html(response);
+			type: 'POST',
+			url: 'module/main/quanlynhaphang_xoa_phieu_nhap.php', // Đường dẫn đến tệp PHP xử lý
+			data: { productId: productId },
+			success: function(response) {
+				// Xử lý kết quả từ tệp PHP nếu cần
+				$('#contendelete').html(response);
 				var searchValue = productId;
-                $("#myTable tbody tr").each(function() {
-                    var rowData = $(this).find("td:eq(0)").text(); // Lấy dữ liệu của cột 0 trong hàng
-                    if (rowData === searchValue) {
-                        $(this).remove(); // Xóa hàng nếu dữ liệu cột 0 trùng khớp với giá trị tìm kiếm
-                        return false; // Dừng vòng lặp sau khi xóa hàng
-                    }
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
+				$("#mTable tbody tr").each(function() {
+					var rowData = $(this).find("td:eq(0)").text(); // Lấy dữ liệu của cột 0 trong hàng
+					if (rowData === searchValue) {
+						$(this).remove(); // Xóa hàng nếu dữ liệu cột 0 trùng khớp với giá trị tìm kiếm
+						return false; // Dừng vòng lặp sau khi xóa hàng
+					}
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+			}
+		});
+	});
 </script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+		// Hàm để thay đổi nội dung của div
+		function changeContent() {
+			var selectBox = document.getElementById("selectBox");
+			var selectedOption = selectBox.options[selectBox.selectedIndex].value;
+
+			// Ẩn tất cả các div
+			var allContents = document.getElementsByClassName("contentdivselect");
+			for (var i = 0; i < allContents.length; i++) {
+				allContents[i].style.display = "none";
+			}
+
+			// Hiển thị div tương ứng với option đã chọn
+			var contentDiv = document.getElementById("contentdivselect" + selectedOption.substr(-1));
+			contentDiv.style.display = "block";
+		}
+	</script>
+	<script>
+
+	    var table = $('#mTable').DataTable({
+		  "order": []
+		});
+	    var Ngay = 0;
+	    var Tien = 0;
+	    var Sl = 0;
+
+	    savedTable = table.rows().data().toArray();
+
+
+		$('#filterBtnDate').click(function() {
+			var startDate = $('#startdate').val();
+			var endDate = $('#enddate').val();
+
+			if (startDate != '' && endDate != '') {
+		        // Tạo một mảng mới để lưu các dòng thỏa mãn điều kiện
+		        var filteredData = [];
+
+		        // Duyệt qua tất cả các hàng trong dữ liệu
+		        for (var i = 0; i < savedTable.length; i++) {
+		            // Lấy giá trị của cột thứ 4 (index 3) trong hàng hiện tại
+		            var dateValue = savedTable[i][3]; // Giả sử cột thứ 4 là cột chứa ngày
+
+		            // Kiểm tra xem giá trị của cột này có nằm trong khoảng startDate và endDate không
+		            if (dateValue >= startDate && dateValue <= endDate) {
+		                // Nếu nằm trong khoảng thì thêm hàng vào mảng filteredData
+		                filteredData.push(savedTable[i]);
+		            }
+		        }
+		        // Thêm các hàng thỏa mãn điều kiện vào bảng
+		        table.clear().rows.add(filteredData).draw();
+		    }
+		});
+		$('#clearBtnDate').click(function() {
+	        table.clear().rows.add(savedTable).draw();
+	        console.log('xoa loc ngay');
+		});
+
+
+		$('#filterBtnMoney').click(function() {
+			var startmoney = $('#startmoney').val();
+			var endmoney = $('#endmoney').val();
+	        var filteredData1 = [];
+
+			if (startmoney != '' && endmoney != '') {
+		        for (var i = 0; i < savedTable.length; i++) {
+		            var dateValue = savedTable[i][4]; // Giả sử cột thứ 4 là cột chứa ngày
+		            var moneyformat = dateValue.replace(/\D/g, '');
+		            moneyformat = parseFloat(moneyformat);
+		            if (moneyformat >= startmoney && moneyformat <= endmoney) {
+		                filteredData1.push(savedTable[i]);
+		            }
+		        }
+		        // thực hiện sắp xếp theo thứ tự tăng của cột 5
+		        filteredData1.sort(function(a, b) {
+		            var moneyA = parseFloat(a[4].replace(/\D/g, ''));
+		            var moneyB = parseFloat(b[4].replace(/\D/g, ''));
+		            return moneyA - moneyB;
+		        });
+		        table.clear().rows.add(filteredData1).draw();
+			}
+		});
+		$('#clearBtnMoney').click(function() {
+	        table.clear().rows.add(savedTable).draw();
+	        console.log('xoa loc tien');
+		});
+
+		$('#filterBtnNumber').click(function() {
+			var startSL = $('#startSL').val();
+			var endSL = $('#endSL').val();
+	        var filteredData1 = [];
+
+			if (startSL != '' && endSL != '') {
+		        for (var i = 0; i < savedTable.length; i++) {
+		            var dateValue = savedTable[i][5]; // Giả sử cột thứ 4 là cột chứa ngày
+		            var number = $(dateValue).text().trim();
+					console.log(number); // Kết quả: "60"
+		            if (number >= startSL && number <= endSL) {
+		                filteredData1.push(savedTable[i]);
+		            }
+		        }
+		        // Thêm các hàng thỏa mãn điều kiện vào bảng
+		        table.clear().rows.add(filteredData1).draw();
+			}
+		});
+		$('#clearBtnNumber').click(function() {
+	        table.clear().rows.add(savedTable).draw();
+	        console.log('xoa loc tien');
+		});
+	</script>

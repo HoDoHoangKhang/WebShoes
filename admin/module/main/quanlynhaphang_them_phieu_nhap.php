@@ -7,7 +7,7 @@ require '../config/config.php';
 <div id="divTong" class="container mt-4 mb-4">
     <div>
         <h2 style="padding: 10px;">Nhập Phiếu Nhập</h2>
-        <div style="display: flex; width: 100%;"> 
+        <div style="display: flex; width: 100%; pointer-events: none;"> 
             <div class="input-group">
                 <input id="MaNV" type="text" value="<?php 
                 $sql = "SELECT Ma FROM `user` WHERE TenDangNhap = ?";
@@ -20,7 +20,7 @@ require '../config/config.php';
                     $stmt->close();
                 }
                 echo $MaNV;
-                ?>" required>
+                ?>" >
                 <label for="">MaNV</label>
             </div>
             <div class="input-group">
@@ -29,17 +29,15 @@ require '../config/config.php';
             </div>
             <script type="text/javascript">
                 var inputElement = document.getElementById('NgayNhap');
-                setInterval(function() {
-                    var currentDate = new Date();
+                var currentDate = new Date();
 
-                    var currentDay = currentDate.getDate();
-                    var currentMonth = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
-                    var currentYear = currentDate.getFullYear();
+                var currentDay = currentDate.getDate();
+                var currentMonth = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+                var currentYear = currentDate.getFullYear();
 
-                    var formattedDate = currentYear + "-" + (currentMonth < 10 ? '0' : '') + currentMonth + "-" + (currentDay < 10 ? '0' : '') + currentDay;
+                var formattedDate = currentYear + "-" + (currentMonth < 10 ? '0' : '') + currentMonth + "-" + (currentDay < 10 ? '0' : '') + currentDay;
 
-                    inputElement.value = formattedDate;
-                }, 1000);
+                inputElement.value = formattedDate;
             </script>
         </div>
             
@@ -68,8 +66,8 @@ require '../config/config.php';
                 </ul>
             </div>
             <div class="dropdown">
-                <div class="select">
-                    <span class="selected" id="tinhTrang">Tình Trạng Đơn Hàng</span>
+                <div class="select" style="display: none;">
+                    <span class="selected" id="tinhTrang">Chưa nhận</span>
                     <div class="caret"></div>
                 </div>
                 <ul class="menu" >
@@ -151,7 +149,6 @@ require '../config/config.php';
         var NgayNhap = document.getElementById('NgayNhap').value;
         var nhacungcap = document.getElementById('nhacungcap').textContent;
         var tinhTrang = document.getElementById('tinhTrang').textContent;
-
 
         var d = 0;
         if (MaNV === '') {
@@ -256,57 +253,75 @@ require '../config/config.php';
         var newPrice = document.getElementById('GiaNhap').value;
 
         var d = 0;
-        if (newCode === '') {
-            document.getElementById('MaSP').style.border = '1px solid red'; d = 1;
-        } else { document.getElementById('MaSP').style.border = ''; } 
-        if (newSize === 'Chọn Size') {
-            document.getElementById('SizeSP').style.color = 'red'; d = 1;
-        } else { document.getElementById('SizeSP').style.color = ''; }
-        if (newQuantity === '') {
-            document.getElementById('SoLuong').style.border = '1px solid red'; d = 1;
-        } else { document.getElementById('SoLuong').style.border = ''; } 
-        if (newPrice === '') {
-            document.getElementById('GiaNhap').style.border = '1px solid red'; d = 1;
-        } else { document.getElementById('GiaNhap').style.border = ''; } 
 
-        if (d === 1) {
-            alert('Vui lòng nhập đầy đủ chi tiết');
-        } else {
-            // Lấy đối tượng bảng
-            var table = document.getElementById('mTable');
-            var dachinh = false;
-            // Kiểm tra xem có hàng nào trong bảng chứa dữ liệu giống với dữ liệu mới không
-            var rows = table.getElementsByTagName('tr');
-            for (var i = 0; i < rows.length; i++) {
-                var cells = rows[i].getElementsByTagName('td');
-                if (cells.length >= 2) {
-                    var code = cells[0].innerHTML;
-                    var size = cells[1].innerHTML;
-                    if (code === newCode) {
-                        cells[3].innerHTML = newPrice;
-                        if (size === newSize) {
-                            cells[2].innerHTML = newQuantity;
-                            dachinh = true;
+        var productCode = newCode;
+        $.ajax({
+            type: 'POST',
+            url: 'module/main/quanlynhaphang_is_MaSP_exist.php',
+            data: {productCode: productCode},
+            success: function(response){
+                if (response === "khong_ton_tai"){
+                    document.getElementById('MaSP').style.border = '1px solid red'; d = 1;
+                    alert("Mã Không tồn tại!");
+
+                }  else {
+                    if (newCode === '') {
+                        document.getElementById('MaSP').style.border = '1px solid red'; d = 1;
+                    } else { document.getElementById('MaSP').style.border = ''; } 
+                    if (newSize === 'Chọn Size') {
+                        document.getElementById('SizeSP').style.color = 'red'; d = 1;
+                    } else { document.getElementById('SizeSP').style.color = ''; }
+                    if (newQuantity === '') {
+                        document.getElementById('SoLuong').style.border = '1px solid red'; d = 1;
+                    } else { document.getElementById('SoLuong').style.border = ''; } 
+                    if (newPrice === '') {
+                        document.getElementById('GiaNhap').style.border = '1px solid red'; d = 1;
+                    } else { document.getElementById('GiaNhap').style.border = ''; } 
+
+                    if (d === 1) {
+                        alert('Vui lòng nhập đầy đủ chi tiết');
+                    } else {
+                        // Lấy đối tượng bảng
+                        var table = document.getElementById('mTable');
+                        var dachinh = false;
+                        // Kiểm tra xem có hàng nào trong bảng chứa dữ liệu giống với dữ liệu mới không
+                        var rows = table.getElementsByTagName('tr');
+                        for (var i = 0; i < rows.length; i++) {
+                            var cells = rows[i].getElementsByTagName('td');
+                            if (cells.length >= 2) {
+                                var code = cells[0].innerHTML;
+                                var size = cells[1].innerHTML;
+                                if (code === newCode) {
+                                    cells[3].innerHTML = newPrice;
+                                    if (size === newSize) {
+                                        cells[2].innerHTML = newQuantity;
+                                        dachinh = true;
+                                    }
+                                }
+                                
+                            }
                         }
+                        if (dachinh) return;
+
+                        // Nếu không tìm thấy hàng có dữ liệu giống, thêm một hàng mới
+                        var newRow = table.insertRow(-1); // Thêm vào cuối bảng
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        var cell3 = newRow.insertCell(2);
+                        var cell4 = newRow.insertCell(3);
+
+                        // Gán dữ liệu cho các ô của hàng mới
+                        cell1.innerHTML = newCode;
+                        cell2.innerHTML = newSize;
+                        cell3.innerHTML = newQuantity;
+                        cell4.innerHTML = newPrice;       
                     }
-                    
                 }
             }
-            if (dachinh) return;
+        });
 
-            // Nếu không tìm thấy hàng có dữ liệu giống, thêm một hàng mới
-            var newRow = table.insertRow(-1); // Thêm vào cuối bảng
-            var cell1 = newRow.insertCell(0);
-            var cell2 = newRow.insertCell(1);
-            var cell3 = newRow.insertCell(2);
-            var cell4 = newRow.insertCell(3);
-
-            // Gán dữ liệu cho các ô của hàng mới
-            cell1.innerHTML = newCode;
-            cell2.innerHTML = newSize;
-            cell3.innerHTML = newQuantity;
-            cell4.innerHTML = newPrice;       
-        }
+        
+        
         
     }
 
