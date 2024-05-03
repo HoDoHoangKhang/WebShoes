@@ -59,18 +59,20 @@
         var btnDanhGias=document.querySelectorAll(".btnDanhGia");
         btnDanhGias.forEach(element => {
             element.addEventListener('click', function(){
-                $.ajax({
-                    url: "./module/main/quanlydanhgia-an.php",
-                    method: "POST",
-                    data: {
-                        maDanhGia:element.parentElement.parentElement.children[0].textContent,
-                        action: "AnDanhGia"
-                    },
-                    success: function(data){
-                        element.parentElement.parentElement.remove();
-                        alert(data);
-                    }
-                });
+                if(confirm("Bạn có chăc chắn muốn ẩn không")){
+                    $.ajax({
+                        url: "./module/main/quanlydanhgia-an.php",
+                        method: "POST",
+                        data: {
+                            maDanhGia:element.parentElement.parentElement.children[0].textContent,
+                            action: "AnDanhGia"
+                        },
+                        success: function(data){
+                            element.parentElement.parentElement.remove();
+                            alert(data);
+                        }
+                    });
+                }
             }); 
         });
         $('#filterSelect').on('change', function() {
