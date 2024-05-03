@@ -138,10 +138,34 @@ $result = $conn->query($sql);
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                            <li><a class="dropdown-item" href="index.php?danhmuc=quanlydonhang-chitiet&id=<?php echo $row['MaPX']; ?>">Xem chi tiết</a></li>                   
-                            <?php if ($row['TinhTrangDH'] != "Đã hủy") { ?>
+                            <?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+                            $TenDangNhap=$_SESSION['taikhoan'];
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết đơn hàng' and ctqcn.TrangThai=1";
+                            $resultq=mysqli_query($connect,$sqlq);
+                            $rowq=mysqli_num_rows($resultq);
+                            if($rowq==1){ ?>                                  
+                                    <li><a class="dropdown-item" href="index.php?danhmuc=quanlydonhang-chitiet&id=<?php echo $row['MaPX']; ?>">Xem chi tiết</a></li>                                               
+                            <?php
+                                }
+                            ?>
+                                               
+                            <?php if ($row['TinhTrangDH'] != "Đã hủy") { 
+                                $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thay đổi trạng thái đơn hàng' and ctqcn.TrangThai=1";
+                                $resultq=mysqli_query($connect,$sqlq);
+                                $rowq=mysqli_num_rows($resultq);
+                                if ($rowq==1){?>
                                 <li><button class="chuyen-trang-thai dropdown-item">Chuyển trạng thái</button></li>
-                                <li><button class="huy-don dropdown-item">Hủy đơn hàng</button></li>
+                                <?php }
+                                $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Hủy đơn hàng' and ctqcn.TrangThai=1";
+                                $resultq=mysqli_query($connect,$sqlq);
+                                $rowq=mysqli_num_rows($resultq);
+                                if ($rowq==1){?>
+                                        <li><button class="huy-don dropdown-item">Hủy đơn hàng</button></li>
+                                <?php }
+                                ?>
+                                
+
                             <?php } ?>
                         </ul>
                     </div>

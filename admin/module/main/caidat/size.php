@@ -1,17 +1,45 @@
 <div class="container">
     <ul class="row">
-        <li class="col-sm-3 index-danhmuc">
+    <?php
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+        $TenDangNhap=$_SESSION['taikhoan'];
+        //Size
+        $sql="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Quản lí size' and ctqcn.TrangThai=1";
+        $result=mysqli_query($connect,$sql);
+        $row=mysqli_num_rows($result);
+          if($row==1){
+            echo '<li class="col-sm-3 index-danhmuc">
             <a class="nav-link" href="index.php?danhmuc=caidat&id=size">Size</a>
-        </li>
-        <li class="col-sm-3 index-danhmuc">
+          </li>';
+          }
+          //Nhà cung cấp
+        $sql="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Quản lí nhà cung cấp' and ctqcn.TrangThai=1";
+        $result=mysqli_query($connect,$sql);
+        $row=mysqli_num_rows($result);
+          if($row==1){
+            echo '<li class="col-sm-3 index-danhmuc">
             <a class="nav-link" href="index.php?danhmuc=caidat&id=nhacungcap">Nhà Cung Cấp</a>
-        </li>
-        <li class="col-sm-3 index-danhmuc">
+          </li>';
+          }
+          //Nhãn hiệu
+        $sql="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Quản lí nhãn hiệu' and ctqcn.TrangThai=1";
+        $result=mysqli_query($connect,$sql);
+        $row=mysqli_num_rows($result);
+          if($row==1){
+            echo '<li class="col-sm-3 index-danhmuc">
             <a class="nav-link" href="index.php?danhmuc=caidat&id=nhanhieu">Nhãn hiệu</a>
-        </li>
-        <li class="col-sm-3 index-danhmuc">
+          </li>';
+          }
+          //Danh mục
+        $sql="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Quản lí danh mục' and ctqcn.TrangThai=1";
+        $result=mysqli_query($connect,$sql);
+        $row=mysqli_num_rows($result);
+          if($row==1){
+            echo ' <li class="col-sm-3 index-danhmuc">
             <a class="nav-link" href="index.php?danhmuc=caidat&id=danhmuc">Danh Mục</a>
-        </li>
+          </li>';
+          }
+        ?>
     </ul>
 </div>
 

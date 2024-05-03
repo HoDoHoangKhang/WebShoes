@@ -114,7 +114,18 @@ if ($result->num_rows === 0) {
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
-			<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
+			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+				$TenDangNhap=$_SESSION['taikhoan'];
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm nhập hàng' and ctqcn.TrangThai=1";
+				$resultq=mysqli_query($connect,$sqlq);
+				$rowq=mysqli_num_rows($resultq);
+				if($rowq==1){ ?>                                  
+						<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
+				<?php
+					}
+				?>
+			
 		</div>
 	</div>
 	<script>
@@ -384,7 +395,18 @@ if ($result->num_rows === 0) {
             </style>
             <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
             <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
-            <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+				$TenDangNhap=$_SESSION['taikhoan'];
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết đơn hàng' and ctqcn.TrangThai=1";
+				$resultq=mysqli_query($connect,$sqlq);
+				$rowq=mysqli_num_rows($resultq);
+				if($rowq==1){ ?>                                  
+						<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+				<?php
+					}
+				?>
+            
       </div>
       <div class="modal-footer">
       </div>

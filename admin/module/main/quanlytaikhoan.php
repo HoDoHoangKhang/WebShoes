@@ -242,7 +242,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
                                     <!-- <li><a class="dropdown-item" href="module/main/quanlytaikhoan_xoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?Suy nghĩ kĩ nha^^'); ">Xóa</a></li> -->
                                     <li><a class="dropdown-item" href="module/main/quanlytaikhoan_kichhoattaikhoan.php?id=<?php echo $row['TenDangNhap'];?>">Kích hoạt</a></li>
-                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
+                                    <li><a class="dropdown-item" href="module/main/quanlytaikhoan_khoataikhoan.php?id=<?php echo $row['TenDangNhap'];?>&id2=<?php echo $_SESSION['taikhoan']?>" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?'); ">Khóa</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -283,9 +283,15 @@
                             case 'kichhoattaikhoanfalse':
                                 echo "<h4>Tài khoản này đang hoạt động mà, kích hoạt gì nữa cha nội!</h4>";
                                 break;
+                            case 'khoataikhoanfalse':
+                                echo "<h4>Tài khoản này đang hoạt động, không thể khóa!</h4>";
+                                break;
                             case 'xoataikhoantrue':
                                 echo "<h4>Đã xóa tài khoản "; echo $_GET['TenDangNhap']; echo " ra khỏi hệ thống</h4>";
                                 break;
+                            case 'khoataikhoanfalse2':
+                                echo "<h4>Tài khoản này hiện đang hoạt động, không thể khóa!</h4>";
+                                break;    
                         }
                     }
                 ?>
