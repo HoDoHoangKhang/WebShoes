@@ -8,7 +8,8 @@
     $mk=$_POST['mk'];
     $mk02=$_POST['mk02'];
     $diachi= $_POST['diachi'];
-    $gioitinh= $_POST['gioitinh'];
+    $gioitinh= intval($_POST['gioitinh']);
+    $ngaysinh=$_POST['day'];
     if ( empty($tenDangNhap) || empty($hoTen) || empty($sdt) || empty($email) || empty($mk) || empty($mk02) || empty($diachi) ){
         echo 'botrongthongtin';
     }
@@ -43,7 +44,7 @@
         echo 'saimk02';
     }
     else{
-        dangki($tenDangNhap,$hoTen,$sdt,$email,$day,$mk02,$diachi,$gioitinh);
+        dangki($tenDangNhap,$hoTen,$sdt,$email,$ngaysinh,$mk02,$diachi,$gioitinh);
         echo 0;
     }
 ?>

@@ -1326,3 +1326,64 @@ while($product_sizeSp=mysqli_fetch_array($result_sizeSp)){
                     <?php }
                 ?>
             </div>
+
+
+(27,11,'Sản phẩm đáp ứng được mong đợi của tôi về chất lượng và tính năng.','17:21 2023-05-04',3,1),
+(27,17,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(27,26,'Không ngờ sản phẩm lại đúng như mô tả và chất lượng đến vậy. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(27,30,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(27,31,'Sản phẩm nhận được rất nhiều lời khen ngợi từ bạn bè và người thân.','12:21 2023-05-04',5,1),
+
+(28,12,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(28,11,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(28,17,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Điều mà tôi thích nhất là sự thoải mái khi mang, đặc biệt là đế giày êm ái. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(28,2,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(28,28,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(29,2,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(29,3,'Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(29,4,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm.','11:21 2023-05-04',5,1),
+(29,5,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(29,6,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(30,2,'Sản phẩm đáp ứng được mong đợi của tôi về chất lượng và tính năng.','17:21 2023-05-04',3,1),
+(30,3,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(30,4,'Không ngờ sản phẩm lại đúng như mô tả và chất lượng đến vậy. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(30,5,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(30,31,'Sản phẩm nhận được rất nhiều lời khen ngợi từ bạn bè và người thân.','12:21 2023-05-04',5,1),
+
+(31,12,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(31,17,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(31,25,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Điều mà tôi thích nhất là sự thoải mái khi mang, đặc biệt là đế giày êm ái. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(31,27,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(31,28,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(32,11,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(32,2,'Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(32,25,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm.','11:21 2023-05-04',5,1),
+(32,5,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(32,6,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(33,11,'Sản phẩm đáp ứng được mong đợi của tôi về chất lượng và tính năng.','17:21 2023-05-04',3,1),
+(33,17,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(33,26,'Không ngờ sản phẩm lại đúng như mô tả và chất lượng đến vậy. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(33,2,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(33,31,'Sản phẩm nhận được rất nhiều lời khen ngợi từ bạn bè và người thân.','12:21 2023-05-04',5,1),
+
+(34,12,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(34,5,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(34,25,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Điều mà tôi thích nhất là sự thoải mái khi mang, đặc biệt là đế giày êm ái. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(34,6,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(34,28,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(35,11,'Sản phẩm giày này vô cùng ấn tượng với chất lượng và thiết kế hiện đại. Tuy nhiên, tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','17:21 2023-05-04',3,1),
+(35,8,'Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(35,9,'Sản phẩm giày này thực sự ấn tượng với chất lượng vượt trội và thiết kế hiện đại. Sản phẩm dễ sử dụng và thích hợp cho cả người mới bắt đầu và người có kinh nghiệm.','11:21 2023-05-04',5,1),
+(35,5,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(35,29,'Giày này thật sự phù hợp với phong cách của tôi. Chất liệu và đế giày chắc chắn, giúp tôi tự tin trên mọi bề mặt. Mặc dù giá hơi cao nhưng đây là một sự đầu tư đáng giá cho mọi người đam mê thời trang.','12:21 2023-05-04',5,1),
+
+(36,11,'Sản phẩm đáp ứng được mong đợi của tôi về chất lượng và tính năng.','17:21 2023-05-04',3,1),
+(36,6,'Tôi cảm thấy kích thước hơi lớn so với bình thường. Tuy nhiên, sự thoải mái khi mang vẫn là điểm sáng, giúp tôi tự tin di chuyển mọi nơi.','04:21 2023-05-04',4,1),
+(36,26,'Không ngờ sản phẩm lại đúng như mô tả và chất lượng đến vậy. Tuy nhiên, tôi cảm thấy kích thước có vẻ lớn hơn so với bình thường, nên bạn nên lưu ý khi chọn size.','11:21 2023-05-04',5,1),
+(36,3,'Giày này đẹp và chất lượng tuyệt vời. Tôi thích cách chúng phối hợp với mọi trang phục. Tuy nhiên, sau vài lần sử dụng, tôi cảm thấy một chút không thoải mái ở phần ngón chân. Tuy nhiên, đây vẫn là lựa chọn hàng đầu của tôi cho mọi dịp.','19:21 2023-05-04',4,1),
+(36,31,'Sản phẩm nhận được rất nhiều lời khen ngợi từ bạn bè và người thân.','12:21 2023-05-04',5,1);

@@ -107,13 +107,9 @@
     function dangki($tenDangNhap,$hoTen,$sdt,$email,$day,$mk02,$diachi,$gioitinh){
         $ngayhientai = date('Y/m/d');
         $db = new DTB();
-        $result1 = mysqli_query($db->getConnection(),"INSERT INTO `taikhoan`(`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`, `TrangThai`)
-                                                         VALUES ('$tenDangNhap','$mk02','$ngayhientai',4,'',0)");
-        $row1=mysqli_fetch_array($result1);
-
-        $result2 = mysqli_query($db->getConnection(), "INSERT INTO user(TenDangNhap, HoTen, NgaySinh, SDT, Email, DiaChi, GioiTinh) 
-                                        VALUES ('$tenDangNhap','$hoTen','$day','$sdt','$email','$diachi',$gioitinh)");
-        $row2=mysqli_fetch_array($result2);
+        mysqli_query($db->getConnection(),"INSERT INTO `taikhoan`(`TenDangNhap`, `MatKhau`, `NgayTaoTK`, `MaQuyen`, `Avt`, `TrangThai`) VALUES ('$tenDangNhap','$mk02','$ngayhientai',4,'avt-default.jpg',0)");
+        mysqli_query($db->getConnection(), "INSERT INTO user(`TenDangNhap`, `HoTen`, `NgaySinh`, `SDT`, `Email`, `DiaChi`, `GioiTinh`) VALUES ('$tenDangNhap','$hoTen','$day','$sdt','$email','$diachi',$gioitinh)");
     }
+    // echo dangki("b","a","a","a",'2023-03-02',"a","a",1);
     // echo getTaiKhoan("user2");
 ?>

@@ -77,6 +77,9 @@
         return $output;
     }
     function checkSanPhamInPhieuXuat($listMaPX, $MaSP){
+        if(empty($listMaPX)){
+            return false;
+        }
         $db = new DTB();
         $query = "SELECT COUNT(*) as count FROM ctpx WHERE MaPX IN ($listMaPX) AND MaSP=$MaSP";
         $result = mysqli_query($db->getConnection(), $query);

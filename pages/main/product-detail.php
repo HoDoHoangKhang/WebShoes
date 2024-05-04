@@ -902,38 +902,43 @@
                 curentIndex--;
             }
         });
-        var btnReview=document.querySelector(".btn-review");
-        btnReview.addEventListener('click',function(){
-            if(getNumberStar()!=null){
-                if(getReviewContent()!=''){
-                    $.ajax({
-                        url: "./control/ajax_action.php",
-                        method: "POST",
-                        data: {
-                            reviewContent:getReviewContent(),
-                            star: getNumberStar(),
-                            size: 40,
-                            tenDangNhap: "<?php echo $_SESSION['taikhoan']?>",
-                            maSP: <?php echo $_GET['id']?>,
-                            action: "review"
-                        },
-                        success: function(data){
-                            var newDiv = document.createElement("div");
-                            newDiv.innerHTML = data;
-                            document.querySelector(".describe-reviews_detail-list").insertAdjacentElement("afterbegin",newDiv);
-                            creatToast("item-success","Đánh giá của bạn đã được ghi lại !","fa-solid fa-circle-check","item-end-success");
-                            var formReview=document.querySelector('.review').style.display='none';
-                        }
-                    });
+                        
+
+        <?php if(isset($_SESSION['taikhoan']) && checkSanPhamInPhieuXuat(implode(',', getMaPhieuXuatListFromMaKH($MaKH)),$MaSP) && checkDanhGiaExists($MaSP,$MaKH)==false){ ?>
+            var btnReview=document.querySelector(".btn-review");
+            btnReview.addEventListener('click',function(){
+                if(getNumberStar()!=null){
+                    if(getReviewContent()!=''){
+                        $.ajax({
+                            url: "./control/ajax_action.php",
+                            method: "POST",
+                            data: {
+                                reviewContent:getReviewContent(),
+                                star: getNumberStar(),
+                                size: 40,
+                                tenDangNhap: "<?php echo $_SESSION['taikhoan']?>",
+                                maSP: <?php echo $_GET['id']?>,
+                                action: "review"
+                            },
+                            success: function(data){
+                                var newDiv = document.createElement("div");
+                                newDiv.innerHTML = data;
+                                document.querySelector(".describe-reviews_detail-list").insertAdjacentElement("afterbegin",newDiv);
+                                creatToast("item-success","Đánh giá của bạn đã được ghi lại !","fa-solid fa-circle-check","item-end-success");
+                                var formReview=document.querySelector('.review').style.display='none';
+                            }
+                        });
+                    }
+                    else{
+                        creatToast("item-warning","Vui lòng nhập nội dung để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
+                    }
                 }
                 else{
-                    creatToast("item-warning","Vui lòng nhập nội dung để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
+                    creatToast("item-warning","Vui chọn sao để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
                 }
-            }
-            else{
-                creatToast("item-warning","Vui chọn sao để đánh giá!","fa-solid fa-circle-exclamation","item-end-warning");
-            }
-        });
+            });
+        <?php } ?>
+
         function getReviewContent(){
             var reviewContent=document.getElementById('review');
             return reviewContent.value;

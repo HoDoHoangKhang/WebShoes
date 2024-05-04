@@ -1026,6 +1026,7 @@
 .slick-next{
     right: -5%;
     top: 50%;
+    cursor: pointer;
 }
 .slick-next:hover{
     background-color: var(--A-color);
@@ -1034,6 +1035,8 @@
 .slick-prev{
     left: -5%;
     top: 50%;
+    cursor: pointer;
+
 }
 .slick-prev:hover{
     background-color:var(--A-color);;
