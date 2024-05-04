@@ -115,7 +115,18 @@ if ($result->num_rows === 0) {
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
-			<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
+			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+				$TenDangNhap=$_SESSION['taikhoan'];
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm nhập hàng' and ctqcn.TrangThai=1";
+				$resultq=mysqli_query($connect,$sqlq);
+				$rowq=mysqli_num_rows($resultq);
+				if($rowq==1){ ?>                                  
+						<a class="btn btn-primary" href="index.php?danhmuc=themphieunhap">Thêm</a>
+				<?php
+					}
+				?>
+			
 		</div>
 	</div>
 	
@@ -271,24 +282,35 @@ if ($result->num_rows === 0) {
 
 <div class="modal fade" id="xoaphieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	  </div>
-	  <div class="modal-body" id="contendelete">
-			<style>
-				.inline-p {
-					display: inline-block;
-				}
-			</style>
-			<p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
-			<h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
-			<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
-	  </div>
-	  <div class="modal-footer">
-	  </div>
-	</div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="contendelete">
+            <style>
+                .inline-p {
+                    display: inline-block;
+                }
+            </style>
+            <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+            <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+				$TenDangNhap=$_SESSION['taikhoan'];
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết đơn hàng' and ctqcn.TrangThai=1";
+				$resultq=mysqli_query($connect,$sqlq);
+				$rowq=mysqli_num_rows($resultq);
+				if($rowq==1){ ?>                                  
+						<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+				<?php
+					}
+				?>
+            
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
   </div>
 </div>
 <script>

@@ -54,7 +54,19 @@
                     ?>
                 </select>
             </div>
-            <a class="btn btn-primary" href="index.php?danhmuc=themsanpham">Thêm</a><!-- quanlysanpham_add_product_input.php-->
+            <?php
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+            $TenDangNhap=$_SESSION['taikhoan'];
+            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm sản phẩm' and ctqcn.TrangThai=1";
+            $resultq=mysqli_query($connect,$sqlq);
+            $rowq=mysqli_num_rows($resultq);
+            if($rowq==1){
+                ?>
+                    <a class="btn btn-primary" href="index.php?danhmuc=themsanpham">Thêm</a><!-- quanlysanpham_add_product_input.php-->
+                <?php
+            }
+            ?>
+            
             
         </div>
     </div>
@@ -119,13 +131,24 @@
                                     <div>
                                         <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
                                             Chi tiết
-                                            </button>
+                                            </button>';
+                                            
+                                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Sửa sản phẩm' and ctqcn.TrangThai=1";
+                                            $resultq=mysqli_query($connect,$sqlq);
+                                            $rowq=mysqli_num_rows($resultq);
+                                            if($rowq==1){                                   
+                                                    echo '<a class="btn btn-primary" href="index.php?danhmuc=suasanpham&idsp=' . $row["MaSP"] . '">Sửa</a>';                                               
+                                            }
+                                            
+                                            $sqlq2="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Xóa sản phẩm' and ctqcn.TrangThai=1";
+                                            $resultq2=mysqli_query($connect,$sqlq2);
+                                            $rowq2=mysqli_num_rows($resultq2);
+                                            if($rowq2==1){                                   
+                                                echo '<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>';                                         
+                                                } 
                                         
-                                            <a class="btn btn-primary" href="index.php?danhmuc=suasanpham&idsp=' . $row["MaSP"] . '">Sửa</a>
-
-                                        <button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoasanpham"  id="' .$row["MaSP"] . '">Xóa</button>
                                         
-                                    </div>
+                                    echo '</div>
                                 </td>
                                 <td style="display:none;visibility:hidden;">' .$row["MaLoai"]. '</td>
                             </tr>'

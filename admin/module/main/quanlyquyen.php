@@ -19,9 +19,18 @@
 <div class="tableBox ">
     <div class="tableTitle">Danh sách các nhóm quyền</p>
         <div class="table-func">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#themquyen">
-                Thêm
-            </button>
+        <?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+                            $TenDangNhap=$_SESSION['taikhoan'];
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='	
+Thêm nhóm quyền' and ctqcn.TrangThai=1";
+                            $resultq=mysqli_query($connect,$sqlq);
+                            $rowq=mysqli_num_rows($resultq);
+                            if($rowq==1){ ?>                                  
+                                    <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+                            <?php
+                                }
+                            ?>
         </div>
     </div>
     <table id="myTable" class="table table-striped " style="width: 100%;">
@@ -48,9 +57,33 @@
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index: 2;">
-                                <li><a class="dropdown-item" href="index.php?danhmuc=quanlyquyen_chitietquyen&id=<?php echo $row['MaQuyen']?>">Chi tiết</a></li>
-                                <li><a class="dropdown-item edit-btn"  href="module/main/quanlyquyen_gettenquyen.php?id=<?php echo $row['MaQuyen']?>&ten=<?php echo $row['TenQuyen']?>" >Sửa</a></li>
-                                <li><a class="dropdown-item" href="module/main/quanlyquyen_xoaquyen.php?id=<?php echo $row['MaQuyen']?>">Xóa</a></li>
+                            <?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+            
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết chức năng cho nhóm quyền' and ctqcn.TrangThai=1";
+                            $resultq=mysqli_query($connect,$sqlq);
+                            $rowq=mysqli_num_rows($resultq);
+                            if($rowq==1 && $row['MaQuyen']!=4 ){ ?>                                  
+                                    <li><a class="dropdown-item" href="index.php?danhmuc=quanlyquyen_chitietquyen&id=<?php echo $row['MaQuyen']?>">Chi tiết</a></li>
+                            <?php
+                                }
+                                 //chi tiết quyền nếu được thực hiện thì mới được hiện ra
+                              $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Sửa nhóm quyền' and ctqcn.TrangThai=1";
+                              $resultq=mysqli_query($connect,$sqlq);
+                              $rowq=mysqli_num_rows($resultq);
+                              if($rowq==1 ){ ?>                                  
+                                      <li><a class="dropdown-item edit-btn"  href="module/main/quanlyquyen_gettenquyen.php?id=<?php echo $row['MaQuyen']?>&ten=<?php echo $row['TenQuyen']?>" >Sửa</a></li>
+                              <?php
+                                  }
+                                  //Xóa quyền
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Xóa nhóm quyền' and ctqcn.TrangThai=1";
+                            $resultq=mysqli_query($connect,$sqlq);
+                            $rowq=mysqli_num_rows($resultq);
+                            if($rowq==1){ ?>                                  
+                                    <li><a class="dropdown-item" href="module/main/quanlyquyen_xoaquyen.php?id=<?php echo $row['MaQuyen']?>">Xóa</a></li>
+                            <?php
+                                }
+                            ?>
+                                
                             </ul>
                         </div>
                     </td>
