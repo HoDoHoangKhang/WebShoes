@@ -37,8 +37,9 @@ if ($result->num_rows === 0) {
 	<title>Quản lí Nhập hàng</title>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="../admin/js/jquery.js"></script>
+<script src="../admin/js/dataTables.js"></script>
 <style
 >
 	.img-pr{
@@ -63,19 +64,24 @@ if ($result->num_rows === 0) {
 	#contentdivselect1 {
 		display: block;
 	}
+	#mTable {
+
+	}
 </style>
 <div id="noi-dung-chi-tiet" ></div>
 <div class="tableBox ">
 	<div class="tableTitle">
 		<p>Danh sách nhập hàng</p>
-		<div class="table-func" style="width: 50%">
-			<select id="selectBox" onchange="changeContent()">
+		<div class="table-func" style="width: 60%">
+
+            <div class="filter-container">
+				<select id="selectBox" onchange="changeContent()">
 					<option value="option1">Theo Ngày</option>
 					<option value="option2">Theo Tiền</option>
 					<option value="option3">Theo Số lượng</option>
-					<option value="option4">Trạng thái</option>
 				</select>
-			<div id="contentdivselect1" class="contentdivselect filter-container" style="width: 100%">
+			</div>
+			<div id="contentdivselect1" class="contentdivselect filter-container" style="width: 60%">
 				<label>Bắt đầu:</label>
 				<input type="date" id="startdate">
 				<label>Kết thúc:</label>
@@ -83,7 +89,7 @@ if ($result->num_rows === 0) {
 				<button class="btn btn-primary" id="filterBtnDate">Filter</button>
 				<button class="btn btn-secondary" id="clearBtnDate">Clear</button>
 			</div>
-			<div id="contentdivselect2" class="contentdivselect filter-container" style="width: 100%">
+			<div id="contentdivselect2" class="contentdivselect filter-container" style="width: 60%">
 				<label>Bắt đầu:</label>
 				<input type="number" id="startmoney">
 				<label>Kết thúc:</label>
@@ -91,7 +97,7 @@ if ($result->num_rows === 0) {
 				<button class="btn btn-primary" id="filterBtnMoney">Filter</button>
 				<button class="btn btn-secondary" id="clearBtnMoney">Clear</button>
 			</div>
-			<div id="contentdivselect3" class="contentdivselect filter-container" style="width: 100%">
+			<div id="contentdivselect3" class="contentdivselect filter-container" style="width: 60%">
 				<label>Bắt đầu:</label>
 				<input type="number" id="startSL">
 				<label>Kết thúc:</label>
@@ -99,7 +105,7 @@ if ($result->num_rows === 0) {
 				<button class="btn btn-primary" id="filterBtnNumber">Filter</button>
 				<button class="btn btn-secondary" id="clearBtnNumber">Clear</button>
 			</div>
-			<div id="contentdivselect4" class="contentdivselect filter-container" style="width: 100%">
+			<div>
 				<label>Trạng thái:</label>
 				<select id="selectTrangThai">
 					<option value=" ">All</option>
@@ -112,12 +118,13 @@ if ($result->num_rows === 0) {
 					  });
 				</script>
 			</div>
+
+			
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
 			&nbsp&nbsp&nbsp
 			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
-				$TenDangNhap=$_SESSION['taikhoan'];
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
+				$TenDangNhap=$_SESSION['taikhoan'];      
 				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm nhập hàng' and ctqcn.TrangThai=1";
 				$resultq=mysqli_query($connect,$sqlq);
 				$rowq=mysqli_num_rows($resultq);
@@ -126,11 +133,10 @@ if ($result->num_rows === 0) {
 				<?php
 					}
 				?>
-			
 		</div>
 	</div>
 	
-	<table id="mTable"  style="width: 100%;">
+	<table id="mTable" class="table table-striped " style="width: 100%;">
 		<thead>
 			<tr>
 				<th>Mã</th>
@@ -183,7 +189,16 @@ if ($result->num_rows === 0) {
 			</td>
 			<td>
 				<a class="btn btn-primary fix-sp-button" href="index.php?danhmuc=chitietphieunhap&mapn=<?php echo $row['MaPN']; ?>">Chi tiết</a>
-				<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoaphieunhap" id="<?php echo $row['MaPN'] ?>">Xóa</button>
+
+				<?php 
+				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết đơn hàng' and ctqcn.TrangThai=1";
+				$resultq=mysqli_query($connect,$sqlq);
+				$rowq=mysqli_num_rows($resultq);
+				if($rowq==1){ ?>                                  
+						<button type="button" class="btn btn-primary xoa-sp-button" data-bs-toggle="modal" data-bs-target="#xoaphieunhap" id="<?php echo $row['MaPN'] ?>">Xóa</button>
+				<?php
+					}
+				?>
 			</td>
 		</tr>
 	<?php } } ?>
@@ -282,35 +297,24 @@ if ($result->num_rows === 0) {
 
 <div class="modal fade" id="xoaphieunhap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="contendelete">
-            <style>
-                .inline-p {
-                    display: inline-block;
-                }
-            </style>
-            <p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
-            <h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
-			<?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
-				$TenDangNhap=$_SESSION['taikhoan'];
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
-				$sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết đơn hàng' and ctqcn.TrangThai=1";
-				$resultq=mysqli_query($connect,$sqlq);
-				$rowq=mysqli_num_rows($resultq);
-				if($rowq==1){ ?>                                  
-						<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
-				<?php
-					}
-				?>
-            
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="ModalLabelXoasanpham">Xóa Phiếu Nhập</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body" id="contendelete">
+			<style>
+				.inline-p {
+					display: inline-block;
+				}
+			</style>
+			<p class="inline-p">Mã phiếu nhập: </p><p id="idpn" class="inline-p"></p>
+			<h2>Bạn có chắc muốn xóa phiếu nhập này?</h2>
+			<button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+	  </div>
+	  <div class="modal-footer">
+	  </div>
+	</div>
   </div>
 </div>
 <script>
@@ -462,11 +466,15 @@ $(document).ready(function(){
 		        for (var i = 0; i < savedTable.length; i++) {
 		            var dateValue = savedTable[i][5]; // Giả sử cột thứ 4 là cột chứa ngày
 		            var number = $(dateValue).text().trim();
-					console.log(number); // Kết quả: "60"
 		            if (number >= startSL && number <= endSL) {
 		                filteredData1.push(savedTable[i]);
 		            }
 		        }
+		        filteredData1.sort(function(a, b) {
+		        	var numberA = $(a[5]).text().trim();
+		        	var numberB = $(b[5]).text().trim();
+		            return numberA - numberB;
+		        });
 		        // Thêm các hàng thỏa mãn điều kiện vào bảng
 		        table.clear().rows.add(filteredData1).draw();
 			}
