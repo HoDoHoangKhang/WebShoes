@@ -22,12 +22,13 @@
         <?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
                             $TenDangNhap=$_SESSION['taikhoan'];
                             require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
-                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='	
-Thêm nhóm quyền' and ctqcn.TrangThai=1";
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm nhóm quyền' and ctqcn.TrangThai=1";
                             $resultq=mysqli_query($connect,$sqlq);
                             $rowq=mysqli_num_rows($resultq);
-                            if($rowq==1){ ?>                                  
-                                    <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+                            if($rowq==1){  ?>                                 
+                                    <button type="button" class="btn btn-primary Add-SP-button" data-bs-toggle="modal" data-bs-target="#themquyen">
+                                        Thêm
+                                    </button>
                             <?php
                                 }
                             ?>
