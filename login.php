@@ -69,7 +69,7 @@
         }
     </style>
 </head>
-<body>
+<body >
         <!-- Login 6 - Bootstrap Brain Component -->
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center" style="border-radius: 10px;">
@@ -80,20 +80,20 @@
                                 <div class="col-lg-6">
                                     <div class="p-5">
                                         <div class="mb-5">
-                                            <h3 class="h4 font-weight-bold text-theme">Login</h3>
+                                            <h3 class="h4 font-weight-bold text-theme">Đăng nhập</h3>
                                         </div>
 
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
+                                            <div class="form-group" style="margin-bottom: 20px;">
+                                                <label for="exampleInputEmail1">Tên đăng nhập</label>
                                                 <input type="text" class="form-control" id="username" name="txtUser">
                                             </div>
                                             <div class="form-group mb-5">
-                                                <label for="exampleInputPassword1">Password</label>
+                                                <label for="exampleInputPassword1">Mật khẩu</label>
                                                 <input type="password" class="form-control" id="password" name="txtPass">
                                             </div>
                                             <p id="thongbao" style="color: red"></p>
-                                            <button type="submit" class="btn btn-theme" id="dangnhap" name="btnLogin">Login</button>
-                                            <a href="#l" class="link float-right text-primary">Forgot password?</a>
+                                            <button type="submit" class="btn btn-theme" id="dangnhap" name="btnLogin">Đăng nhập</button>
+                                            <!-- <a href="#l" class="link float-right text-primary">Forgot password?</a> -->
 
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                     </div>
                     <!-- end card -->
 
-                    <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.php" class="link text-primary ml-1">register</a></p>
+                    <p class="text-muted text-center mt-3 mb-0">Nếu chưa có tài khoản hãy <a href="register.php" class="link text-primary ml-1">Đăng ký</a></p>
 
                     <!-- end row -->
 

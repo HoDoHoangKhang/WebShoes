@@ -33,7 +33,7 @@
                     </td>
                     <td>'.formatCurrency($row['TongTien']).'</td>
                     <td>
-                        <div style="display: flex; gap: 10px; justify-content: center;">
+                        <div style="display: flex; gap: 10px; justify-content: start;">
                             <button class="openModalBtn" style="padding: 5px 10px; background-color: #3294fe; border: none; color: white; border-radius: 4px; cursor: pointer;">Xem</button>  
                         </div>
                     </td>
@@ -50,7 +50,7 @@
                     </td>
                     <td>'.formatCurrency($row['TongTien']).'</td>
                     <td>
-                        <div style="display: flex; gap: 10px; justify-content: center;">
+                        <div style="display: flex; gap: 10px; justify-content: start;">
                             <button class="openModalBtn" style="padding: 5px 10px; background-color: #3294fe; border: none; color: white; border-radius: 4px; cursor: pointer;">Xem</button>
                             <button class="btnHuyDon" style="color:white; border:none; border-radius:4px; cursor: pointer; background-color: rgb(247, 55, 55); padding: 5px 10px">
                                 Hủy

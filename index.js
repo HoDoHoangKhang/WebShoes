@@ -725,6 +725,6 @@ function creatToast(status,mess,icon,end_color){
   
     setTimeout(() => {
         newDiv.classList.add("hidden");
-    }, 1000);
+    }, 3000);
 }
 

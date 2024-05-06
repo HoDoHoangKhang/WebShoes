@@ -220,7 +220,7 @@
             <div class="describe-main">
                 <div class="describe-title">
                     <img class="describe-title_bg" src="./assets/img/higtline.png" alt="">
-                    <h3>Describe</h3>
+                    <h3>Mô tả</h3>
                 </div>
                 <div class="describe-detail">
                     <!-- <h4>
@@ -280,13 +280,10 @@
                 </div>
                 <ul class="describe__menu">
                     <li class="describe__menu-sub describe__menu-sub_reviews describe--primary">
-                        Reviews
+                        Đánh giá
                     </li>
                     <li class="describe__menu-sub describe__menu-sub_size">
                         Size & Fit
-                    </li>
-                    <li class="describe__menu-sub describe__menu-sub_delivery">
-                        Free Delivery and Returns
                     </li>
                 </ul>
                 <div class="describe-reviews describe-select ">
@@ -534,7 +531,7 @@
                         action: "themvaoyeuthich"
                     },
                     success: function(data){
-                        creatToast("item-success","Thêm vào yêu thích thàng công !","fa-solid fa-circle-check","item-end-success");
+                        creatToast("item-success","Thêm vào yêu thích thành công !","fa-solid fa-circle-check","item-end-success");
                         var maSP=parseInt(<?php echo $_GET['id'] ?>);
                         var taikhoan="<?php echo $_SESSION['taikhoan'] ?>";
                         var object={
@@ -573,7 +570,7 @@
                                 stock.style.opacity=1;
                             }
                             else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
-                                creatToast("item-success","Thêm vào vỏ hàng thàng công !","fa-solid fa-circle-check","item-end-success");
+                                creatToast("item-success","Thêm vào vỏ hàng thành công !","fa-solid fa-circle-check","item-end-success");
                                 if(data>0){
                                     var product = { TaiKhoan: "<?php echo $_SESSION['taikhoan'] ?>",MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
                                     // Thêm sản phẩm vào giỏ hàng

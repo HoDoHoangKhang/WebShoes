@@ -164,8 +164,6 @@ $result = $conn->query($sql);
                                         <li><button class="huy-don dropdown-item">Hủy đơn hàng</button></li>
                                 <?php }
                                 ?>
-                                
-
                             <?php } ?>
                         </ul>
                     </div>
@@ -233,7 +231,7 @@ $(document).ready(function() {
 <!-- Modal -->
 <div class="modal fade" id="chitietsoluong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content"  style="">
+    <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Chi tiết số lượng</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

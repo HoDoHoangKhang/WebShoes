@@ -81,7 +81,7 @@
                                 <div class="col-lg-12">
                                     <div class="p-5">
                                         <div class="mb-5">
-                                            <h3 class="h4 font-weight-bold text-theme">Register</h3>
+                                            <h3 class="h4 font-weight-bold text-theme">Đăng ký</h3>
                                         </div>
                                             <div class="form-group">
                                                 <label>Tên đăng nhập</label>
@@ -141,7 +141,7 @@
                                                 <input type="password" id="txtMK02" class="form-control">
                                             </div>
                                             <p id="thongbao" style="color: red"></p>
-                                            <button id="btnSubmit" class="btn btn-theme">Register</button>
+                                            <button id="btnSubmit" class="btn btn-theme">Đăng ký</button>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                     </div>
                     <!-- end card -->
 
-                    <p class="text-muted text-center mt-3 mb-0">Trở về <a href="login.php" class="link text-primary ml-1">Login</a></p>
+                    <p class="text-muted text-center mt-3 mb-0">Trở về <a href="login.php" class="link text-primary ml-1">Đăng nhập</a></p>
 
                     <!-- end row -->
 

@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <a class="menu_sub" href="index.php?danhmuc=about">About</a>
-                <a class="menu_sub" href="index.php?danhmuc=tiktokfeed">TikTok Feed</a>
+                <a class="menu_sub" href="index.php?danhmuc=tiktokfeed">TikTok</a>
 
             </div>
             <div class="header__action">

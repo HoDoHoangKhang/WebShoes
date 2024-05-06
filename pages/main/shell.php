@@ -375,7 +375,7 @@
                         console.log(MaSP+" "+Size+" "+TaiKhoan);
                         removeFromCart(MaSP,Size,TaiKhoan);
                         setQuantityCard();
-                        creatToast("item-success","Xóa khỏi vỏ hàng thàng công","fa-solid fa-circle-check","item-end-success");
+                        creatToast("item-success","Xóa khỏi vỏ hàng thành công","fa-solid fa-circle-check","item-end-success");
                     }
                 })
             });
