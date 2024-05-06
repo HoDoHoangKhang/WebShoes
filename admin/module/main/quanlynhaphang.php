@@ -466,6 +466,7 @@ $(document).ready(function(){
 		        for (var i = 0; i < savedTable.length; i++) {
 		            var dateValue = savedTable[i][5]; // Giả sử cột thứ 4 là cột chứa ngày
 		            var number = $(dateValue).text().trim();
+		            number = parseFloat(number);
 		            if (number >= startSL && number <= endSL) {
 		                filteredData1.push(savedTable[i]);
 		            }
@@ -481,6 +482,6 @@ $(document).ready(function(){
 		});
 		$('#clearBtnNumber').click(function() {
 	        table.clear().rows.add(savedTable).draw();
-	        console.log('xoa loc tien');
+	        console.log('xoa loc SL');
 		});
 	</script>
