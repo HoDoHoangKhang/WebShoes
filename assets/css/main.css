@@ -4219,3 +4219,9 @@ label.star:before {
     font-size: 16px;
     margin-bottom: 40px;
 }
+.swal2-popup .swal2-html-container {
+    font-size: 16px;
+}
+.swal2-popup .swal2-styled {
+    font-size: 14px; /* Thay đổi kích thước phông chữ tùy theo nhu cầu */
+}

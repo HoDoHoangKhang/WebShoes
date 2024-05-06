@@ -1,4 +1,17 @@
 <main>
+    <section class="breadcrumb">
+        <div class="container" style="margin-bottom: 10px;">
+            <div class="breadcrumb-main">
+                <a  href="index.php?danhmuc=home" style="color: #807e7e;">
+                    Home
+                </a>
+                <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
+                <a href="index.php?danhmuc=about" style="color: #807e7e;">
+                    About
+                </a>
+            </div>
+        </div>
+    </section>
     <div class="app">
         <div class="container">
             <div class="container-background">

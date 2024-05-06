@@ -2,18 +2,18 @@
     <div class="notification">
     </div>
     <section class="breadcrumb">
-        <div class="container">
+        <div class="container" style="margin-bottom: 10px;">
             <div class="breadcrumb-main">
-                <span>
+                <a  href="index.php?danhmuc=home" style="color: #807e7e;">
                     Trang chủ
-                </span>
+                </a>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
-                <span>
+                <a href="index.php?danhmuc=listwish" style="color: #807e7e;">
                     Yêu thích
-                </span>
+                </a>
             </div>
         </div>
-    </section>
+</section>
     <section class="shell">
         <div class="container">
             <div class="wish-main">

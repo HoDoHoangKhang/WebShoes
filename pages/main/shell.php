@@ -2,15 +2,15 @@
     <div class="notification">
     </div>
     <section class="breadcrumb">
-        <div class="container">
+        <div class="container" style="margin-bottom: 10px;">
             <div class="breadcrumb-main">
-                <span>
+                <a  href="index.php?danhmuc=home" style="color: #807e7e;">
                     Trang chủ
-                </span>
+                </a>
                 <i class="breadcrumb-icon fa-solid fa-chevron-right"></i>
-                <span>
-                    Shell
-                </span>
+                <a href="index.php?danhmuc=shell" style="color: #807e7e;">
+                    Vỏ hàng
+                </a>
             </div>
         </div>
     </section>

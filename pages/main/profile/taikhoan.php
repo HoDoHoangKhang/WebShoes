@@ -204,7 +204,16 @@
                                         // Lấy từ cuối cùng trong mảng
                                         var Ten = slipt[slipt.length - 1] + " " + getHoTen();
                                         headerInfo.innerHTML=Ten;
-                                        creatToast("item-success","Thay đổi thành công !","fa-solid fa-circle-check","item-end-success");
+                                        async function showAlert() {
+                                            await Swal.fire({
+                                                icon: 'success',
+                                                title: 'Thành công',
+                                                text: 'Thay đổi thông tin cá nhân thành công!',
+                                                timer: 2000
+                                            });
+                                        }
+                                        showAlert();
+                                        // creatToast("item-success","Thay đổi thành công !","fa-solid fa-circle-check","item-end-success");
                                     }
                                     else{// Không có hàng nào được cập nhật
                                         creatToast("item-warning","Không có bất kì thay đổi nào!","fa-solid fa-circle-exclamation","item-end-warning");

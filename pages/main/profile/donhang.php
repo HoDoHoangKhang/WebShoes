@@ -19,6 +19,7 @@
     background-color: #fff;
     padding: 20px;
     z-index: 9999;
+    border-radius: 7px;
     
 }
 

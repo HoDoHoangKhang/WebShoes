@@ -570,7 +570,17 @@
                                 stock.style.opacity=1;
                             }
                             else{ //Nếu = 1 thì thêm vào giỏ hàng thành công
-                                creatToast("item-success","Thêm vào vỏ hàng thành công !","fa-solid fa-circle-check","item-end-success");
+                                // creatToast("item-success","Thêm vào vỏ hàng thành công !","fa-solid fa-circle-check","item-end-success");
+                                async function showAlert() {
+                                    await Swal.fire({
+                                        icon: 'success',
+                                        title: 'Thành công',
+                                        text: 'Thêm sản phẩm vào vỏ hàng thành công!',
+                                        timer: 2000
+                                    });
+
+                                }
+                                showAlert();
                                 if(data>0){
                                     var product = { TaiKhoan: "<?php echo $_SESSION['taikhoan'] ?>",MaSP: <?php echo $MaSP ?>, Size: getSize(), SoLuong: getQuantity()};
                                     // Thêm sản phẩm vào giỏ hàng
@@ -921,7 +931,16 @@
                                 var newDiv = document.createElement("div");
                                 newDiv.innerHTML = data;
                                 document.querySelector(".describe-reviews_detail-list").insertAdjacentElement("afterbegin",newDiv);
-                                creatToast("item-success","Đánh giá của bạn đã được ghi lại !","fa-solid fa-circle-check","item-end-success");
+                                async function showAlert() {
+                                    await Swal.fire({
+                                        icon: 'success',
+                                        title: 'Thành công',
+                                        text: 'Đánh giá sản phẩm thành công!',
+                                        timer: 2000
+                                    });
+
+                                }
+                                showAlert();
                                 var formReview=document.querySelector('.review').style.display='none';
                             }
                         });
