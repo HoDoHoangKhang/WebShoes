@@ -19,7 +19,7 @@
     // insertPhieuXuat(2, 2 ,"2024-05-04","Tạm giữ",300000,1,1);
     function showPhieuXuat($maKH){
         $db = new DTB();
-        $query = "SELECT * FROM phieuxuat WHERE MaKH=$maKH";
+        $query = "SELECT * FROM phieuxuat WHERE MaKH=$maKH order by MaPX DESC";
         $result = mysqli_query($db->getConnection(), $query);
         $output='';
         while($row=mysqli_fetch_array($result)){

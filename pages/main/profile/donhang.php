@@ -152,26 +152,39 @@ table tr:nth-child(odd) {
                 // $MaSP=
                 // $SoLuong=
                 // $Size=
-                $.ajax({
-                    url: 'control/ajax_action.php',
-                    type: 'POST',
-                    data: {
-                        MaPX: $maPX,
-                        // MaSP: $MaSP,
-                        // SoLuong: $SoLuong,
-                        // Size: $Size,
-                        action:"deleteDonHang",
-                    },
-                    success: function(data){
-                        console.log(data);
-                        if(data==1){
-                            btn.parentElement.parentElement.parentElement.children[2].innerHTML="Đã hủy";
-                            btn.remove();
-                            creatToast("item-success","Hủy đơn hàng thành công","fa-solid fa-circle-check","item-end-success");
-                        }
-                        else{
-                            creatToast("item-error","Đơn hàng đã được gửi cho đơn vị vận chuyển, không thể hủy đơn hàng này","fa-solid fa-triangle-exclamation","item-end-error");                        
-                        }
+                Swal.fire({
+                    title: 'Xác nhận hủy',
+                    text: "Bạn có chắc chắn muốn hủy đơn hàng này không?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Hủy',
+                    cancelButtonText: 'Không'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'control/ajax_action.php',
+                            type: 'POST',
+                            data: {
+                                MaPX: $maPX,
+                                // MaSP: $MaSP,
+                                // SoLuong: $SoLuong,
+                                // Size: $Size,
+                                action:"deleteDonHang",
+                            },
+                            success: function(data){
+                                console.log(data);
+                                if(data==1){
+                                    btn.parentElement.parentElement.parentElement.children[2].innerHTML="Đã hủy";
+                                    btn.remove();
+                                    creatToast("item-success","Hủy đơn hàng thành công","fa-solid fa-circle-check","item-end-success");
+                                }
+                                else{
+                                    creatToast("item-error","Đơn hàng đã được gửi cho đơn vị vận chuyển, không thể hủy đơn hàng này","fa-solid fa-triangle-exclamation","item-end-error");                        
+                                }
+                            }
+                        });
                     }
                 });
             });
