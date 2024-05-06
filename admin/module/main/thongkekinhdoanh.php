@@ -652,12 +652,25 @@ $conn->close();
 
           $('#productTable').empty();
           if (data.san_pham && data.san_pham.length > 0) {
-            var selectHTML = '<div class="row mb-3"><div class="col-md-6"><select id="rowLimitSelect" class="form-control"><option value="all">All</option><option value="5">Top 5</option><option value="10">Top 10</option></select></div></div>';
-            $('#productTable').before(selectHTML);
+            var productTable = $('<table>').addClass('table table-striped');
+            var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
+            var tbody = $('<tbody>');
 
-            var rowLimit = $('#rowLimitSelect').val();
+            $.each(data.san_pham, function(index, product) {
+              var row = $('<tr>');
+              row.append('<td>' + product.TenSP + '</td>');
+              row.append('<td>' + product.TenNhanHieu + '</td>');
+              row.append('<td>' + product.TongSoLuong + '</td>');
+              tbody.append(row);
+            });
 
-            createProductTable(data, rowLimit);
+            productTable.append(thead).append(tbody);
+            $('#productTable').html(productTable);
+            $('#productTable table').DataTable({
+                                    language: {
+                                        search: "Tìm kiếm:"
+                                    }
+                                });
           }
         }
 
@@ -669,43 +682,8 @@ $conn->close();
       }
     });
   });
-
-  // Nếu đang lọc theo nhãn hiệu
-  function createProductTable(data, rowLimit) {
-    var productTable = $('<table>').addClass('table table-striped');
-    var thead = $('<thead>').append('<tr><th>Tên sản phẩm</th><th>Nhãn hiệu</th><th>Tổng Số Lượng</th></tr>');
-    var tbody = $('<tbody>');
-
-    // Giới hạn số hàng hiển thị nếu rowLimit không phải "all"
-    var products = rowLimit !== "all" ? data.san_pham.slice(0, rowLimit) : data.san_pham;
-
-    $.each(products, function(index, product) {
-      var row = $('<tr>');
-      row.append('<td>' + product.TenSP + '</td>');
-      row.append('<td>' + product.TenNhanHieu + '</td>');
-      row.append('<td>' + product.TongSoLuong + '</td>');
-      tbody.append(row);
-    });
-
-    productTable.append(thead).append(tbody);
-    $('#productTable').html(productTable);
-    $('#productTable table').DataTable({
-                                language: {
-                                    search: "Tìm kiếm:"
-                                }
-                            });
-  }
-
-  $('#rowLimitSelect').on('change', function() {
-    var rowLimit = $(this).val();
-
-    // Nếu đã có dữ liệu sản phẩm
-    if (data.san_pham && data.san_pham.length > 0) {
-      createProductTable(data, rowLimit);
-    }
-  });
 });
-</script> 
+</script>
 <script>
     $(document).ready(function() {
         $('.loc-button').click(function() {
@@ -918,10 +896,9 @@ $conn->close();
         myChart = new Chart(document.getElementById('myChart'), configMyChart);
     }
 
-            
+    $('#locsanphamModal').modal('hide');
         });
-      
-        $('#locsanpham').modal('hide');
+
     });
     
 </script>
@@ -1101,5 +1078,3 @@ $conn->close();
             });
         });
 </script>
-
-   
