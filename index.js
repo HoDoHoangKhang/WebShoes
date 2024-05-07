@@ -728,3 +728,19 @@ function creatToast(status,mess,icon,end_color){
     }, 3000);
 }
 
+var btnMenu=document.querySelector(".header-logo-menu");
+btnMenu.addEventListener('click',function(){
+    var menuMobile= document.querySelector(".menu-mobile");
+    if(menuMobile.style.display=="none"){
+        menuMobile.style.display='block';
+    }
+    else{
+        menuMobile.style.display='none';
+    }
+});
+
+var btnXmenu=document.querySelector(".menu-mobile_title-icon");
+btnXmenu.addEventListener('click',function(){
+    var menuMobile= document.querySelector(".menu-mobile");
+    menuMobile.style.display='none';
+});

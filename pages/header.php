@@ -152,7 +152,41 @@
             <i class="search_mobile-input-icon fa-solid fa-magnifying-glass"></i>
         </div>
     </div>
+    <div class="menu-mobile none">
+        <div class="menu-mobile_title">
+            <h2>
+                Danh mục
+            </h2>
+            <i class="fa-solid fa-xmark menu-mobile_title-icon"></i>
+        </div>
+        <div class="menu-mobile-content">
+            <a class="menu_sub-mobile active" href="index.php?danhmuc=home" >
+                Home
+            </a>
+            <a class="menu_sub-mobile"  href="index.php?danhmuc=products">
+                Products
+                
+            </a>
+            <div class="product-menu_sub" style="padding: 0; margin-left: 20px;">
+                    <ul class="menu__hover__content">
+                        <?php 
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+                            showNhanHieuMegaMenu();
+                        ?>
+                    </ul>
+                    <ul class="menu__hover__content">
+                        <?php 
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
+                            showNhanHieuMegaMenu();
+                        ?>
+                    </ul>
+                </div>
+            <a class="menu_sub-mobile active" href="about.html">About</a>
+            <a class="menu_sub-mobile active" href="">TikTok</a>
+        </div>
+    </div>
 </header>
+
 <script>
     $(document).ready(function(){
         var cardQuanlity=document.querySelector('.header__action-cart-count').innerHTML=getCardUser().length;

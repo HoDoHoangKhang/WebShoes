@@ -102,35 +102,6 @@
     <script src="index.js">
     </script>
 </body>
-<div class="menu-mobile">
-    <div class="menu-mobile_title">
-        <h2>
-            Directory
-        </h2>
-        <i class="fa-solid fa-xmark menu-mobile_title-icon"></i>
-    </div>
-    <a class="menu_sub-mobile active" href="index.html" >
-        Home
-    </a>
-    <a class="menu_sub-mobile" href="./product.html">
-        Products
-        <ul class="menu__hover__content-mobile">
-            <li>All Men's Shoes</li>
-            <li>Basketball</li>
-            <li>Running</li>
-            <li>Gym</li>
-            <li>Football</li>
-            <li>Nike</li>
-            <li>Adidas</li>
-            <li>Jordan</li>
-            <li>New Balance</li>
-            <li>Vans</li>
-            <li>Puma</li>
-        </ul>
-    </a>
-    <a class="menu_sub-mobile active" href="about.html">About</a>
-    <a class="menu_sub-mobile active" href="">Contact</a>
-    <a class="menu_sub-mobile active" href="">Blog</a>
-</div>
+
 </html>
 
