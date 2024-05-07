@@ -176,8 +176,8 @@
                     </ul>
                     <ul class="menu__hover__content">
                         <?php 
-                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/nhanhieu-act.php');
-                            showNhanHieuMegaMenu();
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/control/loaisp-act.php');
+                            showDanhMucMegaMenu();
                         ?>
                     </ul>
                 </div>

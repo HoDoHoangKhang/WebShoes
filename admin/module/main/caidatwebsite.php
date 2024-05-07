@@ -99,7 +99,7 @@ img{
   
   <div class="form-group">
       <h5 for="logo">Tên thương hiệu:</h5>
-      <input type="text" name="name" placeholder="<?php echo $thuonghieu; ?>">
+      <input type="text" name="name" maxlength=5 placeholder="<?php echo $thuonghieu; ?>">
   </div>
 
   <div class="form-group" style="display: block;">

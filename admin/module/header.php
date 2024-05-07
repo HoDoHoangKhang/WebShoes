@@ -5,12 +5,12 @@
             </a>
         </p>
         <div class="header-notifi_user">
-            <div class="notifi">
+            <!-- <div class="notifi">
                 <i class="fa-regular fa-bell"></i>
                 <div class="notifi-state">
                     
                 </div>
-            </div>
+            </div> -->
             <div class="user">
                 <p class="user-name">
                     <?php

@@ -172,7 +172,7 @@ if ($result->num_rows === 0) {
 			</td>
 			
 			<td><?php echo $row['NgayNhap']; ?></td>
-			<td><?php echo number_format($row['TongTien'], 0, ',', '.') . ' '; ?>VND</td>
+			<td><?php echo $row['TongTien']; ?></td>
 			<td>
 				<button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluongPhieunhap" id="<?php echo $row['MaPN']; ?>"> <?php echo $row['TongSoLuong']; ?> </button>
 			</td>

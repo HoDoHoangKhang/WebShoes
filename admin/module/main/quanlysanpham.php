@@ -121,7 +121,7 @@
                                 </td>
                                 <td>' . $row["TenSP"] . '</td>
                                 <td>' . $tennhanhieu . '</td>
-                                <td>' . $formatted_number = number_format($row["GiaMoi"], 0, ',', '.') .' VND</td>
+                                <td>' . $row["GiaMoi"].'</td>
                                 <td>
                                     <button type="button" class="btn btn-primary view-size-button" data-bs-toggle="modal" data-bs-target="#chitietsoluong" id="' .$row["MaSP"] . '">
                                     ' . $tongSL . '
