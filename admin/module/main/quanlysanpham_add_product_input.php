@@ -27,7 +27,7 @@ require '../config/config.php';
                 <ul class="menu">
                     <?php
                     // Chuẩn bị câu truy vấn SQL
-                    $sql = "SELECT MaNhanHieu, TenNhanHieu FROM nhanhieu";
+                    $sql = "SELECT MaNhanHieu, TenNhanHieu FROM nhanhieu where hide=1";
                     $result = $connect->query($sql);
 
                     // Kiểm tra số dòng trả về từ câu truy vấn
@@ -49,7 +49,7 @@ require '../config/config.php';
                 </div>
                 <ul class="menu" >
                     <?php 
-                    $sql = "SELECT MaLoai, TenLoai FROM loaisp";
+                    $sql = "SELECT MaLoai, TenLoai FROM loaisp where hide=1";
                     $result = $connect->query($sql);
 
                     // Kiểm tra số dòng trả về từ câu truy vấn

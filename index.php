@@ -39,8 +39,12 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- Latest version of SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ -->
+    <script
+        type="text/javascript"
+        src="./assets/js/sweetalert.js"
+    ></script>
 </head>
 
 <body>

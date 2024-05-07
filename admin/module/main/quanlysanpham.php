@@ -128,7 +128,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <div>
+                                    <div style="display:flex; gap:10px;">
                                         <button type="button" class="btn btn-primary view-SP-button" data-bs-toggle="modal" data-bs-target="#chitietsanpham" id="' .$row["MaSP"] . '">
                                             Chi tiết
                                             </button>';

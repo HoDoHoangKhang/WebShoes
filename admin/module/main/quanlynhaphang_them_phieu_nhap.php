@@ -50,7 +50,7 @@ require '../config/config.php';
                 <ul class="menu">
                     <?php
                     // Chuẩn bị câu truy vấn SQL
-                    $sql = "SELECT MaNCC, TenNCC FROM nhacungcap";
+                    $sql = "SELECT MaNCC, TenNCC FROM nhacungcap where hide=1";
                     $result = $connect->query($sql);
 
                     // Kiểm tra số dòng trả về từ câu truy vấn
