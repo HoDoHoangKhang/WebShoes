@@ -22,12 +22,13 @@
         <?php //chi tiết quyền nếu được thực hiện thì mới được hiện ra
                             $TenDangNhap=$_SESSION['taikhoan'];
                             require_once($_SERVER['DOCUMENT_ROOT'] . '/webbangiay/admin/config/config.php'); //Kết nối mysql                     
-                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='	
-Thêm nhóm quyền' and ctqcn.TrangThai=1";
+                            $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Thêm nhóm quyền' and ctqcn.TrangThai=1";
                             $resultq=mysqli_query($connect,$sqlq);
                             $rowq=mysqli_num_rows($resultq);
-                            if($rowq==1){ ?>                                  
-                                    <button type="submit" class="btn btn-primary" id="submitXoaPN">Xóa</button>
+                            if($rowq==1){  ?>                                 
+                                    <button type="button" class="btn btn-primary Add-SP-button" data-bs-toggle="modal" data-bs-target="#themquyen">
+                                        Thêm
+                                    </button>
                             <?php
                                 }
                             ?>
@@ -62,7 +63,7 @@ Thêm nhóm quyền' and ctqcn.TrangThai=1";
                             $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Chi tiết chức năng cho nhóm quyền' and ctqcn.TrangThai=1";
                             $resultq=mysqli_query($connect,$sqlq);
                             $rowq=mysqli_num_rows($resultq);
-                            if($rowq==1 && $row['MaQuyen']!=4 ){ ?>                                  
+                            if($rowq==1 && $row['MaQuyen']!=4){ ?>                                  
                                     <li><a class="dropdown-item" href="index.php?danhmuc=quanlyquyen_chitietquyen&id=<?php echo $row['MaQuyen']?>">Chi tiết</a></li>
                             <?php
                                 }
@@ -70,7 +71,7 @@ Thêm nhóm quyền' and ctqcn.TrangThai=1";
                               $sqlq="SELECT * FROM `taikhoan` tk join quyen q on q.MaQuyen=tk.MaQuyen join chitietquyenchucnang ctqcn on ctqcn.MaQuyen=q.MaQuyen WHERE TenDangNhap='$TenDangNhap' and ctqcn.HanhDong='Sửa nhóm quyền' and ctqcn.TrangThai=1";
                               $resultq=mysqli_query($connect,$sqlq);
                               $rowq=mysqli_num_rows($resultq);
-                              if($rowq==1 ){ ?>                                  
+                              if($rowq==1){ ?>                                  
                                       <li><a class="dropdown-item edit-btn"  href="module/main/quanlyquyen_gettenquyen.php?id=<?php echo $row['MaQuyen']?>&ten=<?php echo $row['TenQuyen']?>" >Sửa</a></li>
                               <?php
                                   }
