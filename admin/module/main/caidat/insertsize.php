@@ -39,6 +39,11 @@ if (isset($_POST['size'])) {
                     </td>
                   </tr>";
         }
+        $insertSqlKho = "INSERT INTO ctsizesp (MaSP, SizeSP, SoLuong)
+        SELECT DISTINCT MaSP, $size as SizeSP, 0 as SoLuong
+        FROM ctsizesp;";
+        $conn->query($insertSqlKho);
+
     }
     $conn->close();
 }

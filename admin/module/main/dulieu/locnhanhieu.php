@@ -130,13 +130,34 @@ if ($result_tong_tien->num_rows > 0) {
     }
 }
 
+$sql_doanh_thu = "SELECT SUM(ctpx.GiaBan * 0.1 * ctpx.SoLuong) AS DoanhThu
+                  FROM phieuxuat px
+                  JOIN ctpx ON px.MaPX = ctpx.MaPX
+                  JOIN sanpham sp ON ctpx.MaSP = sp.MaSP
+                  JOIN nhanhieu nh ON sp.MaNhanHieu = nh.MaNhanHieu
+                  WHERE px.TinhTrangDH = 'Đã hoàn thành' AND nh.TenNhanHieu = ?";
+
+$stmt_doanh_thu = $conn->prepare($sql_doanh_thu);
+$stmt_doanh_thu->bind_param("s", $nhan_hieu);
+$stmt_doanh_thu->execute();
+$result_doanh_thu = $stmt_doanh_thu->get_result();
+
+$data_doanh_thu = array();
+if ($result_doanh_thu->num_rows > 0) {
+    while($row = $result_doanh_thu->fetch_assoc()) {
+        $data_doanh_thu[] = array(
+            'value' => $row['DoanhThu']
+        );
+    }
+}
 // Trả về dữ liệu dưới dạng JSON
 $response = array(
     'san_pham' => $san_pham,
     'nhan_hieu' => $data_nhanhieu,
     'loai_sp' => $data_loaisp,
     'tong_so_luong' => $data_tong_so_luong,
-    'tong_tien' => $data_tong_tien
+    'tong_tien' => $data_tong_tien,
+    'doanh_thu' => $data_doanh_thu
 );
 echo json_encode($response);
 
