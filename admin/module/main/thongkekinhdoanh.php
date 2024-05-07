@@ -70,7 +70,21 @@ if ($result->num_rows > 0) {
         $tongTien[] = $row["TongTien"];
     }
 }
+$sql_doanhthu = "SELECT SUM(doanhthusanpham) AS DoanhThu
+                 FROM (
+                   SELECT ctpx.MaSP, ctpx.SoLuong, ctpx.GiaBan, (ctpx.GiaBan * 0.1 * ctpx.SoLuong) AS doanhthusanpham
+                   FROM ctpx
+                   JOIN phieuxuat px ON ctpx.MaPX = px.MaPX
+                   WHERE px.TinhTrangDH = 'Đã hoàn thành'
+                 ) AS temp";
 
+$result_doanhthu = $conn->query($sql_doanhthu);
+$doanhthu = 0;
+
+if ($result_doanhthu->num_rows > 0) {
+    $row = $result_doanhthu->fetch_assoc();
+    $doanhthu = $row['DoanhThu'];
+}
 
 $conn->close();
 ?>
@@ -322,7 +336,9 @@ $conn->close();
     </div>
 </div>
 </div>
-
+<script>
+    var doanhthu = <?php echo $doanhthu; ?>;
+</script>
 <script>
     var tongSoLuong = <?php echo json_encode($tongSoLuong); ?>;
     var tongTien = <?php echo json_encode($tongTien); ?>;
@@ -421,19 +437,24 @@ $conn->close();
             id: 'totalValueBoxes',
             beforeInit: (chart) => {
                 const totalTienHoaDon = tongTienHoaDon.toLocaleString('en-US');
-                const totalSoLuongSanPham = tongSoLuongSanPham;
+            const totalSoLuongSanPham = tongSoLuongSanPham;
 
-                const totalTienBox = document.createElement('div');
-                totalTienBox.classList.add('tongTienDisplay');
-                totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${totalTienHoaDon} (VNĐ)</span>`;
+            const totalTienBox = document.createElement('div');
+            totalTienBox.classList.add('tongTienDisplay');
+            totalTienBox.innerHTML = `<h3>Tổng tiền đơn hàng</h3><span>${totalTienHoaDon} (VNĐ)</span>`;
 
-                const totalSoLuongBox = document.createElement('div');
-                totalSoLuongBox.classList.add('tongTienDisplay');
-                totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${totalSoLuongSanPham}</span>`;
+            const totalSoLuongBox = document.createElement('div');
+            totalSoLuongBox.classList.add('tongTienDisplay');
+            totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${totalSoLuongSanPham}</span>`;
 
-                const chartContainer = chart.canvas.parentNode;
-                chartContainer.appendChild(totalTienBox);
-                chartContainer.appendChild(totalSoLuongBox);
+            const doanhThuBox = document.createElement('div');
+            doanhThuBox.classList.add('tongTienDisplay');
+            doanhThuBox.innerHTML = `<h3>Doanh thu bán được</h3><span>${doanhthu.toLocaleString('en-US')} (VNĐ)</span>`;
+
+            const chartContainer = chart.canvas.parentNode;
+            chartContainer.appendChild(totalTienBox);
+            chartContainer.appendChild(totalSoLuongBox);
+            chartContainer.appendChild(doanhThuBox);
             }
         }]
     });
@@ -557,7 +578,20 @@ $conn->close();
 
           const chartContainer = $('#myChart').parent();
           chartContainer.append(totalSoLuongBox);
-
+          if (data.doanh_thu && data.doanh_thu[0]?.value) {
+    const doanhThu = data.doanh_thu[0].value;
+    const doanhThuString = doanhThu.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    const doanhThuBox = document.createElement('div');
+    doanhThuBox.classList.add('tongTienDisplay');
+    doanhThuBox.innerHTML = `<h3>Doanh thu</h3><span>${doanhThuString} (VNĐ)</span>`;
+    chartContainer.append(doanhThuBox);
+} else {
+    const chartContainer = $('#myChart').parent();
+    const noDataMessage = document.createElement('div');
+    noDataMessage.classList.add('tongTienDisplay');
+    noDataMessage.innerHTML = '<h3>Không có dữ liệu về doanh thu</h3>';
+    chartContainer.append(noDataMessage);
+}
           // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
           configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
           configDonutChartNhanHieu.data.datasets[0].data = data.nhan_hieu.map(item => item.value);
@@ -784,10 +818,20 @@ $conn->close();
         const totalSoLuongBox = document.createElement('div');
         totalSoLuongBox.classList.add('tongTienDisplay');
         totalSoLuongBox.innerHTML = `<h3>Tổng số lượng sản phẩm đã bán</h3><span>${tongSoLuongSanPham}</span>`;
+        
 
         // Thêm các phần tử mới vào DOM
         const chartContainer = $('#myChart').parent();
         chartContainer.append(totalTienBox, totalSoLuongBox);
+        if (data.doanh_thu && data.doanh_thu.length > 0) {
+    const doanhThu = data.doanh_thu[0].value;
+    const doanhThuString = doanhThu.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+    const doanhThuBox = document.createElement('div');
+    doanhThuBox.classList.add('tongTienDisplay');
+    doanhThuBox.innerHTML = `<h3>Doanh thu</h3><span>${doanhThuString} (VNĐ)</span>`;
+    chartContainer.append(doanhThuBox);
+}
 
         // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
         configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);
@@ -934,9 +978,11 @@ $conn->close();
                 // Tính toán tổng tiền đơn hàng và tổng số lượng sản phẩm
                 var tongTienHoaDon = data.tong_tien[0].value;
                 var tongSoLuongSanPham = data.tong_so_luong.reduce((total, item) => total + item.value, 0);
+                var tongTienDoanhThu = data.doanh_thu[0].value;
 
                 // Xóa các phần tử hiển thị cũ
                 $('.tongTienDisplay').remove();
+                
 
                 const totalTienBox = document.createElement('div');
                 totalTienBox.classList.add('tongTienDisplay');
@@ -948,6 +994,15 @@ $conn->close();
 
                 const chartContainer = $('#myChart').parent();
                 chartContainer.append(totalTienBox, totalSoLuongBox);
+                if (data.doanh_thu && data.doanh_thu.length > 0) {
+    const doanhThu = data.doanh_thu[0].value;
+    const doanhThuString = doanhThu.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+    const doanhThuBox = document.createElement('div');
+    doanhThuBox.classList.add('tongTienDisplay');
+    doanhThuBox.innerHTML = `<h3>Doanh thu</h3><span>${doanhThuString} (VNĐ)</span>`;
+    chartContainer.append(doanhThuBox);
+}
 
                 // Cập nhật dữ liệu cho biểu đồ tròn nhãn hiệu
                 configDonutChartNhanHieu.data.labels = data.nhan_hieu.map(item => item.label);

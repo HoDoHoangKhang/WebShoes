@@ -228,6 +228,49 @@ if ($result_tong_tien->num_rows > 0) {
         );
     }
 }
+// Truy vấn để lấy doanh thu bán được (10% giá bán)
+if ($showAll) {
+    $sql_doanh_thu = "SELECT SUM(doanhthusanpham) AS DoanhThu
+                      FROM (
+                        SELECT ctpx.SoLuong, ctpx.GiaBan, (ctpx.GiaBan * 0.1 * ctpx.SoLuong) AS doanhthusanpham
+                        FROM ctpx
+                        JOIN phieuxuat px ON ctpx.MaPX = px.MaPX
+                        WHERE px.TinhTrangDH = 'Đã hoàn thành'
+                          AND px.NgayDatHang BETWEEN ? AND ?
+                      ) AS temp";
+
+    $stmt_doanh_thu = $conn->prepare($sql_doanh_thu);
+    $stmt_doanh_thu->bind_param("ss", $startDate, $endDate);
+    $stmt_doanh_thu->execute();
+    $result_doanh_thu = $stmt_doanh_thu->get_result();
+    $data_doanh_thu = array();
+} else {
+    $sql_doanh_thu = "SELECT SUM(doanhthusanpham) AS DoanhThu
+                      FROM (
+                        SELECT ctpx.SoLuong, ctpx.GiaBan, (ctpx.GiaBan * 0.1 * ctpx.SoLuong) AS doanhthusanpham
+                        FROM ctpx
+                        JOIN phieuxuat px ON ctpx.MaPX = px.MaPX
+                        JOIN sanpham sp ON ctpx.MaSP = sp.MaSP
+                        JOIN loaisp loai ON sp.MaLoai = loai.MaLoai
+                        WHERE px.TinhTrangDH = 'Đã hoàn thành'
+                          AND px.NgayDatHang BETWEEN ? AND ?
+                          AND loai.TenLoai = ?
+                      ) AS temp";
+
+    $stmt_doanh_thu = $conn->prepare($sql_doanh_thu);
+    $stmt_doanh_thu->bind_param("sss", $startDate, $endDate, $tenLoai);
+    $stmt_doanh_thu->execute();
+    $result_doanh_thu = $stmt_doanh_thu->get_result();
+    $data_doanh_thu = array();
+}
+
+if ($result_doanh_thu->num_rows > 0) {
+    while($row = $result_doanh_thu->fetch_assoc()) {
+        $data_doanh_thu[] = array(
+            'value' => $row['DoanhThu']
+        );
+    }
+}
 
 // Trả về dữ liệu dưới dạng JSON
 $response = array(
@@ -236,6 +279,7 @@ $response = array(
     'loai_sp' => $data_loaisp,
     'tong_so_luong' => $data_tong_so_luong,
     'tong_tien' => $data_tong_tien,
+    'doanh_thu' => $data_doanh_thu
 );
 
 ob_end_clean();

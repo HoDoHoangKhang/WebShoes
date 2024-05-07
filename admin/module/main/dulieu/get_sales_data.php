@@ -130,28 +130,26 @@ if ($result_tong_tien->num_rows > 0) {
         );
     }
 }
-$sql_san_pham_ban_chay = "SELECT sp.TenSP, SUM(ctpx.SoLuong) AS TongSoLuong
-                          FROM sanpham sp
-                          JOIN ctpx ON ctpx.MaSP = sp.MaSP
-                          JOIN phieuxuat px ON ctpx.MaPX = px.MaPX
-                          WHERE px.TinhTrangDH = 'Đã hoàn thành'
-                            AND px.NgayDatHang BETWEEN ? AND ?
-                          GROUP BY sp.TenSP
-                          ORDER BY TongSoLuong DESC
-                          LIMIT 1;";
+$sql_doanh_thu = "SELECT SUM(doanhthusanpham) AS DoanhThu
+                      FROM (
+                        SELECT ctpx.SoLuong, ctpx.GiaBan, (ctpx.GiaBan * 0.1 * ctpx.SoLuong) AS doanhthusanpham
+                        FROM ctpx
+                        JOIN phieuxuat px ON ctpx.MaPX = px.MaPX
+                        WHERE px.TinhTrangDH = 'Đã hoàn thành'
+                          AND px.NgayDatHang BETWEEN ? AND ?
+                      ) AS temp";
 
-$stmt_san_pham_ban_chay = $conn->prepare($sql_san_pham_ban_chay);
-$stmt_san_pham_ban_chay->bind_param("ss", $startDate, $endDate);
-$stmt_san_pham_ban_chay->execute();
-$result_san_pham_ban_chay = $stmt_san_pham_ban_chay->get_result();
-
-$san_pham_ban_chay = array();
-if ($result_san_pham_ban_chay->num_rows > 0) {
-    $row = $result_san_pham_ban_chay->fetch_assoc();
-    $san_pham_ban_chay = array(
-        'TenSP' => $row['TenSP'],
-        'TongSoLuong' => $row['TongSoLuong']
-    );
+$stmt_doanh_thu = $conn->prepare($sql_doanh_thu);
+$stmt_doanh_thu->bind_param("ss", $startDate, $endDate);
+$stmt_doanh_thu->execute();
+$result_doanh_thu = $stmt_doanh_thu->get_result();
+$data_doanh_thu = array();
+if ($result_doanh_thu->num_rows > 0) {
+    while($row = $result_doanh_thu->fetch_assoc()) {
+        $data_doanh_thu[] = array(
+                'value' => $row['DoanhThu']
+        );
+    }
 }
 
 // Trả về dữ liệu dưới dạng JSON
@@ -161,7 +159,7 @@ $response = array(
     'loai_sp' => $data_loaisp,
     'tong_so_luong' => $data_tong_so_luong,
     'tong_tien' => $data_tong_tien,
-    'san_pham_ban_chay' => $san_pham_ban_chay
+    'doanh_thu' => $data_doanh_thu
 );
 
 ob_end_clean();
