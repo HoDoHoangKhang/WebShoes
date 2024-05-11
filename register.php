@@ -194,6 +194,9 @@
                     else if(data=='tendangnhapdatontai'){
                         thongbao.innerHTML ='Tên Đăng nhập đã tồn tại trong hệ thống!';
                     }
+                    else if(data=='tendangnhapkhongdung'){
+                        thongbao.innerHTML ='Tên Đăng nhập phải từ 5-15 kí tự và chỉ chứ chữ cái, chữ số, dấu gạch dưới';
+                    }
                     else if (data=='saihoten'){
                         thongbao.innerHTML ='Phải có họ và tên, không bao gồm kí tự số và kí tự đặc biệt(ví dụ: Nguyễn Văn Thọt)!';
                     }

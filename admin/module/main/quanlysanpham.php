@@ -115,7 +115,7 @@
                             <tr>
                                 <td>' . $row["MaSP"] . '</td>
                                 <td>
-                                    <div>
+                                    <div style="background-color:rgba(255,255,255,0.3); width: 80px; border-radius:5px;">
                                         <img src="../assets/img/' .$row["HinhAnh"]. '" alt="" class="" width="80">
                                     </div>
                                 </td>

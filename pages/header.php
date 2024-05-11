@@ -11,6 +11,7 @@
             if(getTenNhomQuyen($_SESSION['taikhoan'])!="Khách hàng"){?>
                 <a href="admin/index.php" class="header_Admin">
                     <i class="fa-solid fa-circle-right icon-admin"></i><span>Admin</span>
+
                 </a>
             <?php }
         }

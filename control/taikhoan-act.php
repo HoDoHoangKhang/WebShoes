@@ -21,6 +21,9 @@
         $db->disconnect();
         return $taikhoan;
     }
+    function isValidUsername($username) {
+        return preg_match('/^[a-zA-Z0-9_]{5,15}$/', $username);
+    }
     function tenDangNhapTonTai($TenDangNhap){
         $db = new DTB();
         $kq = mysqli_query($db->getConnection(), "SELECT * FROM `taikhoan` WHERE TenDangNhap = '$TenDangNhap' ");

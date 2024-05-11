@@ -22,6 +22,9 @@
     else if(tenDangNhapTonTai($tenDangNhap)==1){
         echo 'tendangnhapdatontai';
     }
+    else if(isValidUsername($tenDangNhap)==false){
+        echo 'tendangnhapkhongdung';
+    }
     else if( checkHoTen($hoTen) == 0 ){
         echo 'saihoten';
     }

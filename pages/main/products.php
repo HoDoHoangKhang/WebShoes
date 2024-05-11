@@ -67,8 +67,8 @@
                                 <div class="progress"></div>
                             </div>
                             <div class="range-input">
-                                <input type="range" class="range-min" min="0" max="5000000" value="0" step="200000">
-                                <input type="range" class="range-max" min="0" max="5000000" value="5000000" step="200000">
+                                <input type="range" class="range-min" min="0" max="5000000" value="0" step="30000">
+                                <input type="range" class="range-max" min="0" max="5000000" value="5000000" step="30000">
                             </div>
                         </div>           
                     </div>

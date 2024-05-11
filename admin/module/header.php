@@ -8,7 +8,6 @@
             <!-- <div class="notifi">
                 <i class="fa-regular fa-bell"></i>
                 <div class="notifi-state">
-                    
                 </div>
             </div> -->
             <div class="user">
@@ -29,10 +28,10 @@
                     </div>
                     <div class="user-more">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <i class="fa-solid fa-user"></i>
                                 <a class="dropdown-item" href="index.php?danhmuc=thongtintaikhoan">Thông tin</a>
-                            </li>
+                            </li> -->
                             <li>
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <a style="text-decoration: none;" href="../logout.php">Log out</a>

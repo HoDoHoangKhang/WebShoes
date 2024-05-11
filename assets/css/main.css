@@ -8,6 +8,12 @@
     gap: 10px;
     cursor: pointer;
 }
+.header_Admin div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
 .header_Admin:hover{    
     color: #ffffff;
     background-color: #666666;

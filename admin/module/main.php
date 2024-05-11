@@ -78,7 +78,7 @@
             }
         }
         else{
-            require_once 'module/main/dashboard.php';
+            require_once 'module/main/quanlysanpham.php';
         }
 
     ?>

@@ -2,7 +2,7 @@
 
 	$userId   = $_POST['username'];
 	$password = $_POST['password'];
-	include("config/config.php");
+	include("../config/config.php");
 	//Kiểm tra xem tài khoản có tồn tại hay không
 	$SqlCheckUser = "SELECT TenDangNhap,MatKhau,TrangThai
 					FROM taikhoan

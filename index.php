@@ -99,7 +99,7 @@
       type="text/javascript"
       src="./assets/js/slick.min.js"
     ></script>
-    <script src="index.js">
+    <script src="./assets/js/index.js">
     </script>
 </body>
 

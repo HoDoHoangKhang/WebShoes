@@ -135,7 +135,7 @@
                 var username = document.getElementById('username').value;
                 var password = document.getElementById('password').value;
                 $.ajax({
-                    url: 'xulylogin.php',
+                    url: './control/xulylogin.php',
                     method: 'POST',
                     data: {
                         username: username,
